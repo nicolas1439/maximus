@@ -23,7 +23,7 @@
   .mx-footer {
     background: #141414;
     border-top: 1px solid #2e2e2e;
-    padding: 48px 20px 24px;
+    padding: 48px 20px 9px 20px;
     position: absolute;
     overflow: hidden;
     color: #e2e8f0;
@@ -92,7 +92,7 @@
   .mx-footer-logo img {
     display: block;
     width: auto;
-    height: 42px;
+    height: 36px;
     max-width: 100%;
     border: 0;
   }
@@ -280,11 +280,11 @@
     font-weight: 500;
   }
 
-  .mx-footer-hours-time2{padding-left: 6px;}
+  .mx-footer-hours-time2{padding-left: 4px;}
 
   .mx-footer-divider {
     margin-top: 36px;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     border: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.07);
     height: 0;
