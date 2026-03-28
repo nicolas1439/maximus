@@ -1,15 +1,16 @@
-/*ESTILOS FOOTER*/
-  
+/* =============================================
+   FOOTER — estilos generales
+   ============================================= */
   .mx-footer img,
   .mx-footer svg {
-	max-width: none;
+    max-width: none;
   }
 
   .mx-footer a,
   .mx-footer p,
   .mx-footer div,
   .mx-footer span {
-	box-sizing: border-box;
+    box-sizing: border-box;
   }
   
   .mx-footer,
@@ -20,8 +21,8 @@
   }
 
   .mx-footer {
-    background: #131826;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    background: #141414;
+    border-top: 1px solid #2e2e2e;
     padding: 48px 20px 24px;
     position: relative;
     overflow: hidden;
@@ -125,8 +126,8 @@
   }
 
   .mx-footer-social a:hover {
-    background: #4f8cff;
-    border-color: #4f8cff;
+    background: #099600;
+    border-color: #095700;
     color: #ffffff;
     transform: translateY(-2px);
   }
@@ -170,7 +171,7 @@
   }
 
   .mx-footer-links a:hover {
-    color: #4f8cff;
+    color: #16e000;
     padding-left: 4px;
   }
 
@@ -200,8 +201,8 @@
     height: 34px;
     flex: 0 0 34px;
     border-radius: 8px;
-    background: rgba(79, 140, 255, 0.12);
-    border: 1px solid rgba(79, 140, 255, 0.25);
+    background: #1C1C1C;
+    border: 1px solid #2e2e2e;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -210,7 +211,7 @@
   .mx-footer-contact-icon svg {
     width: 15px;
     height: 15px;
-    fill: #4f8cff;
+    fill: #16e000;
     display: block;
   }
 
@@ -242,7 +243,7 @@
   }
 
   .mx-footer-contact-value a:hover {
-    color: #4f8cff;
+    color: #16e000;
   }
 
   .mx-footer-hours {
@@ -269,7 +270,7 @@
   }
 
   .mx-footer-hours-time {
-    color: #4f8cff;
+    color: #119C00;
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
@@ -326,6 +327,213 @@
     transition: color 0.25s ease;
   }
 
-  .mx-footer-legal a:hover {
-    color: #4f8cff;
+  .mx-footer-legal a:hover { color: #8892a4; }
+
+/* =============================================
+   MODAL — BOTÓN DE ARREPENTIMIENTO
+   ============================================= */
+
+  /* Contenedor del modal: oculto por defecto */
+  .mx-arrep-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  /* Clase que activa el modal */
+  .mx-arrep-modal--open {
+    display: flex;
+  }
+
+  .mx-arrep-modal--open[aria-hidden="true"] {
+    /* Corrige el atributo aria al abrir vía JS */
+  }
+
+  /* Backdrop oscuro */
+  .mx-arrep-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(3px);
+    cursor: pointer;
+  }
+
+  /* Cuadro de diálogo */
+  .mx-arrep-modal__dialog {
+    position: relative;
+    z-index: 1;
+    background: #1a1a1a;
+    border: 1px solid #2e2e2e;
+    border-radius: 16px;
+    padding: 36px 32px 32px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    animation: mx-arrep-in 0.22s ease;
+  }
+
+  @keyframes mx-arrep-in {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+
+  /* Botón de cierre × */
+  .mx-arrep-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #8892a4;
+    font-size: 22px;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .mx-arrep-modal__close:hover {
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  /* Ícono informativo */
+  .mx-arrep-modal__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(22, 224, 0, 0.1);
+    border: 1px solid rgba(22, 224, 0, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .mx-arrep-modal__icon svg {
+    width: 26px;
+    height: 26px;
+    fill: #16e000;
+    display: block;
+  }
+
+  /* Textos */
+  .mx-arrep-modal__eyebrow {
+    margin: 0 0 6px;
+    color: #16e000;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .mx-arrep-modal__title {
+    margin: 0 0 12px;
+    color: #e2e8f0;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .mx-arrep-modal__text {
+    margin: 0 0 20px;
+    color: #8892a4;
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  /* Caja de pasos */
+  .mx-arrep-modal__box {
+    background: #111111;
+    border: 1px solid #2e2e2e;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 24px;
+  }
+
+  .mx-arrep-modal__box-title {
+    margin: 0 0 10px;
+    color: #e2e8f0;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .mx-arrep-modal__list {
+    margin: 0;
+    padding-left: 18px;
+    color: #8892a4;
+    font-size: 13px;
+    line-height: 1.7;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .mx-arrep-modal__list li + li {
+    margin-top: 4px;
+  }
+
+  /* Acciones */
+  .mx-arrep-modal__actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .mx-arrep-modal__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .mx-arrep-modal__btn--ghost {
+    background: transparent;
+    border: 1px solid #2e2e2e;
+    color: #8892a4;
+  }
+
+  .mx-arrep-modal__btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    border-color: #444;
+  }
+
+  .mx-arrep-modal__btn--primary {
+    background: #16e000;
+    color: #0a0a0a;
+  }
+
+  .mx-arrep-modal__btn--primary:hover {
+    background: #12c400;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 400px) {
+    .mx-arrep-modal__dialog {
+      padding: 28px 20px 24px;
+    }
+    .mx-arrep-modal__actions {
+      flex-direction: column-reverse;
+    }
+    .mx-arrep-modal__btn {
+      width: 100%;
+    }
   }
