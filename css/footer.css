@@ -161,6 +161,10 @@
     gap: 12px;
   }
 
+  .legales-qr a:hover{padding-left: 0px !important;}
+  .legales-qr a:first-of-type {
+    margin-right: 12px;
+  }
   .mx-footer-links a {
     display: inline-block;
     color: #8892a4;
@@ -275,6 +279,8 @@
     line-height: 1.2;
     font-weight: 500;
   }
+
+  .mx-footer-hours-time2{padding-left: 3px;}
 
   .mx-footer-divider {
     margin-top: 36px;
