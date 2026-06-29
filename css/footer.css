@@ -24,26 +24,12 @@
     background: #141414;
     border-top: 1px solid #2e2e2e;
     padding: 48px 20px 9px 20px;
-    position: absolute;
     overflow: hidden;
     color: #e2e8f0;
     font-family: Arial, Helvetica, sans-serif;
     width: 100%;
     clear: both;
-  }
-
-  .mx-footer::after {
-    content: "";
-    position: absolute;
-    right: -60px;
-    bottom: 40px;
-    width: 320px;
-    height: 240px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(167, 139, 250, 0.14), transparent 70%);
-    filter: blur(90px);
-    pointer-events: none;
-    z-index: 0;
+    margin-bottom: -21px;
   }
 
   .mx-footer-inner,
