@@ -6,8 +6,14 @@ Herramienta para diseñar componentes y plantillas web profesionales. Cada carpe
 La carpeta se usa desde distintos dispositivos y vive en GitHub: rama `new-design` del repo `nicolas1439/maximus` (el repo de archivos de Maximus; la rama es independiente de `main`, que sigue con los archivos del sitio actual).
 - Usar siempre rutas relativas. Nunca rutas absolutas ni nada atado a un equipo en particular.
 - Todo el contexto se registra en estos `.md`, no en la memoria local de Claude (esa no viaja entre dispositivos).
-- La carpeta `.claude/` viaja con el proyecto: `launch.json` tiene la configuración de la vista previa. Cada dispositivo necesita Node, Git y el CLI `gh` autenticado con la cuenta nicolas1439. `settings.local.json` es propio de cada equipo y está en `.gitignore`.
-- En otro dispositivo: `git clone -b new-design --single-branch https://github.com/nicolas1439/maximus.git "new design"`. Al empezar una sesión, `git pull` para traer lo último.
+- La carpeta `.claude/` viaja con el proyecto: `launch.json` tiene la configuración de la vista previa. `settings.local.json` es propio de cada equipo y está en `.gitignore`.
+- Configurar un dispositivo nuevo (una sola vez):
+  1. Instalar Git, Node y GitHub CLI (`gh`).
+  2. Autenticar GitHub con la cuenta nicolas1439: `gh auth login` (GitHub.com, HTTPS, con el navegador) y después `gh auth setup-git`, así `git push` usa esa cuenta.
+  3. Clonar: `git clone -b new-design --single-branch https://github.com/nicolas1439/maximus.git "new design"`.
+  4. Dentro de la carpeta, la identidad de los commits (es propia de cada clon, no viaja con el repo; no usar la global del equipo si es otra cuenta): `git config user.name "Nicolas Orellana"` y `git config user.email "112594581+nicolas1439@users.noreply.github.com"` (el correo privado de GitHub de la cuenta).
+  5. Abrir la carpeta en Claude Code. La vista previa (`vista-previa`) ya viene configurada en `.claude/launch.json`.
+- En cada sesión: al empezar, `git pull` para traer lo último; al cerrar, notas al día y commit y push con la confirmación del usuario. Antes de subir, revisar que no haya datos personales reales en los archivos.
 - Publicación: GitHub Pages sirve la rama en https://nicolas1439.github.io/maximus/ (la raíz redirige a `maximus/`). Páginas completas: `maximus/index.html` (home), `maximus/placas-de-video.html` (listado), `maximus/rtx-5070-ti-ventus.html` (ficha de producto) y `maximus/mi-cuenta.html` (Mi cuenta). Cada push la actualiza en un minuto aproximadamente. Claude hace commit y push cuando el usuario lo confirma; no sube nada sin esa confirmación (decisión del usuario, 14/10/2026).
 - Archivos de soporte en la raíz: `index.html` (redirección a `maximus/`), `.nojekyll` (Pages sirve los archivos tal cual) y `.gitignore`.
 
