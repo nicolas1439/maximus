@@ -29,4 +29,4 @@ La carpeta se usa desde distintos dispositivos y vive en GitHub: rama `new-desig
 - Orden y simplicidad: solo los archivos mínimos e indispensables.
 - Componentes óptimos y funcionales, sin complicaciones.
 - Por defecto: HTML, CSS y JS puro, sin build ni dependencias.
-- Mobile es la prioridad: toda pieza se revisa primero en celular y después en tablet y escritorio.
+- Mobile es la prioridad (decisión del usuario, 14/10/2026): cada plantilla y componente se diseña y se revisa primero en celular (375px, de arriba abajo, en claro y oscuro, sin desbordes ni contenido pegado a los bordes) y recién después en tablet y escritorio. Antes de mostrar un avance, la versión mobile tiene que estar bien.

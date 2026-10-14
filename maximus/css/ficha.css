@@ -1,0 +1,1121 @@
+/* Plantilla de ficha de producto (vista previa: ficha.html; página completa: rtx-5070-ti-ventus.html).
+   Migas, cabecera (marca, nombre, calificación, código, compartir y favorito), galería (carrusel con puntos en
+   celular, miniaturas desde tablet y visor a pantalla completa), bloque de compra (precio
+   en efectivo, precio con tarjeta y cuotas con la tabla de planes, cantidad, agregar al carrito, stock, envío y
+   garantía), "Lo esencial" (datos clave), descripción, usos, compatibilidad, tabla de especificaciones, reseñas (componente
+   aparte: resenas.html y css/resenas.css), productos recomendados y texto de cierre.
+   Mobile: todo en columna y una barra de compra fija abajo cuando el botón principal sale de la vista (ficha.js).
+   Tablet: galería y compra lado a lado. Escritorio: grilla de 8 (galería y detalle en 5 columnas; cabecera y
+   compra en las 3 restantes, con el bloque de compra fijo al hacer scroll bajo el header, --alto-fijo). */
+
+.ficha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+/* ---------- Cuerpo: cabecera, galería, compra y detalle ---------- */
+
+.ficha__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* la columna nunca supera el ancho de la pantalla */
+  grid-template-areas:
+    "cab"
+    "galeria"
+    "compra"
+    "detalle";
+  gap: var(--espacio-6);
+}
+
+.ficha__cab {
+  grid-area: cab;
+}
+
+.galeria {
+  grid-area: galeria;
+}
+
+.compra {
+  grid-area: compra;
+}
+
+.ficha__detalle {
+  grid-area: detalle;
+}
+
+/* ---------- Cabecera: marca, nombre y datos ---------- */
+
+.ficha__cab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+/* Marca a la izquierda y, a la derecha, compartir y favorito */
+.ficha__marca-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  margin-bottom: calc(var(--espacio-1) * -1);
+}
+
+.ficha__marca {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.ficha__nombre {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+/* Calificación, código y acciones (compartir, favorito) en un renglón */
+.ficha__datos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-4);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.ficha__calificacion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  transition: color var(--transicion);
+}
+
+.ficha__calificacion:hover {
+  color: var(--color-acento);
+}
+
+.ficha__puntaje {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.ficha__codigo strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.ficha__acciones {
+  display: flex;
+  gap: var(--espacio-1);
+  margin-right: calc(var(--espacio-2) * -1);
+}
+
+/* Favorito: como en la tarjeta, al pasar el mouse o marcado se pinta entero de rojo */
+.ficha__favorito {
+  transition: color var(--transicion), background-color var(--transicion);
+}
+
+.ficha__favorito:hover,
+.ficha__favorito[aria-pressed="true"] {
+  color: var(--color-favorito);
+}
+
+.ficha__favorito:hover .icono,
+.ficha__favorito[aria-pressed="true"] .icono {
+  fill: currentColor;
+}
+
+/* ---------- Galería ---------- */
+
+.galeria {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "visor"
+    "miniaturas";
+  gap: var(--espacio-3);
+}
+
+/* El visor es un carrusel (carrusel.js): se desliza con el dedo y se arrastra con el mouse.
+   La foto es un JPG con fondo blanco: el espacio lleva el mismo blanco (--color-fondo-imagen) */
+.galeria__visor {
+  position: relative;
+  grid-area: visor;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-imagen);
+}
+
+/* La foto se ancla al cuadro (no con alto en %, que dentro de la pista no resuelve contra el cuadro 4:3) */
+.galeria__foto {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.galeria__foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: var(--espacio-6);
+  object-fit: contain;
+}
+
+/* Un clic en la foto abre el visor a pantalla completa */
+.galeria .carrusel__pista img {
+  cursor: zoom-in;
+}
+
+/* Puntos sobre la foto blanca (celular; desde tablet los reemplazan las miniaturas) */
+.galeria__puntos {
+  position: absolute;
+  bottom: var(--espacio-1);
+  left: 50%;
+  z-index: 1;
+  translate: -50% 0;
+}
+
+.galeria .carrusel__punto::before {
+  background: color-mix(in srgb, var(--color-sobre-imagen) 35%, transparent);
+}
+
+.galeria .carrusel__punto[aria-current="true"]::before {
+  background: var(--color-marca);
+}
+
+/* Ampliar: abre el visor a pantalla completa */
+.galeria__ampliar {
+  position: absolute;
+  right: var(--espacio-2);
+  bottom: var(--espacio-2);
+  z-index: 1;
+  background: var(--color-fondo);
+  color: var(--color-texto-suave);
+  box-shadow: var(--sombra);
+  transition: color var(--transicion);
+}
+
+.galeria__ampliar:hover {
+  background: var(--color-fondo);
+  color: var(--color-acento);
+}
+
+/* Etiqueta de descuento: la misma de la tarjeta (producto__etiqueta, producto.css), un punto más grande */
+.galeria .producto__etiqueta {
+  z-index: 1;
+  font-size: var(--texto-xs);
+}
+
+/* Miniaturas: fila deslizable en tablet, columna a la izquierda en escritorio */
+.galeria__miniaturas {
+  display: none;
+  grid-area: miniaturas;
+  gap: var(--espacio-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.galeria__miniaturas::-webkit-scrollbar {
+  display: none;
+}
+
+.galeria__miniatura {
+  flex-shrink: 0;
+  width: 64px;
+  aspect-ratio: 1;
+  padding: var(--espacio-1);
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo-imagen);
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.galeria__miniatura:hover {
+  border-color: var(--color-acento);
+}
+
+.galeria__miniatura[aria-current="true"] {
+  border-color: var(--color-marca);
+  box-shadow: 0 0 0 3px var(--color-brillo-marca);
+}
+
+.galeria__miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- Compra: precios, cantidad, agregar, disponibilidad ---------- */
+
+.compra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+/* Precio en efectivo: el principal */
+.compra__etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-bottom: var(--espacio-2);
+}
+
+.compra__descuento {
+  color: var(--color-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.compra__valor {
+  margin: 0;
+  font-size: var(--texto-3xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+  letter-spacing: -0.01em;
+}
+
+.compra__nota {
+  margin: var(--espacio-1) 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+/* Precio sin impuestos nacionales: en su propia línea, chico y apagado (debajo del precio en efectivo y del de tarjeta) */
+.compra__sin-impuestos {
+  margin: 2px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+}
+
+/* Campaña vigente: precio de lista tachado y, a la derecha, el nombre de la campaña con su descuento */
+.compra__campania {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2) var(--espacio-3);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  font-size: var(--texto-s);
+}
+
+.compra__lista {
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+.compra__lista s {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.compra__campania-dato {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+}
+
+.compra__campania-nombre {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+}
+
+.compra__campania-icono {
+  width: 14px;
+  height: 14px;
+}
+
+.compra__campania-descuento {
+  font-weight: var(--peso-fuerte);
+}
+
+/* Precio con tarjeta y cuotas */
+.compra__tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+}
+
+.compra__tarjeta-fila {
+  display: flex;
+  gap: var(--espacio-3);
+}
+
+.compra__tarjeta-fila .icono {
+  color: var(--color-texto-suave);
+}
+
+.compra__tarjeta-precio {
+  margin: 0;
+  font-size: var(--texto-s);
+}
+
+.compra__tarjeta-precio strong {
+  font-weight: var(--peso-medio);
+}
+
+.compra__cuotas {
+  margin: var(--espacio-1) 0 0;
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+/* Planes de cuotas: plegados en un details con la altura animada (como el acordeón de preguntas) */
+.compra__planes {
+  interpolate-size: allow-keywords;
+}
+
+.compra__planes::details-content {
+  height: 0;
+  overflow: clip;
+  transition: height var(--transicion), content-visibility var(--transicion) allow-discrete;
+}
+
+.compra__planes[open]::details-content {
+  height: auto;
+}
+
+.compra__planes-abrir {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-height: var(--alto-control-xs);
+  color: var(--color-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+  list-style: none;
+}
+
+.compra__planes-abrir::-webkit-details-marker {
+  display: none;
+}
+
+.compra__planes-abrir .icono {
+  transition: transform var(--transicion);
+}
+
+.compra__planes[open] .compra__planes-abrir .icono {
+  transform: rotate(180deg);
+}
+
+.planes {
+  width: 100%;
+  margin-top: var(--espacio-2);
+  border-collapse: collapse;
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.planes th,
+.planes td {
+  padding: var(--espacio-2) 0;
+  border-top: 1px solid var(--color-borde);
+  text-align: right;
+  vertical-align: baseline;
+}
+
+.planes th:first-child,
+.planes td:first-child {
+  text-align: left;
+}
+
+.planes thead th {
+  padding-top: 0;
+  border-top: 0;
+  color: var(--color-texto-suave);
+  font-weight: var(--peso-normal);
+}
+
+.planes tbody th {
+  font-weight: var(--peso-normal);
+}
+
+.planes td:last-child {
+  font-weight: var(--peso-medio);
+}
+
+/* La fila sin interés, resaltada */
+.planes__sin-interes th,
+.planes__sin-interes td {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+.planes__nota {
+  display: inline-block;
+  margin-left: var(--espacio-1);
+  padding: 0 var(--espacio-1);
+  border-radius: var(--radio-s);
+  background: var(--color-brillo-marca);
+  font-size: var(--texto-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--espaciado-mayusculas);
+}
+
+/* Cantidad (con su rótulo) y, debajo, agregar al carrito a todo el ancho; en escritorio amplio van en una fila */
+.compra__accion {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+.compra__cantidad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.compra__cantidad-rotulo {
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.cantidad {
+  display: inline-flex;
+  align-items: center;
+  height: var(--alto-control-l);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo);
+  transition: border-color var(--transicion);
+}
+
+.cantidad:focus-within {
+  border-color: var(--color-acento);
+}
+
+.cantidad__btn {
+  display: grid;
+  place-items: center;
+  width: var(--alto-control);
+  height: 100%;
+  color: var(--color-texto-suave);
+  transition: color var(--transicion), opacity var(--transicion);
+}
+
+.cantidad__btn:hover {
+  color: var(--color-acento);
+}
+
+.cantidad__btn:disabled {
+  opacity: 0.35;
+  color: inherit;
+  cursor: default;
+}
+
+.cantidad__campo {
+  width: 40px;
+  height: 100%;
+  border: 0;
+  background: none;
+  font-weight: var(--peso-medio);
+  text-align: center;
+  outline: none;
+  appearance: textfield;
+}
+
+.cantidad__campo::-webkit-outer-spin-button,
+.cantidad__campo::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.compra__agregar {
+  height: var(--alto-control-l);
+  padding-inline: var(--espacio-4);
+}
+
+/* Disponibilidad y entrega: stock online, stock en el local, envío y garantía */
+.compra__estado {
+  display: flex;
+  flex-direction: column;
+}
+
+.estado {
+  display: flex;
+  gap: var(--espacio-3);
+  padding-block: var(--espacio-3);
+  border-top: 1px solid var(--color-borde);
+  font-size: var(--texto-s);
+}
+
+.estado .icono {
+  color: var(--color-texto-suave);
+}
+
+.estado--ok .icono {
+  color: var(--color-acento);
+}
+
+.estado strong {
+  display: block;
+  font-weight: var(--peso-medio);
+}
+
+.estado--sin strong {
+  color: var(--color-texto-suave);
+}
+
+.estado span {
+  display: block;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.estado a,
+.compra__consulta a {
+  color: var(--color-acento);
+  text-decoration: underline;
+}
+
+.compra__consulta {
+  margin: 0;
+  padding-top: var(--espacio-3);
+  border-top: 1px solid var(--color-borde);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+/* ---------- Detalle: lo esencial, descripción, usos, compatibilidad y especificaciones ---------- */
+
+.ficha__detalle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-8);
+}
+
+.ficha__subtitulo {
+  margin: 0 0 var(--espacio-3);
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+/* Lo esencial: los datos clave en fichas chicas (2 por fila; 4 desde tablet) */
+.esencial__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-2);
+}
+
+.esencial__dato {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo);
+}
+
+.esencial__rotulo {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.esencial__dato strong {
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+  line-height: 1.3;
+}
+
+/* Descripción */
+.descripcion p {
+  max-width: 72ch;
+  margin: 0;
+  font-size: var(--texto-s);
+}
+
+/* Usos y rendimiento: una tarjeta por uso, con su ícono en un recuadro de marca */
+.usos__lista {
+  display: grid;
+  gap: var(--espacio-3);
+}
+
+.uso {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-1) var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.uso__icono {
+  grid-row: span 2;
+  width: 40px;
+  height: 40px;
+  padding: var(--espacio-2);
+  border-radius: var(--radio);
+  background: var(--color-brillo-marca);
+  color: var(--color-acento);
+}
+
+.uso h3 {
+  align-self: center;
+  margin: 0;
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+.uso p {
+  grid-column: 2;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+/* Compatibilidad y requisitos: lista con tildes y consulta por WhatsApp */
+.compat__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  max-width: 72ch;
+}
+
+.compat__lista li {
+  display: flex;
+  gap: var(--espacio-3);
+  font-size: var(--texto-s);
+}
+
+.compat__lista strong {
+  font-weight: var(--peso-medio);
+}
+
+.compat__check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  padding: 4px;
+  border-radius: var(--radio-pill);
+  background: var(--color-brillo-marca);
+  color: var(--color-acento);
+  stroke-width: 2.5;
+}
+
+.compat__whatsapp {
+  margin-top: var(--espacio-4);
+}
+
+/* Especificaciones: tabla en un marco, agrupada por tema */
+.specs__marco {
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.specs__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--texto-s);
+}
+
+.specs__grupo th {
+  padding: var(--espacio-4) var(--espacio-4) var(--espacio-2);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.specs__tabla tbody + tbody .specs__grupo th {
+  border-top: 1px solid var(--color-borde);
+}
+
+.specs__fila th,
+.specs__fila td {
+  padding: var(--espacio-2) var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  text-align: left;
+  vertical-align: top;
+}
+
+.specs__fila th {
+  width: 42%;
+  color: var(--color-texto-suave);
+  font-weight: var(--peso-normal);
+}
+
+.specs__fila td {
+  font-weight: var(--peso-medio);
+}
+
+/* ---------- Secciones al pie: reseñas, recomendados y cierre, separadas por una línea ---------- */
+
+.ficha__seccion {
+  margin-top: var(--espacio-4);
+  padding-top: var(--espacio-seccion);
+  border-top: 1px solid var(--color-borde);
+}
+
+/* Cierre: el texto de la categoría al pie (SEO) */
+.cierre {
+  display: grid;
+  gap: var(--espacio-4);
+}
+
+.cierre__titulo {
+  margin: 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+.cierre__texto {
+  max-width: 72ch;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.cierre__texto p {
+  margin: 0;
+}
+
+.cierre__texto p + p {
+  margin-top: var(--espacio-3);
+}
+
+.cierre__texto a {
+  color: var(--color-acento);
+  text-decoration: underline;
+}
+
+/* ---------- Barra de compra fija (mobile y tablet) ---------- */
+
+/* Aparece cuando el botón "Agregar al carrito" del bloque de compra queda arriba, fuera de la vista (ficha.js) */
+.ficha__barra {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-2) var(--margen-lateral) max(var(--espacio-2), env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-borde);
+  background: var(--color-fondo);
+  box-shadow: var(--sombra);
+  translate: 0 100%;
+  visibility: hidden;
+  transition: translate var(--transicion), visibility 0s var(--duracion);
+}
+
+.ficha__barra--visible {
+  translate: 0;
+  visibility: visible;
+  transition: translate var(--transicion);
+}
+
+.ficha__barra-precio {
+  display: block;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.ficha__barra-nota {
+  display: block;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+}
+
+.ficha__barra .btn {
+  margin-left: auto;
+  padding-inline: var(--espacio-4);
+}
+
+body:has(.ficha__barra--visible) {
+  padding-bottom: calc(var(--alto-control) + 2 * var(--espacio-2));
+}
+
+/* ---------- Visor de fotos a pantalla completa ---------- */
+
+.visor {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+/* Entra con un fundido (animación: funciona aunque el navegador no transicione display) */
+.visor[open] {
+  display: grid;
+  animation: visor-entrar var(--transicion);
+}
+
+@keyframes visor-entrar {
+  from {
+    opacity: 0;
+  }
+}
+
+.visor::backdrop {
+  background: var(--color-capa);
+}
+
+.visor__cuerpo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: zoom-out;
+}
+
+/* La foto conserva su proporción (ancho y alto automáticos con topes): el fondo blanco solo cubre la foto */
+.visor__img {
+  width: auto;
+  height: auto;
+  max-width: min(100% - 2 * var(--espacio-4), 900px);
+  max-height: calc(100dvh - 2 * var(--alto-control-l) - 2 * var(--espacio-4));
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-imagen);
+  cursor: default;
+}
+
+.visor__contador {
+  position: absolute;
+  bottom: calc(var(--espacio-4) + env(safe-area-inset-bottom));
+  left: 50%;
+  translate: -50% 0;
+  font-size: var(--texto-s);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Botones sobre un fondo oscuro translúcido: se ven tanto sobre la foto blanca como sobre el fondo */
+.visor .btn-icono {
+  position: absolute;
+  border-radius: var(--radio-pill);
+  background: var(--color-capa);
+  color: var(--color-sobre-destacado);
+  transition: background-color var(--transicion);
+}
+
+.visor .btn-icono:hover {
+  background: var(--color-barra);
+}
+
+.visor__cerrar {
+  top: calc(var(--espacio-3) + env(safe-area-inset-top));
+  right: var(--espacio-3);
+}
+
+.visor__flecha {
+  top: 50%;
+  width: var(--alto-control-l);
+  height: var(--alto-control-l);
+  translate: 0 -50%;
+}
+
+.visor__flecha[data-sentido="-1"] {
+  left: var(--espacio-3);
+}
+
+.visor__flecha[data-sentido="1"] {
+  right: var(--espacio-3);
+}
+
+/* ---------- Aviso breve (enlace copiado, agregado al carrito…) ---------- */
+
+.aviso {
+  position: fixed;
+  bottom: calc(var(--espacio-6) + env(safe-area-inset-bottom));
+  left: 50%;
+  z-index: 120;
+  margin: 0;
+  padding: var(--espacio-3) var(--espacio-4);
+  border-radius: var(--radio-pill);
+  background: var(--color-barra);
+  color: var(--color-sobre-barra);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  white-space: nowrap;
+  box-shadow: var(--sombra);
+  translate: -50% 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transicion), translate var(--transicion), visibility 0s var(--duracion);
+}
+
+.aviso--visible {
+  translate: -50% 0;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--transicion), translate var(--transicion);
+}
+
+/* Con la barra de compra a la vista, el aviso sube */
+body:has(.ficha__barra--visible) .aviso {
+  bottom: calc(var(--alto-control) + 3 * var(--espacio-3) + env(safe-area-inset-bottom));
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  /* Galería y compra lado a lado, debajo de la cabecera */
+  .ficha__cuerpo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "cab cab"
+      "galeria compra"
+      "detalle detalle";
+    align-items: start;
+    column-gap: var(--separacion-grilla);
+  }
+
+  .ficha__nombre {
+    font-size: var(--texto-2xl);
+  }
+
+  .ficha__subtitulo {
+    font-size: var(--texto-xl);
+  }
+
+  /* La foto pasa a 4:3: las fotos de producto son apaisadas y así no se come la pantalla */
+  .galeria__foto {
+    aspect-ratio: 4 / 3;
+  }
+
+  .galeria__miniaturas {
+    display: flex;
+  }
+
+  .galeria__puntos {
+    display: none;
+  }
+
+  .esencial__lista {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .usos__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .uso p {
+    font-size: var(--texto-s);
+  }
+
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+@media (min-width: 1024px) {
+  /* Grilla de 8: galería y detalle en 5 columnas; cabecera y compra en las 3 restantes */
+  .ficha__cuerpo {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-areas:
+      "galeria galeria galeria galeria galeria cab cab cab"
+      "galeria galeria galeria galeria galeria compra compra compra"
+      "detalle detalle detalle detalle detalle compra compra compra";
+    grid-template-rows: auto auto 1fr;
+    row-gap: var(--espacio-8);
+  }
+
+  .ficha__cab {
+    margin-bottom: calc(var(--espacio-8) * -1 + var(--espacio-4));
+  }
+
+  /* Con el cuadro grande, mÃ¡s aire alrededor del producto */
+  .galeria__foto img {
+    padding: var(--espacio-8);
+  }
+
+  /* Miniaturas en columna, a la izquierda de la foto */
+  .galeria {
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-areas: "miniaturas visor";
+  }
+
+  .galeria__miniaturas {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  /* El bloque de compra queda fijo bajo la cabecera (--alto-fijo, header.css) mientras se lee el detalle */
+  .compra {
+    position: sticky;
+    top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+    transition: top var(--transicion);
+  }
+
+  .ficha__detalle {
+    gap: var(--espacio-seccion);
+  }
+
+  .ficha__barra {
+    display: none;
+  }
+
+  .cierre {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: var(--separacion-grilla);
+  }
+
+  .cierre__titulo {
+    grid-column: span 3;
+    font-size: var(--texto-xl);
+  }
+
+  .cierre__texto {
+    grid-column: span 5;
+  }
+}
+
+/* Pantallas bajas: el bloque de compra no entra fijo, va con el scroll */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .compra {
+    position: static;
+  }
+}
+
+/* ---------- Escritorio amplio: 1280px ---------- */
+
+@media (min-width: 1280px) {
+  /* Con el bloque de compra más ancho, cantidad y botón entran en una fila */
+  .compra__accion {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--espacio-2);
+  }
+
+  .compra__cantidad-rotulo {
+    display: none;
+  }
+}

@@ -14,48 +14,6 @@
   padding-block: var(--espacio-4) var(--espacio-seccion);
 }
 
-/* ---------- Migas ---------- */
-
-.migas {
-  margin-bottom: calc(var(--espacio-2) * -1);
-}
-
-.migas ol {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  color: var(--color-texto-suave);
-  font-size: var(--texto-xs);
-  list-style: none;
-}
-
-.migas a {
-  transition: color var(--transicion);
-}
-
-.migas a:hover {
-  color: var(--color-acento);
-}
-
-.migas li + li::before {
-  content: "";
-  display: inline-block;
-  width: 4px;
-  height: 4px;
-  margin: 0 var(--espacio-2) 2px;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.5;
-  vertical-align: middle;
-}
-
-.migas [aria-current] {
-  color: var(--color-texto);
-  font-weight: var(--peso-medio);
-}
-
 /* ---------- Cabecera de la categoría: título y cantidad, dentro de la barra de resultados ---------- */
 
 .listado__cab {

@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Ficha de producto</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/carrusel.css">
+  <link rel="stylesheet" href="css/producto.css">
+  <link rel="stylesheet" href="css/productos.css">
+  <link rel="stylesheet" href="css/faq.css">
+  <link rel="stylesheet" href="css/resenas.css">
+  <link rel="stylesheet" href="css/ficha.css">
+  <script type="module" src="js/carrusel.js"></script>
+  <script type="module" src="js/ficha.js"></script>
+</head>
+<body>
+
+  <!-- Plantilla de ficha de producto, armada con la MSI GeForce RTX 5070 Ti Ventus 3X: datos, precios, cuotas,
+       stock, garantía, fotos, descripción, usos, compatibilidad y especificaciones tomados de su ficha en
+       maximus.com.ar el 14/10/2026. La calificación (4,7 con 23 opiniones) es la misma de muestra que lleva
+       su tarjeta en el listado; en el sitio real este producto todavía no tiene reseñas. La campaña (Mes de la
+       Primavera, -15% sobre un precio de lista de $3.139.765) también es de muestra: sigue la lógica del sitio,
+       donde "Ahorrá" es la diferencia entre el precio de lista y el precio en efectivo.
+       Página completa con header y footer: rtx-5070-ti-ventus.html. Galería, cantidad, compartir, favorito y
+       barra de compra fija: js/ficha.js. Fotos: por ahora desde el CDN del sitio. -->
+  <main class="ficha">
+
+    <nav class="contenedor migas" aria-label="Ubicación">
+      <ol>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="placas-de-video.html">Placas de video</a></li>
+        <li><a href="placas-de-video.html?sub=nvidia">Nvidia</a></li>
+        <li aria-current="page">MSI GeForce RTX 5070 Ti Ventus 3X</li>
+      </ol>
+    </nav>
+
+    <div class="contenedor ficha__cuerpo">
+
+      <!-- Cabecera: marca, nombre, calificación, código y acciones -->
+      <header class="ficha__cab">
+        <div class="ficha__marca-fila">
+          <p class="ficha__marca">MSI · Nvidia GeForce</p>
+          <div class="ficha__acciones">
+            <button class="btn-icono" type="button" aria-label="Compartir" data-compartir><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-compartir"/></svg></button>
+            <button class="btn-icono ficha__favorito" type="button" aria-label="Guardar en favoritos" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+          </div>
+        </div>
+        <h1 class="ficha__nombre">Placa de Video MSI Nvidia GeForce RTX 5070 Ti Ventus 3X 16GB OC GDDR7</h1>
+        <div class="ficha__datos">
+          <a class="ficha__calificacion" href="#resenas">
+            <svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg>
+            <span class="sr-only">Calificación </span><span class="ficha__puntaje">4,7</span>
+            <span>(23 calificaciones)</span>
+          </a>
+          <span class="ficha__codigo">Código <strong>912-V531-461</strong></span>
+        </div>
+      </header>
+
+      <!-- Galería: carrusel con puntos (celular), miniaturas (tablet y escritorio), zoom y visor -->
+      <section class="galeria" aria-label="Fotos del producto" data-galeria>
+        <div class="galeria__visor">
+          <div class="carrusel" data-carrusel>
+            <ul class="carrusel__pista">
+              <li class="carrusel__item galeria__foto"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V531-461_800.jpg" alt="Placa de video MSI GeForce RTX 5070 Ti Ventus 3X, foto 1 de 5" width="800" height="800" fetchpriority="high"></li>
+              <li class="carrusel__item galeria__foto"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/ItemImages/34917_800.jpg" alt="Placa de video MSI GeForce RTX 5070 Ti Ventus 3X, foto 2 de 5" width="800" height="800" loading="lazy"></li>
+              <li class="carrusel__item galeria__foto"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/ItemImages/34918_800.jpg" alt="Placa de video MSI GeForce RTX 5070 Ti Ventus 3X, foto 3 de 5" width="800" height="800" loading="lazy"></li>
+              <li class="carrusel__item galeria__foto"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/ItemImages/34919_800.jpg" alt="Placa de video MSI GeForce RTX 5070 Ti Ventus 3X, foto 4 de 5" width="800" height="800" loading="lazy"></li>
+              <li class="carrusel__item galeria__foto"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/ItemImages/34920_800.jpg" alt="Placa de video MSI GeForce RTX 5070 Ti Ventus 3X, foto 5 de 5" width="800" height="800" loading="lazy"></li>
+            </ul>
+            <div class="carrusel__puntos galeria__puntos">
+              <button class="carrusel__punto" type="button" aria-label="Foto 1" aria-current="true"></button>
+              <button class="carrusel__punto" type="button" aria-label="Foto 2"></button>
+              <button class="carrusel__punto" type="button" aria-label="Foto 3"></button>
+              <button class="carrusel__punto" type="button" aria-label="Foto 4"></button>
+              <button class="carrusel__punto" type="button" aria-label="Foto 5"></button>
+            </div>
+          </div>
+          <span class="etiqueta producto__etiqueta">Ahorrá $737.845</span>
+          <button class="btn-icono galeria__ampliar" type="button" aria-label="Ver la foto en grande"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-ampliar"/></svg></button>
+        </div>
+        <ul class="galeria__miniaturas">
+          <li><button class="galeria__miniatura" type="button" aria-label="Foto 1 de 5" aria-current="true"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V531-461_800.jpg" alt="" width="800" height="800"></button></li>
+          <li><button class="galeria__miniatura" type="button" aria-label="Foto 2 de 5"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/ItemImages/34917_800.jpg" alt="" width="800" height="800" loading="lazy"></button></li>
+          <li><button class="galeria__miniatura" type="button" aria-label="Foto 3 de 5"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/ItemImages/34918_800.jpg" alt="" width="800" height="800" loading="lazy"></button></li>
+          <li><button class="galeria__miniatura" type="button" aria-label="Foto 4 de 5"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/ItemImages/34919_800.jpg" alt="" width="800" height="800" loading="lazy"></button></li>
+          <li><button class="galeria__miniatura" type="button" aria-label="Foto 5 de 5"><img src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/ItemImages/34920_800.jpg" alt="" width="800" height="800" loading="lazy"></button></li>
+        </ul>
+      </section>
+
+      <!-- Compra: precio en efectivo (el principal), con tarjeta y cuotas, cantidad, agregar y disponibilidad -->
+      <section class="compra" aria-label="Precio y compra">
+        <div class="compra__precio">
+          <div class="compra__etiquetas">
+            <span class="etiqueta">Mejor precio</span>
+            <span class="compra__descuento">10% off pagando en efectivo o transferencia</span>
+          </div>
+          <p class="compra__valor"><span class="sr-only">Precio: </span>$2.401.920</p>
+          <p class="compra__nota">Efectivo, transferencia o depósito</p>
+          <p class="compra__sin-impuestos">Precio sin impuestos nacionales: $2.173.683</p>
+        </div>
+
+        <!-- Campaña vigente (de muestra: en el sitio este producto no tiene campaña): precio de lista y descuento -->
+        <div class="compra__campania">
+          <p class="compra__lista">Precio de lista <s><span class="sr-only">antes: </span>$3.139.765</s></p>
+          <p class="compra__campania-dato">
+            <span class="etiqueta etiqueta--secundaria compra__campania-nombre"><svg class="icono compra__campania-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-etiqueta"/></svg>Mes de la Primavera</span>
+            <strong class="compra__campania-descuento">-15%</strong>
+          </p>
+        </div>
+
+        <div class="compra__tarjeta">
+          <div class="compra__tarjeta-fila">
+            <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cuotas"/></svg>
+            <div>
+              <p class="compra__tarjeta-precio"><strong>$2.668.800</strong> con tarjeta de débito o crédito</p>
+              <p class="compra__sin-impuestos">Precio sin impuestos nacionales: $2.415.204</p>
+              <p class="compra__cuotas">3 cuotas sin interés de $889.600</p>
+            </div>
+          </div>
+          <details class="compra__planes">
+            <summary class="compra__planes-abrir">Ver todas las cuotas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+            <table class="planes">
+              <caption class="sr-only">Planes de pago con tarjeta</caption>
+              <thead>
+                <tr><th scope="col">Cuotas</th><th scope="col">Valor de la cuota</th><th scope="col">Precio final</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">1 cuota o débito</th><td>$2.668.800</td><td>$2.668.800</td></tr>
+                <tr class="planes__sin-interes"><th scope="row">3 cuotas <span class="planes__nota">sin interés</span></th><td>$889.600</td><td>$2.668.800</td></tr>
+                <tr><th scope="row">6 cuotas</th><td>$515.968</td><td>$3.095.808</td></tr>
+                <tr><th scope="row">9 cuotas</th><td>$364.736</td><td>$3.282.624</td></tr>
+                <tr><th scope="row">12 cuotas</th><td>$291.344</td><td>$3.496.128</td></tr>
+                <tr><th scope="row">18 cuotas</th><td>$225.365</td><td>$4.056.576</td></tr>
+                <tr><th scope="row">24 cuotas</th><td>$185.704</td><td>$4.456.896</td></tr>
+              </tbody>
+            </table>
+          </details>
+        </div>
+
+        <div class="compra__accion">
+          <div class="compra__cantidad">
+            <span class="compra__cantidad-rotulo" id="cantidad-rotulo">Cantidad</span>
+            <div class="cantidad" data-cantidad>
+            <button class="cantidad__btn" type="button" aria-label="Una unidad menos" data-paso="-1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-menos"/></svg></button>
+            <input class="cantidad__campo" type="number" value="1" min="1" max="10" inputmode="numeric" aria-labelledby="cantidad-rotulo">
+            <button class="cantidad__btn" type="button" aria-label="Una unidad más" data-paso="1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-mas"/></svg></button>
+          </div>
+          </div>
+          <button class="btn btn--primario compra__agregar" type="button" data-agregar><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg>Agregar al carrito</button>
+        </div>
+
+        <ul class="compra__estado">
+          <li class="estado estado--ok">
+            <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-caja"/></svg>
+            <div><strong>¡Últimas unidades!</strong><span>Stock disponible para compra online</span></div>
+          </li>
+          <li class="estado estado--sin">
+            <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-sucursal"/></svg>
+            <div><strong>Sin stock en el local de Florida</strong><span>Por ahora, solo se consigue online</span></div>
+          </li>
+          <li class="estado">
+            <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-envio"/></svg>
+            <div><strong>Envío a todo el país</strong><span>En AMBA llega en 24 hs · <a href="#">Calcular el costo de envío</a></span></div>
+          </li>
+          <li class="estado">
+            <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-garantia"/></svg>
+            <div><strong>Garantía de 180 días</strong><span><a href="#">Ver condiciones de la garantía</a></span></div>
+          </li>
+        </ul>
+
+        <p class="compra__consulta">¿Dudas con tu gabinete, tu fuente o tu procesador? <a href="https://wa.me/541123575522">Consultanos por WhatsApp</a> y te asesoramos.</p>
+      </section>
+
+      <!-- Detalle: lo esencial, descripción, usos, compatibilidad y especificaciones -->
+      <div class="ficha__detalle">
+
+        <section class="esencial" aria-labelledby="esencial-titulo">
+          <h2 class="ficha__subtitulo" id="esencial-titulo">Lo esencial</h2>
+          <ul class="esencial__lista">
+            <li class="esencial__dato"><span class="esencial__rotulo">GPU</span><strong>RTX 5070 Ti</strong></li>
+            <li class="esencial__dato"><span class="esencial__rotulo">Memoria</span><strong>16 GB GDDR7</strong></li>
+            <li class="esencial__dato"><span class="esencial__rotulo">Núcleos CUDA</span><strong>8960</strong></li>
+            <li class="esencial__dato"><span class="esencial__rotulo">Boost</span><strong>2482 MHz</strong></li>
+            <li class="esencial__dato"><span class="esencial__rotulo">Consumo (TDP)</span><strong>300 W</strong></li>
+            <li class="esencial__dato"><span class="esencial__rotulo">Fuente recomendada</span><strong>800 W</strong></li>
+            <li class="esencial__dato"><span class="esencial__rotulo">Largo</span><strong>320 mm aprox.</strong></li>
+            <li class="esencial__dato"><span class="esencial__rotulo">Salidas</span><strong>3 × DP 2.1 · 1 × HDMI 2.1</strong></li>
+          </ul>
+        </section>
+
+        <section class="descripcion" aria-labelledby="descripcion-titulo">
+          <h2 class="ficha__subtitulo" id="descripcion-titulo">¿Qué es esta placa de video?</h2>
+          <p>La MSI RTX 5070 Ti Ventus 3X 16GB OC es una placa de video de gama alta de la arquitectura Blackwell de Nvidia. Con 16 GB de GDDR7, 8960 núcleos CUDA y hasta 300 W de TDP, entrega gaming fluido en 4K y 1440p con todas las opciones visuales al máximo. DLSS 4 con Multi-Frame Generation eleva exponencialmente los FPS en juegos compatibles. Tres ventiladores Torx 5.0 en diseño Ventus mantienen la temperatura controlada bajo carga sostenida.</p>
+        </section>
+
+        <section class="usos" aria-labelledby="usos-titulo">
+          <h2 class="ficha__subtitulo" id="usos-titulo">Usos y rendimiento</h2>
+          <ul class="usos__lista">
+            <li class="uso">
+              <svg class="icono uso__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-juego"/></svg>
+              <h3>Gaming</h3>
+              <p>Referencia para gaming en 4K con Ray Tracing habilitado. En 1440p alcanza fácilmente los 144 Hz o más en los títulos más exigentes. DLSS 4 Multi-Frame Generation multiplica los FPS en juegos compatibles.</p>
+            </li>
+            <li class="uso">
+              <svg class="icono uso__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-trabajo"/></svg>
+              <h3>Trabajo profesional</h3>
+              <p>16 GB GDDR7 y 8960 núcleos CUDA para renders en Blender, exportaciones en DaVinci Resolve y aceleración de IA local con modelos de lenguaje pequeños. Nivel profesional para inferencia local.</p>
+            </li>
+            <li class="uso">
+              <svg class="icono uso__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-edicion"/></svg>
+              <h3>Edición y contenido</h3>
+              <p>VRAM suficiente para proyectos de video 8K, modelos 3D complejos y compositing pesado. Encoder NVENC de 8.ª generación para streaming de alta calidad.</p>
+            </li>
+            <li class="uso">
+              <svg class="icono uso__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-monitor"/></svg>
+              <h3>Uso general</h3>
+              <p>Tres monitores 4K simultáneos o combinaciones ultrawide. Máxima experiencia visual en cualquier resolución.</p>
+            </li>
+          </ul>
+        </section>
+
+        <section class="compat" aria-labelledby="compat-titulo">
+          <h2 class="ficha__subtitulo" id="compat-titulo">Compatibilidad y requisitos</h2>
+          <ul class="compat__lista">
+            <li><svg class="icono compat__check" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg><span><strong>Slot PCIe x16 Gen 5</strong> en el motherboard.</span></li>
+            <li><svg class="icono compat__check" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg><span><strong>Largo de 320 mm aprox.:</strong> verificá el espacio disponible en tu gabinete.</span></li>
+            <li><svg class="icono compat__check" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg><span><strong>TDP de 300 W:</strong> requiere un conector de 16 pines (12+4) o 2 × 8 pines PCIe.</span></li>
+            <li><svg class="icono compat__check" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg><span><strong>Fuente recomendada:</strong> 800 W.</span></li>
+            <li><svg class="icono compat__check" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg><span><strong>Salidas de video:</strong> 3 × DisplayPort 2.1 y 1 × HDMI 2.1.</span></li>
+          </ul>
+          <a class="btn btn--secundario compat__whatsapp" href="https://wa.me/541123575522"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-whatsapp"/></svg>Consultar por WhatsApp</a>
+        </section>
+
+        <section class="specs" aria-labelledby="specs-titulo">
+          <h2 class="ficha__subtitulo" id="specs-titulo">Especificaciones</h2>
+          <div class="specs__marco">
+            <table class="specs__tabla">
+              <tbody>
+                <tr class="specs__grupo"><th scope="colgroup" colspan="2">GPU y memoria</th></tr>
+                <tr class="specs__fila"><th scope="row">Marca del chip</th><td>Nvidia</td></tr>
+                <tr class="specs__fila"><th scope="row">Ensamblador</th><td>MSI</td></tr>
+                <tr class="specs__fila"><th scope="row">GPU</th><td>RTX 5070 Ti</td></tr>
+                <tr class="specs__fila"><th scope="row">Memoria de video</th><td>16 GB</td></tr>
+                <tr class="specs__fila"><th scope="row">Tipo de memoria</th><td>GDDR7</td></tr>
+                <tr class="specs__fila"><th scope="row">Bus de memoria</th><td>256 bits</td></tr>
+                <tr class="specs__fila"><th scope="row">Núcleos CUDA</th><td>8960</td></tr>
+                <tr class="specs__fila"><th scope="row">Frecuencia boost</th><td>2482 MHz (Extreme Performance con MSI Center: 2497 MHz)</td></tr>
+              </tbody>
+              <tbody>
+                <tr class="specs__grupo"><th scope="colgroup" colspan="2">Alimentación y conexiones</th></tr>
+                <tr class="specs__fila"><th scope="row">Consumo (TDP)</th><td>300 W</td></tr>
+                <tr class="specs__fila"><th scope="row">Conector de alimentación</th><td>1 × 16 pines (12+4)</td></tr>
+                <tr class="specs__fila"><th scope="row">Fuente recomendada</th><td>800 W</td></tr>
+                <tr class="specs__fila"><th scope="row">Salidas de video</th><td>3 × DisplayPort 2.1 y 1 × HDMI 2.1</td></tr>
+              </tbody>
+              <tbody>
+                <tr class="specs__grupo"><th scope="colgroup" colspan="2">Tamaño</th></tr>
+                <tr class="specs__fila"><th scope="row">Largo</th><td>320 mm aprox.</td></tr>
+              </tbody>
+              <tbody>
+                <tr class="specs__grupo"><th scope="colgroup" colspan="2">Perfil</th></tr>
+                <tr class="specs__fila"><th scope="row">Segmento</th><td>Alta</td></tr>
+                <tr class="specs__fila"><th scope="row">Uso principal</th><td>Gaming</td></tr>
+                <tr class="specs__fila"><th scope="row">Nivel de IA</th><td>Profesional</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- Reseñas: componente aparte (resenas.html, css/resenas.css; ahí también se ve el estado sin reseñas).
+         Calificaciones, distribución y reseñas son de muestra; en el sitio real este producto todavía no tiene. -->
+    <section class="resenas ficha__seccion contenedor" id="resenas" aria-labelledby="resenas-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="resenas-titulo">Reseñas sobre este producto</h2>
+      </div>
+      <div class="resenas__cuerpo">
+
+        <aside class="resenas__resumen" aria-label="Resumen de calificaciones">
+          <div class="resenas__promedio">
+            <p class="resenas__nota">4,7<span>de 5</span></p>
+            <div>
+              <div class="estrellas" style="--valor: 94%" role="img" aria-label="4,7 de 5 estrellas">
+                <div class="estrellas__fila" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+                <div class="estrellas__fila estrellas__llenas" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+              </div>
+              <p class="resenas__cantidad">23 calificaciones</p>
+            </div>
+          </div>
+          <ol class="resenas__barras" aria-label="Calificaciones por puntaje">
+            <li class="barra"><span class="barra__puntaje">5<svg class="barra__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg></span><span class="barra__pista"><span class="barra__relleno" style="--parte: 78%"></span></span><span class="barra__n">18</span></li>
+            <li class="barra"><span class="barra__puntaje">4<svg class="barra__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg></span><span class="barra__pista"><span class="barra__relleno" style="--parte: 17%"></span></span><span class="barra__n">4</span></li>
+            <li class="barra"><span class="barra__puntaje">3<svg class="barra__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg></span><span class="barra__pista"><span class="barra__relleno" style="--parte: 0%"></span></span><span class="barra__n">0</span></li>
+            <li class="barra"><span class="barra__puntaje">2<svg class="barra__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg></span><span class="barra__pista"><span class="barra__relleno" style="--parte: 4%"></span></span><span class="barra__n">1</span></li>
+            <li class="barra"><span class="barra__puntaje">1<svg class="barra__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg></span><span class="barra__pista"><span class="barra__relleno" style="--parte: 0%"></span></span><span class="barra__n">0</span></li>
+          </ol>
+          <div class="resenas__escribir">
+            <p class="resenas__invitacion">¿Compraste este producto? Contanos qué te pareció.</p>
+            <button class="btn btn--secundario" type="button">Escribir una reseña</button>
+            <p class="resenas__condicion">Para dejar una reseña, iniciá sesión y comprá este producto.</p>
+          </div>
+        </aside>
+
+        <div class="resenas__lista">
+          <article class="resena">
+            <header class="resena__cab">
+              <span class="resena__avatar" aria-hidden="true">MG</span>
+              <div class="resena__quien">
+                <p class="resena__nombre">Martín G.</p>
+                <p class="resena__meta"><time datetime="2026-10-02">2 de octubre de 2026</time> · <span class="resena__verificada"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg>Compra verificada</span></p>
+              </div>
+              <div class="estrellas estrellas--s" style="--valor: 100%" role="img" aria-label="5 de 5 estrellas">
+                <div class="estrellas__fila" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+                <div class="estrellas__fila estrellas__llenas" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+              </div>
+            </header>
+            <h3 class="resena__titulo">Rinde de más en 1440p</h3>
+            <p class="resena__texto">La venía siguiendo hace meses y aproveché el Mes de la Primavera. En 1440p con todo al máximo no baja de 144 fps en los juegos que uso, y con DLSS 4 se va mucho más arriba. Los tres ventiladores casi no se escuchan. Llegó en 24 hs a Caballito, muy bien embalada.</p>
+          </article>
+          <article class="resena">
+            <header class="resena__cab">
+              <span class="resena__avatar" aria-hidden="true">LR</span>
+              <div class="resena__quien">
+                <p class="resena__nombre">Lucía R.</p>
+                <p class="resena__meta"><time datetime="2026-09-25">25 de septiembre de 2026</time> · <span class="resena__verificada"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg>Compra verificada</span></p>
+              </div>
+              <div class="estrellas estrellas--s" style="--valor: 100%" role="img" aria-label="5 de 5 estrellas">
+                <div class="estrellas__fila" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+                <div class="estrellas__fila estrellas__llenas" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+              </div>
+            </header>
+            <h3 class="resena__titulo">Para editar video, un cambio enorme</h3>
+            <p class="resena__texto">La uso para DaVinci Resolve y Blender. Los exports que antes me llevaban 20 minutos ahora salen en 6, y los 16 GB de VRAM se notan en los proyectos 4K. Ojo con el largo: mide 32 cm, medí el gabinete antes de comprar.</p>
+          </article>
+          <article class="resena">
+            <header class="resena__cab">
+              <span class="resena__avatar" aria-hidden="true">FA</span>
+              <div class="resena__quien">
+                <p class="resena__nombre">Federico A.</p>
+                <p class="resena__meta"><time datetime="2026-09-14">14 de septiembre de 2026</time> · <span class="resena__verificada"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg>Compra verificada</span></p>
+              </div>
+              <div class="estrellas estrellas--s" style="--valor: 80%" role="img" aria-label="4 de 5 estrellas">
+                <div class="estrellas__fila" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+                <div class="estrellas__fila estrellas__llenas" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+              </div>
+            </header>
+            <h3 class="resena__titulo">Excelente, pero tuve que cambiar la fuente</h3>
+            <p class="resena__texto">Impecable la placa y muy buena la atención por WhatsApp para confirmar la compatibilidad. Le saco una estrella porque la fuente de 650 W que tenía no alcanzaba y tuve que pasar a una de 800 W: conviene leer bien los requisitos. Temperaturas muy buenas en carga.</p>
+          </article>
+          <details class="faq__resto resenas__resto">
+            <summary class="faq__mas"><span class="faq__mas-mas">Ver las 5 reseñas</span><span class="faq__mas-menos">Ver menos</span><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+            <article class="resena">
+              <header class="resena__cab">
+                <span class="resena__avatar" aria-hidden="true">SM</span>
+                <div class="resena__quien">
+                  <p class="resena__nombre">Sofía M.</p>
+                  <p class="resena__meta"><time datetime="2026-09-03">3 de septiembre de 2026</time> · <span class="resena__verificada"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg>Compra verificada</span></p>
+                </div>
+                <div class="estrellas estrellas--s" style="--valor: 100%" role="img" aria-label="5 de 5 estrellas">
+                  <div class="estrellas__fila" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+                  <div class="estrellas__fila estrellas__llenas" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+                </div>
+              </header>
+              <h3 class="resena__titulo">Silenciosa y fría</h3>
+              <p class="resena__texto">Venía de una RTX 3070 y la diferencia es abismal: Cyberpunk con ray tracing va fluido. El local no tenía stock, la compré online y llegó al día siguiente.</p>
+            </article>
+            <article class="resena">
+              <header class="resena__cab">
+                <span class="resena__avatar" aria-hidden="true">NP</span>
+                <div class="resena__quien">
+                  <p class="resena__nombre">Nicolás P.</p>
+                  <p class="resena__meta"><time datetime="2026-08-28">28 de agosto de 2026</time> · <span class="resena__verificada"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg>Compra verificada</span></p>
+                </div>
+                <div class="estrellas estrellas--s" style="--valor: 80%" role="img" aria-label="4 de 5 estrellas">
+                  <div class="estrellas__fila" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+                  <div class="estrellas__fila estrellas__llenas" aria-hidden="true"><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg><svg class="estrellas__icono"><use href="recursos/iconos.svg#i-estrella"/></svg></div>
+                </div>
+              </header>
+              <h3 class="resena__titulo">Muy buena relación precio-rendimiento</h3>
+              <p class="resena__texto">Para 4K con DLSS anda muy bien; sin DLSS, en los juegos más pesados hay que bajar alguna opción. El conector de 16 pines viene con adaptador. Las cuotas sin interés, un golazo.</p>
+            </article>
+          </details>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Productos recomendados: fila deslizable de tarjetas (componente producto) -->
+    <section class="productos ficha__seccion contenedor" aria-labelledby="recomendados-titulo">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <h2 class="seccion__titulo" id="recomendados-titulo">Productos recomendados</h2>
+          <div class="seccion__acciones">
+            <a class="seccion__enlace" href="placas-de-video.html">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></a>
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0LZ0-M0AA00_600.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Asus</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Asus TUF Gaming Nvidia GeForce RTX 5070 OC 12GB GDDR7</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$2.025.090</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $675.030 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N5070GAMING-OC-12GD_600.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Gigabyte</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(4<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Gigabyte Nvidia GeForce RTX 5070 Gaming OC 12GB GDDR7</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$1.785.690</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $595.230 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V532-009_600.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">MSI</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video MSI Nvidia GeForce RTX 5070 Ventus 2X OC 12GB GDDR7</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$1.708.380</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $569.460 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0L70-M0AA00_600.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Asus</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(6<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Asus TUF Gaming AMD Radeon RX 9070 XT OC 16GB GDDR6</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$1.828.170</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $609.390 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0K60-M0AA00_600.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Asus</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">5,0</span><span class="producto__opiniones">(1<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Asus Nvidia GeForce RTX 3050 Dual OC 6GB GDDR6</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$513.090</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $171.030 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N3050WF2OCV2-6GD_600.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Gigabyte</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Gigabyte Nvidia GeForce RTX 3050 Windforce V2 OC 6GB GDDR6</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$505.350</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $168.450 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Cierre: el texto de la ficha al pie (está por SEO) -->
+    <section class="cierre ficha__seccion contenedor" aria-labelledby="cierre-titulo">
+      <h2 class="cierre__titulo" id="cierre-titulo">Tu próxima placa de video MSI GeForce RTX 5070 Ti Ventus 3X está en Maximus Gaming</h2>
+      <div class="cierre__texto">
+        <p>En Maximus Gaming Hardware encontrás tu próxima placa de video al mejor precio y con la mejor financiación.</p>
+        <p>Si tenés dudas sobre la compatibilidad con tu procesador, el espacio en tu gabinete o la fuente de poder, podés consultarnos y te asesoramos por <a href="https://wa.me/541123575522">WhatsApp</a>, así elegís la mejor opción para tu setup.</p>
+        <p>¡No esperes más y armá la mejor PC gamer para viciar!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Barra de compra fija (mobile y tablet): aparece cuando el botón principal sale de la vista -->
+  <div class="ficha__barra" data-barra>
+    <div>
+      <span class="ficha__barra-precio">$2.401.920</span>
+      <span class="ficha__barra-nota">Efectivo o transferencia · 3 cuotas sin interés</span>
+    </div>
+    <button class="btn btn--primario" type="button" data-agregar><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg>Agregar</button>
+  </div>
+
+  <!-- Visor de fotos a pantalla completa -->
+  <dialog class="visor" data-visor aria-label="Fotos del producto">
+    <figure class="visor__cuerpo">
+      <img class="visor__img" alt="" width="800" height="800">
+      <figcaption class="visor__contador">1 / 5</figcaption>
+    </figure>
+    <button class="btn-icono visor__flecha" type="button" data-sentido="-1" aria-label="Foto anterior"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+    <button class="btn-icono visor__flecha" type="button" data-sentido="1" aria-label="Foto siguiente"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+    <button class="btn-icono visor__cerrar" type="button" aria-label="Cerrar" data-cerrar><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cerrar"/></svg></button>
+  </dialog>
+
+  <!-- Aviso breve: enlace copiado, agregado al carrito, favorito -->
+  <p class="aviso" data-aviso role="status" aria-live="polite"></p>
+
+</body>
+</html>

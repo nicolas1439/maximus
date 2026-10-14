@@ -59,6 +59,12 @@
   --color-sobre-imagen: #5d636a; /* íconos sobre la foto (favorito) */
   --color-favorito: #ff3040; /* corazón al pasar el mouse y marcado: el rojo del "me gusta" de Instagram */
 
+  /* Estados (pedidos, garantías, avisos): se usan en puntos, íconos y fondos tenues; el texto queda en --color-texto */
+  --color-exito: var(--color-marca);
+  --color-aviso: #f5a524; /* pendiente: falta una acción del cliente */
+  --color-info: #3b82f6; /* en proceso */
+  --color-error: #e5484d; /* cancelado o rechazado */
+
   /* Tipografía: Roboto, la actual de Maximus (puede cambiar más adelante) */
   --fuente-base: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
   --texto-2xs: 0.6875rem;
