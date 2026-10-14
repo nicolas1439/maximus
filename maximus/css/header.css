@@ -1,0 +1,1031 @@
+/* Header: barra superior + fila principal (fija al hacer scroll) + menú.
+   Mobile first. Cortes: 768px (tablet), 1024px (escritorio) y 1280px (escritorio amplio). */
+
+/* ---------- Barra superior ---------- */
+
+.barra-sup {
+  background: var(--color-barra);
+  color: var(--color-sobre-barra);
+  font-size: var(--texto-xs);
+}
+
+.barra-sup__fila {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+}
+
+.barra-sup__beneficios {
+  display: flex;
+  gap: var(--espacio-8);
+}
+
+.barra-sup__beneficios li,
+.barra-sup__util a {
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+
+.barra-sup__util {
+  display: none;
+}
+
+/* Celular: los tres beneficios no entran, así que van rotando de a uno en el mismo lugar (fundido y leve
+   desplazamiento, 4 s cada uno). Con "reducir movimiento" queda fijo el primero. */
+@media (width < 768px) {
+  .barra-sup__beneficios {
+    display: grid;
+  }
+
+  .barra-sup__beneficios li {
+    grid-area: 1 / 1;
+    justify-content: center;
+    opacity: 0;
+    animation: barra-sup-rotar 12s infinite;
+  }
+
+  .barra-sup__beneficios li:nth-child(2) {
+    animation-delay: 4s;
+  }
+
+  .barra-sup__beneficios li:nth-child(3) {
+    animation-delay: 8s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .barra-sup__beneficios li:first-child {
+      opacity: 1;
+      animation: none;
+    }
+
+    .barra-sup__beneficios li:not(:first-child) {
+      display: none;
+    }
+  }
+}
+
+@keyframes barra-sup-rotar {
+  0% {
+    opacity: 0;
+    translate: 0 8px;
+  }
+
+  5%,
+  28% {
+    opacity: 1;
+    translate: 0;
+  }
+
+  33.33%,
+  100% {
+    opacity: 0;
+    translate: 0 -8px;
+  }
+}
+
+/* ---------- Fila principal ---------- */
+
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-fondo);
+  border-bottom: 1px solid var(--color-borde);
+  transition: box-shadow var(--transicion), margin var(--transicion);
+}
+
+.cabecera__fila {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "menu logo acciones"
+    "buscar buscar buscar";
+  align-items: center;
+  column-gap: var(--espacio-2);
+  row-gap: var(--espacio-3);
+  padding-block: var(--espacio-3);
+  transition: padding var(--transicion), row-gap var(--transicion);
+}
+
+/* Al compactarse, el padding que pierde la fila pasa a margin de la cabecera: la altura en el flujo no cambia y el contenido no salta. */
+.cabecera--compacta {
+  margin-bottom: var(--espacio-2);
+  box-shadow: var(--sombra);
+}
+
+.cabecera--compacta .cabecera__fila {
+  padding-block: var(--espacio-2);
+}
+
+.cabecera__menu {
+  grid-area: menu;
+  margin-left: calc(var(--espacio-2) * -1);
+}
+
+.cabecera__logo {
+  grid-area: logo;
+  justify-self: start;
+}
+
+.logo {
+  height: 28px;
+  width: auto;
+  aspect-ratio: 563.6 / 103.6;
+  color: var(--color-texto);
+}
+
+.cabecera__acciones {
+  grid-area: acciones;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin-right: calc(var(--espacio-2) * -1);
+}
+
+.cabecera__fav,
+.carrito__total {
+  display: none;
+}
+
+/* Carrito */
+
+.carrito {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  border-radius: var(--radio);
+}
+
+.carrito__cant {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding-inline: 5px;
+  border-radius: var(--radio-pill);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+}
+
+.carrito__total {
+  font-weight: var(--peso-fuerte);
+  font-size: var(--texto-s);
+  padding-right: var(--espacio-2);
+}
+
+/* Buscador */
+
+.buscador {
+  grid-area: buscar;
+  display: flex;
+  height: var(--alto-control);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  overflow: hidden;
+  transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+.buscador:focus-within {
+  border-color: var(--color-acento);
+  background: var(--color-fondo);
+}
+
+.buscador__campo {
+  flex: 1;
+  min-width: 0;
+  padding: 0 var(--espacio-4);
+  border: 0;
+  background: transparent;
+  outline: none;
+}
+
+.buscador__campo::placeholder {
+  color: var(--color-texto-suave);
+}
+
+.buscador__btn {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+  transition: background-color var(--transicion);
+}
+
+.buscador__btn:hover {
+  background: var(--color-marca-hover);
+}
+
+/* Celular: al bajar, el buscador se esconde y queda solo la fila de logo y acciones; vuelve cuando el usuario sube
+   un tramo (header.js, igual que la fila del menú en escritorio). El alto que pierde pasa a margin de la cabecera,
+   como al compactarse, así el contenido no salta. */
+@media (width < 768px) {
+  .buscador {
+    transition: border-color var(--transicion), background-color var(--transicion), height var(--transicion),
+      border-width var(--transicion), opacity var(--transicion);
+  }
+
+  .cabecera--sin-buscador .cabecera__fila {
+    row-gap: 0;
+  }
+
+  .cabecera--sin-buscador .buscador {
+    height: 0;
+    border-width: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: border-color var(--transicion), background-color var(--transicion), height var(--transicion),
+      border-width var(--transicion), opacity var(--transicion), visibility 0s var(--duracion);
+  }
+
+  .cabecera--sin-buscador {
+    margin-bottom: calc(var(--espacio-2) + var(--espacio-3) + var(--alto-control));
+  }
+}
+
+/* ---------- Menú (panel lateral en mobile/tablet, fila en escritorio) ---------- */
+
+/* Celular: el panel ocupa toda la pantalla. Arriba la cabecera fija, en el medio lo que se desplaza
+   (atajos y categorías) y abajo los enlaces de utilidad, fijos al pie */
+.menu {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 100;
+  --ancho-panel: 100%;
+  display: flex;
+  flex-direction: column;
+  width: var(--ancho-panel);
+  background: var(--color-fondo);
+  overflow: hidden;
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition: transform var(--transicion), visibility 0s var(--transicion);
+}
+
+.menu--abierto {
+  transform: none;
+  visibility: visible;
+  transition: transform var(--transicion);
+}
+
+.menu-capa {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--color-capa);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transicion), visibility 0s var(--transicion);
+}
+
+.menu--abierto + .menu-capa {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--transicion);
+}
+
+html:has(.menu--abierto) {
+  overflow: hidden;
+}
+
+.menu__cab {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--espacio-3) var(--espacio-2) var(--espacio-3) var(--espacio-4);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.menu__fila {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  min-height: 0;
+  padding-block: var(--espacio-2) 0;
+  overflow-y: auto;
+}
+
+/* Catálogo: botón Productos y mega menú.
+   Mobile/tablet: las categorías se ven directo en el panel lateral y cada una abre un segundo nivel.
+   Escritorio: el botón despliega el mega menú (categorías | subcategorías | promo). */
+
+.catalogo__btn {
+  display: none;
+  align-items: center;
+  gap: var(--espacio-3);
+  width: 100%;
+  padding-inline: var(--espacio-6);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+  font-weight: var(--peso-medio);
+  transition: background-color var(--transicion);
+}
+
+/* Degradado vivo: al pasar el puntero, una luz lima lo sigue con retraso (header.js) sobre el verde, que hacia
+   los bordes pasa a esmeralda y violeta; el borde se sombrea apenas cerca del puntero.
+   Los colores están en tokens.css y las medidas acá; se prueban en vivo con ajustes-hover.html.
+   --x / --y: posición del puntero dentro del botón, en px (las pone header.js). */
+.catalogo__btn {
+  --luz-radio: 470px; /* alcance del degradado; supera el ancho del botón para que el violeta apenas asome */
+  --luz-lima: 27%; /* hasta dónde llega la luz lima */
+  --luz-esmeralda: 95%; /* desde dónde se hunde en violeta */
+  --luz-seguimiento: 0.06; /* parte del camino al puntero que la luz recorre cada 1/60 s (menor = más retraso); la lee header.js */
+  --sombra-radio: 250px; /* alcance de la sombra del borde alrededor del puntero */
+  --sombra-ancho: 4px; /* ancho del contorno sombreado */
+  position: relative;
+  isolation: isolate; /* las capas quedan entre el fondo y el contenido */
+  overflow: hidden;
+}
+
+.catalogo__btn:hover {
+  background: var(--color-marca); /* el degradado pinta todo el botón */
+}
+
+.catalogo__btn::before,
+.catalogo__btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transicion-lenta);
+}
+
+.catalogo__btn:hover::before,
+.catalogo__btn:hover::after {
+  opacity: 1;
+}
+
+/* Luz y colores (mezcla perceptual, para que el paso al violeta no cruce por grises) */
+.catalogo__btn::before {
+  background: radial-gradient(
+    var(--luz-radio) circle at var(--x, 50%) var(--y, 50%) in oklab,
+    var(--color-lima) 0%,
+    var(--color-marca) var(--luz-lima),
+    var(--color-esmeralda) var(--luz-esmeralda),
+    var(--color-violeta) 100%
+  );
+}
+
+/* Sombra del borde: solo se ve en el contorno y cerca del puntero */
+.catalogo__btn::after {
+  background: radial-gradient(var(--sombra-radio) circle at var(--x, 50%) var(--y, 50%), var(--sombra-interior) 0%, transparent 70%);
+  mask:
+    linear-gradient(to right, #000, transparent var(--sombra-ancho)),
+    linear-gradient(to left, #000, transparent var(--sombra-ancho)),
+    linear-gradient(to bottom, #000, transparent var(--sombra-ancho)),
+    linear-gradient(to top, #000, transparent var(--sombra-ancho));
+  mask-composite: add;
+}
+
+.catalogo__btn .icono:last-child {
+  margin-left: auto;
+  transition: transform var(--transicion);
+}
+
+.catalogo__btn[aria-expanded="true"] .icono:last-child {
+  transform: rotate(180deg);
+}
+
+.catalogo__cat,
+.menu__links a,
+.menu__extra a,
+.menu__extra button {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  width: 100%;
+  min-height: var(--alto-control);
+  padding-inline: var(--espacio-4);
+  border-radius: var(--radio);
+  text-align: left;
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.catalogo__cat:hover,
+.menu__links a:hover,
+.menu__extra a:hover,
+.menu__extra button:hover {
+  background: var(--color-superficie);
+}
+
+.catalogo__cat {
+  gap: var(--espacio-2);
+  padding-inline: var(--espacio-3);
+}
+
+.catalogo__cat > .icono:first-child {
+  width: 20px;
+  height: 20px;
+  color: var(--color-texto-suave);
+}
+
+.catalogo__cat .icono--s {
+  margin-left: auto;
+  color: var(--color-texto-suave);
+}
+
+/* Segundo nivel en mobile: cubre el panel lateral, con botón para volver */
+.catalogo__sub {
+  display: none;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 110;
+  width: var(--ancho-panel);
+  overflow-y: auto;
+  background: var(--color-fondo);
+}
+
+.catalogo__cat[aria-expanded="true"] + .catalogo__sub {
+  display: block;
+  animation: catalogo-entrar var(--transicion);
+}
+
+@keyframes catalogo-entrar {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+.catalogo__sub-cab {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-3) var(--espacio-4) var(--espacio-3) var(--espacio-2);
+  border-bottom: 1px solid var(--color-borde);
+  background: var(--color-fondo);
+}
+
+.catalogo__sub-titulo {
+  margin: 0;
+  font-weight: var(--peso-fuerte);
+}
+
+.catalogo__ver-todo {
+  margin-left: auto;
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  white-space: nowrap;
+}
+
+.catalogo__ver-todo:hover {
+  text-decoration: underline;
+}
+
+.catalogo__grupos {
+  padding: var(--espacio-2) var(--espacio-4) var(--espacio-6);
+}
+
+.catalogo__grupo + .catalogo__grupo {
+  margin-top: var(--espacio-2);
+  padding-top: var(--espacio-2);
+  border-top: 1px solid var(--color-borde);
+}
+
+.catalogo__grupo-titulo {
+  display: flex;
+  align-items: center;
+  min-height: var(--alto-control);
+  font-weight: var(--peso-medio);
+}
+
+.catalogo__grupo li a {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  color: var(--color-texto-suave);
+}
+
+.catalogo__grupo-titulo:hover,
+.catalogo__grupo li a:hover {
+  color: var(--color-acento);
+}
+
+.catalogo__promo {
+  display: none;
+}
+
+/* Ofertas, Armá tu PC y Empresas van arriba de las categorías */
+.menu__links {
+  order: -1;
+  font-weight: var(--peso-medio);
+}
+
+/* Un poco más bajos que las categorías, para que el bloque de arriba no pese tanto */
+.menu__links a {
+  min-height: var(--alto-control-s);
+}
+
+.menu__links--fin {
+  margin-top: calc(var(--espacio-2) * -1);
+  padding-bottom: var(--espacio-2);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.menu__atajo,
+.menu__links--fin .icono {
+  display: none;
+}
+
+.menu__links a[aria-current="page"] {
+  color: var(--color-acento);
+}
+
+/* Enlaces de utilidad fijos al pie del panel, en dos columnas para dejarle lugar a las categorías */
+.menu__extra {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: auto;
+  padding-block: var(--espacio-2) max(var(--espacio-2), env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-borde);
+  background: var(--color-fondo);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.menu__extra a,
+.menu__extra button {
+  gap: var(--espacio-2);
+  padding-inline: var(--espacio-2);
+}
+
+/* Botón de tema: muestra la luna en claro y el sol en oscuro */
+
+.tema__sol,
+[data-tema="oscuro"] .tema__luna {
+  display: none;
+}
+
+[data-tema="oscuro"] .tema__sol {
+  display: block;
+}
+
+/* Mientras cambia el tema (header.js), el ícono nuevo entra girando */
+.tema-en-cambio .tema__sol,
+.tema-en-cambio .tema__luna {
+  animation: tema-icono var(--transicion-lenta);
+}
+
+@keyframes tema-icono {
+  from {
+    transform: rotate(-120deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  .cabecera__fila {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-areas: "menu logo buscar acciones";
+    column-gap: var(--espacio-4);
+  }
+
+  .logo {
+    height: 32px;
+  }
+
+  .cabecera__logo {
+    margin-right: var(--espacio-2);
+  }
+
+  .cabecera__fav {
+    display: grid;
+  }
+
+  /* Tablet: el menú vuelve a ser un panel lateral y los enlaces de utilidad, una columna */
+  .menu {
+    --ancho-panel: min(340px, 86vw);
+  }
+
+  .menu__extra {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+@media (min-width: 1024px) {
+  .barra-sup__fila {
+    justify-content: space-between;
+  }
+
+  .barra-sup__util {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-4);
+  }
+
+  .barra-sup__util a:hover {
+    color: var(--color-marca);
+  }
+
+  .barra-sup__util .btn-icono {
+    width: 32px;
+    height: 32px;
+  }
+
+  .barra-sup__util .btn-icono:hover {
+    background: var(--color-barra-hover);
+  }
+
+  .cabecera {
+    border-bottom: 0;
+  }
+
+  /* Fila principal en 3 columnas sobre la grilla de 8 del hero: logo (2), buscador (4, el ancho del
+     carrusel principal) y acciones (2, alineadas a la derecha) */
+  .cabecera__fila {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-areas: "logo logo buscar buscar buscar buscar acciones acciones";
+    column-gap: var(--separacion-grilla);
+    padding-block: var(--espacio-4);
+  }
+
+  .cabecera__acciones {
+    justify-self: end;
+  }
+
+  /* El menú usa la misma grilla: Productos debajo del logo y los atajos desde la columna del buscador */
+  .menu__fila {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: var(--separacion-grilla);
+  }
+
+  .catalogo {
+    grid-column: span 2;
+  }
+
+  .menu__links {
+    order: 0;
+    grid-column: span 5;
+  }
+
+  .menu__links--fin {
+    grid-column: 8;
+    margin-top: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .cabecera--compacta {
+    margin-bottom: var(--espacio-4);
+  }
+
+  .cabecera--compacta .cabecera__fila {
+    padding-block: var(--espacio-2);
+  }
+
+  .cabecera__menu,
+  .menu__cab,
+  .menu__extra {
+    display: none;
+  }
+
+  .logo {
+    height: 38px;
+  }
+
+  .buscador {
+    height: var(--alto-control-l);
+  }
+
+  .carrito__total {
+    display: block;
+  }
+
+  /* El menú deja de ser panel y pasa a ser una fila, pegada debajo de la fila principal (sticky). Al bajar se
+     esconde detrás de ella (menu--oculto, header.js) y vuelve cuando el usuario sube un tramo; arriba de todo
+     queda en su lugar, con la barra superior. El tope sigue a la altura de la fila principal, compacta o no. */
+  .menu {
+    position: sticky;
+    top: calc(var(--alto-control-l) + 2 * var(--espacio-4));
+    z-index: 35;
+    display: block;
+    width: auto;
+    overflow: visible;
+    transform: none;
+    visibility: visible;
+    border-top: 1px solid var(--color-borde);
+    border-bottom: 1px solid var(--color-borde);
+    transition: top var(--transicion), translate var(--transicion), opacity var(--transicion), box-shadow var(--transicion);
+  }
+
+  .cabecera--compacta + .menu {
+    top: calc(var(--alto-control-l) + 2 * var(--espacio-2));
+  }
+
+  /* Alto de lo que queda fijo arriba al hacer scroll (fila principal compacta más la fila del menú, o solo la
+     principal cuando el menú se esconde). Lo que se pega debajo en otras plantillas (columna de filtros, intro
+     de preguntas frecuentes) usa --alto-fijo como tope; sin header, cae a 0 */
+  :root:has(.cabecera) {
+    --alto-fijo: calc(var(--alto-control-l) + 2 * var(--espacio-2) + 58px);
+  }
+
+  :root:has(.menu--oculto) {
+    --alto-fijo: calc(var(--alto-control-l) + 2 * var(--espacio-2));
+  }
+
+  /* Pegado (ya no está arriba de todo): sombra propia */
+  .menu--pegado {
+    box-shadow: var(--sombra);
+  }
+
+  /* Escondido detrás de la fila principal */
+  .menu--oculto {
+    translate: 0 -100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: top var(--transicion), translate var(--transicion), opacity var(--transicion), visibility 0s var(--duracion);
+  }
+
+  /* Con el mega menú abierto, la capa oscurece la página para que el foco quede en el menú.
+     La barra superior, la fila principal y el menú quedan por encima de la capa. */
+  .barra-sup {
+    position: relative;
+    z-index: 35;
+  }
+
+  .menu-capa {
+    z-index: 30;
+  }
+
+  .menu:has(.catalogo--abierto) + .menu-capa {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--transicion);
+  }
+
+  .menu__fila {
+    position: relative;
+    display: grid;
+    align-items: center;
+    padding-block: 0;
+    overflow: visible;
+  }
+
+  /* Bloque pintado a toda la altura de la fila (tapa también los bordes) */
+  .catalogo {
+    align-self: stretch;
+    margin-block: -1px;
+  }
+
+  .catalogo__btn {
+    display: flex;
+    height: 100%;
+  }
+
+  /* Mega menú: ocupa el ancho del contenedor y respeta la grilla
+     (categorías en las 2 primeras columnas, subcategorías desde la tercera).
+     Abre con un fundido y cierra más rápido; cerrado queda oculto (visibility), fuera del foco y del clic. */
+  .catalogo__panel {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: var(--margen-lateral);
+    right: var(--margen-lateral);
+    z-index: 40; /* debajo de la fila fija (50): al hacer scroll pasa por detrás */
+    border-radius: 0 0 var(--radio) var(--radio);
+    background: var(--color-fondo);
+    box-shadow: 0 0 0 1px var(--color-borde), var(--sombra);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transicion-rapida), visibility 0s var(--duracion-rapida);
+  }
+
+  .catalogo--abierto .catalogo__panel {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--transicion);
+  }
+
+  .catalogo__cats {
+    width: calc((100% - 3 * var(--separacion-grilla)) / 4);
+    padding: var(--espacio-2);
+    border-right: 1px solid var(--color-borde);
+  }
+
+  .catalogo__cat {
+    min-height: 42px;
+    font-size: var(--texto-s);
+  }
+
+  .catalogo__cat[aria-expanded="true"] {
+    background: var(--color-superficie);
+    font-weight: var(--peso-medio);
+  }
+
+  .catalogo__cat[aria-expanded="true"] > .icono:first-child {
+    color: var(--color-acento);
+  }
+
+  /* Cada subcategoría mide lo mismo que el panel: si el contenido no entra, scrollea solo
+     .catalogo__contenido y la promo queda fija, siempre del mismo tamaño */
+  .catalogo__sub {
+    position: absolute;
+    inset: 0 0 0 calc((100% - 3 * var(--separacion-grilla)) / 4 + var(--separacion-grilla));
+    z-index: auto;
+    width: auto;
+    padding: var(--espacio-6) var(--espacio-6) var(--espacio-6) 0;
+    overflow: hidden;
+    background: none;
+  }
+
+  .catalogo__cat[aria-expanded="true"] + .catalogo__sub {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr);
+    animation: none;
+  }
+
+  .catalogo__contenido {
+    overflow-y: auto;
+  }
+
+  .catalogo__sub-cab {
+    position: static;
+    align-items: baseline;
+    gap: var(--espacio-4);
+    margin-bottom: var(--espacio-4);
+    padding: 0;
+    border: 0;
+  }
+
+  .catalogo__volver {
+    display: none;
+  }
+
+  .catalogo__sub-titulo {
+    font-size: var(--texto-l);
+  }
+
+  .catalogo__ver-todo {
+    margin-left: 0;
+  }
+
+  .catalogo__grupos {
+    padding: 0;
+    columns: 160px 3;
+    column-gap: var(--espacio-8);
+  }
+
+  .catalogo__grupo {
+    break-inside: avoid;
+    margin-bottom: var(--espacio-4);
+  }
+
+  .catalogo__grupo + .catalogo__grupo {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .catalogo__grupo-titulo {
+    min-height: 0;
+    margin-bottom: var(--espacio-1);
+  }
+
+  .catalogo__grupo li a {
+    min-height: 0;
+    padding-block: 3px;
+    font-size: var(--texto-s);
+  }
+
+  .menu__links {
+    display: flex;
+    gap: var(--espacio-6);
+    padding-top: 0;
+    border-top: 0;
+    font-size: var(--texto-s);
+  }
+
+  .menu__atajo {
+    display: list-item;
+  }
+
+  /* Entre 1024 y 1279px no entran todos los atajos: se oculta el último */
+  .menu__atajo:last-child {
+    display: none;
+  }
+
+  .menu__links--fin {
+    justify-self: end;
+  }
+
+  .menu__links--fin .icono {
+    display: block;
+  }
+
+  .menu__links a {
+    position: relative;
+    white-space: nowrap;
+    min-height: 56px;
+    padding-inline: 0;
+    border-radius: 0;
+  }
+
+  .menu__links a:hover {
+    background: none;
+    color: var(--color-acento);
+  }
+
+  .menu__links a[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -1px;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: var(--color-marca);
+  }
+}
+
+/* ---------- Escritorio amplio: 1280px ---------- */
+
+/* Con más espacio: último atajo del menú y promo del mega menú */
+@media (min-width: 1280px) {
+  .menu__atajo:last-child {
+    display: list-item;
+  }
+
+  /* Espacio promocional del mega menú: un tercio del panel de subcategorías (unas 2 columnas) */
+  .catalogo__cat[aria-expanded="true"] + .catalogo__sub {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    column-gap: var(--separacion-grilla);
+  }
+
+  .catalogo__promo {
+    position: relative;
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--espacio-1);
+    padding: var(--espacio-6);
+    overflow: hidden;
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    background: var(--color-fondo-destacado);
+    color: var(--color-sobre-destacado);
+    font-size: var(--texto-s);
+  }
+
+  .catalogo__promo-icono {
+    position: absolute;
+    top: var(--espacio-6);
+    right: calc(var(--espacio-4) * -1);
+    width: 140px;
+    height: 140px;
+    fill: none;
+    stroke: var(--color-marca);
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.35;
+  }
+
+  .catalogo__promo .etiqueta {
+    align-self: flex-start;
+    margin-bottom: var(--espacio-2);
+  }
+
+  .catalogo__promo strong {
+    font-size: var(--texto-xl);
+    line-height: 1.2;
+  }
+
+  .catalogo__promo-cta {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+    margin-top: var(--espacio-3);
+    color: var(--color-marca);
+    font-weight: var(--peso-medio);
+  }
+
+  .catalogo__promo-cta .icono {
+    transition: transform var(--transicion);
+  }
+
+  .catalogo__promo:hover .catalogo__promo-cta .icono {
+    transform: translateX(3px);
+  }
+}

@@ -1,0 +1,32 @@
+# Plantillas y componentes web
+
+Herramienta para diseñar componentes y plantillas web profesionales. Cada carpeta de la raíz es un subproyecto (principalmente componentes y algunas plantillas).
+
+## Portabilidad y publicación
+La carpeta se usa desde distintos dispositivos y vive en GitHub: rama `new-design` del repo `nicolas1439/maximus` (el repo de archivos de Maximus; la rama es independiente de `main`, que sigue con los archivos del sitio actual).
+- Usar siempre rutas relativas. Nunca rutas absolutas ni nada atado a un equipo en particular.
+- Todo el contexto se registra en estos `.md`, no en la memoria local de Claude (esa no viaja entre dispositivos).
+- La carpeta `.claude/` viaja con el proyecto: `launch.json` tiene la configuración de la vista previa. Cada dispositivo necesita Node, Git y el CLI `gh` autenticado con la cuenta nicolas1439. `settings.local.json` es propio de cada equipo y está en `.gitignore`.
+- En otro dispositivo: `git clone -b new-design --single-branch https://github.com/nicolas1439/maximus.git "new design"`. Al empezar una sesión, `git pull` para traer lo último.
+- Publicación: GitHub Pages sirve la rama en https://nicolas1439.github.io/maximus/ (la raíz redirige a `maximus/`; el listado: https://nicolas1439.github.io/maximus/maximus/placas-de-video.html). Cada push la actualiza en un minuto aproximadamente. Claude hace commit y push cuando el usuario lo confirma; no sube nada sin esa confirmación (decisión del usuario, 14/10/2026).
+- Archivos de soporte en la raíz: `index.html` (redirección a `maximus/`), `.nojekyll` (Pages sirve los archivos tal cual) y `.gitignore`.
+
+## Registro en .md
+- Este archivo: solo lo general del proyecto. Nada específico de un subproyecto.
+- Cada subproyecto tiene su propio `CLAUDE.md` en su carpeta, solo si hace falta registrar algo.
+- Registrar solo lo necesario y lo que el usuario indique.
+- Claude decide qué amerita registro, pero solo anota lo que ya está totalmente definido.
+
+## Dinámica de trabajo
+- Directo al hueso: el usuario da indicaciones y referencias; Claude actúa como experto en diseño y lo concreta con criterio profesional.
+- No pedir contexto del sitio ni de qué se trata. El usuario lo da a medida que avanza; Claude anota solo si hace falta.
+- Mostrar cómo va quedando el diseño (vista previa) para que el usuario decida. Servidor `vista-previa` en `.claude/launch.json` (Node, sin dependencias): sirve la raíz en `http://127.0.0.1:5500/<subproyecto>/`.
+- Criterio propio aplicado de entrada: lo que tiene una práctica establecida (medidas, proporciones, jerarquía, accesibilidad, convenciones de e-commerce) se implementa directo con ese criterio, sin consultar; el usuario corrige si lo quiere distinto. Si al revisar algo ya hecho aparece una mejora de ese tipo, se aplica y se cuenta.
+- Opciones visuales concretas solo cuando la decisión es de gusto o de marca y no hay una respuesta claramente mejor. Las opciones no se guardan como archivos; solo se implementa la elegida.
+- Claude observa la dinámica y anota acá lo necesario para mantenerla igual en todos los dispositivos.
+
+## Criterios
+- Orden y simplicidad: solo los archivos mínimos e indispensables.
+- Componentes óptimos y funcionales, sin complicaciones.
+- Por defecto: HTML, CSS y JS puro, sin build ni dependencias.
+- Mobile es la prioridad: toda pieza se revisa primero en celular y después en tablet y escritorio.

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Footer</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <style data-demo>
+    /* Solo en esta vista previa: deja espacio arriba, como una página real */
+    .vista-demo { display: flex; flex-direction: column; justify-content: flex-end; gap: var(--espacio-2); min-height: 50vh; padding-block: var(--espacio-8); color: var(--color-texto-suave); }
+    .vista-demo button { align-self: flex-start; }
+  </style>
+</head>
+<body>
+
+  <main class="contenedor vista-demo" data-demo>
+    <p>Vista previa del footer. Cambiá el tema para verlo en claro y oscuro.</p>
+    <button class="btn btn--primario" type="button" onclick="const o = document.documentElement.dataset.tema !== 'oscuro'; if (o) document.documentElement.dataset.tema = 'oscuro'; else delete document.documentElement.dataset.tema; try { localStorage.setItem('tema', o ? 'oscuro' : 'claro'); } catch {}">Cambiar tema</button>
+  </main>
+
+  <!-- Footer: misma distribución, textos y orden que el de maximus.com.ar (marca y redes | Empresa | Soporte | Legal | Contacto,
+       y debajo copyright, Términos y condiciones y la firma del ERP). Oscuro en ambos modos, como la barra superior. -->
+  <footer class="pie">
+    <div class="contenedor pie__cuerpo">
+
+      <div class="pie__marca">
+        <a class="pie__logo-enlace" href="index.html" aria-label="Maximus, ir al inicio">
+          <svg class="pie__logo" aria-hidden="true"><use href="recursos/iconos.svg#logo"/></svg>
+        </a>
+        <p class="pie__lema">La tienda N°1 en Computación y Gaming.</p>
+        <ul class="pie__redes" aria-label="Redes sociales">
+          <li><a href="https://www.facebook.com/Maximusgamingok" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-facebook"/></svg></a></li>
+          <li><a href="https://www.instagram.com/maximusgamingok" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-instagram"/></svg></a></li>
+          <li><a href="https://ar.linkedin.com/company/maximus-gaming-hardware" aria-label="LinkedIn" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-linkedin"/></svg></a></li>
+          <li><a href="https://www.tiktok.com/@maximusgamingok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-tiktok"/></svg></a></li>
+          <li><a href="https://www.youtube.com/@MAXIMUSGAMINGTV" aria-label="YouTube" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-youtube"/></svg></a></li>
+        </ul>
+      </div>
+
+      <div class="pie__col">
+        <h2 class="pie__titulo">Empresa</h2>
+        <ul>
+          <li><a href="#">Quiénes somos</a></li>
+          <li><a href="mailto:seleccion@maximus.com.ar">Unite al equipo Maximus</a></li>
+        </ul>
+      </div>
+
+      <div class="pie__col">
+        <h2 class="pie__titulo">Soporte</h2>
+        <ul>
+          <li><a href="#">Garantía</a></li>
+          <li><a href="#">Seguir mi pedido</a></li>
+          <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+          <li><a href="#">Botón de arrepentimiento</a></li>
+        </ul>
+      </div>
+
+      <div class="pie__col">
+        <h2 class="pie__titulo">Legal</h2>
+        <ul>
+          <li><a href="#">Ley Nº 24.240</a></li>
+          <li><a href="#">Conocé tus derechos</a></li>
+        </ul>
+        <!-- Sellos: reemplazar por las imágenes reales del logo de CACE y del QR de Data Fiscal (AFIP) -->
+        <div class="pie__sellos">
+          <a class="pie__sello" href="#" aria-label="Miembro de CACE">CACE</a>
+          <a class="pie__sello" href="#" aria-label="Data fiscal, AFIP">QR Data fiscal</a>
+        </div>
+        <p class="pie__nota">Conocé las normas que aplican cuando comprás online.</p>
+      </div>
+
+      <address class="pie__contacto">
+        <h2 class="pie__titulo">Contacto</h2>
+        <ul>
+          <li class="pie__dato">
+            <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-whatsapp"/></svg>
+            <div><span class="pie__rotulo">WhatsApp</span><a href="https://wa.me/541123575522" target="_blank" rel="noopener">+54 11 2357-5522</a></div>
+          </li>
+          <li class="pie__dato">
+            <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-mail"/></svg>
+            <div><span class="pie__rotulo">Empresas</span><a href="mailto:empresas@maximus.com.ar">empresas@maximus.com.ar</a></div>
+          </li>
+          <li class="pie__dato">
+            <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-sucursal"/></svg>
+            <div>
+              <span class="pie__rotulo">Local / Showroom</span>
+              Florida 537 Local 379 (PB), CABA
+              <dl class="pie__horario"><dt>Lun – Vie</dt><dd>10:00 – 19:00</dd><dt>Sáb</dt><dd>10:00 – 14:30</dd></dl>
+            </div>
+          </li>
+          <li class="pie__dato">
+            <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-pedido"/></svg>
+            <div>
+              <span class="pie__rotulo">Oficinas / Retiro de pedidos</span>
+              R. de Escalada de San Martín 3875, CABA
+              <dl class="pie__horario"><dt>Lun – Vie</dt><dd>09:00 – 17:00</dd><dt>Sáb</dt><dd>10:00 – 14:00</dd></dl>
+            </div>
+          </li>
+        </ul>
+      </address>
+
+    </div>
+
+    <div class="pie__final">
+      <div class="contenedor pie__final-fila">
+        <p>© 2026 Maximus Gaming Hardware.</p>
+        <a class="pie__arriba" href="#" aria-label="Volver arriba"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-arriba"/></svg></a>
+        <a class="pie__final-enlace" href="#">Términos y condiciones</a>
+      </div>
+      <p class="pie__erp">Powered by GlobalBluePoint© ERP</p>
+    </div>
+  </footer>
+
+</body>
+</html>

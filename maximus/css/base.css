@@ -1,0 +1,352 @@
+/* Base: reset mínimo, etiquetas y utilidades comunes. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente-base);
+  font-size: var(--texto-m);
+  line-height: 1.5;
+  color: var(--color-texto);
+  background: var(--color-fondo-suave);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: var(--contenedor);
+  margin-inline: auto;
+  padding-inline: var(--margen-lateral);
+}
+
+.icono {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icono--s {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-icono {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio);
+  transition: background-color var(--transicion);
+}
+
+.btn-icono:hover {
+  background: var(--color-superficie);
+}
+
+/* Botón */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  height: var(--alto-control);
+  padding-inline: var(--espacio-6);
+  border-radius: var(--radio);
+  font-weight: var(--peso-medio);
+  white-space: nowrap;
+  transition: background-color var(--transicion);
+}
+
+.btn .icono {
+  transition: transform var(--transicion);
+}
+
+.btn--primario {
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.btn--primario:hover {
+  background: var(--color-marca-hover);
+}
+
+.btn--secundario {
+  border: 1px solid var(--color-borde);
+  background: var(--color-fondo);
+  transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+.btn--secundario:hover {
+  border-color: var(--color-acento);
+}
+
+/* Etiqueta (ofertas, novedades, campañas) */
+.etiqueta {
+  display: inline-block;
+  padding: 2px var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  line-height: 1.5;
+}
+
+/* Selector: select nativo con estilo propio y flecha propia (va después del select, dentro de .selector).
+   Donde el navegador lo permite (appearance: base-select, Chrome y Edge), el desplegable también lleva el estilo
+   del sitio y entra con un fundido; en el resto queda el desplegable nativo, con los colores del tema.
+   Foco y abierto: borde de acento con un halo suave, sin el contorno general (evita el doble borde). */
+.selector {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.selector__campo {
+  height: var(--alto-control);
+  padding: 0 calc(var(--espacio-8) + var(--espacio-2)) 0 var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+  appearance: none;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.selector__campo:hover {
+  border-color: var(--color-acento);
+}
+
+.selector__campo:is(:focus-visible, :open) {
+  outline: none;
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 3px var(--color-brillo-marca);
+}
+
+.selector__campo option {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+.selector__flecha {
+  position: absolute;
+  right: var(--espacio-3);
+  color: var(--color-texto-suave);
+  pointer-events: none;
+  transition: rotate var(--transicion);
+}
+
+.selector:has(.selector__campo:open) .selector__flecha {
+  rotate: 180deg;
+}
+
+@supports (appearance: base-select) {
+  .selector__campo,
+  .selector__campo::picker(select) {
+    appearance: base-select;
+  }
+
+  /* En este modo el navegador no centra el texto en el alto del control */
+  .selector__campo {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .selector__campo::picker-icon {
+    display: none;
+  }
+
+  .selector__campo::picker(select) {
+    min-width: anchor-size(width);
+    margin-top: var(--espacio-1);
+    padding: var(--espacio-1);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    box-shadow: var(--sombra);
+    opacity: 0;
+    translate: 0 -4px;
+    transition: opacity var(--transicion-rapida), translate var(--transicion-rapida),
+      display var(--transicion-rapida) allow-discrete, overlay var(--transicion-rapida) allow-discrete;
+  }
+
+  .selector__campo:open::picker(select) {
+    opacity: 1;
+    translate: 0;
+  }
+
+  @starting-style {
+    .selector__campo:open::picker(select) {
+      opacity: 0;
+      translate: 0 -4px;
+    }
+  }
+
+  .selector__campo option {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    min-height: var(--alto-control-s);
+    padding-inline: var(--espacio-3);
+    border-radius: var(--radio-s);
+    font-size: var(--texto-s);
+    font-weight: var(--peso-normal);
+    transition: background-color var(--transicion-rapida), color var(--transicion-rapida);
+  }
+
+  .selector__campo option:is(:hover, :focus-visible) {
+    outline: none;
+    background: var(--color-superficie);
+  }
+
+  .selector__campo option:checked {
+    color: var(--color-acento);
+    font-weight: var(--peso-medio);
+  }
+
+  .selector__campo option::checkmark {
+    order: 1;
+    margin-left: auto;
+    color: var(--color-acento);
+  }
+}
+
+/* Encabezado de sección: título y enlace "Ver todo" (lo comparten las secciones del home y otras plantillas) */
+.seccion__cab {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espacio-4);
+  margin-bottom: var(--espacio-4);
+}
+
+.seccion__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+/* Lado derecho del encabezado cuando suma más de un control (ej. "Ver todas" + flechas del carrusel) */
+.seccion__acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+}
+
+.seccion__enlace {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  flex-shrink: 0;
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.seccion__enlace .icono {
+  transition: transform var(--transicion);
+}
+
+.seccion__enlace:hover .icono {
+  transform: translateX(3px);
+}
+
+@media (min-width: 768px) {
+  .seccion__cab {
+    margin-bottom: var(--espacio-6);
+  }
+
+  .seccion__titulo {
+    font-size: var(--texto-2xl);
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Cambio de tema: el tema nuevo se revela en círculo desde el botón que lo cambió (header.js anima el recorte
+   sobre la vista nueva). Se anula el fundido por defecto de View Transitions para que el círculo sea nítido. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Reducir movimiento (preferencia del sistema): se quitan los movimientos (desplazamientos, zooms,
+   animaciones y scroll suave) y se conservan los fundidos de color y opacidad, que no marean. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-property: color, background-color, border-color, outline-color, box-shadow, opacity, fill, stroke !important;
+    animation-duration: 0s !important;
+  }
+}

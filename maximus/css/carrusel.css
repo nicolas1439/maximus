@@ -1,0 +1,130 @@
+/* Carrusel genérico: pista deslizable (scroll-snap; con el mouse se arrastra) con puntos opcionales.
+   Sirve para una diapositiva por vez (hero) o varias visibles (filas de productos). */
+
+.carrusel {
+  position: relative;
+}
+
+.carrusel__pista {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.carrusel__pista::-webkit-scrollbar {
+  display: none;
+}
+
+.carrusel__item {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+/* En bucle, cada gesto avanza de a un ítem (necesario para pasar del último al primero) */
+[data-bucle] .carrusel__item {
+  scroll-snap-stop: always;
+}
+
+/* Puntos sobre fondos destacados (banners) */
+.carrusel__puntos {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+}
+
+.carrusel__punto {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: var(--alto-control);
+}
+
+.carrusel__punto::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radio-pill);
+  background: color-mix(in srgb, var(--color-sobre-destacado) 45%, transparent);
+  transition: width var(--transicion), background-color var(--transicion);
+}
+
+.carrusel__punto[aria-current="true"] {
+  width: 32px;
+}
+
+.carrusel__punto[aria-current="true"]::before {
+  width: 24px;
+  background: var(--color-marca);
+}
+
+/* A sangre: en pantallas angostas la pista llega al borde de la pantalla, pero arranca alineada con el margen.
+   En escritorio vuelve a la columna del contenido */
+.carrusel--a-sangre .carrusel__pista {
+  margin-inline: calc(var(--margen-lateral) * -1);
+  padding-inline: var(--margen-lateral);
+  scroll-padding-inline: var(--margen-lateral);
+}
+
+@media (min-width: 1024px) {
+  .carrusel--a-sangre .carrusel__pista {
+    margin-inline: 0;
+    padding-inline: 0;
+    scroll-padding-inline: 0;
+  }
+}
+
+/* Flechas (opcionales): pasan lo que se ve. Solo en escritorio (desde 1024px, donde el hero pasa a horizontal),
+   con mouse y si hay algo para desplazar (con el dedo se desliza) */
+.carrusel__flechas {
+  display: none;
+  gap: var(--espacio-2);
+}
+
+.carrusel__flecha {
+  border-radius: var(--radio-pill);
+  background: var(--color-superficie);
+  transition: color var(--transicion), opacity var(--transicion);
+}
+
+.carrusel__flecha:hover {
+  color: var(--color-acento);
+}
+
+.carrusel__flecha[aria-disabled="true"] {
+  opacity: 0.4;
+  color: inherit;
+  cursor: default;
+}
+
+/* Arrastre con el mouse (solo si hay algo para desplazar): cursor de mano;
+   al arrastrar se suelta el ajuste (snap) para que siga al cursor */
+@media (hover: hover) and (pointer: fine) {
+  .carrusel--desplazable .carrusel__pista,
+  .carrusel--desplazable .carrusel__pista * {
+    cursor: grab;
+  }
+
+  .carrusel--desplazable .carrusel__pista :is(.btn, button),
+  .carrusel--desplazable .carrusel__pista :is(.btn, button) * {
+    cursor: pointer;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+  .carrusel--desplazable .carrusel__flechas {
+    display: flex;
+  }
+}
+
+.carrusel--arrastrando .carrusel__pista {
+  scroll-snap-type: none;
+  user-select: none;
+}
+
+.carrusel--arrastrando .carrusel__pista,
+.carrusel--arrastrando .carrusel__pista * {
+  cursor: grabbing;
+}

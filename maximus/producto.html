@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Tarjeta de producto</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/producto.css">
+</head>
+<body>
+
+  <!-- Vista previa del componente: la tarjeta en sus casos de datos y en los anchos en que se usa (fotos y nombres reales de Maximus, precios de ejemplo) -->
+  <main class="contenedor" style="padding-block: 32px; display: grid; gap: var(--espacio-seccion);">
+
+    <section aria-labelledby="casos-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="casos-titulo">Casos</h2>
+      </div>
+      <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 230px)); gap: var(--separacion-grilla);">
+
+        <!-- Completa: descuento, calificación y cuotas -->
+        <li>
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">MSI</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                <p class="producto__precio">$1.489.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+
+        <!-- Sin calificación (la mayoría) -->
+        <li>
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/ryzen-7-9800x3d.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $110.000</span>
+              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">AMD</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Micro AMD Ryzen 7 9800X3D 5.2 Ghz AM5</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$849.999</s>
+                <p class="producto__precio">$739.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $290.196 <span class="producto__cuotas-nota">sin interés</span></p>
+              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+
+        <!-- Sin descuento: sin etiqueta ni precio anterior -->
+        <li>
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/logitech-g203.jpg" alt="" width="600" height="600">
+              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Logitech G</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Mouse Logitech G203 Lightsync Black</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"></s>
+                <p class="producto__precio">$59.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $23.529 <span class="producto__cuotas-nota">sin interés</span></p>
+              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+
+        <!-- Sin cuotas -->
+        <li>
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/coolermaster-caliber-x2.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $60.000</span>
+              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Cooler Master</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Silla Gamer Coolermaster Caliber X2 Gray</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$389.999</s>
+                <p class="producto__precio">$329.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas"></p>
+              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+
+        <!-- Marcada como favorito: el corazón queda rojo y relleno (aria-pressed="true") -->
+        <li>
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">MSI</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                <p class="producto__precio">$1.489.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+
+        <!-- Compacta (estante "Las más elegidas" de los listados): solo foto, etiqueta, marca, nombre, precio y cuotas -->
+        <li>
+          <article class="producto producto--compacto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $203.181</span>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">MSI</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+              <div class="producto__precios">
+                <p class="producto__precio">$1.489.999</p>
+              </div>
+              <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="anchos-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="anchos-titulo">Anchos</h2>
+      </div>
+      <ul style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--separacion-grilla);">
+        <li style="width: 165px;">
+          <p style="margin: 0 0 var(--espacio-2); color: var(--color-texto-suave); font-size: var(--texto-xs);">Celular · 165 px</p>
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">MSI</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                <p class="producto__precio">$1.489.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li style="width: 230px;">
+          <p style="margin: 0 0 var(--espacio-2); color: var(--color-texto-suave); font-size: var(--texto-xs);">Escritorio, 5 por fila · 230 px</p>
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">MSI</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                <p class="producto__precio">$1.489.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li style="width: 292px;">
+          <p style="margin: 0 0 var(--espacio-2); color: var(--color-texto-suave); font-size: var(--texto-xs);">Escritorio, 4 por fila · 292 px</p>
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">MSI</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                <p class="producto__precio">$1.489.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Ajustes del hover de Productos</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <style>
+    /* Herramienta de ajuste: el header de arriba es el real (header.html con su CSS y JS);
+       los controles cambian en vivo las variables del efecto y muestran los valores para pasar a los archivos. */
+    .ajustes {
+      padding-block: var(--espacio-8) var(--espacio-seccion);
+    }
+
+    .ajustes__cab {
+      max-width: 72ch;
+      margin-bottom: var(--espacio-6);
+    }
+
+    .ajustes__cab h1 {
+      margin: 0 0 var(--espacio-2);
+      font-size: var(--texto-2xl);
+      line-height: var(--interlineado-titulo);
+    }
+
+    .ajustes__cab p {
+      margin: 0;
+      color: var(--color-texto-suave);
+    }
+
+    .ajustes__grilla {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--espacio-4);
+      align-items: start;
+    }
+
+    .grupo {
+      margin: 0;
+      padding: var(--espacio-4) var(--espacio-4) var(--espacio-2);
+      border: 1px solid var(--color-borde);
+      border-radius: var(--radio-l);
+      background: var(--color-fondo);
+    }
+
+    .grupo h2 {
+      margin: 0 0 var(--espacio-2);
+      font-size: var(--texto-m);
+      font-weight: var(--peso-fuerte);
+    }
+
+    .control {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--espacio-1) var(--espacio-3);
+      padding-block: var(--espacio-2);
+    }
+
+    .control + .control {
+      border-top: 1px solid var(--color-borde);
+    }
+
+    .control label {
+      font-size: var(--texto-s);
+    }
+
+    .control output {
+      min-width: 4.5em;
+      color: var(--color-texto-suave);
+      font-size: var(--texto-xs);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .control input[type="range"] {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin: 0;
+      accent-color: var(--color-acento);
+    }
+
+    .control input[type="color"] {
+      width: 44px;
+      height: 32px;
+      padding: 0;
+      border: 1px solid var(--color-borde);
+      border-radius: var(--radio-s);
+      background: none;
+      cursor: pointer;
+    }
+
+    .control input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 2px;
+    }
+
+    .control input[type="color"]::-webkit-color-swatch {
+      border: 0;
+      border-radius: 2px;
+    }
+
+    .control--color {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+    }
+
+    .valores textarea {
+      width: 100%;
+      min-height: 250px;
+      padding: var(--espacio-3);
+      border: 1px solid var(--color-borde);
+      border-radius: var(--radio);
+      background: var(--color-superficie);
+      color: var(--color-texto);
+      font: 12px / 1.6 ui-monospace, Consolas, monospace;
+      resize: vertical;
+    }
+
+    .valores__acciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--espacio-2);
+      margin-block: var(--espacio-3) var(--espacio-2);
+    }
+
+    .btn--borde {
+      border: 1px solid var(--color-borde);
+      transition: background-color var(--transicion);
+    }
+
+    .btn--borde:hover {
+      background: var(--color-superficie);
+    }
+
+    .valores__aviso {
+      margin: 0;
+      color: var(--color-texto-suave);
+      font-size: var(--texto-xs);
+    }
+
+    @media (max-width: 1023px) {
+      .ajustes::before {
+        content: "El botón Productos solo existe en escritorio: ampliá la ventana a 1024px o más para usar esta herramienta.";
+        display: block;
+        margin-bottom: var(--espacio-4);
+        padding: var(--espacio-3) var(--espacio-4);
+        border-radius: var(--radio);
+        background: var(--color-superficie);
+        font-size: var(--texto-s);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header real, desde su archivo: el botón Productos es el de verdad, con su CSS y su JS -->
+  <div data-incluir="header.html"></div>
+
+  <main class="contenedor ajustes">
+    <div class="ajustes__cab">
+      <h1>Ajustes del hover de Productos</h1>
+      <p>Pasá el puntero por el botón Productos del header para ver el efecto; el tema se cambia desde el header. Los ajustes quedan guardados en este navegador. Para dejarlos fijos en el sitio, copiá los valores y pasalos a <code>tokens.css</code> y <code>header.css</code> (o pedíselo a Claude).</p>
+    </div>
+    <div class="ajustes__grilla" id="grupos"></div>
+  </main>
+
+  <script type="module">
+    import { listo } from './js/incluir.js';
+    await listo;
+
+    const raiz = document.documentElement;
+    const boton = document.querySelector('.catalogo__btn');
+    const CLAVE = 'ajustes-hover';
+
+    // ---------- Controles ----------
+    // raiz: variable de tokens.css (en :root). boton: variable de header.css (en .catalogo__btn).
+    // sombra: intensidad de --sombra-interior según el tema (negro con esa opacidad).
+    const grupos = [
+      { titulo: 'Colores', items: [
+        { id: 'lima', tipo: 'color', etiqueta: 'Luz (lima, en el puntero)', en: 'raiz', variable: '--color-lima' },
+        { id: 'esmeralda', tipo: 'color', etiqueta: 'Esmeralda (paso al violeta)', en: 'raiz', variable: '--color-esmeralda' },
+        { id: 'violeta', tipo: 'color', etiqueta: 'Violeta (extremos)', en: 'raiz', variable: '--color-violeta' },
+      ] },
+      { titulo: 'Luz', items: [
+        { id: 'radio', tipo: 'range', etiqueta: 'Alcance del degradado', en: 'boton', variable: '--luz-radio', unidad: 'px', min: 150, max: 600, paso: 10 },
+        { id: 'luz-lima', tipo: 'range', etiqueta: 'Tamaño de la luz lima', en: 'boton', variable: '--luz-lima', unidad: '%', min: 5, max: 60, paso: 1 },
+        { id: 'luz-esmeralda', tipo: 'range', etiqueta: 'Dónde empieza el violeta', en: 'boton', variable: '--luz-esmeralda', unidad: '%', min: 40, max: 95, paso: 1 },
+        { id: 'seguimiento', tipo: 'range', etiqueta: 'Velocidad de la luz (menor = más retraso)', en: 'boton', variable: '--luz-seguimiento', unidad: '', min: 0.01, max: 0.2, paso: 0.005 },
+      ] },
+      { titulo: 'Sombra del borde', items: [
+        { id: 'sombra-radio', tipo: 'range', etiqueta: 'Alcance alrededor del puntero', en: 'boton', variable: '--sombra-radio', unidad: 'px', min: 50, max: 400, paso: 10 },
+        { id: 'sombra-ancho', tipo: 'range', etiqueta: 'Ancho del contorno', en: 'boton', variable: '--sombra-ancho', unidad: 'px', min: 0, max: 30, paso: 1 },
+        { id: 'sombra-claro', tipo: 'range', etiqueta: 'Intensidad en modo claro', en: 'sombra', tema: 'claro', unidad: '', min: 0, max: 0.5, paso: 0.01 },
+        { id: 'sombra-oscuro', tipo: 'range', etiqueta: 'Intensidad en modo oscuro', en: 'sombra', tema: 'oscuro', unidad: '', min: 0, max: 0.5, paso: 0.01 },
+      ] },
+    ];
+    const items = grupos.flatMap((g) => g.items);
+
+    // ---------- Valores de los archivos (antes de aplicar nada) ----------
+    const leerSombra = () => {
+      const v = getComputedStyle(raiz).getPropertyValue('--sombra-interior');
+      return parseFloat(v.match(/\/\s*([\d.]+)/)?.[1] ?? 0);
+    };
+    const temaInicial = raiz.dataset.tema;
+    const base = {};
+    for (const it of items) {
+      if (it.en === 'raiz') base[it.id] = getComputedStyle(raiz).getPropertyValue(it.variable).trim();
+      if (it.en === 'boton') base[it.id] = parseFloat(getComputedStyle(boton).getPropertyValue(it.variable));
+      if (it.en === 'sombra') {
+        if (it.tema === 'oscuro') raiz.dataset.tema = 'oscuro';
+        else delete raiz.dataset.tema;
+        base[it.id] = leerSombra();
+      }
+    }
+    if (temaInicial) raiz.dataset.tema = temaInicial;
+    else delete raiz.dataset.tema;
+
+    // ---------- Estado ----------
+    let valores = { ...base };
+    try {
+      const guardado = JSON.parse(localStorage.getItem(CLAVE));
+      if (guardado) valores = { ...base, ...guardado };
+    } catch {}
+
+    const temaActual = () => (raiz.dataset.tema === 'oscuro' ? 'oscuro' : 'claro');
+
+    function aplicar() {
+      for (const it of items) {
+        if (it.en === 'raiz') raiz.style.setProperty(it.variable, valores[it.id]);
+        if (it.en === 'boton') boton.style.setProperty(it.variable, valores[it.id] + it.unidad);
+      }
+      raiz.style.setProperty('--sombra-interior', `rgb(0 0 0 / ${valores[`sombra-${temaActual()}`]})`);
+      salida.value = textoValores();
+      // Se guarda solo lo que difiere de los archivos; si no hay cambios, mandan los archivos
+      try {
+        if (JSON.stringify(valores) === JSON.stringify(base)) localStorage.removeItem(CLAVE);
+        else localStorage.setItem(CLAVE, JSON.stringify(valores));
+      } catch {}
+    }
+
+    // Al cambiar el tema desde el header, la sombra toma la intensidad de ese tema
+    new MutationObserver(aplicar).observe(raiz, { attributes: true, attributeFilter: ['data-tema'] });
+
+    function textoValores() {
+      const v = valores;
+      return [
+        '/* css/tokens.css */',
+        `--color-lima: ${v.lima};`,
+        `--color-esmeralda: ${v.esmeralda};`,
+        `--color-violeta: ${v.violeta};`,
+        `--sombra-interior: rgb(0 0 0 / ${v['sombra-claro']}); /* :root (modo claro) */`,
+        `--sombra-interior: rgb(0 0 0 / ${v['sombra-oscuro']}); /* [data-tema="oscuro"] */`,
+        '',
+        '/* css/header.css (.catalogo__btn) */',
+        `--luz-radio: ${v.radio}px;`,
+        `--luz-lima: ${v['luz-lima']}%;`,
+        `--luz-esmeralda: ${v['luz-esmeralda']}%;`,
+        `--luz-seguimiento: ${v.seguimiento};`,
+        `--sombra-radio: ${v['sombra-radio']}px;`,
+        `--sombra-ancho: ${v['sombra-ancho']}px;`,
+      ].join('\n');
+    }
+
+    // ---------- Interfaz ----------
+    const contenedor = document.getElementById('grupos');
+    const campos = {};
+
+    for (const g of grupos) {
+      const grupo = document.createElement('section');
+      grupo.className = 'grupo';
+      grupo.innerHTML = `<h2>${g.titulo}</h2>`;
+      for (const it of g.items) {
+        const fila = document.createElement('div');
+        fila.className = `control control--${it.tipo}`;
+        const salidaValor = it.tipo === 'range' ? `<output for="${it.id}"></output>` : `<output for="${it.id}"></output>`;
+        fila.innerHTML = `<label for="${it.id}">${it.etiqueta}</label>${salidaValor}<input id="${it.id}" type="${it.tipo}"${
+          it.tipo === 'range' ? ` min="${it.min}" max="${it.max}" step="${it.paso}"` : ''
+        }>`;
+        grupo.append(fila);
+        const campo = fila.querySelector('input');
+        const out = fila.querySelector('output');
+        campos[it.id] = { campo, out };
+        campo.addEventListener('input', () => {
+          valores[it.id] = it.tipo === 'range' ? parseFloat(campo.value) : campo.value;
+          // La luz lima tiene que terminar antes de que empiece el violeta
+          if (it.id === 'luz-lima' && valores['luz-lima'] >= valores['luz-esmeralda']) valores['luz-esmeralda'] = valores['luz-lima'] + 1;
+          if (it.id === 'luz-esmeralda' && valores['luz-esmeralda'] <= valores['luz-lima']) valores['luz-lima'] = valores['luz-esmeralda'] - 1;
+          mostrar();
+          aplicar();
+        });
+      }
+      contenedor.append(grupo);
+    }
+
+    // Valores resultantes
+    const valoresSeccion = document.createElement('section');
+    valoresSeccion.className = 'grupo valores';
+    valoresSeccion.innerHTML = `
+      <h2>Valores para los archivos</h2>
+      <textarea readonly spellcheck="false" aria-label="Valores resultantes"></textarea>
+      <div class="valores__acciones">
+        <button class="btn btn--primario" type="button" data-copiar>Copiar</button>
+        <button class="btn btn--borde" type="button" data-restablecer>Volver a los valores de los archivos</button>
+      </div>
+      <p class="valores__aviso">El retraso nuevo se aplica al volver a entrar al botón.</p>`;
+    contenedor.append(valoresSeccion);
+    const salida = valoresSeccion.querySelector('textarea');
+
+    valoresSeccion.querySelector('[data-copiar]').addEventListener('click', async (e) => {
+      try {
+        await navigator.clipboard.writeText(salida.value);
+        e.target.textContent = 'Copiado';
+        setTimeout(() => (e.target.textContent = 'Copiar'), 1500);
+      } catch {
+        salida.focus();
+        salida.select();
+      }
+    });
+
+    valoresSeccion.querySelector('[data-restablecer]').addEventListener('click', () => {
+      valores = { ...base };
+      mostrar();
+      aplicar();
+    });
+
+    function mostrar() {
+      for (const it of items) {
+        const { campo, out } = campos[it.id];
+        campo.value = valores[it.id];
+        out.value = it.tipo === 'range' ? `${valores[it.id]}${it.unidad}` : valores[it.id];
+      }
+    }
+
+    mostrar();
+    aplicar();
+  </script>
+</body>
+</html>

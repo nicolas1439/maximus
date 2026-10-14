@@ -1,0 +1,325 @@
+/* Footer: misma distribución que el de maximus.com.ar (marca y redes | Empresa | Soporte | Legal | Contacto; debajo,
+   copyright con Términos y condiciones, y la firma del ERP centrada). Oscuro en ambos modos, como la barra superior.
+   Arriba, una línea de luz del verde de marca al violeta (los colores del hover de Productos) que se apaga en
+   ambos extremos.
+   Mobile first. Cortes: 768px (dos columnas) y 1024px (cinco columnas, la marca más ancha). */
+
+.pie {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-barra);
+  color: var(--color-sobre-barra);
+  font-size: var(--texto-s);
+}
+
+/* Línea de luz */
+.pie::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-marca) 18%, var(--color-esmeralda) 48%, var(--color-violeta) 78%, transparent);
+}
+
+.pie__cuerpo {
+  display: grid;
+  gap: var(--espacio-8) var(--espacio-6);
+  padding-block: var(--espacio-seccion) var(--espacio-8);
+}
+
+/* Marca y redes */
+.pie__logo-enlace {
+  display: inline-block;
+}
+
+.pie__logo {
+  height: 36px;
+  width: auto;
+  aspect-ratio: 563.6 / 103.6;
+  color: var(--color-sobre-barra);
+}
+
+.pie__lema {
+  max-width: 28ch;
+  margin: var(--espacio-4) 0 0;
+  color: var(--color-sobre-barra-suave);
+}
+
+/* Redes: botones como los del sitio (cuadrados de 36px con fondo y borde tenues, ícono de 16px).
+   Hover propio: el botón se eleva y se enciende el contorno y el ícono en verde, con un brillo debajo */
+.pie__redes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-4);
+  margin-top: var(--espacio-4);
+}
+
+.pie__redes a {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-barra-borde);
+  border-radius: var(--radio);
+  background: color-mix(in srgb, var(--color-sobre-barra) 5%, transparent);
+  color: var(--color-sobre-barra-suave);
+  transition: border-color var(--transicion), color var(--transicion), transform var(--transicion),
+    box-shadow var(--transicion);
+}
+
+.pie__redes .icono {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transicion);
+}
+
+.pie__redes a:hover {
+  border-color: var(--color-marca);
+  color: var(--color-marca);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px var(--color-brillo-marca);
+}
+
+.pie__redes a:hover .icono {
+  transform: scale(1.15);
+}
+
+/* Títulos de columna: en mayúsculas y con línea abajo, como en el sitio */
+.pie__titulo {
+  margin: 0 0 var(--espacio-3);
+  padding-bottom: var(--espacio-2);
+  border-bottom: 1px solid var(--color-barra-borde);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+/* Columnas de enlaces */
+.pie__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.pie__col a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--color-sobre-barra-suave);
+  transition: color var(--transicion), translate var(--transicion);
+}
+
+.pie__col a:hover {
+  color: var(--color-marca);
+  translate: 3px 0;
+}
+
+/* Sellos (CACE, Data fiscal): lugar reservado para las imágenes */
+.pie__sellos {
+  display: flex;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-4);
+}
+
+.pie__sello {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding: var(--espacio-1);
+  border: 1px dashed var(--color-barra-borde);
+  border-radius: var(--radio-s);
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-2xs);
+  line-height: 1.2;
+  text-align: center;
+  transition: border-color var(--transicion), color var(--transicion);
+}
+
+.pie__sello:hover {
+  border-color: var(--color-marca);
+  color: var(--color-sobre-barra);
+}
+
+.pie__nota {
+  margin: var(--espacio-3) 0 0;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-xs);
+  font-style: italic;
+}
+
+/* Contacto: cada dato con su ícono en verde, rótulo chico en mayúsculas y horarios en verde */
+.pie__contacto {
+  font-style: normal;
+}
+
+.pie__contacto ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.pie__dato {
+  display: flex;
+  gap: var(--espacio-3);
+}
+
+.pie__dato .icono {
+  flex-shrink: 0;
+  box-sizing: content-box;
+  padding: 7px;
+  border-radius: var(--radio-s);
+  background: var(--color-brillo-marca);
+  color: var(--color-marca);
+}
+
+.pie__rotulo {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.pie__dato a {
+  transition: color var(--transicion);
+}
+
+.pie__dato a:hover {
+  color: var(--color-marca);
+}
+
+.pie__horario {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  gap: 2px var(--espacio-3);
+  margin: var(--espacio-1) 0 0;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-xs);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.pie__horario dd {
+  margin: 0;
+  color: var(--color-marca);
+}
+
+/* Pie legal */
+.pie__final {
+  border-top: 1px solid var(--color-barra-borde);
+}
+
+/* Fila final: copyright, botón para volver arriba en el centro y Términos a la derecha.
+   Mobile: en columna y centrado, con el botón primero. */
+.pie__final-fila {
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-3);
+  padding-block: var(--espacio-4);
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-xs);
+  text-align: center;
+}
+
+.pie__final-fila p {
+  margin: 0;
+}
+
+.pie__final-enlace {
+  transition: color var(--transicion);
+}
+
+.pie__final-enlace:hover {
+  color: var(--color-marca);
+}
+
+/* Volver arriba: mismo lenguaje que los botones de redes; la flecha se asoma hacia arriba al pasar el mouse */
+.pie__arriba {
+  order: -1;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-barra-borde);
+  border-radius: var(--radio-pill);
+  background: color-mix(in srgb, var(--color-sobre-barra) 5%, transparent);
+  color: var(--color-sobre-barra);
+  transition: border-color var(--transicion), color var(--transicion), transform var(--transicion),
+    box-shadow var(--transicion);
+}
+
+.pie__arriba .icono {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--transicion);
+}
+
+.pie__arriba:hover {
+  border-color: var(--color-marca);
+  color: var(--color-marca);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px var(--color-brillo-marca);
+}
+
+.pie__arriba:hover .icono {
+  transform: translateY(-2px);
+}
+
+.pie__erp {
+  margin: 0;
+  padding-block: var(--espacio-3) var(--espacio-4);
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-2xs);
+  text-align: center;
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  .pie__cuerpo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pie__marca,
+  .pie__contacto {
+    grid-column: 1 / -1;
+  }
+
+  /* Tres columnas iguales: el botón queda en el centro exacto de la página */
+  .pie__final-fila {
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .pie__arriba {
+    order: 0;
+    justify-self: center;
+  }
+
+  .pie__final-enlace {
+    justify-self: end;
+  }
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+/* Cinco columnas como en el sitio: la marca más ancha, Contacto con lugar para direcciones y horarios */
+@media (min-width: 1024px) {
+  .pie__cuerpo {
+    grid-template-columns: 2fr 1fr 1.3fr 1.3fr 1.9fr;
+    column-gap: var(--espacio-8);
+  }
+
+  .pie__marca,
+  .pie__contacto {
+    grid-column: auto;
+  }
+}

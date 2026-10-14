@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Header</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <script type="module" src="js/header.js"></script>
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <div class="barra-sup">
+    <div class="contenedor barra-sup__fila">
+      <ul class="barra-sup__beneficios">
+        <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-envio"/></svg>Envíos a todo el país</li>
+        <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-cuotas"/></svg>3 cuotas sin interés</li>
+        <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-sucursal"/></svg>Retiro en sucursal</li>
+      </ul>
+      <div class="barra-sup__util">
+        <a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-pedido"/></svg>Seguí tu pedido</a>
+        <a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-comprobante"/></svg>Subir comprobante</a>
+        <a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-ayuda"/></svg>Ayuda</a>
+        <button class="btn-icono" type="button" data-tema-toggle aria-label="Modo oscuro">
+          <svg class="icono icono--s tema__luna" aria-hidden="true"><use href="recursos/iconos.svg#i-luna"/></svg>
+          <svg class="icono icono--s tema__sol" aria-hidden="true"><use href="recursos/iconos.svg#i-sol"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fila principal -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__fila">
+      <button class="btn-icono cabecera__menu" type="button" aria-label="Abrir menú" aria-controls="menu" aria-expanded="false">
+        <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-menu"/></svg>
+      </button>
+
+      <a class="cabecera__logo" href="index.html" aria-label="Maximus, ir al inicio">
+        <svg class="logo" aria-hidden="true"><use href="recursos/iconos.svg#logo"/></svg>
+      </a>
+
+      <form class="buscador" role="search" action="#">
+        <label class="sr-only" for="buscar">Buscar productos</label>
+        <input class="buscador__campo" id="buscar" type="search" placeholder="Buscá productos y marcas">
+        <button class="buscador__btn" type="submit" aria-label="Buscar">
+          <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-buscar"/></svg>
+        </button>
+      </form>
+
+      <div class="cabecera__acciones">
+        <a class="btn-icono" href="#" aria-label="Mi cuenta">
+          <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-usuario"/></svg>
+        </a>
+        <a class="btn-icono cabecera__fav" href="#" aria-label="Favoritos">
+          <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg>
+        </a>
+        <a class="carrito" href="#" aria-label="Carrito: 2 productos, $649.000">
+          <span class="btn-icono">
+            <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg>
+            <span class="carrito__cant">2</span>
+          </span>
+          <span class="carrito__total">$649.000</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menú: panel lateral en mobile/tablet, fila en escritorio -->
+  <nav class="menu" id="menu" aria-label="Principal">
+    <div class="menu__cab">
+      <svg class="logo" aria-hidden="true"><use href="recursos/iconos.svg#logo"/></svg>
+      <button class="btn-icono menu__cerrar" type="button" aria-label="Cerrar menú">
+        <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cerrar"/></svg>
+      </button>
+    </div>
+
+    <div class="contenedor menu__fila">
+      <div class="catalogo">
+        <button class="catalogo__btn" type="button" aria-expanded="false" aria-controls="catalogo-panel">
+          <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-menu"/></svg>
+          Productos
+          <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg>
+        </button>
+        <div class="catalogo__panel" id="catalogo-panel">
+          <ul class="catalogo__cats">
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-pc"/></svg>Computadoras<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Computadoras</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <ul>
+                        <li><a href="placas-de-video.html">PC gamer económicas</a></li>
+                        <li><a href="placas-de-video.html">PC oficina y estudio</a></li>
+                        <li><a href="placas-de-video.html">PC gamer para jugar y stream</a></li>
+                        <li><a href="placas-de-video.html">PC gamer gama alta</a></li>
+                        <li><a href="placas-de-video.html">PC para diseño e IA</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-pc"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Computadoras</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-notebook"/></svg>Notebooks<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Notebooks</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Por procesador</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Notebooks Intel</a></li>
+                        <li><a href="placas-de-video.html">Notebooks AMD</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Accesorios</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Mouse inalámbrico</a></li>
+                        <li><a href="placas-de-video.html">Mouse pads</a></li>
+                        <li><a href="placas-de-video.html">Mochilas</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Almacenamiento y memoria</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Discos SSD</a></li>
+                        <li><a href="placas-de-video.html">Discos externos</a></li>
+                        <li><a href="placas-de-video.html">Pendrives</a></li>
+                        <li><a href="placas-de-video.html">Memorias SODIMM</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-notebook"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Notebooks</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-combo"/></svg>Combos de actualización<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Combos de actualización</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <ul>
+                        <li><a href="placas-de-video.html">Combos Intel</a></li>
+                        <li><a href="placas-de-video.html">Combos AMD</a></li>
+                        <li><a href="placas-de-video.html">Combos upgrade</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-combo"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Combos de actualización</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-cpu"/></svg>Componentes de PC<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Componentes de PC</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Microprocesadores</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Intel</a></li>
+                        <li><a href="placas-de-video.html">AMD</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Motherboards</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">AM4</a></li>
+                        <li><a href="placas-de-video.html">AM5</a></li>
+                        <li><a href="placas-de-video.html">Intel 1700</a></li>
+                        <li><a href="placas-de-video.html">Intel 1851</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Placas de video</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Nvidia</a></li>
+                        <li><a href="placas-de-video.html">AMD</a></li>
+                        <li><a href="placas-de-video.html">Intel</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Memorias RAM</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">DDR4</a></li>
+                        <li><a href="placas-de-video.html">DDR5</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Almacenamiento</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">SSD</a></li>
+                        <li><a href="placas-de-video.html">HDD</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Refrigeración</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">CPU coolers</a></li>
+                        <li><a href="placas-de-video.html">Water coolers</a></li>
+                        <li><a href="placas-de-video.html">Fan coolers</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Gabinetes</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Mini tower</a></li>
+                        <li><a href="placas-de-video.html">Mid tower</a></li>
+                        <li><a href="placas-de-video.html">Full tower</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Fuentes</a>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-cpu"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Componentes de PC</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-mouse"/></svg>Periféricos<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Periféricos</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Teclados</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Mecánicos</a></li>
+                        <li><a href="placas-de-video.html">Membrana</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Mouse</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Cableado</a></li>
+                        <li><a href="placas-de-video.html">Inalámbrico</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Auriculares</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Inalámbricos</a></li>
+                        <li><a href="placas-de-video.html">Cableados</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Micrófonos</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Con cable</a></li>
+                        <li><a href="placas-de-video.html">Inalámbricos</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Volantes</a>
+                      <ul>
+                        <li><a href="placas-de-video.html">Kit simulador</a></li>
+                      </ul>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Mouse pads</a>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Parlantes</a>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Joysticks</a>
+                    </div>
+                    <div class="catalogo__grupo">
+                      <a class="catalogo__grupo-titulo" href="placas-de-video.html">Webcams</a>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-mouse"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Periféricos</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-monitor"/></svg>Monitores<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Monitores</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <ul>
+                        <li><a href="placas-de-video.html">Hasta 75 Hz</a></li>
+                        <li><a href="placas-de-video.html">100 – 144 Hz</a></li>
+                        <li><a href="placas-de-video.html">165 – 180 Hz</a></li>
+                        <li><a href="placas-de-video.html">200 – 240 Hz</a></li>
+                        <li><a href="placas-de-video.html">280 Hz o más</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-monitor"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Monitores</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-silla"/></svg>Sillas y escritorios<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Sillas y escritorios</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <ul>
+                        <li><a href="placas-de-video.html">Sillas gamer</a></li>
+                        <li><a href="placas-de-video.html">Escritorios</a></li>
+                        <li><a href="placas-de-video.html">Otros</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-silla"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Sillas y escritorios</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-redes"/></svg>Redes y conectividad<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Redes y conectividad</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <ul>
+                        <li><a href="placas-de-video.html">Routers</a></li>
+                        <li><a href="placas-de-video.html">Placas de red</a></li>
+                        <li><a href="placas-de-video.html">Cables</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-redes"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Redes y conectividad</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-accesorios"/></svg>Accesorios varios<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Accesorios varios</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <ul>
+                        <li><a href="placas-de-video.html">Cables mod</a></li>
+                        <li><a href="placas-de-video.html">Drive bay</a></li>
+                        <li><a href="placas-de-video.html">Soportes</a></li>
+                        <li><a href="placas-de-video.html">Key caps</a></li>
+                        <li><a href="placas-de-video.html">Thermal pads</a></li>
+                        <li><a href="placas-de-video.html">Pasta térmica</a></li>
+                        <li><a href="placas-de-video.html">Herramientas</a></li>
+                        <li><a href="placas-de-video.html">Cargadores portátiles</a></li>
+                        <li><a href="placas-de-video.html">Limpieza</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-accesorios"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Accesorios varios</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-impresora"/></svg>Impresoras y consumibles<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Impresoras y consumibles</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <ul>
+                        <li><a href="placas-de-video.html">Impresoras</a></li>
+                        <li><a href="placas-de-video.html">Tintas y tóners</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-impresora"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Impresoras y consumibles</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <button class="catalogo__cat" type="button" aria-expanded="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-electro"/></svg>Electro<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+              <div class="catalogo__sub">
+                <div class="catalogo__contenido">
+                  <div class="catalogo__sub-cab">
+                    <button class="btn-icono catalogo__volver" type="button" aria-label="Volver a Productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+                    <p class="catalogo__sub-titulo">Electro</p>
+                    <a class="catalogo__ver-todo" href="placas-de-video.html">Ver todo</a>
+                  </div>
+                  <div class="catalogo__grupos">
+                    <div class="catalogo__grupo">
+                      <ul>
+                        <li><a href="placas-de-video.html">Proyectores</a></li>
+                        <li><a href="placas-de-video.html">Capturadoras de video</a></li>
+                        <li><a href="placas-de-video.html">Stream</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <a class="catalogo__promo" href="placas-de-video.html">
+                  <svg class="catalogo__promo-icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-electro"/></svg>
+                  <span class="etiqueta">Ofertas</span>
+                  <strong>Electro</strong>
+                  <span>Los mejores precios, por tiempo limitado.</span>
+                  <span class="catalogo__promo-cta">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+                </a>
+              </div>
+            </li>
+            <li><a class="catalogo__cat" href="placas-de-video.html"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-outlet"/></svg>Outlet</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Los atajos a categorías solo se muestran en escritorio; en el panel lateral ya están dentro de Productos -->
+      <ul class="menu__links">
+        <li><a href="placas-de-video.html">Ofertas</a></li>
+        <li><a href="#">Armá tu PC</a></li>
+        <li class="menu__atajo"><a href="placas-de-video.html">Computadoras</a></li>
+        <li class="menu__atajo"><a href="placas-de-video.html">Notebooks</a></li>
+        <li class="menu__atajo"><a href="placas-de-video.html">Monitores</a></li>
+        <li class="menu__atajo"><a href="placas-de-video.html">Placas de video</a></li>
+      </ul>
+
+      <ul class="menu__links menu__links--fin">
+        <li><a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-empresa"/></svg>Empresas</a></li>
+      </ul>
+
+      <ul class="menu__extra">
+        <li><a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg>Favoritos</a></li>
+        <li><a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-pedido"/></svg>Seguí tu pedido</a></li>
+        <li><a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-comprobante"/></svg>Subir comprobante</a></li>
+        <li><a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-garantia"/></svg>Garantía</a></li>
+        <li><a href="#"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-ayuda"/></svg>Ayuda</a></li>
+        <li>
+          <button type="button" data-tema-toggle>
+            <svg class="icono icono--s tema__luna" aria-hidden="true"><use href="recursos/iconos.svg#i-luna"/></svg>
+            <svg class="icono icono--s tema__sol" aria-hidden="true"><use href="recursos/iconos.svg#i-sol"/></svg>
+            Modo oscuro
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="menu-capa"></div>
+
+  <!-- Contenido de prueba para ver el comportamiento al hacer scroll (data-demo: no se incluye en la página completa) -->
+  <main class="contenedor" data-demo style="padding-block: 32px; display: grid; gap: 24px;">
+    <div style="height: 360px; border-radius: 8px; background: var(--color-superficie);"></div>
+    <div style="height: 900px; border-radius: 8px; background: var(--color-superficie);"></div>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,336 @@
+/* Accesos destacados: tres tarjetas a herramientas y destinos clave (PC ideal, armador, placas de video).
+   Oscuras en ambos modos, como los banners. Cada una tiene su color, su foto recortada, un fondo propio
+   (grilla de plano, haces de luz) y un detalle sobre el título que se completa al pasar el mouse:
+   los 3 pasos del test, el avance del armado y las barras de rendimiento. El detalle ocupa el mismo lugar
+   en las tres, así los títulos quedan alineados.
+   Mobile/tablet: fila deslizable (carrusel a sangre). Escritorio: las tres en una fila.
+   Si la tarjeta mide menos de 420px muestra solo título y botón. */
+
+.accesos__lista {
+  gap: var(--espacio-3);
+}
+
+/* Cada tarjeta se adapta a su propio ancho (container queries), no al de la pantalla */
+.accesos__lista > .carrusel__item {
+  flex: 0 0 86%;
+  container: acceso / inline-size;
+}
+
+.acceso {
+  --acceso-fondo: var(--color-fondo-destacado);
+  --acceso-brillo: var(--color-marca);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radio-l);
+  background:
+    radial-gradient(circle at 78% 50%, color-mix(in srgb, var(--acceso-brillo) 40%, transparent), transparent 58%),
+    var(--acceso-fondo);
+  color: var(--color-sobre-destacado);
+}
+
+.acceso:focus-visible {
+  outline-offset: -2px;
+}
+
+/* Decoración propia de cada tarjeta (grilla, haces), por debajo de la foto */
+.acceso::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.acceso__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  max-width: 58%;
+  padding: var(--espacio-6);
+}
+
+.acceso__detalle {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  margin: 0 0 var(--espacio-1);
+  padding: 0;
+  list-style: none;
+}
+
+.acceso__detalle > * {
+  transition: background-color var(--transicion-lenta), border-color var(--transicion-lenta), opacity var(--transicion-lenta);
+}
+
+.acceso__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.acceso__bajada {
+  margin: 0;
+  color: color-mix(in srgb, var(--color-sobre-destacado) 80%, transparent);
+  font-size: var(--texto-s);
+}
+
+.acceso__cta {
+  height: var(--alto-control-s);
+  margin-top: auto;
+  padding-inline: var(--espacio-4);
+  font-size: var(--texto-s);
+}
+
+.acceso__img {
+  position: absolute;
+  z-index: -1;
+  height: auto;
+  filter: drop-shadow(var(--sombra-recorte));
+  pointer-events: none;
+  transition: scale var(--transicion-muy-lenta), translate var(--transicion-muy-lenta);
+}
+
+.acceso:is(:hover, .activo) .acceso__img {
+  scale: 1.08;
+}
+
+.acceso:is(:hover, .activo) .acceso__cta {
+  background: var(--color-marca-hover);
+}
+
+.acceso:is(:hover, .activo) .acceso__cta .icono {
+  transform: translateX(3px);
+}
+
+/* ---------- Encontrá tu PC ideal: los 3 pasos del test ---------- */
+
+.acceso--pc {
+  --acceso-fondo: var(--color-acceso-pc);
+  --acceso-brillo: var(--color-acceso-pc-brillo);
+}
+
+.acceso__pasos {
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-fuerte);
+}
+
+.acceso__pasos li {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid color-mix(in srgb, var(--color-sobre-destacado) 40%, transparent);
+  border-radius: var(--radio-pill);
+}
+
+.acceso__pasos li:first-child,
+.acceso--pc:is(:hover, .activo) .acceso__pasos li {
+  border-color: var(--acceso-brillo);
+  background: var(--acceso-brillo);
+}
+
+.acceso--pc:is(:hover, .activo) .acceso__pasos li:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.acceso--pc:is(:hover, .activo) .acceso__pasos li:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.acceso__pasos li + li {
+  margin-left: var(--espacio-4);
+}
+
+.acceso__pasos li + li::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  width: var(--espacio-4);
+  height: 1px;
+  background: color-mix(in srgb, var(--color-sobre-destacado) 40%, transparent);
+}
+
+.acceso--pc .acceso__img {
+  right: 3%;
+  bottom: 0;
+  width: 40%;
+}
+
+.acceso--pc:is(:hover, .activo) .acceso__img {
+  translate: 0 -6px;
+}
+
+/* ---------- Armá tu PC: grilla de plano y componentes por armar ---------- */
+
+.acceso--armador {
+  --acceso-fondo: var(--color-acceso-armador);
+}
+
+.acceso--armador::before {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--acceso-brillo) 14%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--acceso-brillo) 14%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(to right, transparent 25%, #000 75%);
+}
+
+.acceso__progreso {
+  gap: var(--espacio-1);
+}
+
+.acceso__progreso span {
+  width: 20px;
+  height: 6px;
+  border-radius: var(--radio-pill);
+  background: color-mix(in srgb, var(--color-sobre-destacado) 25%, transparent);
+}
+
+.acceso__progreso span:nth-child(-n + 2),
+.acceso--armador:is(:hover, .activo) .acceso__progreso span {
+  background: var(--acceso-brillo);
+}
+
+.acceso--armador:is(:hover, .activo) .acceso__progreso span:nth-child(3) {
+  transition-delay: 0.1s;
+}
+
+.acceso--armador:is(:hover, .activo) .acceso__progreso span:nth-child(4) {
+  transition-delay: 0.2s;
+}
+
+.acceso__img--mother {
+  top: 6%;
+  right: -4%;
+  width: 46%;
+  rotate: 6deg;
+}
+
+.acceso__img--memoria {
+  right: 2%;
+  bottom: 16%;
+  width: 34%;
+  rotate: -14deg;
+}
+
+.acceso--armador:is(:hover, .activo) .acceso__img--memoria {
+  translate: -6px -4px;
+}
+
+/* ---------- Placas de video: haces de luz, barras de rendimiento y la placa en diagonal ---------- */
+
+.acceso--gpu {
+  --acceso-fondo: var(--color-acceso-gpu);
+  --acceso-brillo: var(--color-acceso-gpu-brillo);
+}
+
+.acceso--gpu::before {
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent 0 26px,
+    color-mix(in srgb, var(--acceso-brillo) 10%, transparent) 26px 28px
+  );
+  mask-image: linear-gradient(to right, transparent 30%, #000 80%);
+}
+
+.acceso__barras {
+  align-items: flex-end;
+  gap: 3px;
+}
+
+/* Las dos primeras barras van encendidas; las otras tres se encienden de a una al pasar el mouse */
+.acceso__barras span {
+  width: 4px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--color-sobre-destacado) 25%, transparent);
+}
+
+.acceso__barras span:nth-child(1) { height: 30%; }
+.acceso__barras span:nth-child(2) { height: 45%; }
+.acceso__barras span:nth-child(3) { height: 62%; }
+.acceso__barras span:nth-child(4) { height: 80%; }
+.acceso__barras span:nth-child(5) { height: 100%; }
+
+.acceso__barras span:nth-child(-n + 2),
+.acceso--gpu:is(:hover, .activo) .acceso__barras span {
+  background: var(--acceso-brillo);
+}
+
+.acceso--gpu:is(:hover, .activo) .acceso__barras span:nth-child(3) {
+  transition-delay: 0.1s;
+}
+
+.acceso--gpu:is(:hover, .activo) .acceso__barras span:nth-child(4) {
+  transition-delay: 0.2s;
+}
+
+.acceso--gpu:is(:hover, .activo) .acceso__barras span:nth-child(5) {
+  transition-delay: 0.3s;
+}
+
+.acceso--gpu .acceso__img {
+  right: -12%;
+  bottom: 10%;
+  width: 56%;
+  rotate: -12deg;
+}
+
+.acceso--gpu:is(:hover, .activo) .acceso__img {
+  translate: -6px 0;
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  .accesos__lista {
+    gap: var(--espacio-4);
+  }
+
+  .accesos__lista > .carrusel__item {
+    flex-basis: 48%;
+  }
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+/* Entran las tres: la fila pasa a ser una grilla, sin desplazamiento ni sangrado */
+@media (min-width: 1024px) {
+  .accesos .carrusel__pista {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+    overflow: visible;
+  }
+}
+
+/* ---------- Según el ancho de la tarjeta ---------- */
+
+/* Angosta (celular, tablet chica y escritorio angosto): solo título y botón, para que el texto no se apriete */
+@container acceso (width < 420px) {
+  .acceso {
+    min-height: var(--alto-destacado);
+  }
+
+  .acceso__texto {
+    max-width: 62%;
+  }
+
+  .acceso__bajada {
+    display: none;
+  }
+}
+
+/* Amplia: con descripción y título más grande */
+@container acceso (min-width: 420px) {
+  .acceso {
+    min-height: var(--alto-destacado-l);
+  }
+
+  .acceso__titulo {
+    font-size: var(--texto-2xl);
+  }
+}

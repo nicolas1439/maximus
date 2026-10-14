@@ -1,0 +1,14 @@
+/* Plantilla del home: orden y separación vertical entre sus componentes. */
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-seccion);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+@media (min-width: 768px) {
+  .home {
+    padding-top: var(--espacio-6);
+  }
+}

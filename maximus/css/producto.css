@@ -1,0 +1,275 @@
+/* Componente tarjeta de producto (vista previa: producto.html).
+   La tarjeta se adapta sola a su ancho (container queries): sirve igual en filas deslizables, grillas o listados.
+   Toda la tarjeta lleva al producto (el enlace del nombre la cubre); favorito y carrito quedan por encima.
+   Posiciones fijas: cada dato tiene su lugar reservado. Si un producto no lo tiene (precio anterior, cuotas…),
+   el elemento va vacío y conserva su espacio, así nada se corre y las tarjetas de una fila quedan alineadas.
+   La foto es un JPG con fondo blanco: el espacio de la imagen lleva el mismo blanco (--color-fondo-imagen). */
+
+.producto {
+  container: producto / inline-size;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.producto:hover {
+  border-color: var(--color-acento);
+  box-shadow: var(--sombra);
+}
+
+/* Foco: se marca la tarjeta entera, por dentro (así no lo recorta la fila deslizable) */
+.producto:has(.producto__enlace:focus-visible) {
+  outline: 2px solid var(--color-acento);
+  outline-offset: -2px;
+}
+
+.producto__enlace:focus-visible {
+  outline: none;
+}
+
+.producto__enlace::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* Imagen */
+.producto__media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  background: var(--color-fondo-imagen);
+}
+
+.producto__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--espacio-4);
+  transition: transform var(--transicion-lenta);
+}
+
+.producto:hover .producto__img {
+  transform: scale(1.05);
+}
+
+/* Etiqueta de descuento ("Ahorrá $monto"): en el violeta secundario, discreta sobre la foto; en tarjetas amplias,
+   un punto más grande */
+.producto__etiqueta {
+  position: absolute;
+  top: var(--espacio-3);
+  left: var(--espacio-3);
+  background: var(--color-secundario);
+  color: var(--color-sobre-secundario);
+  font-size: var(--texto-2xs);
+}
+
+/* Favorito: solo el ícono sobre la foto, con el mismo color en ambos modos (la foto siempre es blanca).
+   Al pasar el mouse o marcado como favorito (aria-pressed="true") se pinta entero de rojo. */
+.producto__favorito {
+  position: absolute;
+  top: var(--espacio-1);
+  right: var(--espacio-1);
+  z-index: 1;
+  color: var(--color-sobre-imagen);
+  transition: color var(--transicion);
+}
+
+.producto__favorito:hover,
+.producto__favorito[aria-pressed="true"] {
+  background: none;
+  color: var(--color-favorito);
+}
+
+.producto__favorito:hover .icono,
+.producto__favorito[aria-pressed="true"] .icono {
+  fill: currentColor;
+}
+
+/* Datos */
+.producto__cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  padding: var(--espacio-3);
+}
+
+/* Renglón de marca y calificación: mide lo mismo con o sin calificación (la mayoría no tiene; se omite) */
+.producto__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: 1lh;
+  font-size: var(--texto-xs);
+}
+
+.producto__marca {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.producto__calificacion {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin-left: auto;
+  color: var(--color-texto-suave);
+}
+
+.producto__estrella {
+  width: 1em;
+  height: 1em;
+  fill: var(--color-calificacion);
+}
+
+.producto__puntaje {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.producto__nombre {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-normal);
+  min-height: 2lh;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Precios debajo del nombre: con nombre y renglones de alto fijo, quedan a la misma altura en toda la fila */
+.producto__precios {
+  padding-top: var(--espacio-2);
+}
+
+.producto__antes {
+  display: block;
+  min-height: 1lh;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.producto__precio {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.producto__nota {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+}
+
+/* Cuotas: en un renglón cuando entra; si no, "sin interés" baja entero al siguiente (nunca se parte).
+   Sin cuotas, el espacio de un renglón queda vacío */
+.producto__cuotas {
+  min-height: 1lh;
+  margin: 0 0 var(--espacio-2);
+  color: var(--color-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.producto__cuotas-nota {
+  white-space: nowrap;
+}
+
+/* El botón va al pie: si en una tarjeta las cuotas ocupan dos renglones, se achica el espacio de arriba
+   del botón y los botones de la fila siguen alineados */
+.producto__agregar {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: var(--alto-control-s);
+  margin-top: auto;
+  padding-inline: var(--espacio-3);
+  font-size: var(--texto-s);
+}
+
+/* Variante compacta (estante "Las más elegidas" de los listados): foto, marca, nombre, precio y cuotas; el HTML no lleva
+   favorito, calificación, precio anterior, nota ni botón (la tarjeta entera lleva al producto).
+   Más chica y con menos aire, en cualquier ancho; el nombre en tres renglones */
+.producto--compacto .producto__img {
+  padding: var(--espacio-3);
+}
+
+.producto--compacto .producto__cuerpo {
+  padding: var(--espacio-3);
+}
+
+/* El nombre va en tres renglones: con la tarjeta angosta, en dos no llega a verse el modelo */
+.producto--compacto .producto__nombre {
+  min-height: 3lh;
+  font-size: var(--texto-xs);
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.producto--compacto .producto__precios {
+  padding-top: var(--espacio-1);
+}
+
+.producto--compacto .producto__precio {
+  font-size: var(--texto-l);
+}
+
+.producto--compacto .producto__cuotas {
+  margin-bottom: 0;
+}
+
+/* Tarjeta angosta: la calificación muestra solo la nota y el botón dice solo "Agregar"
+   (la cantidad de opiniones y " al carrito" quedan para lectores de pantalla) */
+@container producto (max-width: 200px) {
+  .producto__opiniones,
+  .producto__agregar-resto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* Tarjeta amplia (desde 5 por vista en escritorio): más aire y precio más grande */
+@container producto (min-width: 220px) {
+  .producto__cuerpo {
+    padding: var(--espacio-4);
+  }
+
+  .producto__nombre {
+    font-size: var(--texto-s);
+  }
+
+  .producto__precio {
+    font-size: var(--texto-2xl);
+  }
+
+  .producto__nota {
+    font-size: var(--texto-xs);
+  }
+
+  .producto__etiqueta {
+    font-size: var(--texto-xs);
+  }
+}

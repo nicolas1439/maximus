@@ -1,0 +1,1440 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Home</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/carrusel.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/categorias.css">
+  <link rel="stylesheet" href="css/producto.css">
+  <link rel="stylesheet" href="css/productos.css">
+  <link rel="stylesheet" href="css/accesos.css">
+  <link rel="stylesheet" href="css/banner.css">
+  <link rel="stylesheet" href="css/faq.css">
+  <link rel="stylesheet" href="css/marcas.css">
+  <script type="module" src="js/carrusel.js"></script>
+  <script type="module" src="js/visible.js"></script>
+  <script type="module" src="js/marcas.js"></script>
+</head>
+<body>
+
+  <!-- Cuerpo del home: acá se suman sus componentes -->
+  <main class="home">
+    <h1 class="sr-only">Maximus Gaming Hardware, especialistas en PC gamer</h1>
+
+    <!-- Hero: carrusel principal de campañas + 4 tarjetas secundarias (textos de ejemplo).
+         Para usar un banner: <img class="hero__img" src="recursos/..." alt=""> dentro de la tarjeta
+         (o <picture> con versión mobile y escritorio). Si el banner ya trae el texto, se quita .hero__texto
+         y se describe en el alt. -->
+    <section class="hero contenedor" aria-label="Destacados">
+      <!-- Carrusel de campañas. Los colores (--hero-fondo / --hero-brillo) son de ejemplo para distinguirlas:
+           en producción cada campaña lleva su banner. -->
+      <div class="hero__principal carrusel" data-carrusel data-bucle data-autoplay="6000" role="region" aria-roledescription="carrusel" aria-label="Campañas">
+        <div class="carrusel__pista">
+          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="1 de 4">
+            <a class="hero__tarjeta hero__tarjeta--principal" href="#">
+              <svg class="hero__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-outlet"/></svg>
+              <div class="hero__texto">
+                <span class="etiqueta">Mes de la Primavera</span>
+                <h2 class="hero__titulo">Hasta 35% off</h2>
+                <p class="hero__bajada">En productos seleccionados, por tiempo limitado.</p>
+                <span class="btn btn--primario">Ver ofertas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+              </div>
+            </a>
+          </div>
+          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="2 de 4">
+            <a class="hero__tarjeta hero__tarjeta--principal" href="#" style="--hero-fondo: #2a1258; --hero-brillo: #a855f7">
+              <svg class="hero__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-pc"/></svg>
+              <div class="hero__texto">
+                <span class="etiqueta">PC armadas</span>
+                <h2 class="hero__titulo">Listas para encender y jugar</h2>
+                <p class="hero__bajada">Sin armado, sin esperas.</p>
+                <span class="btn btn--primario">Ver PC armadas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+              </div>
+            </a>
+          </div>
+          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="3 de 4">
+            <a class="hero__tarjeta hero__tarjeta--principal" href="#" style="--hero-fondo: #0b2550; --hero-brillo: #3b82f6">
+              <svg class="hero__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-monitor"/></svg>
+              <div class="hero__texto">
+                <span class="etiqueta">Monitores</span>
+                <h2 class="hero__titulo">Jugá a otra velocidad</h2>
+                <p class="hero__bajada">De 144 Hz a 280 Hz o más.</p>
+                <span class="btn btn--primario">Ver monitores <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+              </div>
+            </a>
+          </div>
+          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="4 de 4">
+            <a class="hero__tarjeta hero__tarjeta--principal" href="#" style="--hero-fondo: #4a1608; --hero-brillo: #f97316">
+              <svg class="hero__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-combo"/></svg>
+              <div class="hero__texto">
+                <span class="etiqueta">Combos</span>
+                <h2 class="hero__titulo">Actualizá tu PC</h2>
+                <p class="hero__bajada">Procesador, motherboard y memoria en un solo combo.</p>
+                <span class="btn btn--primario">Ver combos <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="carrusel__puntos">
+          <button class="carrusel__punto" type="button" aria-label="Campaña 1" aria-current="true"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 2"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 3"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 4"></button>
+        </div>
+      </div>
+
+      <a class="hero__tarjeta" href="#">
+        <svg class="hero__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cuotas"/></svg>
+        <div class="hero__texto">
+          <h2 class="hero__titulo">3 cuotas sin interés</h2>
+          <p class="hero__bajada">Con Mercado Pago</p>
+          <span class="hero__cta">Ver más <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+        </div>
+      </a>
+
+      <a class="hero__tarjeta" href="#">
+        <svg class="hero__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-pc"/></svg>
+        <div class="hero__texto">
+          <h2 class="hero__titulo">Elegí tu PC en 3 pasos</h2>
+          <p class="hero__bajada">Armala a tu medida</p>
+          <span class="hero__cta">Armá tu PC <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+        </div>
+      </a>
+
+      <a class="hero__tarjeta" href="#">
+        <svg class="hero__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-envio"/></svg>
+        <div class="hero__texto">
+          <h2 class="hero__titulo">Entrega en 24&nbsp;hs</h2>
+          <p class="hero__bajada">Con OCA, en AMBA</p>
+          <span class="hero__cta">Ver más <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+        </div>
+      </a>
+
+      <a class="hero__tarjeta" href="#">
+        <svg class="hero__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cat-notebook"/></svg>
+        <div class="hero__texto">
+          <h2 class="hero__titulo">Notebooks</h2>
+          <p class="hero__bajada">Para trabajar, estudiar y jugar</p>
+          <span class="hero__cta">Ver notebooks <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+        </div>
+      </a>
+    </section>
+
+    <!-- Categorías destacadas: accesos directos a lo que más se vende (selección de ejemplo, con fotos de productos reales de Maximus) -->
+    <!-- Marcas: tira de logos que se desliza sola, como en maximus.com.ar (mismas 12 marcas y orden). Logos en recursos/marcas/.
+         js/marcas.js duplica la lista para que el bucle no tenga salto y enciende los logos cerca del puntero.
+         Cada logo lleva su SVG como imagen (color) y como máscara del tono único (mask-image en el style). -->
+    <section class="marcas contenedor" aria-label="Marcas que trabajamos">
+      <ul class="marcas__pista">
+        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/genesis.svg" alt="Genesis"><span class="marca__tono" style="mask-image: url(recursos/marcas/genesis.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/gigabyte.svg" alt="Gigabyte"><span class="marca__tono" style="mask-image: url(recursos/marcas/gigabyte.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/nvidia.svg" alt="NVIDIA"><span class="marca__tono" style="mask-image: url(recursos/marcas/nvidia.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--alta" href="#"><img class="marca__img" src="recursos/marcas/corsair.svg" alt="Corsair"><span class="marca__tono" style="mask-image: url(recursos/marcas/corsair.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--menor" href="#"><img class="marca__img" src="recursos/marcas/amd.svg" alt="AMD"><span class="marca__tono" style="mask-image: url(recursos/marcas/amd.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/msi.svg" alt="MSI"><span class="marca__tono" style="mask-image: url(recursos/marcas/msi.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--baja" href="#"><img class="marca__img" src="recursos/marcas/asus.svg" alt="ASUS"><span class="marca__tono" style="mask-image: url(recursos/marcas/asus.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/redragon.svg" alt="Redragon"><span class="marca__tono" style="mask-image: url(recursos/marcas/redragon.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/kingston.svg" alt="Kingston"><span class="marca__tono" style="mask-image: url(recursos/marcas/kingston.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--ancha" href="#"><img class="marca__img" src="recursos/marcas/lovingcool.svg" alt="Lovingcool"><span class="marca__tono" style="mask-image: url(recursos/marcas/lovingcool.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/logitech.svg" alt="Logitech"><span class="marca__tono" style="mask-image: url(recursos/marcas/logitech.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--ancha" href="#"><img class="marca__img" src="recursos/marcas/xigmatek.svg" alt="Xigmatek"><span class="marca__tono" style="mask-image: url(recursos/marcas/xigmatek.svg)" aria-hidden="true"></span></a></li>
+      </ul>
+    </section>
+
+    <section class="categorias contenedor" aria-labelledby="categorias-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="categorias-titulo">Categorías destacadas</h2>
+        <a class="seccion__enlace" href="#">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></a>
+      </div>
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <ul class="carrusel__pista categorias__lista">
+          <li class="carrusel__item"><a class="categorias__tarjeta" href="#"><img class="categorias__img" src="recursos/categorias/pc-armadas.webp" alt="" width="256" height="255">PC armadas</a></li>
+          <li class="carrusel__item"><a class="categorias__tarjeta" href="#"><img class="categorias__img" src="recursos/categorias/notebooks.webp" alt="" width="256" height="230">Notebooks</a></li>
+          <li class="carrusel__item"><a class="categorias__tarjeta" href="#"><img class="categorias__img" src="recursos/categorias/procesadores.webp" alt="" width="221" height="256">Procesadores</a></li>
+          <li class="carrusel__item"><a class="categorias__tarjeta" href="placas-de-video.html"><img class="categorias__img" src="recursos/categorias/placas-de-video.webp" alt="" width="256" height="168">Placas de video</a></li>
+          <li class="carrusel__item"><a class="categorias__tarjeta" href="#"><img class="categorias__img" src="recursos/categorias/monitores.webp" alt="" width="256" height="199">Monitores</a></li>
+          <li class="carrusel__item"><a class="categorias__tarjeta" href="#"><img class="categorias__img" src="recursos/categorias/teclados.webp" alt="" width="256" height="101">Teclados</a></li>
+          <li class="carrusel__item"><a class="categorias__tarjeta" href="#"><img class="categorias__img" src="recursos/categorias/auriculares.webp" alt="" width="240" height="256">Auriculares</a></li>
+          <li class="carrusel__item"><a class="categorias__tarjeta" href="#"><img class="categorias__img" src="recursos/categorias/sillas-gamer.webp" alt="" width="148" height="256">Sillas gamer</a></li>
+        </ul>
+      </div>
+    </section>
+    <!-- Ofertas: fila deslizable de tarjetas de producto (fotos y nombres reales de Maximus, precios de ejemplo; solo dos con calificación y la silla, sin cuotas).
+         Sirve de base para otras filas (más vendidos, novedades): se repite la sección con otro título. -->
+    <section class="productos contenedor" aria-labelledby="ofertas-titulo">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <h2 class="seccion__titulo" id="ofertas-titulo">Ofertas</h2>
+          <div class="seccion__acciones">
+            <a class="seccion__enlace" href="#">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></a>
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">MSI</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                  <p class="producto__precio">$1.489.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/ryzen-7-9800x3d.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $110.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">AMD</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Micro AMD Ryzen 7 9800X3D 5.2 Ghz AM5</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$849.999</s>
+                  <p class="producto__precio">$739.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $290.196 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/msi-g242l.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $60.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">MSI</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Monitor Gamer IPS MSI 24" G242L E14 144Hz HDMI - DP</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$449.999</s>
+                  <p class="producto__precio">$389.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $152.941 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/redragon-k552.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $40.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Redragon</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Teclado Mecanico Redragon K552 Kumara 2 Rainbow Red Switches - Español</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$279.999</s>
+                  <p class="producto__precio">$239.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $94.117 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/redragon-zeus-x.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $30.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Redragon</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Auricular c/mic Redragon ZEUS X H510 White RGB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$249.999</s>
+                  <p class="producto__precio">$219.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $86.274 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/logitech-g203.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $35.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Logitech G</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Mouse Logitech G203 Lightsync Black</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$219.999</s>
+                  <p class="producto__precio">$184.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $72.549 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/lenovo-loq-15.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $250.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Lenovo</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook Lenovo LOQ 15AHP10 15.6" FHD AMD Ryzen 5-220 16GB RAM 512GB SSD Rtx 5050 - W11</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$1.899.999</s>
+                  <p class="producto__precio">$1.649.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $647.058 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/coolermaster-caliber-x2.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $60.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Cooler Master</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,5</span><span class="producto__opiniones">(12<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Silla Gamer Coolermaster Caliber X2 Gray</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$389.999</s>
+                  <p class="producto__precio">$329.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas"></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Accesos destacados: herramientas y destinos clave, con fotos de productos reales de Maximus -->
+    <section class="accesos contenedor" aria-label="Accesos destacados">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <ul class="carrusel__pista accesos__lista">
+          <li class="carrusel__item">
+            <a class="acceso acceso--pc" href="#" data-activo-visible="accesos">
+              <div class="acceso__texto">
+                <ol class="acceso__detalle acceso__pasos" aria-hidden="true"><li>1</li><li>2</li><li>3</li></ol>
+                <h2 class="acceso__titulo">Encontrá tu PC ideal</h2>
+                <p class="acceso__bajada">Respondé 3 preguntas y te recomendamos la PC justa para lo que necesitás.</p>
+                <span class="btn btn--primario acceso__cta">Comenzar <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+              </div>
+              <img class="acceso__img" src="recursos/accesos/pc-ideal.webp" alt="" width="374" height="480" loading="lazy">
+            </a>
+          </li>
+          <li class="carrusel__item">
+            <a class="acceso acceso--armador" href="#" data-activo-visible="accesos">
+              <div class="acceso__texto">
+                <span class="acceso__detalle acceso__progreso" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+                <h2 class="acceso__titulo">Armá tu PC</h2>
+                <p class="acceso__bajada">Elegí cada componente y armá la PC a tu medida, paso a paso.</p>
+                <span class="btn btn--primario acceso__cta">Empezar a armar <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+              </div>
+              <img class="acceso__img acceso__img--mother" src="recursos/accesos/armador-motherboard.webp" alt="" width="424" height="480" loading="lazy">
+              <img class="acceso__img acceso__img--memoria" src="recursos/accesos/armador-memoria.webp" alt="" width="480" height="159" loading="lazy">
+            </a>
+          </li>
+          <li class="carrusel__item">
+            <a class="acceso acceso--gpu" href="placas-de-video.html" data-activo-visible="accesos">
+              <div class="acceso__texto">
+                <span class="acceso__detalle acceso__barras" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+                <h2 class="acceso__titulo">Placas de video</h2>
+                <p class="acceso__bajada">NVIDIA GeForce y AMD Radeon para jugar, crear y trabajar con IA.</p>
+                <span class="btn btn--primario acceso__cta">Ver placas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></span>
+              </div>
+              <img class="acceso__img" src="recursos/accesos/placa-de-video.webp" alt="" width="480" height="315" loading="lazy">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Lo último que viste: la misma fila de productos que Ofertas, sin "Ver todas" (fotos y nombres reales de Maximus, precios de ejemplo) -->
+    <section class="productos contenedor" aria-labelledby="vistos-titulo">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <h2 class="seccion__titulo" id="vistos-titulo">Lo último que viste</h2>
+          <div class="seccion__acciones">
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/kingston-fury-beast-ddr5.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $14.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Kingston</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Memoria RAM Kingston Fury Beast 16GB RGB 6000 Mhz DDR5 CL36 AMD EXPO</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$139.999</s>
+                  <p class="producto__precio">$125.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $49.411 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">MSI</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                  <p class="producto__precio">$1.489.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/arkham-27-qhd.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Arkham</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(12<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Monitor LED IPS 27" Arkham Gaming QHD 210Hz 1ms - HDMI/DP</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$369.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $145.098 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/ryzen-5-5500.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $30.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">AMD</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(31<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Micro AMD Ryzen 5 5500 4.2 Ghz AM4</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$189.999</s>
+                  <p class="producto__precio">$159.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $62.745 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/redragon-zeus-x.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $30.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Redragon</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Auricular c/mic Redragon ZEUS X H510 White RGB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$249.999</s>
+                  <p class="producto__precio">$219.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $86.274 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/redragon-king-m999.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $16.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Redragon</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">5,0</span><span class="producto__opiniones">(6<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Mouse Redragon K1NG Ultra M999 Wireless</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$79.999</s>
+                  <p class="producto__precio">$63.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $25.098 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/msi-a520m-a-pro.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">MSI</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Motherboard MSI A520M A Pro AM4</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$114.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $45.098 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/asus-rog-chariot-core.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">ASUS ROG</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,6</span><span class="producto__opiniones">(17<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Silla Gamer Asus Rog Chariot Core Black</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$649.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $254.902 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Computadoras armadas: PC armadas por Maximus (fotos y nombres reales, precios de ejemplo) -->
+    <section class="productos contenedor" aria-labelledby="computadoras-titulo">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <h2 class="seccion__titulo" id="computadoras-titulo">Computadoras armadas</h2>
+          <div class="seccion__acciones">
+            <a class="seccion__enlace" href="#">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></a>
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml12.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $180.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Maximus</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(19<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">PC Armada AMD Ryzen 5 5500 RTX 3050 16GB 512GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$1.379.999</s>
+                  <p class="producto__precio">$1.199.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $470.588 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml2.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $80.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Maximus</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">PC Armada AMD Ryzen 5 5600GT 16GB 512GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$779.999</s>
+                  <p class="producto__precio">$699.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $274.509 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml8.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Maximus</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(44<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">PC Armada AMD Ryzen 5 5500 RTX 5050 16GB 512GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$1.399.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $549.019 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml5.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Maximus</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">PC Armada AMD Ryzen 7 5700G 16GB 512GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$849.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $333.333 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml11.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $120.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Maximus</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(15<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">PC Armada AMD Ryzen 5 4500 RX 7600 16GB 512GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$1.419.999</s>
+                  <p class="producto__precio">$1.299.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $509.804 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml1.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Maximus</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">PC Armada AMD Ryzen 3 3200G 8GB 256GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$489.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $192.156 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml14.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Maximus</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(9<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">PC Armada AMD Ryzen 7 5700G 32GB 1TB WIFI White</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$1.099.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $431.372 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml13.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $100.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Maximus</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">PC Armada AMD Ryzen 7 5700G 32GB 1TB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$1.149.999</s>
+                  <p class="producto__precio">$1.049.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $411.764 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Banner de campaña MSI x AMD (banners reales de Maximus, adaptados al alto de los accesos destacados) -->
+    <div class="banner contenedor">
+      <a class="banner__enlace" href="#" data-activo-visible>
+        <picture>
+          <source media="(min-width: 1024px)" srcset="recursos/banners/msi-amd-escritorio.webp" width="2180" height="364">
+          <img class="banner__img" src="recursos/banners/msi-amd-mobile.webp" alt="MSI x AMD: llevate un cooler MSI MAG CoreFrozr AA13 de regalo comprando una motherboard MSI AM5 y un micro AMD. Válido hasta agotar stock." width="1760" height="440" loading="lazy">
+        </picture>
+      </a>
+    </div>
+
+    <!-- Notebooks: fila de una categoría, igual a Ofertas (fotos y nombres reales de Maximus, precios de ejemplo) -->
+    <section class="productos contenedor" aria-labelledby="notebooks-titulo">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <h2 class="seccion__titulo" id="notebooks-titulo">Notebooks</h2>
+          <div class="seccion__acciones">
+            <a class="seccion__enlace" href="#">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></a>
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/legion-5-oled.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $300.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Lenovo</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,4</span><span class="producto__opiniones">(11<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook Lenovo Legion 5 15AKP10 15.6" WQXGA OLED 165hz Ryzen AI 7 350 16GB 512GB Nvme RTX 5050 8GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$2.399.999</s>
+                  <p class="producto__precio">$2.099.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $823.529 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/hp-victus-15-rtx5060.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">HP</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,6</span><span class="producto__opiniones">(31<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook HP Victus 15 FA2093DX Gaming 15.6" 144Hz Intel I7 13620H 16GB Ram 1TB Nvme W11 RTX 5060 8GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$1.899.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $745.098 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/asus-vivobook-go-15.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $75.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">ASUS</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook ASUS VIVOBOOK GO E1504fa-WS51 15.6" AMD Ryzen 5 40 FHD 8GB Ram 512GB Nvme W11H</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$749.999</s>
+                  <p class="producto__precio">$674.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $264.705 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/lenovo-loq-15.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $250.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Lenovo</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(52<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook Lenovo LOQ 15AHP10 15.6" FHD AMD Ryzen 5-220 16GB RAM 512GB SSD Rtx 5050 - W11</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$1.899.999</s>
+                  <p class="producto__precio">$1.649.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $647.058 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/hp-omnibook-3.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">HP</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook HP Omnibook 3 16-BY0205DX IPS 16.0" WUXGA 2K AMD Ryzen 5 40 16GB 256GB - TouchScreen - W11</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$1.049.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $411.764 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/lenovo-ideapad-slim-3-r7.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $90.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Lenovo</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,6</span><span class="producto__opiniones">(7<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook Lenovo IdeaPad Slim 3 15ABR8 15.6" Amd Ryzen 7 5825U 8GB Ram 512GB NVMe W11H</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$899.999</s>
+                  <p class="producto__precio">$809.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $317.647 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/hp-15-r5.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">HP</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook HP 15.6" Ryzen 5 7520U 8GB Ram 512GB NVMe FHD - W11 Home</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$629.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $247.058 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/legion-5-rtx5060.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $350.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Lenovo</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(19<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook Lenovo Legion 5 Gaming 15AHP10 15.6" 165hz Ryzen 7 260 16GB Ram 512GB SSD RTX 5060 8GB W11</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$2.699.999</s>
+                  <p class="producto__precio">$2.349.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $921.568 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Tus favoritos: los productos que el cliente marcó con el corazón (selección de ejemplo). En producción se arma con
+         los favoritos del cliente y no se muestra si no tiene ninguno. Misma fila que Más vendidos, con el corazón marcado. -->
+    <section class="productos contenedor" aria-labelledby="favoritos-titulo">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <h2 class="seccion__titulo" id="favoritos-titulo">Tus favoritos</h2>
+          <div class="seccion__acciones">
+            <a class="seccion__enlace" href="#">Ver todos <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></a>
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">MSI</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                  <p class="producto__precio">$1.489.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/ryzen-7-9800x3d.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $110.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">AMD</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Micro AMD Ryzen 7 9800X3D 5.2 Ghz AM5</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$849.999</s>
+                  <p class="producto__precio">$739.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $290.196 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/legion-5-oled.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $300.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Lenovo</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,4</span><span class="producto__opiniones">(11<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Notebook Lenovo Legion 5 15AKP10 15.6" WQXGA OLED 165hz Ryzen AI 7 350 16GB 512GB Nvme RTX 5050 8GB</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$2.399.999</s>
+                  <p class="producto__precio">$2.099.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $823.529 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/arkham-27-qhd.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Arkham</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(12<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Monitor LED IPS 27" Arkham Gaming QHD 210Hz 1ms - HDMI/DP</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$369.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $145.098 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/redragon-k552.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $40.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Redragon</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Teclado Mecanico Redragon K552 Kumara 2 Rainbow Red Switches - Español</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$279.999</s>
+                  <p class="producto__precio">$239.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $94.117 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/logitech-g203.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $35.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Logitech G</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Mouse Logitech G203 Lightsync Black</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$219.999</s>
+                  <p class="producto__precio">$184.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $72.549 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Más vendidos: productos de varias categorías (fotos y nombres reales de Maximus, precios de ejemplo) -->
+    <section class="productos contenedor" aria-labelledby="vendidos-titulo">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <h2 class="seccion__titulo" id="vendidos-titulo">Más vendidos</h2>
+          <div class="seccion__acciones">
+            <a class="seccion__enlace" href="#">Ver todos <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></a>
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/kingston-nv3-1tb.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $15.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Kingston</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(57<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Disco Solido SSD 1TB Kingston NV3 M.2 NVMe PCIe x4 4.0 (Similar 960GB)</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$114.999</s>
+                  <p class="producto__precio">$99.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $39.215 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/ryzen-7-5700x.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">AMD</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Micro AMD Ryzen 7 5700X 4.6 Ghz AM4</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$289.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $113.725 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/msi-rtx-5060-shadow.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $80.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">MSI</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,5</span><span class="producto__opiniones">(28<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Placa de Video Msi Nvidia Geforce RTX 5060 SHADOW 2X 8GB OC GDDR7</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$829.999</s>
+                  <p class="producto__precio">$749.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $294.117 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/redragon-k552.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $40.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Redragon</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Teclado Mecanico Redragon K552 Kumara 2 Rainbow Red Switches - Español</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$279.999</s>
+                  <p class="producto__precio">$239.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $94.117 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/gigabyte-gs25f2.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Gigabyte</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(18<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Monitor Gamer IPS 24.5" Gigabyte GS25F2 FHD 200Hz 1Ms Freesync Premium</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$279.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $109.804 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/msi-mag-a650gn.jpg" alt="" width="600" height="600">
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">MSI</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(36<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Fuente 650W MSI MAG A650GN II 80 PLUS Gold</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"></s>
+                  <p class="producto__precio">$134.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $52.941 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/redragon-h610.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $10.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Redragon</span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Auricular Gamer Redragon H610 Vibecore BT - Negro</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$64.999</s>
+                  <p class="producto__precio">$54.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $21.568 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+          <li class="carrusel__item">
+            <article class="producto">
+              <div class="producto__media">
+                <img class="producto__img" loading="lazy" src="recursos/productos/logitech-g203.jpg" alt="" width="600" height="600">
+                <span class="etiqueta producto__etiqueta">Ahorrá $35.000</span>
+                <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-favorito"/></svg></button>
+              </div>
+              <div class="producto__cuerpo">
+                <div class="producto__meta">
+                  <span class="producto__marca">Logitech G</span>
+                  <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
+                </div>
+                <h3 class="producto__nombre"><a class="producto__enlace" href="#">Mouse Logitech G203 Lightsync Black</a></h3>
+                <div class="producto__precios">
+                  <s class="producto__antes"><span class="sr-only">Antes: </span>$219.999</s>
+                  <p class="producto__precio">$184.999</p>
+                  <p class="producto__nota">Efectivo o transferencia</p>
+                </div>
+                <p class="producto__cuotas">3 × $72.549 <span class="producto__cuotas-nota">sin interés</span></p>
+                <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Preguntas frecuentes: las 8 más consultadas, con las respuestas del centro de ayuda de maximus.com.ar
+         (resumidas, sin cambiar las políticas). El enlace lleva al centro de ayuda completo. -->
+    <section class="faq contenedor" id="preguntas-frecuentes" aria-labelledby="faq-titulo">
+      <div class="faq__intro">
+        <h2 class="seccion__titulo" id="faq-titulo">Preguntas frecuentes</h2>
+        <p class="faq__bajada">Lo que más nos consultan antes de comprar. Si no encontrás tu respuesta, escribinos.</p>
+        <div class="faq__acciones">
+          <a class="btn btn--primario" href="https://wa.me/541123575522"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-whatsapp"/></svg>Escribinos por WhatsApp</a>
+          <a class="seccion__enlace" href="#">Ver todas las preguntas<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-derecha"/></svg></a>
+        </div>
+      </div>
+
+      <div class="faq__lista">
+        <details class="faq__item" name="faq">
+          <summary class="faq__pregunta">¿Hacen envíos a todo el país?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+          <div class="faq__respuesta">
+            <p>Sí, enviamos a todo el país (excepto Tierra del Fuego) por OCA, a domicilio o a sucursal. En AMBA la entrega es en 24 hs.</p>
+            <p>El costo y el plazo se consultan con “Ver costo de envío” en la página de cada producto. En eventos como Hot Sale o Cyber Monday los plazos pueden extenderse.</p>
+          </div>
+        </details>
+        <details class="faq__item" name="faq">
+          <summary class="faq__pregunta">¿Puedo retirar mi pedido en persona?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+          <div class="faq__respuesta">
+            <p>Sí, sin costo en dos puntos de CABA:</p>
+            <ul>
+              <li><strong>Galería Jardín:</strong> Florida 537, Local 379 (PB). Lunes a viernes de 10 a 19 h, sábados de 10 a 14:30 h.</li>
+              <li><strong>Floresta:</strong> Remedios de Escalada de San Martín 3875. Lunes a viernes de 9 a 17 h, sábados de 10 a 14 h.</li>
+            </ul>
+            <p>Se retira cuando llega el correo de confirmación: 24 a 48 hs hábiles para productos en stock y 72 hs hábiles para computadoras armadas.</p>
+          </div>
+        </details>
+        <details class="faq__item" name="faq">
+          <summary class="faq__pregunta">¿Qué medios de pago aceptan?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+          <div class="faq__respuesta">
+            <ul>
+              <li><strong>Transferencia o depósito bancario:</strong> los datos se informan al finalizar la compra y hay que subir el comprobante.</li>
+              <li><strong>Efectivo:</strong> solo en Galería Jardín o en cajeros automáticos del Banco Galicia.</li>
+              <li><strong>Mercado Pago:</strong> en 1, 3, 6, 9, 12, 18 y 24 cuotas fijas.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="faq__item" name="faq">
+          <summary class="faq__pregunta">¿Cómo hago el seguimiento de mi pedido?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+          <div class="faq__respuesta">
+            <p>Cuando se despacha, el estado del pedido en tu cuenta pasa a “Despachado” y desde ahí accedés al seguimiento de OCA en tiempo real. También podés entrar por “Seguí tu pedido”, arriba de la página.</p>
+          </div>
+        </details>
+        <details class="faq__item" name="faq">
+          <summary class="faq__pregunta">¿Dónde subo el comprobante si pagué por transferencia?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+          <div class="faq__respuesta">
+            <p>En “Mi cuenta”, sección “Mis compras”, dentro del pedido correspondiente. Es obligatorio para validar el pago y que el pedido entre en preparación.</p>
+          </div>
+        </details>
+        <details class="faq__item" name="faq">
+          <summary class="faq__pregunta">¿Qué garantía tienen los productos?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+          <div class="faq__respuesta">
+            <ul>
+              <li><strong>12 meses:</strong> computadoras armadas por Maximus.</li>
+              <li><strong>6 meses en el local:</strong> periféricos, hardware, conectividad y accesorios.</li>
+              <li><strong>Directa con el fabricante:</strong> notebooks, impresoras, monitores, Logitech y Seagate, con 10 días de prueba con Maximus.</li>
+            </ul>
+            <p>Hace falta presentar la factura y conservar la caja y el embalaje originales.</p>
+          </div>
+        </details>
+        <details class="faq__item" name="faq">
+          <summary class="faq__pregunta">¿Puedo cambiar o devolver un producto?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+          <div class="faq__respuesta">
+            <p>Devolución hasta 10 días corridos desde la recepción y cambio hasta 30 días corridos, siempre sin uso, sin abrir y con el empaque y los accesorios originales.</p>
+            <p>No tienen cambio ni devolución los productos Outlet o marcados “sin cambio”, las licencias de software activadas y los productos con uso.</p>
+          </div>
+        </details>
+        <details class="faq__item" name="faq">
+          <summary class="faq__pregunta">¿Qué tipo de factura emiten?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></summary>
+          <div class="faq__respuesta">
+            <p>Factura B por defecto, para consumidor final. Factura A si cargás tu CUIT y razón social al comprar. La factura electrónica llega por correo al confirmarse el pago y queda disponible en “Mis compras”.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
