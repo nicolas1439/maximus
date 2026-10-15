@@ -981,19 +981,13 @@ html:has(.menu--abierto) {
     background: var(--color-borde);
   }
 
-  /* Al pasar el mouse, el fuego de Ofertas flamea (sigue mientras dura el hover) y la llave de Armá tu PC
-     da un par de giros, como si ajustara una tuerca. Con "reducir movimiento" no se mueven (base.css) */
-  .menu__destacado .icono {
-    transform-origin: 50% 90%;
-  }
-
+  /* Al pasar el mouse, el fuego de Ofertas flamea (header.js mueve la punta de la llama mientras dura el hover;
+     va en línea en el HTML para poder tocar su trazo, y sin recorte para que la punta no se corte al estirarse)
+     y la llave de Armá tu PC da un par de giros, como si ajustara una tuerca. Con "reducir movimiento" no se mueven */
   .menu__destacado:first-child .icono {
     width: 20px;
     height: 20px;
-  }
-
-  .menu__destacado:first-child a:hover .icono {
-    animation: menu-fuego 0.7s ease-in-out infinite;
+    overflow: visible;
   }
 
   .menu__destacado:nth-child(2) .icono {
@@ -1002,21 +996,6 @@ html:has(.menu--abierto) {
 
   .menu__destacado:nth-child(2) a:hover .icono {
     animation: menu-llave 0.8s ease-in-out;
-  }
-}
-
-@keyframes menu-fuego {
-  0%, 100% {
-    transform: scale(1, 1) skewX(0deg);
-  }
-  25% {
-    transform: scale(0.92, 1.12) skewX(-6deg);
-  }
-  50% {
-    transform: scale(1.06, 0.94) skewX(3deg);
-  }
-  75% {
-    transform: scale(0.95, 1.1) skewX(6deg);
   }
 }
 
