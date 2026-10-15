@@ -343,7 +343,7 @@ function iniciar() {
     // El envío y su seguro (o el retiro) van como un ítem más, recién cuando se eligió cómo recibir el pedido.
     // Ícono genérico en el lugar de la foto hasta tener sus imágenes desde el sistema.
     const extra = (icono, texto, monto) =>
-      `<li><span class="resumen__icono"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#${icono}"/></svg></span><span>${texto}</span><strong>${monto}</strong></li>`;
+      `<li><span class="resumen__icono"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#${icono}"/></svg></span><span>${texto}</span><strong>${monto}</strong></li>`;
     let extras = '';
     if (entrega === 'envio' && modalidad) extras = extra('i-envio', modalidad.dataset.texto, pesos(total.envio)) + extra('i-garantia', 'Seguro de envío', pesos(total.seguro));
     else if (entrega === 'retiro') extras = extra('i-tienda', elegido('retiro')?.dataset.texto || 'Retiro en tienda', 'Gratis');

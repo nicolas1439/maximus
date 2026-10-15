@@ -239,7 +239,7 @@ function pintarActivos() {
   for (const { texto, quitar } of lista) {
     const li = document.createElement('li');
     li.className = 'activo';
-    li.innerHTML = `${escapar(texto)}<button class="activo__quitar" type="button" aria-label="Quitar filtro ${escapar(texto)}"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cerrar"/></svg></button>`;
+    li.innerHTML = `${escapar(texto)}<button class="activo__quitar" type="button" aria-label="Quitar filtro ${escapar(texto)}"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cerrar"/></svg></button>`;
     li.querySelector('button').addEventListener('click', () => {
       quitar();
       aplicar();

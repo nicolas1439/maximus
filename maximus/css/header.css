@@ -983,6 +983,11 @@ html:has(.menu--abierto) {
     transform-origin: 50% 90%;
   }
 
+  .menu__destacado:first-child .icono {
+    width: 20px;
+    height: 20px;
+  }
+
   .menu__destacado:first-child a:hover .icono {
     animation: menu-fuego 0.7s ease-in-out infinite;
   }
