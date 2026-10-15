@@ -172,7 +172,6 @@ function iniciar() {
     const antes = $('[data-item-antes]', item);
     antes.hidden = !lista;
     if (lista) antes.innerHTML = `<span class="sr-only">Precio de lista: </span>${pesos(lista * cantidad)}`;
-    $('[data-item-efectivo]', item).textContent = pesos(precio * cantidad * (1 - DESCUENTO_TRANSFERENCIA));
     const unitario = $('[data-item-unitario]', item);
     unitario.textContent = `${pesos(precio)} c/u`;
     unitario.hidden = cantidad < 2;
@@ -341,35 +340,41 @@ function iniciar() {
 
     // Detalle de la compra
     const itemsResumen = $('[data-resumen-items]');
-    itemsResumen.innerHTML = items()
-      .map((item) => {
-        const n = Number($('input', item).value) || 1;
-        const foto = $('img', item).getAttribute('src');
-        return `<li><img src="${foto}" alt="" width="600" height="600"><span>${item.dataset.nombre}<small> × ${n}</small></span><strong>${pesos(Number(item.dataset.precio) * n)}</strong></li>`;
-      })
-      .join('');
+    // El envío y su seguro (o el retiro) van como un ítem más, recién cuando se eligió cómo recibir el pedido.
+    // Ícono genérico en el lugar de la foto hasta tener sus imágenes desde el sistema.
+    const extra = (icono, texto, monto) =>
+      `<li><span class="resumen__icono"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#${icono}"/></svg></span><span>${texto}</span><strong>${monto}</strong></li>`;
+    let extras = '';
+    if (entrega === 'envio' && modalidad) extras = extra('i-envio', modalidad.dataset.texto, pesos(total.envio)) + extra('i-garantia', 'Seguro de envío', pesos(total.seguro));
+    else if (entrega === 'retiro') extras = extra('i-tienda', elegido('retiro')?.dataset.texto || 'Retiro en tienda', 'Gratis');
+    itemsResumen.innerHTML =
+      items()
+        .map((item) => {
+          const n = Number($('input', item).value) || 1;
+          const foto = $('img', item).getAttribute('src');
+          return `<li><img src="${foto}" alt="" width="600" height="600"><span>${item.dataset.nombre}<small> × ${n}</small></span><strong>${pesos(Number(item.dataset.precio) * n)}</strong></li>`;
+        })
+        .join('') + extras;
 
     $('[data-total-cantidad]').textContent = total.cantidad;
     $('[data-total-lista]').textContent = pesos(total.lista);
     $('[data-fila-campania]').hidden = !total.campania;
     $('[data-campania-nombre]').textContent = items().find((i) => i.dataset.campania)?.dataset.campania || 'Campaña';
     $('[data-total-campania]').textContent = `−${pesos(total.campania)}`;
-    $('[data-total-envio]').textContent = entrega === 'retiro' ? 'Gratis' : modalidad ? pesos(total.envio) : 'A elegir';
-    $('[data-fila-seguro]').hidden = !total.seguro;
-    $('[data-total-seguro]').textContent = pesos(total.seguro);
     $('[data-fila-descuento]').hidden = !total.descuento;
     $('[data-total-descuento]').textContent = `−${pesos(total.descuento)}`;
     $$('[data-total]').forEach((n) => (n.textContent = pesos(total.final)));
     $$('[data-ahorro]').forEach((n) => (n.textContent = n.matches('.opcion__precio') ? `Ahorrás ${pesos(ahorro)}` : pesos(ahorro)));
 
-    // Nota bajo el total: el ahorro por transferencia o el plan de cuotas elegido
+    // Nota bajo el total: el descuento por transferencia o el plan de cuotas, recién cuando se eligió el pago
     const nota = $('[data-resumen-nota]');
     if (pago === 'transferencia') nota.innerHTML = `Incluye el 10% de descuento por transferencia: <strong>ahorrás ${pesos(total.descuento)}</strong>.`;
     else if (pago === 'mercadopago' && cuotas) {
       const n = Number(cuotas.value);
       const financiado = total.final * Number(cuotas.dataset.factor);
       nota.innerHTML = n === 1 ? 'En 1 pago con tarjeta.' : `<strong>${n} cuotas de ${pesos(financiado / n)}</strong>${financiado > total.final ? ` · Total financiado ${pesos(financiado)}` : ' sin interés'}.`;
-    } else nota.innerHTML = `Pagando por transferencia ahorrás <strong>${pesos(ahorro)}</strong>.`;
+    } else nota.innerHTML = '';
+    nota.hidden = !nota.innerHTML;
 
     // Cuotas: el valor de cada una sobre el total con tarjeta, y el plan elegido
     $$('.cuota', checkout).forEach((cuota) => {

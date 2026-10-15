@@ -540,8 +540,7 @@ html:has(.menu--abierto) {
   border-bottom: 1px solid var(--color-borde);
 }
 
-.menu__atajo,
-.menu__links--fin .icono {
+.menu__atajo {
   display: none;
 }
 
@@ -931,10 +930,6 @@ html:has(.menu--abierto) {
     justify-self: end;
   }
 
-  .menu__links--fin .icono {
-    display: block;
-  }
-
   .menu__links a {
     position: relative;
     white-space: nowrap;
@@ -944,17 +939,90 @@ html:has(.menu--abierto) {
   }
 
   .menu__links a:hover {
-    background: none;
-    color: var(--color-acento);
+    background-color: transparent;
   }
 
-  .menu__links a[aria-current="page"]::after {
+  /* Hover y página actual: una línea verde al pie de la fila. Al pasar el mouse crece desde el centro
+     (con "reducir movimiento", aparece con un fundido) */
+  .menu__links a::after {
     content: "";
     position: absolute;
     inset: auto 0 -1px;
     height: 3px;
     border-radius: 3px 3px 0 0;
     background: var(--color-marca);
+    opacity: 0;
+    transform: scaleX(0);
+    transition: transform var(--transicion), opacity var(--transicion);
+  }
+
+  .menu__links a:hover::after,
+  .menu__links a[aria-current="page"]::after {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Ofertas y Armá tu PC, los enlaces principales: llevan ícono (fuego y llave) y un separador los aparta
+     de las categorías */
+  .menu__destacado + .menu__atajo {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-6);
+  }
+
+  .menu__destacado + .menu__atajo::before {
+    content: "";
+    width: 1px;
+    height: 20px;
+    background: var(--color-borde);
+  }
+
+  /* Al pasar el mouse, el fuego de Ofertas flamea (sigue mientras dura el hover) y la llave de Armá tu PC
+     da un par de giros, como si ajustara una tuerca. Con "reducir movimiento" no se mueven (base.css) */
+  .menu__destacado .icono {
+    transform-origin: 50% 90%;
+  }
+
+  .menu__destacado:first-child a:hover .icono {
+    animation: menu-fuego 0.7s ease-in-out infinite;
+  }
+
+  .menu__destacado:nth-child(2) .icono {
+    transform-origin: 50% 50%;
+  }
+
+  .menu__destacado:nth-child(2) a:hover .icono {
+    animation: menu-llave 0.8s ease-in-out;
+  }
+}
+
+@keyframes menu-fuego {
+  0%, 100% {
+    transform: scale(1, 1) skewX(0deg);
+  }
+  25% {
+    transform: scale(0.92, 1.12) skewX(-6deg);
+  }
+  50% {
+    transform: scale(1.06, 0.94) skewX(3deg);
+  }
+  75% {
+    transform: scale(0.95, 1.1) skewX(6deg);
+  }
+}
+
+@keyframes menu-llave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-35deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(-25deg);
   }
 }
 

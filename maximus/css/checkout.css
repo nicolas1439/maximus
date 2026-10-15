@@ -311,10 +311,6 @@
   text-align: right;
 }
 
-.item__nota strong {
-  display: block;
-}
-
 .item__precio {
   margin: 0;
   font-size: var(--texto-l);
@@ -347,17 +343,11 @@
   font-variant-numeric: tabular-nums;
 }
 
-.item__nota,
 .item__unitario {
   margin: 2px 0 0;
   color: var(--color-texto-suave);
   font-size: var(--texto-xs);
   font-variant-numeric: tabular-nums;
-}
-
-.item__nota strong {
-  color: var(--color-acento);
-  font-weight: var(--peso-medio);
 }
 
 /* Carrito vacío */
@@ -1056,6 +1046,17 @@
   color: var(--color-texto-suave);
 }
 
+/* Envío y seguro: un ítem más, con un ícono genérico en el lugar de la foto (hasta tener sus imágenes del sistema) */
+.resumen__icono {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  color: var(--color-texto-suave);
+}
+
 .resumen__items strong {
   font-weight: var(--peso-medio);
   font-variant-numeric: tabular-nums;
@@ -1275,10 +1276,6 @@ body:has(.checkout__barra--visible) .aviso {
 
   .item__precios {
     min-width: 9rem;
-  }
-
-  .item__nota strong {
-    display: inline;
   }
 
   .opciones--dos {
