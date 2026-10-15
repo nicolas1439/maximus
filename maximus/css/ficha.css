@@ -341,7 +341,9 @@
   height: 14px;
 }
 
+/* El descuento de la campaña, en violeta como su etiqueta */
 .compra__campania-descuento {
+  color: var(--color-secundario-texto);
   font-weight: var(--peso-fuerte);
 }
 
@@ -491,56 +493,6 @@
   font-weight: var(--peso-medio);
 }
 
-.cantidad {
-  display: inline-flex;
-  align-items: center;
-  height: var(--alto-control-l);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio);
-  background: var(--color-fondo);
-  transition: border-color var(--transicion);
-}
-
-.cantidad:focus-within {
-  border-color: var(--color-acento);
-}
-
-.cantidad__btn {
-  display: grid;
-  place-items: center;
-  width: var(--alto-control);
-  height: 100%;
-  color: var(--color-texto-suave);
-  transition: color var(--transicion), opacity var(--transicion);
-}
-
-.cantidad__btn:hover {
-  color: var(--color-acento);
-}
-
-.cantidad__btn:disabled {
-  opacity: 0.35;
-  color: inherit;
-  cursor: default;
-}
-
-.cantidad__campo {
-  width: 40px;
-  height: 100%;
-  border: 0;
-  background: none;
-  font-weight: var(--peso-medio);
-  text-align: center;
-  outline: none;
-  appearance: textfield;
-}
-
-.cantidad__campo::-webkit-outer-spin-button,
-.cantidad__campo::-webkit-inner-spin-button {
-  margin: 0;
-  appearance: none;
-}
-
 .compra__agregar {
   height: var(--alto-control-l);
   padding-inline: var(--espacio-4);
@@ -650,7 +602,7 @@
   font-size: var(--texto-s);
 }
 
-/* Usos y rendimiento: una tarjeta por uso, con su ícono en un recuadro de marca */
+/* Usos y rendimiento: una tarjeta por uso, con su ícono en un recuadro violeta tenue (el color secundario) */
 .usos__lista {
   display: grid;
   gap: var(--espacio-3);
@@ -672,8 +624,8 @@
   height: 40px;
   padding: var(--espacio-2);
   border-radius: var(--radio);
-  background: var(--color-brillo-marca);
-  color: var(--color-acento);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
 }
 
 .uso h3 {
@@ -949,36 +901,6 @@ body:has(.ficha__barra--visible) {
 
 .visor__flecha[data-sentido="1"] {
   right: var(--espacio-3);
-}
-
-/* ---------- Aviso breve (enlace copiado, agregado al carrito…) ---------- */
-
-.aviso {
-  position: fixed;
-  bottom: calc(var(--espacio-6) + env(safe-area-inset-bottom));
-  left: 50%;
-  z-index: 120;
-  margin: 0;
-  padding: var(--espacio-3) var(--espacio-4);
-  border-radius: var(--radio-pill);
-  background: var(--color-barra);
-  color: var(--color-sobre-barra);
-  font-size: var(--texto-s);
-  font-weight: var(--peso-medio);
-  white-space: nowrap;
-  box-shadow: var(--sombra);
-  translate: -50% 8px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity var(--transicion), translate var(--transicion), visibility 0s var(--duracion);
-}
-
-.aviso--visible {
-  translate: -50% 0;
-  opacity: 1;
-  visibility: visible;
-  transition: opacity var(--transicion), translate var(--transicion);
 }
 
 /* Con la barra de compra a la vista, el aviso sube */

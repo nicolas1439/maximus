@@ -85,8 +85,10 @@
   transform: scale(1.15);
 }
 
-/* Títulos de columna: en mayúsculas y con línea abajo, como en el sitio */
+/* Títulos de columna: en mayúsculas y con línea abajo, como en el sitio. La línea arranca con un trazo corto en el
+   lila de marca (el violeta legible sobre el fondo oscuro), que retoma el violeta de la línea de luz */
 .pie__titulo {
+  position: relative;
   margin: 0 0 var(--espacio-3);
   padding-bottom: var(--espacio-2);
   border-bottom: 1px solid var(--color-barra-borde);
@@ -94,6 +96,17 @@
   font-weight: var(--peso-fuerte);
   letter-spacing: var(--espaciado-mayusculas);
   text-transform: uppercase;
+}
+
+.pie__titulo::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  border-radius: var(--radio-pill);
+  background: var(--color-secundario-sobre-barra);
 }
 
 /* Columnas de enlaces */

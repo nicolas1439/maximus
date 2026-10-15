@@ -152,6 +152,27 @@ ul {
   color: var(--color-sobre-secundario);
 }
 
+/* Chip en violeta tenue (el color secundario): cantidades y campañas junto a un título ("Productos (n)", "34 productos") */
+.chip-secundario {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  height: 24px;
+  padding-inline: var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.chip-secundario .icono {
+  width: 14px;
+  height: 14px;
+}
+
 /* Selector: select nativo con estilo propio y flecha propia (va después del select, dentro de .selector).
    Donde el navegador lo permite (appearance: base-select, Chrome y Edge), el desplegable también lleva el estilo
    del sitio y entra con un fundido; en el resto queda el desplegable nativo, con los colores del tema.
@@ -365,6 +386,15 @@ ul {
   line-height: var(--interlineado-titulo);
 }
 
+/* Título con un chip al lado (ej. "Ofertas" con la campaña vigente); el chip baja si no entra */
+.seccion__titulos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+  min-width: 0;
+}
+
 /* Lado derecho del encabezado cuando suma más de un control (ej. "Ver todas" + flechas del carrusel) */
 .seccion__acciones {
   display: flex;
@@ -439,6 +469,105 @@ ul {
 .migas [aria-current] {
   color: var(--color-texto);
   font-weight: var(--peso-medio);
+}
+
+/* Botón de texto (acciones secundarias dentro de tarjetas: editar, quitar, ver más) */
+.btn-texto {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-height: var(--alto-control-xs);
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.btn-texto:hover {
+  text-decoration: underline;
+}
+
+.btn-texto--suave {
+  color: var(--color-texto-suave);
+}
+
+/* Control de cantidad (ficha y carrito): menos, campo numérico y más en una sola caja */
+.cantidad {
+  display: inline-flex;
+  align-items: center;
+  height: var(--alto-control-l);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo);
+  transition: border-color var(--transicion);
+}
+
+.cantidad:focus-within {
+  border-color: var(--color-acento);
+}
+
+.cantidad__btn {
+  display: grid;
+  place-items: center;
+  width: var(--alto-control);
+  height: 100%;
+  color: var(--color-texto-suave);
+  transition: color var(--transicion), opacity var(--transicion);
+}
+
+.cantidad__btn:hover {
+  color: var(--color-acento);
+}
+
+.cantidad__btn:disabled {
+  opacity: 0.35;
+  color: inherit;
+  cursor: default;
+}
+
+.cantidad__campo {
+  width: 40px;
+  height: 100%;
+  border: 0;
+  background: none;
+  font-weight: var(--peso-medio);
+  text-align: center;
+  outline: none;
+  appearance: textfield;
+}
+
+.cantidad__campo::-webkit-outer-spin-button,
+.cantidad__campo::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+/* Aviso breve (enlace copiado, agregado al carrito…): lo muestran ficha.js y checkout.js */
+.aviso {
+  position: fixed;
+  bottom: calc(var(--espacio-6) + env(safe-area-inset-bottom));
+  left: 50%;
+  z-index: 120;
+  margin: 0;
+  padding: var(--espacio-3) var(--espacio-4);
+  border-radius: var(--radio-pill);
+  background: var(--color-barra);
+  color: var(--color-sobre-barra);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  white-space: nowrap;
+  box-shadow: var(--sombra);
+  translate: -50% 8px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--transicion), translate var(--transicion), visibility 0s var(--duracion);
+}
+
+.aviso--visible {
+  translate: -50% 0;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--transicion), translate var(--transicion);
 }
 
 .sr-only {

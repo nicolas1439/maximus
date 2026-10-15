@@ -10,6 +10,8 @@
   --color-acento: #0a8500; /* verde legible como texto o indicador sobre el fondo */
   --color-secundario: #621c87; /* violeta, color secundario de Maximus: etiqueta de descuento de las tarjetas */
   --color-sobre-secundario: #ffffff;
+  --color-secundario-texto: #621c87; /* violeta legible como texto, rótulo o ícono sobre el fondo (en oscuro, un lila) */
+  --color-secundario-suave: rgb(98 28 135 / 0.1); /* fondo tenue violeta: chips y bloques destacados en violeta */
   --color-calificacion: #f5a524; /* estrellas de calificación */
 
   /* Degradado vivo (hover del botón Productos): luz lima en el puntero sobre el verde de marca; hacia los bordes, esmeralda y violeta */
@@ -30,6 +32,7 @@
   --color-sobre-barra-suave: #9ba2a9; /* texto secundario sobre la barra y el footer */
   --color-barra-hover: rgb(255 255 255 / 0.1);
   --color-barra-borde: rgb(255 255 255 / 0.12); /* líneas y contornos sobre la barra y el footer */
+  --color-secundario-sobre-barra: #c9a6ee; /* violeta legible sobre la barra y el footer (oscuros en ambos modos): el lila */
   --color-brillo-marca: rgb(22 224 0 / 0.12); /* halo de marca sobre fondos oscuros */
   --color-fondo-destacado: #0b0d0e; /* banners y bloques destacados: oscuros en ambos modos */
   --color-sobre-destacado: #f2f4f5;
@@ -119,6 +122,8 @@
   color-scheme: dark;
 
   --color-acento: #16e000;
+  --color-secundario-texto: #c9a6ee;
+  --color-secundario-suave: rgb(201 166 238 / 0.14);
 
   --color-fondo-suave: #10171b;
   --color-fondo: #0a0e12;

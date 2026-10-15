@@ -28,6 +28,20 @@
   scale: 1.04;
 }
 
+/* Variante entera (banner de Kingston en Empresas): la imagen se ve completa, con su proporción, en lugar de
+   recortarse al alto de las tarjetas de accesos. Proporciones de las imágenes: mobile y tablet 750 × 300 (2,5:1),
+   escritorio 1500 × 364 (4,12:1) */
+.banner--entero .banner__enlace {
+  height: auto;
+  aspect-ratio: 750 / 300;
+}
+
+@media (min-width: 1024px) {
+  .banner--entero .banner__enlace {
+    aspect-ratio: 1500 / 364;
+  }
+}
+
 /* Alto amplio en los mismos anchos que las tarjetas de accesos: cuando una tarjeta llega a 420px.
    Mobile: la tarjeta mide el 86% de la fila. Tablet: el 48%. Escritorio: un tercio, menos las dos separaciones. */
 @media (width < 768px) {

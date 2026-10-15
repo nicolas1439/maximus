@@ -1,0 +1,1403 @@
+/* Plantilla de carrito y checkout (vista previa: checkout.html; página completa: carrito.html).
+   Los cinco pasos del checkout de maximus.com.ar en una sola página: Carrito, Facturación, Entrega, Pago y
+   Resumen, uno a la vista por vez (js/checkout.js; sin JS se ven todos). Arriba, el indicador de pasos; a la
+   derecha en escritorio, el detalle de la compra (totales), fijo bajo el header (--alto-fijo, header.css).
+   Mobile y tablet: todo en columna, con el detalle al final y una barra fija abajo con el total y el botón del
+   paso cuando el del pie sale de la vista. Elección de opciones (facturación, entrega, pago): tarjetas con un
+   radio (.opcion), marcadas con borde y fondo tenue de marca; lo que depende de una opción (datos de la
+   empresa, dirección nueva, sucursal, cuotas) aparece debajo en un subpanel. */
+
+.checkout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+/* ---------- Cabecera: indicador de pasos (sin título, decisión del usuario, 15/10/2026) ---------- */
+
+.checkout__cab {
+  display: flex;
+  justify-content: center;
+}
+
+/* Pasos unidos por una línea que se pinta de marca a medida que avanza la compra (como el seguimiento del pedido) */
+.pasos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: 100%;
+  max-width: 640px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pasos__paso {
+  position: relative;
+  text-align: center;
+}
+
+.pasos__paso:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: calc(50% + 18px);
+  right: calc(-50% + 18px);
+  height: 2px;
+  border-radius: var(--radio-pill);
+  background: var(--color-borde);
+}
+
+.pasos__paso--hecho:not(:last-child)::after {
+  background: var(--color-marca);
+}
+
+.pasos__enlace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-1);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  line-height: 1.3;
+}
+
+/* Los pasos que todavía no se alcanzaron no se pueden abrir */
+.pasos__enlace[aria-disabled="true"] {
+  pointer-events: none;
+}
+
+.pasos__num {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
+}
+
+.pasos__num .icono {
+  display: none;
+  width: 14px;
+  height: 14px;
+  stroke-width: 3;
+}
+
+.pasos__paso--hecho .pasos__num {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.pasos__paso--hecho .pasos__n {
+  display: none;
+}
+
+.pasos__paso--hecho .pasos__num .icono {
+  display: block;
+}
+
+.pasos__paso[aria-current="step"] .pasos__num {
+  border-color: var(--color-marca);
+  color: var(--color-texto);
+  box-shadow: 0 0 0 4px var(--color-brillo-marca);
+}
+
+.pasos__paso--hecho .pasos__enlace,
+.pasos__paso[aria-current="step"] .pasos__enlace {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.pasos__paso--hecho .pasos__enlace:hover .pasos__nombre {
+  text-decoration: underline;
+}
+
+/* ---------- Cuerpo: pasos y detalle de la compra ---------- */
+
+.checkout__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-8);
+}
+
+.checkout__pasos {
+  min-width: 0;
+}
+
+.paso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  scroll-margin-top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+}
+
+/* Sin JS se ven todos: los separa el espacio de sección */
+.paso + .paso {
+  margin-top: var(--espacio-seccion);
+}
+
+.checkout--js .paso + .paso {
+  margin-top: 0;
+}
+
+.paso__cab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.paso__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.paso__bajada,
+.paso__ayuda {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.paso__ayuda {
+  font-size: var(--texto-xs);
+}
+
+/* Falta elegir algo para continuar */
+.paso__error {
+  margin: 0;
+  padding: var(--espacio-3);
+  border-radius: var(--radio);
+  background: color-mix(in srgb, var(--color-error) 10%, transparent);
+  color: var(--color-error);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+/* Volver y continuar: en celular, el principal arriba y a todo el ancho */
+.paso__pie {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--espacio-2);
+  padding-top: var(--espacio-2);
+}
+
+.paso__pie .btn {
+  height: var(--alto-control-l);
+}
+
+.paso__pie .btn--secundario .icono {
+  margin-left: calc(var(--espacio-1) * -1);
+}
+
+.paso__legal {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  text-align: center;
+}
+
+.paso__legal a {
+  color: var(--color-acento);
+}
+
+/* Tarjeta base: ítems, opciones, subpaneles y bloques del resumen */
+.tarjeta {
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+/* ---------- 1. Carrito: ítems ---------- */
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+/* Foto y datos arriba; cantidad y precios abajo (la cantidad abarca dos columnas para no ensanchar la de la
+   foto). Desde tablet, todo en una fila */
+.item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "foto datos datos"
+    "cantidad cantidad precios";
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+/* Al quitarlo se achica y se desvanece (checkout.js lo saca al terminar) */
+.item--saliendo {
+  opacity: 0;
+  scale: 0.96;
+  transition: opacity var(--transicion), scale var(--transicion);
+}
+
+.item__foto {
+  grid-area: foto;
+  align-self: start;
+}
+
+.item__foto img {
+  width: 72px;
+  height: 72px;
+  padding: var(--espacio-1);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo-imagen);
+  object-fit: contain;
+}
+
+.item__datos {
+  grid-area: datos;
+  min-width: 0;
+}
+
+.item__marca {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.item__nombre {
+  margin: 2px 0 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  line-height: 1.35;
+}
+
+.item__nombre a:hover {
+  color: var(--color-acento);
+}
+
+.item__cantidad {
+  grid-area: cantidad;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.item__cantidad .cantidad {
+  height: var(--alto-control-s);
+}
+
+.item__cantidad .cantidad__btn {
+  width: 36px;
+}
+
+/* Quitar: solo el ícono en celular (el texto aparece desde tablet) */
+.item__quitar {
+  justify-content: center;
+  min-width: var(--alto-control-s);
+  min-height: var(--alto-control-s);
+}
+
+.item__quitar-texto {
+  display: none;
+}
+
+.item__precios {
+  grid-area: precios;
+  text-align: right;
+}
+
+.item__nota strong {
+  display: block;
+}
+
+.item__precio {
+  margin: 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Campaña: etiqueta violeta con el nombre y el descuento, y el precio de lista tachado sobre el precio */
+.item__campania {
+  margin: var(--espacio-2) 0 0;
+}
+
+.item__campania .etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+}
+
+.item__campania .icono {
+  width: 14px;
+  height: 14px;
+}
+
+.item__antes {
+  margin: 0 0 2px;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.item__nota,
+.item__unitario {
+  margin: 2px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.item__nota strong {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+/* Carrito vacío */
+.vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-8) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  text-align: center;
+}
+
+.vacio__icono {
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--espacio-2);
+  color: var(--color-texto-suave);
+}
+
+.vacio__titulo {
+  margin: 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+}
+
+.vacio__texto {
+  margin: 0 0 var(--espacio-3);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+/* ---------- 2. Facturación: cliente ---------- */
+
+.cliente {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+/* Avatar con las iniciales sobre el verde de marca (el mismo de Mi cuenta) */
+.cliente__avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radio-pill);
+  background: linear-gradient(135deg, var(--color-lima), var(--color-marca) 45%, var(--color-esmeralda));
+  color: var(--color-sobre-marca);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+}
+
+.cliente__datos {
+  flex: 1;
+  min-width: 0;
+}
+
+.cliente__nombre {
+  margin: 0;
+  font-weight: var(--peso-fuerte);
+}
+
+.cliente__meta {
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 3. Entrega: dirección elegida ---------- */
+
+.direccion {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-3) var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.direccion__icono {
+  width: 40px;
+  height: 40px;
+  padding: var(--espacio-2);
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+}
+
+.direccion__texto {
+  min-width: 0;
+}
+
+.direccion__nombre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  font-weight: var(--peso-fuerte);
+}
+
+.direccion__nombre .etiqueta {
+  padding-block: 0;
+  font-size: var(--texto-2xs);
+}
+
+.direccion__detalle {
+  margin: 2px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.direccion__acciones {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: var(--espacio-2);
+}
+
+.direccion__acciones .btn {
+  flex: 1;
+  height: var(--alto-control-s);
+  padding-inline: var(--espacio-4);
+  font-size: var(--texto-s);
+}
+
+.direccion__acciones .btn[aria-expanded="true"] {
+  border-color: var(--color-acento);
+  color: var(--color-acento);
+}
+
+/* ---------- Opciones: tarjetas con radio (facturación, entrega, pago) ---------- */
+
+.opciones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Rótulo del grupo (se probó en violeta y mayúsculas y se descartó: decisión del usuario, 15/10/2026) */
+.opciones__titulo {
+  margin-bottom: var(--espacio-2);
+  padding: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.opcion {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  cursor: pointer;
+  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
+}
+
+.opcion:hover {
+  border-color: var(--color-acento);
+}
+
+/* El radio nativo queda invisible pero accesible: el círculo lo dibuja ::before y el foco lo marca la tarjeta */
+.opcion__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opcion::before {
+  content: "";
+  grid-row: 1 / -1;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.opcion:has(.opcion__radio:checked) {
+  border-color: var(--color-marca);
+  background: color-mix(in srgb, var(--color-marca) 6%, var(--color-fondo));
+  box-shadow: 0 0 0 1px var(--color-marca);
+}
+
+.opcion:has(.opcion__radio:checked)::before {
+  border-width: 6px;
+  border-color: var(--color-marca);
+}
+
+.opcion:has(.opcion__radio:focus-visible) {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+.opcion__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.opcion__titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  font-weight: var(--peso-medio);
+}
+
+.opcion__titulo .etiqueta {
+  padding-block: 0;
+  font-size: var(--texto-2xs);
+}
+
+.opcion__texto {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+/* Precio de la opción (envíos): debajo del texto en celular, a la derecha desde tablet */
+.opcion__precio {
+  grid-column: 2;
+  font-weight: var(--peso-fuerte);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.opcion__precio--gratis,
+.opcion__precio--ahorro {
+  color: var(--color-acento);
+}
+
+.opcion__precio--ahorro {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+/* Con ícono (forma de entrega, medio de pago) */
+.opcion--icono {
+  grid-template-columns: auto auto minmax(0, 1fr);
+}
+
+.opcion__icono {
+  width: 36px;
+  height: 36px;
+  padding: 7px;
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.opcion:has(.opcion__radio:checked) .opcion__icono {
+  background: color-mix(in srgb, var(--color-marca) 16%, transparent);
+  color: var(--color-acento);
+}
+
+/* Tarjeta de crédito o débito: el celeste de Mercado Pago sobre el ícono */
+.opcion:has(.opcion__radio:checked) .opcion__icono--mp {
+  background: color-mix(in srgb, var(--color-info) 16%, transparent);
+  color: var(--color-info);
+}
+
+.opcion--icono .opcion__precio {
+  grid-column: 3;
+}
+
+/* "Enviar a otra dirección": línea punteada, sin fondo */
+.opcion--nueva {
+  border-style: dashed;
+  background: none;
+}
+
+.opcion--nueva .opcion__titulo {
+  color: var(--color-acento);
+}
+
+/* ---------- Subpaneles: lo que depende de la opción elegida ---------- */
+
+.subpanel-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.subpanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  min-width: 0;
+  margin: 0;
+}
+
+.subpanel__titulo {
+  float: left;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-fuerte);
+}
+
+.subpanel__nota {
+  display: flex;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: var(--espacio-3);
+  border-radius: var(--radio);
+  background: color-mix(in srgb, var(--color-aviso) 12%, transparent);
+  font-size: var(--texto-xs);
+}
+
+.subpanel__nota .icono {
+  flex-shrink: 0;
+  color: var(--color-aviso);
+}
+
+.formulario__campos {
+  clear: both;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+}
+
+.campo__rotulo small {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-normal);
+}
+
+/* Cómo funciona la transferencia */
+.pasos-pago {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding-left: var(--espacio-6);
+  font-size: var(--texto-s);
+}
+
+.pasos-pago li::marker {
+  color: var(--color-acento);
+  font-weight: var(--peso-fuerte);
+}
+
+.pasos-pago a {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+/* Tipo de tarjeta: pastillas */
+.tipo-tarjeta,
+.cuotas {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tipo-tarjeta__opciones {
+  clear: both;
+  display: flex;
+  gap: var(--espacio-2);
+  padding-top: var(--espacio-3);
+}
+
+.chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.chip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip span {
+  display: inline-flex;
+  align-items: center;
+  height: var(--alto-control-s);
+  padding-inline: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion);
+}
+
+.chip:hover span {
+  border-color: var(--color-acento);
+}
+
+.chip:has(input:checked) span {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.chip:has(input:focus-visible) span {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+/* Cuotas: casillas en grilla; las sin interés resaltadas en verde */
+.cuotas__grilla {
+  clear: both;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-2);
+  padding-top: var(--espacio-3);
+}
+
+.cuota {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--espacio-3) var(--espacio-2);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
+}
+
+/* Siete planes en dos columnas: el último ocupa la fila entera */
+.cuota:nth-child(7):last-child {
+  grid-column: 1 / -1;
+}
+
+.cuota input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.cuota:hover {
+  border-color: var(--color-acento);
+}
+
+.cuota:has(input:checked) {
+  border-color: var(--color-marca);
+  background: color-mix(in srgb, var(--color-marca) 6%, var(--color-fondo));
+  box-shadow: 0 0 0 1px var(--color-marca);
+}
+
+.cuota:has(input:focus-visible) {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+.cuota__n {
+  font-weight: var(--peso-fuerte);
+}
+
+.cuota__valor {
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.cuota__nota {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+}
+
+.cuota:has([data-factor="1"]) .cuota__nota {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+/* Plan elegido */
+.plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  margin: 0;
+  padding: var(--espacio-3) var(--espacio-4);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  font-size: var(--texto-s);
+}
+
+.plan div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.plan dt {
+  color: var(--color-texto-suave);
+}
+
+.plan dd {
+  margin: 0;
+  font-weight: var(--peso-medio);
+  font-variant-numeric: tabular-nums;
+}
+
+.plan__total {
+  padding-top: var(--espacio-1);
+  border-top: 1px dashed var(--color-borde);
+}
+
+.plan__total dt {
+  color: var(--color-texto);
+}
+
+.plan__total dd {
+  font-weight: var(--peso-fuerte);
+}
+
+/* ---------- 5. Resumen: revisión por bloques ---------- */
+
+.revision {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+.revision__bloque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.revision__cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.revision__titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+.revision__titulo .icono {
+  width: 20px;
+  height: 20px;
+  color: var(--color-acento);
+}
+
+.revision__dato {
+  margin: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.revision__meta {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.revision__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.revision__items li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-3);
+  font-size: var(--texto-s);
+}
+
+.revision__items img {
+  width: 44px;
+  height: 44px;
+  padding: 2px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo-imagen);
+  object-fit: contain;
+}
+
+.revision__items small {
+  display: block;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.revision__items strong {
+  font-weight: var(--peso-medio);
+  font-variant-numeric: tabular-nums;
+}
+
+.paso__pie--final .btn--primario {
+  font-weight: var(--peso-fuerte);
+}
+
+/* ---------- Detalle de la compra (columna derecha) ---------- */
+
+.resumen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  min-width: 0;
+}
+
+.resumen__caja {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.resumen__cab {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+}
+
+.resumen__titulo {
+  margin: 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+/* Productos: miniatura, nombre con cantidad y precio */
+.resumen__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.resumen__items li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-2);
+  font-size: var(--texto-xs);
+}
+
+.resumen__items img {
+  width: 40px;
+  height: 40px;
+  padding: 2px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo-imagen);
+  object-fit: contain;
+}
+
+.resumen__items span {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.resumen__items small {
+  color: var(--color-texto-suave);
+}
+
+.resumen__items strong {
+  font-weight: var(--peso-medio);
+  font-variant-numeric: tabular-nums;
+}
+
+.totales {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  font-size: var(--texto-s);
+}
+
+.totales div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.totales dt {
+  color: var(--color-texto-suave);
+}
+
+.totales dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.totales__descuento dd {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+/* Descuento de campaña, en violeta como su etiqueta */
+.totales__campania dt,
+.totales__campania dd {
+  color: var(--color-secundario-texto);
+}
+
+.totales__campania dd {
+  font-weight: var(--peso-medio);
+}
+
+.totales__total {
+  margin-top: var(--espacio-1);
+  padding-top: var(--espacio-3);
+  border-top: 1px dashed var(--color-borde);
+}
+
+.totales__total dt {
+  color: var(--color-texto);
+  font-weight: var(--peso-fuerte);
+}
+
+.totales__total dd {
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.resumen__nota {
+  margin: calc(var(--espacio-2) * -1) 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  text-align: right;
+}
+
+.resumen__nota strong {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+/* El botón del detalle repite el del paso: solo en escritorio, donde el detalle queda a la vista.
+   En el último paso lo reemplaza "Confirmar compra", que sí se ve en todos los anchos (checkout.js) */
+.resumen__continuar {
+  display: none;
+  height: var(--alto-control-l);
+}
+
+.resumen__confirmar {
+  height: var(--alto-control-l);
+  font-weight: var(--peso-fuerte);
+}
+
+.resumen .paso__legal {
+  margin-top: calc(var(--espacio-2) * -1);
+}
+
+.resumen__seguro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-1);
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.resumen__ayuda {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  text-align: center;
+}
+
+.resumen__ayuda a {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+/* ---------- Barra fija (celular y tablet) ---------- */
+
+/* Aparece cuando el botón del pie del paso queda abajo, fuera de la vista (checkout.js) */
+.checkout__barra {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-2) var(--margen-lateral) max(var(--espacio-2), env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-borde);
+  background: var(--color-fondo);
+  box-shadow: var(--sombra);
+  translate: 0 100%;
+  visibility: hidden;
+  transition: translate var(--transicion), visibility 0s var(--duracion);
+}
+
+.checkout__barra--visible {
+  translate: 0;
+  visibility: visible;
+  transition: translate var(--transicion);
+}
+
+.checkout__barra-total {
+  display: block;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+  font-variant-numeric: tabular-nums;
+}
+
+.checkout__barra > div {
+  min-width: 0;
+}
+
+.checkout__barra-nota {
+  display: block;
+  overflow: hidden;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.checkout__barra .btn {
+  margin-left: auto;
+  padding-inline: var(--espacio-4);
+}
+
+body:has(.checkout__barra--visible) {
+  padding-bottom: calc(var(--alto-control) + 2 * var(--espacio-2));
+}
+
+body:has(.checkout__barra--visible) .aviso {
+  bottom: calc(var(--alto-control) + 3 * var(--espacio-3) + env(safe-area-inset-bottom));
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  .pasos__enlace {
+    font-size: var(--texto-xs);
+  }
+
+  .paso__titulo {
+    font-size: var(--texto-2xl);
+  }
+
+  .paso__pie {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .item {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "foto datos cantidad precios";
+    gap: var(--espacio-4);
+  }
+
+  .item__foto {
+    align-self: center;
+  }
+
+  .item__foto img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .item__cantidad {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espacio-1);
+  }
+
+  .item__cantidad .cantidad__btn {
+    width: var(--alto-control-s);
+  }
+
+  .item__quitar-texto {
+    display: inline;
+  }
+
+  .item__precios {
+    min-width: 9rem;
+  }
+
+  .item__nota strong {
+    display: inline;
+  }
+
+  .opciones--dos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .opciones--dos .opcion {
+    align-content: start;
+  }
+
+  .direccion {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .direccion__acciones {
+    grid-column: auto;
+  }
+
+  .direccion__acciones .btn {
+    flex: none;
+  }
+
+  .opcion {
+    padding: var(--espacio-4);
+  }
+
+  .opcion__precio {
+    grid-column: 3;
+    grid-row: 1;
+    margin-left: var(--espacio-3);
+  }
+
+  .opcion--icono .opcion__precio {
+    grid-column: 4;
+  }
+
+  .opcion:not(.opcion--icono):has(.opcion__precio) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .opcion--icono:has(.opcion__precio) {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+  }
+
+  .subpanel {
+    padding: var(--espacio-6);
+  }
+
+  .formulario__campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .campo--ancho {
+    grid-column: 1 / -1;
+  }
+
+  .cuotas__grilla {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .cuota:nth-child(7):last-child {
+    grid-column: auto;
+  }
+
+  .revision {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .revision__bloque:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .resumen__caja {
+    padding: var(--espacio-6);
+  }
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+@media (min-width: 1024px) {
+  /* Grilla de 8: los pasos en 5 columnas y el detalle de la compra en las 3 restantes, fijo bajo el header */
+  .checkout__cuerpo {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: start;
+    column-gap: var(--separacion-grilla);
+  }
+
+  .checkout__pasos {
+    grid-column: span 5;
+  }
+
+  /* Arranca a la altura del contenido del paso, debajo de su título (--alto-cab: alto de la cabecera del paso
+     a la vista, lo mide checkout.js) */
+  .resumen {
+    position: sticky;
+    top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+    grid-column: span 3;
+    margin-top: calc(var(--alto-cab, 0px) + var(--espacio-4));
+    transition: top var(--transicion);
+  }
+
+  .resumen__continuar:not([hidden]) {
+    display: inline-flex;
+  }
+
+
+  .checkout__barra {
+    display: none;
+  }
+
+  body:has(.checkout__barra--visible) {
+    padding-bottom: 0;
+  }
+}

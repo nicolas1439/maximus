@@ -19,9 +19,9 @@
 .listado__cab {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   flex-basis: 100%;
-  gap: var(--espacio-1) var(--espacio-4);
+  gap: var(--espacio-2) var(--espacio-3);
 }
 
 .listado__titulo {
@@ -31,14 +31,12 @@
   line-height: var(--interlineado-titulo);
 }
 
+/* Cantidad de productos: chip en violeta tenue (.chip-secundario, en base.css), como "Productos (n)" del carrito */
 .listado__total {
   margin: 0;
-  color: var(--color-texto-suave);
-  font-size: var(--texto-s);
 }
 
 .listado__total strong {
-  color: var(--color-texto);
   font-weight: var(--peso-fuerte);
 }
 
@@ -63,7 +61,7 @@
   margin-right: auto;
 }
 
-/* Botón Filtrar (mobile y tablet) con la cantidad de filtros aplicados */
+/* Botón Filtrar (mobile y tablet) con la cantidad de filtros aplicados, en violeta (el color secundario) */
 .listado__abrir {
   position: relative;
   padding-inline: var(--espacio-4);
@@ -77,8 +75,8 @@
   height: 20px;
   padding-inline: 5px;
   border-radius: var(--radio-pill);
-  background: var(--color-marca);
-  color: var(--color-sobre-marca);
+  background: var(--color-secundario);
+  color: var(--color-sobre-secundario);
   font-size: var(--texto-2xs);
   font-weight: var(--peso-fuerte);
   line-height: 1;

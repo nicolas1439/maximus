@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Carrito y checkout</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  <script type="module" src="js/checkout.js"></script>
+</head>
+<body>
+
+  <!-- Plantilla de carrito y checkout: los cinco pasos del checkout de maximus.com.ar (relevado el 15/10/2026 con
+       un producto en el carrito): Carrito → Facturación (el sitio lo llama Identidad) → Entrega → Pago → Resumen.
+       Una sola página, un paso a la vista por vez (js/checkout.js; sin JS se ven todos, uno debajo del otro).
+       Precios, envíos, sucursales, cuotas y textos legales son los del sitio; los productos del carrito, el cliente
+       y las direcciones son de muestra (los mismos de Mi cuenta). El último paso no confirma nada: "Confirmar
+       compra" solo muestra un aviso. Página completa con header y footer: carrito.html. -->
+  <main class="checkout">
+
+    <div class="contenedor checkout__cab">
+      <h1 class="sr-only">Carrito y checkout</h1>
+
+      <!-- Pasos: los ya hechos se pueden volver a abrir -->
+      <ol class="pasos" aria-label="Pasos de la compra" data-pasos>
+        <li class="pasos__paso" aria-current="step"><a class="pasos__enlace" href="#carrito"><span class="pasos__num"><span class="pasos__n">1</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg></span><span class="pasos__nombre">Carrito</span></a></li>
+        <li class="pasos__paso"><a class="pasos__enlace" href="#facturacion"><span class="pasos__num"><span class="pasos__n">2</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg></span><span class="pasos__nombre">Facturación</span></a></li>
+        <li class="pasos__paso"><a class="pasos__enlace" href="#entrega"><span class="pasos__num"><span class="pasos__n">3</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg></span><span class="pasos__nombre">Entrega</span></a></li>
+        <li class="pasos__paso"><a class="pasos__enlace" href="#pago"><span class="pasos__num"><span class="pasos__n">4</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg></span><span class="pasos__nombre">Pago</span></a></li>
+        <li class="pasos__paso"><a class="pasos__enlace" href="#resumen"><span class="pasos__num"><span class="pasos__n">5</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-check"/></svg></span><span class="pasos__nombre">Resumen</span></a></li>
+      </ol>
+    </div>
+
+    <div class="contenedor checkout__cuerpo">
+      <div class="checkout__pasos">
+
+        <!-- ==================== 1. Carrito ==================== -->
+        <section class="paso" id="carrito" data-paso="carrito" aria-labelledby="carrito-titulo">
+          <header class="paso__cab">
+            <h2 class="paso__titulo" id="carrito-titulo">Carrito</h2>
+            <p class="paso__bajada">Revisá los productos y las cantidades antes de seguir.</p>
+          </header>
+
+          <ul class="items" data-items>
+            <li class="item" data-item data-precio="2668800" data-lista="3139765" data-campania="Mes de la Primavera" data-campania-descuento="15%" data-nombre="Placa de Video MSI GeForce RTX 5070 Ti Ventus 3X 16GB">
+              <a class="item__foto" href="rtx-5070-ti-ventus.html" tabindex="-1" aria-hidden="true"><img src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600"></a>
+              <div class="item__datos">
+                <p class="item__marca">MSI</p>
+                <h3 class="item__nombre"><a href="rtx-5070-ti-ventus.html">Placa de Video MSI Nvidia GeForce RTX 5070 Ti Ventus 3X 16GB OC GDDR7</a></h3>
+                <p class="item__campania"><span class="etiqueta etiqueta--secundaria"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-etiqueta"/></svg>Mes de la Primavera · -15%</span></p>
+              </div>
+              <div class="item__cantidad">
+                <div class="cantidad" data-cantidad>
+                  <button class="cantidad__btn" type="button" aria-label="Una unidad menos" data-paso="-1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-menos"/></svg></button>
+                  <input class="cantidad__campo" type="number" value="1" min="1" max="10" inputmode="numeric" aria-label="Cantidad">
+                  <button class="cantidad__btn" type="button" aria-label="Una unidad más" data-paso="1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-mas"/></svg></button>
+                </div>
+                <button class="btn-texto btn-texto--suave item__quitar" type="button" aria-label="Quitar del carrito" data-quitar><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-borrar"/></svg><span class="item__quitar-texto">Quitar</span></button>
+              </div>
+              <div class="item__precios">
+                <p class="item__antes" data-item-antes><span class="sr-only">Precio de lista: </span>$3.139.765</p>
+                <p class="item__precio" data-item-total>$2.668.800</p>
+                <p class="item__nota">Con transferencia <strong data-item-efectivo>$2.401.920</strong></p>
+                <p class="item__unitario" data-item-unitario hidden>$2.668.800 c/u</p>
+              </div>
+            </li>
+            <li class="item" data-item data-precio="139999" data-nombre="Memoria Kingston Fury Beast 16GB DDR5 6000">
+              <a class="item__foto" href="rtx-5070-ti-ventus.html" tabindex="-1" aria-hidden="true"><img src="recursos/productos/kingston-fury-beast-ddr5.jpg" alt="" width="600" height="600"></a>
+              <div class="item__datos">
+                <p class="item__marca">Kingston</p>
+                <h3 class="item__nombre"><a href="rtx-5070-ti-ventus.html">Memoria RAM Kingston Fury Beast 16GB RGB 6000 MHz DDR5 CL36 AMD EXPO</a></h3>
+              </div>
+              <div class="item__cantidad">
+                <div class="cantidad" data-cantidad>
+                  <button class="cantidad__btn" type="button" aria-label="Una unidad menos" data-paso="-1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-menos"/></svg></button>
+                  <input class="cantidad__campo" type="number" value="2" min="1" max="10" inputmode="numeric" aria-label="Cantidad">
+                  <button class="cantidad__btn" type="button" aria-label="Una unidad más" data-paso="1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-mas"/></svg></button>
+                </div>
+                <button class="btn-texto btn-texto--suave item__quitar" type="button" aria-label="Quitar del carrito" data-quitar><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-borrar"/></svg><span class="item__quitar-texto">Quitar</span></button>
+              </div>
+              <div class="item__precios">
+                <p class="item__antes" data-item-antes hidden></p>
+                <p class="item__precio" data-item-total>$279.998</p>
+                <p class="item__nota">Con transferencia <strong data-item-efectivo>$251.998</strong></p>
+                <p class="item__unitario" data-item-unitario>$139.999 c/u</p>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Carrito vacío: aparece cuando se quita el último producto -->
+          <div class="vacio" data-vacio hidden>
+            <svg class="icono vacio__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-carrito"/></svg>
+            <p class="vacio__titulo">Tu carrito está vacío</p>
+            <p class="vacio__texto">Cuando agregues productos, los vas a ver acá.</p>
+            <a class="btn btn--primario" href="placas-de-video.html">Ver ofertas</a>
+          </div>
+
+          <p class="paso__ayuda" data-con-items>El precio con transferencia o depósito tiene un 10% de descuento, el mismo que ves en cada ficha. Lo elegís en el paso de pago.</p>
+
+          <footer class="paso__pie" data-con-items>
+            <a class="btn btn--secundario" href="placas-de-video.html"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg>Seguir comprando</a>
+            <button class="btn btn--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></button>
+          </footer>
+        </section>
+
+        <!-- ==================== 2. Facturación ==================== -->
+        <section class="paso" id="facturacion" data-paso="facturacion" aria-labelledby="facturacion-titulo">
+          <header class="paso__cab">
+            <h2 class="paso__titulo" id="facturacion-titulo">Facturación</h2>
+            <p class="paso__bajada">Confirmá a nombre de quién se hace esta compra.</p>
+          </header>
+
+          <!-- Cliente con sesión iniciada (de muestra) -->
+          <div class="cliente">
+            <span class="cliente__avatar" aria-hidden="true">MG</span>
+            <div class="cliente__datos">
+              <p class="cliente__nombre">Martín González</p>
+              <p class="cliente__meta">martin.gonzalez@correo.com · Cliente N.º 48213</p>
+            </div>
+            <a class="btn-texto" href="index.html">No soy yo</a>
+          </div>
+
+          <fieldset class="opciones">
+            <legend class="opciones__titulo">¿Cómo vas a facturar?</legend>
+            <label class="opcion">
+              <input class="opcion__radio" type="radio" name="facturacion" value="b" checked>
+              <span class="opcion__cuerpo">
+                <span class="opcion__titulo">A mi nombre <span class="etiqueta">Factura B</span></span>
+                <span class="opcion__texto">Consumidor final. Se emite a nombre de Martín González, DNI 34.567.890.</span>
+              </span>
+            </label>
+            <label class="opcion">
+              <input class="opcion__radio" type="radio" name="facturacion" value="a">
+              <span class="opcion__cuerpo">
+                <span class="opcion__titulo">A nombre de una empresa <span class="etiqueta etiqueta--secundaria">Factura A</span></span>
+                <span class="opcion__texto">Para responsables inscriptos. Completá los datos fiscales de la empresa.</span>
+              </span>
+            </label>
+          </fieldset>
+
+          <!-- Datos de la empresa: solo con Factura A -->
+          <div class="tarjeta subpanel" data-empresa hidden>
+            <p class="subpanel__titulo">Datos de la empresa</p>
+            <div class="formulario__campos">
+              <label class="campo campo--ancho"><span class="campo__rotulo">Razón social</span><input class="campo__control" type="text" autocomplete="organization" data-requerido="a"></label>
+              <label class="campo"><span class="campo__rotulo">CUIT</span><input class="campo__control" type="text" inputmode="numeric" placeholder="30-12345678-9" data-requerido="a"></label>
+              <label class="campo"><span class="campo__rotulo">Condición fiscal</span>
+                <span class="selector"><select class="selector__campo"><option>Responsable Inscripto</option><option>Monotributista</option><option>IVA Exento</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></span>
+              </label>
+              <label class="campo campo--ancho"><span class="campo__rotulo">Domicilio fiscal</span><input class="campo__control" type="text" autocomplete="street-address" data-requerido="a"></label>
+            </div>
+          </div>
+
+          <p class="paso__error" role="alert" data-error hidden></p>
+
+          <footer class="paso__pie">
+            <button class="btn btn--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg>Volver</button>
+            <button class="btn btn--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></button>
+          </footer>
+        </section>
+
+        <!-- ==================== 3. Entrega ==================== -->
+        <section class="paso" id="entrega" data-paso="entrega" aria-labelledby="entrega-titulo">
+          <header class="paso__cab">
+            <h2 class="paso__titulo" id="entrega-titulo">Entrega</h2>
+            <p class="paso__bajada">Con esta dirección calculamos las opciones de envío.</p>
+          </header>
+
+          <!-- Dirección elegida, como en el sitio: una tarjeta con "Cambiar" (lista de direcciones guardadas) y "Agregar" (dirección nueva) -->
+          <div class="direccion" data-direccion-caja>
+            <svg class="icono direccion__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-sucursal"/></svg>
+            <div class="direccion__texto">
+              <p class="direccion__nombre" data-direccion-nombre>Casa <span class="etiqueta">Principal</span></p>
+              <p class="direccion__detalle" data-direccion-detalle>Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA</p>
+            </div>
+            <div class="direccion__acciones">
+              <button class="btn btn--secundario" type="button" data-cambiar-direccion aria-expanded="false">Cambiar</button>
+              <button class="btn btn--secundario" type="button" data-agregar-direccion aria-expanded="false"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-mas"/></svg>Agregar</button>
+            </div>
+          </div>
+
+          <fieldset class="opciones" data-lista-direcciones hidden>
+            <legend class="opciones__titulo">Tus direcciones</legend>
+            <label class="opcion">
+              <input class="opcion__radio" type="radio" name="direccion" value="casa" checked data-nombre="Casa" data-texto="Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA">
+              <span class="opcion__cuerpo">
+                <span class="opcion__titulo">Casa <span class="etiqueta">Principal</span></span>
+                <span class="opcion__texto">Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA<br>Recibe Martín González · 11 5555-0123</span>
+              </span>
+            </label>
+            <label class="opcion">
+              <input class="opcion__radio" type="radio" name="direccion" value="trabajo" data-nombre="Trabajo" data-texto="Av. Corrientes 1234, piso 7, oficina 12 · C1043 San Nicolás, CABA">
+              <span class="opcion__cuerpo">
+                <span class="opcion__titulo">Trabajo</span>
+                <span class="opcion__texto">Av. Corrientes 1234, piso 7, oficina 12 · C1043 San Nicolás, CABA<br>Recibe Martín González · 11 5555-0123</span>
+              </span>
+            </label>
+          </fieldset>
+
+          <!-- Dirección nueva: el radio queda oculto y lo marca el botón "Agregar" -->
+          <div class="tarjeta subpanel" data-direccion-nueva hidden>
+            <input type="radio" name="direccion" value="nueva" data-nombre="Nueva dirección" data-texto="" hidden>
+            <p class="subpanel__titulo">Nueva dirección</p>
+            <div class="formulario__campos">
+              <label class="campo campo--ancho"><span class="campo__rotulo">Calle y número</span><input class="campo__control" type="text" autocomplete="street-address" data-requerido="nueva" data-nueva-calle></label>
+              <label class="campo"><span class="campo__rotulo">Piso y depto. <small>(opcional)</small></span><input class="campo__control" type="text"></label>
+              <label class="campo"><span class="campo__rotulo">Código postal</span><input class="campo__control" type="text" inputmode="numeric" autocomplete="postal-code" data-requerido="nueva" data-nueva-cp></label>
+              <label class="campo"><span class="campo__rotulo">Provincia</span>
+                <span class="selector"><select class="selector__campo"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></span>
+              </label>
+              <label class="campo"><span class="campo__rotulo">Localidad</span><input class="campo__control" type="text" autocomplete="address-level2" data-requerido="nueva" data-nueva-localidad></label>
+              <label class="campo"><span class="campo__rotulo">Quién recibe</span><input class="campo__control" type="text" autocomplete="name" value="Martín González" data-requerido="nueva"></label>
+              <label class="campo"><span class="campo__rotulo">Teléfono</span><input class="campo__control" type="tel" autocomplete="tel" value="11 5555-0123" data-requerido="nueva"></label>
+            </div>
+            <button class="btn-texto btn-texto--suave" type="button" data-usar-guardada>Usar una dirección guardada</button>
+          </div>
+
+          <fieldset class="opciones opciones--dos">
+            <legend class="opciones__titulo">¿Cómo querés recibir tu pedido?</legend>
+            <label class="opcion opcion--icono">
+              <input class="opcion__radio" type="radio" name="entrega" value="envio" checked>
+              <svg class="icono opcion__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-envio"/></svg>
+              <span class="opcion__cuerpo">
+                <span class="opcion__titulo">Envío por correo OCA</span>
+                <span class="opcion__texto">A domicilio o a una sucursal. En AMBA llega en 24 hs.</span>
+              </span>
+            </label>
+            <label class="opcion opcion--icono">
+              <input class="opcion__radio" type="radio" name="entrega" value="retiro">
+              <svg class="icono opcion__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-tienda"/></svg>
+              <span class="opcion__cuerpo">
+                <span class="opcion__titulo">Retiro en tienda <span class="etiqueta">Gratis</span></span>
+                <span class="opcion__texto">En Floresta o en el local de Florida. Listo en 24 a 48 hs hábiles.</span>
+              </span>
+            </label>
+          </fieldset>
+
+          <!-- Envío: modalidad -->
+          <div class="subpanel-grupo" data-entrega="envio">
+            <fieldset class="opciones">
+              <legend class="opciones__titulo">Elegí la modalidad</legend>
+              <label class="opcion">
+                <input class="opcion__radio" type="radio" name="modalidad" value="oca24" data-costo="4892" data-seguro="12917" data-texto="OCA 24 hs a domicilio" data-plazo="Llega mañana, entre las 12 y las 20 h">
+                <span class="opcion__cuerpo">
+                  <span class="opcion__titulo">OCA 24 hs a domicilio <span class="etiqueta">Tu zona</span></span>
+                  <span class="opcion__texto">Entrega en <span data-direccion-detalle>Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA</span>. Comprando antes de las 23:59 (con el pago acreditado), llega el siguiente día hábil entre las 12 y las 20 h.</span>
+                </span>
+                <span class="opcion__precio">$4.892</span>
+              </label>
+              <label class="opcion">
+                <input class="opcion__radio" type="radio" name="modalidad" value="ocanormal" data-costo="8367" data-seguro="12917" data-texto="OCA Normal a domicilio" data-plazo="Llega en 4 días hábiles desde el despacho">
+                <span class="opcion__cuerpo">
+                  <span class="opcion__titulo">OCA Normal a domicilio</span>
+                  <span class="opcion__texto">Entrega en <span data-direccion-detalle>Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA</span>. Llega en 4 días hábiles desde su despacho.</span>
+                </span>
+                <span class="opcion__precio">$8.367</span>
+              </label>
+              <label class="opcion">
+                <input class="opcion__radio" type="radio" name="modalidad" value="ocasucursal" data-costo="6694" data-seguro="12917" data-texto="OCA Normal a sucursal" data-plazo="Disponible en 4 días hábiles">
+                <span class="opcion__cuerpo">
+                  <span class="opcion__titulo">OCA Normal a sucursal</span>
+                  <span class="opcion__texto">Lo retirás en la sucursal de OCA más cercana a tu código postal. Disponible en 4 días hábiles.</span>
+                </span>
+                <span class="opcion__precio">$6.694</span>
+              </label>
+            </fieldset>
+
+            <!-- Sucursal de OCA: solo con envío a sucursal (las del CP 1406, según el sitio) -->
+            <div class="tarjeta subpanel" data-sucursal hidden>
+              <label class="campo"><span class="campo__rotulo">Sucursal de OCA</span>
+                <span class="selector"><select class="selector__campo" data-sucursal-campo><option value="">Elegí una sucursal</option><option>Av. Rivadavia 10608, Capital Federal</option><option>Tuyutí 7215, Capital Federal</option><option>Montiel 266, Liniers</option><option>Av. Gral. Paz 11154, Liniers</option><option>Av. San Juan Bautista de La Salle 1926, Parque Avellaneda</option><option>Oliden 4302, Villa Lugano</option><option>José Ignacio de la Rosa 5770, Mataderos</option><option>Murguiondo 4324, Capital Federal</option><option>Cañada de Gómez 4821, Villa Riachuelo</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg#i-abajo"/></svg></span>
+                <span class="campo__ayuda">Las sucursales se filtran según tu código postal.</span>
+              </label>
+            </div>
+
+            <p class="paso__ayuda">Los envíos van con seguro ($12.917 por este pedido). El costo se suma al total en el resumen.</p>
+          </div>
+
+          <!-- Retiro en tienda -->
+          <div class="subpanel-grupo" data-entrega="retiro" hidden>
+            <fieldset class="opciones">
+              <legend class="opciones__titulo">Elegí dónde retirar</legend>
+              <label class="opcion">
+                <input class="opcion__radio" type="radio" name="retiro" value="floresta" checked data-texto="Retiro en Floresta" data-plazo="R. de Escalada de San Martín 3875 · Listo en 24 a 48 hs hábiles">
+                <span class="opcion__cuerpo">
+                  <span class="opcion__titulo">Oficinas de Floresta</span>
+                  <span class="opcion__texto">R. de Escalada de San Martín 3875, CABA<br>Lun. a vie. de 9 a 17 h · Sáb. de 10 a 14 h</span>
+                </span>
+                <span class="opcion__precio opcion__precio--gratis">Gratis</span>
+              </label>
+              <label class="opcion">
+                <input class="opcion__radio" type="radio" name="retiro" value="florida" data-texto="Retiro en el local de Florida" data-plazo="Florida 537, Local 379 · Listo en 24 a 48 hs hábiles">
+                <span class="opcion__cuerpo">
+                  <span class="opcion__titulo">Local y showroom de Florida</span>
+                  <span class="opcion__texto">Florida 537, Local 379 (PB), Galería Jardín, CABA<br>Lun. a vie. de 10 a 19 h · Sáb. de 10 a 14:30 h</span>
+                </span>
+                <span class="opcion__precio opcion__precio--gratis">Gratis</span>
+              </label>
+            </fieldset>
+            <p class="paso__ayuda">Tu pedido queda listo en 24 a 48 hs hábiles. Te avisamos por correo cuando puedas pasar a buscarlo.</p>
+          </div>
+
+          <p class="paso__error" role="alert" data-error hidden></p>
+
+          <footer class="paso__pie">
+            <button class="btn btn--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg>Volver</button>
+            <button class="btn btn--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></button>
+          </footer>
+        </section>
+
+        <!-- ==================== 4. Pago ==================== -->
+        <section class="paso" id="pago" data-paso="pago" aria-labelledby="pago-titulo">
+          <header class="paso__cab">
+            <h2 class="paso__titulo" id="pago-titulo">Pago</h2>
+            <p class="paso__bajada">Elegí cómo querés pagar.</p>
+          </header>
+
+          <fieldset class="opciones">
+            <legend class="sr-only">Medio de pago</legend>
+            <label class="opcion opcion--icono">
+              <input class="opcion__radio" type="radio" name="pago" value="transferencia">
+              <svg class="icono opcion__icono" aria-hidden="true"><use href="recursos/iconos.svg#i-transferencia"/></svg>
+              <span class="opcion__cuerpo">
+                <span class="opcion__titulo">Transferencia o depósito bancario <span class="etiqueta">10% off</span></span>
+                <span class="opcion__texto">El mejor precio. Al confirmar la compra te mostramos los datos bancarios.</span>
+              </span>
+              <span class="opcion__precio opcion__precio--ahorro" data-ahorro>Ahorrás $294.880</span>
+            </label>
+            <label class="opcion opcion--icono">
+              <input class="opcion__radio" type="radio" name="pago" value="mercadopago">
+              <svg class="icono opcion__icono opcion__icono--mp" aria-hidden="true"><use href="recursos/iconos.svg#i-cuotas"/></svg>
+              <span class="opcion__cuerpo">
+                <span class="opcion__titulo">Tarjeta de crédito o débito</span>
+                <span class="opcion__texto">Con Mercado Pago. Hasta 3 cuotas sin interés.</span>
+              </span>
+            </label>
+          </fieldset>
+
+          <!-- Transferencia -->
+          <div class="tarjeta subpanel" data-pago="transferencia" hidden>
+            <p class="subpanel__titulo">Cómo funciona</p>
+            <ol class="pasos-pago">
+              <li>Confirmás la compra y te mostramos el CBU y el alias.</li>
+              <li>Hacés la transferencia o el depósito por el total.</li>
+              <li>Subís el comprobante desde <a href="mi-cuenta.html#pedidos">Mi cuenta</a> y, acreditado el pago, preparamos tu pedido.</li>
+            </ol>
+            <p class="subpanel__nota"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-alerta"/></svg>El pago lo tiene que hacer la misma persona o empresa a cuyo nombre se emite la factura. No se aceptan pagos desde otras cuentas.</p>
+          </div>
+
+          <!-- Mercado Pago: tipo de tarjeta y cuotas -->
+          <div class="tarjeta subpanel" data-pago="mercadopago" hidden>
+            <fieldset class="tipo-tarjeta">
+              <legend class="subpanel__titulo">Tipo de tarjeta</legend>
+              <div class="tipo-tarjeta__opciones">
+                <label class="chip"><input type="radio" name="tarjeta" value="credito" checked><span>Crédito</span></label>
+                <label class="chip"><input type="radio" name="tarjeta" value="debito"><span>Débito</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="cuotas" data-cuotas>
+              <legend class="subpanel__titulo">Cantidad de cuotas</legend>
+              <div class="cuotas__grilla">
+                <label class="cuota"><input type="radio" name="cuotas" value="1" data-factor="1" checked><span class="cuota__n">1 pago</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Sin interés</span></label>
+                <label class="cuota"><input type="radio" name="cuotas" value="3" data-factor="1"><span class="cuota__n">3 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Sin interés</span></label>
+                <label class="cuota"><input type="radio" name="cuotas" value="6" data-factor="1.16"><span class="cuota__n">6 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="cuota"><input type="radio" name="cuotas" value="9" data-factor="1.23"><span class="cuota__n">9 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="cuota"><input type="radio" name="cuotas" value="12" data-factor="1.31"><span class="cuota__n">12 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="cuota"><input type="radio" name="cuotas" value="18" data-factor="1.52"><span class="cuota__n">18 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="cuota"><input type="radio" name="cuotas" value="24" data-factor="1.67"><span class="cuota__n">24 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+              </div>
+            </fieldset>
+
+            <dl class="plan" data-plan>
+              <div><dt>Plan</dt><dd data-plan-nombre>1 pago</dd></div>
+              <div><dt>Valor de la cuota</dt><dd data-plan-cuota></dd></div>
+              <div class="plan__total"><dt>Total financiado</dt><dd data-plan-total></dd></div>
+            </dl>
+            <p class="subpanel__nota" data-nota-retiro hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-alerta"/></svg>Si pagás con tarjeta, el pedido solo lo puede retirar el titular, con la tarjeta y su DNI físico.</p>
+            <p class="campo__ayuda">En Mercado Pago vas a elegir las cuotas de nuevo. El valor financiado se calcula según lo que elijas acá.</p>
+          </div>
+
+          <p class="paso__error" role="alert" data-error hidden></p>
+
+          <footer class="paso__pie">
+            <button class="btn btn--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg>Volver</button>
+            <button class="btn btn--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></button>
+          </footer>
+        </section>
+
+        <!-- ==================== 5. Resumen ==================== -->
+        <section class="paso" id="resumen" data-paso="resumen" aria-labelledby="resumen-titulo">
+          <header class="paso__cab">
+            <h2 class="paso__titulo" id="resumen-titulo">Resumen</h2>
+            <p class="paso__bajada">Revisá todo antes de confirmar.</p>
+          </header>
+
+          <div class="revision">
+            <section class="tarjeta revision__bloque" aria-labelledby="rev-productos">
+              <header class="revision__cab">
+                <h3 class="revision__titulo" id="rev-productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-caja"/></svg>Productos</h3>
+                <a class="btn-texto" href="#carrito"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-lapiz"/></svg>Editar</a>
+              </header>
+              <ul class="revision__items" data-revision-items></ul>
+            </section>
+
+            <section class="tarjeta revision__bloque" aria-labelledby="rev-entrega">
+              <header class="revision__cab">
+                <h3 class="revision__titulo" id="rev-entrega"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-envio"/></svg>Entrega</h3>
+                <a class="btn-texto" href="#entrega"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-lapiz"/></svg>Editar</a>
+              </header>
+              <p class="revision__dato" data-revision-entrega></p>
+              <p class="revision__meta" data-revision-entrega-meta></p>
+            </section>
+
+            <section class="tarjeta revision__bloque" aria-labelledby="rev-facturacion">
+              <header class="revision__cab">
+                <h3 class="revision__titulo" id="rev-facturacion"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-comprobante"/></svg>Facturación</h3>
+                <a class="btn-texto" href="#facturacion"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-lapiz"/></svg>Editar</a>
+              </header>
+              <p class="revision__dato" data-revision-facturacion></p>
+              <p class="revision__meta">martin.gonzalez@correo.com</p>
+            </section>
+
+            <section class="tarjeta revision__bloque" aria-labelledby="rev-pago">
+              <header class="revision__cab">
+                <h3 class="revision__titulo" id="rev-pago"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg#i-cuotas"/></svg>Pago</h3>
+                <a class="btn-texto" href="#pago"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-lapiz"/></svg>Editar</a>
+              </header>
+              <p class="revision__dato" data-revision-pago></p>
+              <p class="revision__meta" data-revision-pago-meta></p>
+            </section>
+          </div>
+
+          <footer class="paso__pie paso__pie--final">
+            <button class="btn btn--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-izquierda"/></svg>Volver</button>
+          </footer>
+        </section>
+
+      </div>
+
+      <!-- Resumen de la compra: fijo a la derecha en escritorio; en celular, al pie de cada paso -->
+      <aside class="resumen" aria-label="Detalle de tu compra">
+        <div class="tarjeta resumen__caja">
+          <div class="resumen__cab">
+            <h2 class="resumen__titulo">Detalle de tu compra</h2>
+            <span class="chip-secundario"><span>Productos (<span data-total-cantidad>3</span>)</span></span>
+          </div>
+          <ul class="resumen__items" data-resumen-items></ul>
+          <dl class="totales">
+            <div><dt>Subtotal de lista</dt><dd data-total-lista>$3.419.763</dd></div>
+            <div class="totales__campania" data-fila-campania hidden><dt data-campania-nombre>Mes de la Primavera</dt><dd data-total-campania></dd></div>
+            <div><dt>Envío</dt><dd data-total-envio>A elegir</dd></div>
+            <div data-fila-seguro hidden><dt>Seguro de envío</dt><dd data-total-seguro></dd></div>
+            <div class="totales__descuento" data-fila-descuento hidden><dt>Transferencia −10%</dt><dd data-total-descuento></dd></div>
+            <div class="totales__total"><dt>Total</dt><dd data-total>$2.948.798</dd></div>
+          </dl>
+          <p class="resumen__nota" data-resumen-nota>Pagando por transferencia ahorrás <strong data-ahorro>$294.880</strong>.</p>
+          <button class="btn btn--primario resumen__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></button>
+          <button class="btn btn--primario resumen__confirmar" type="button" data-confirmar hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-candado"/></svg>Confirmar compra</button>
+          <p class="paso__legal" data-legal hidden>Al confirmar aceptás los <a href="#">términos y condiciones</a>. Vista previa: en esta demostración la compra no se confirma.</p>
+          <p class="resumen__seguro"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-candado"/></svg>Compra protegida · Datos cifrados</p>
+        </div>
+        <p class="resumen__ayuda">¿Dudas con tu compra? <a href="https://wa.me/541123575522">Escribinos por WhatsApp</a>.</p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Barra fija (celular y tablet): total y el botón del paso cuando el del pie sale de la vista -->
+  <div class="checkout__barra" data-barra>
+    <div>
+      <span class="checkout__barra-total" data-total>$2.948.798</span>
+      <span class="checkout__barra-nota" data-barra-nota>3 productos</span>
+    </div>
+    <button class="btn btn--primario" type="button" data-barra-btn>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg#i-flecha"/></svg></button>
+  </div>
+
+  <!-- Aviso breve: producto quitado, compra de muestra -->
+  <p class="aviso" data-aviso role="status" aria-live="polite"></p>
+
+</body>
+</html>

@@ -137,9 +137,10 @@
   line-height: 1;
 }
 
+/* La cantidad va en violeta tenue (el color secundario), como los chips de cantidad del listado y el carrito */
 .cuenta__cant {
-  background: var(--color-superficie);
-  color: var(--color-texto-suave);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
 }
 
 .cuenta__aviso {
@@ -876,11 +877,23 @@
 .direccion__cab {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--espacio-2);
+  gap: var(--espacio-3);
+}
+
+/* Ícono de la dirección sobre violeta tenue (el color secundario), como en la entrega del checkout */
+.direccion__icono {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: var(--espacio-2);
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
 }
 
 .direccion__cab h3 {
+  flex: 1;
+  min-width: 0;
   margin: 0;
   font-size: var(--texto-m);
   font-weight: var(--peso-fuerte);
@@ -903,25 +916,6 @@
   gap: var(--espacio-1) var(--espacio-4);
   margin-top: auto;
   padding-top: var(--espacio-2);
-}
-
-/* Botón de texto (acciones secundarias dentro de tarjetas) */
-.btn-texto {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--espacio-1);
-  min-height: var(--alto-control-xs);
-  color: var(--color-acento);
-  font-size: var(--texto-s);
-  font-weight: var(--peso-medio);
-}
-
-.btn-texto:hover {
-  text-decoration: underline;
-}
-
-.btn-texto--suave {
-  color: var(--color-texto-suave);
 }
 
 .direccion-nueva {
@@ -1346,8 +1340,8 @@
   }
 
   .cuenta__nav a[aria-current="page"] .cuenta__cant {
-    background: var(--color-superficie);
-    color: var(--color-texto-suave);
+    background: var(--color-secundario-suave);
+    color: var(--color-secundario-texto);
   }
 
   .cuenta__cant,

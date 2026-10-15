@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Empresas</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <script type="module" src="js/incluir.js"></script>
+</head>
+<body>
+
+  <!-- Página completa de Empresas: header + plantilla de empresas + footer.
+       Como index.html, no tiene código propio: js/incluir.js arma la página desde los archivos de cada parte. -->
+  <div data-incluir="header.html"></div>
+  <div data-incluir="empresas.html"></div>
+  <div data-incluir="footer.html"></div>
+
+</body>
+</html>
