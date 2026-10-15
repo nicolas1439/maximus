@@ -209,14 +209,6 @@
   color: var(--color-acento);
 }
 
-/* Tarjeta base: ítems, opciones, subpaneles y bloques del resumen */
-.tarjeta {
-  padding: var(--espacio-4);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-l);
-  background: var(--color-fondo);
-}
-
 /* ---------- 1. Carrito: ítems ---------- */
 
 .items {

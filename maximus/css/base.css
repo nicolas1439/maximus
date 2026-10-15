@@ -295,6 +295,14 @@ ul {
   }
 }
 
+/* Tarjeta base: bloques de contenido sobre la página (Mi cuenta, checkout, seguimiento) */
+.tarjeta {
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
 /* Campo de formulario: rótulo, control (input o .selector) y ayuda opcional. El texto va en 16px para que el
    celular no haga zoom al enfocar. Solo lectura: fondo de superficie y texto suave */
 .campo {
