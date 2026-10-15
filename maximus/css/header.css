@@ -962,8 +962,12 @@ html:has(.menu--abierto) {
     transform: none;
   }
 
-  /* Ofertas y Armá tu PC, los enlaces principales: llevan ícono (fuego y llave) y un separador los aparta
-     de las categorías */
+  /* Ofertas y Armá tu PC, los enlaces principales: llevan ícono (fuego y llave), un poco más pegado al texto
+     que en el resto del menú, y un separador los aparta de las categorías */
+  .menu__links .menu__destacado a {
+    gap: var(--espacio-2);
+  }
+
   .menu__destacado + .menu__atajo {
     display: flex;
     align-items: center;
