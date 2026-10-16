@@ -361,6 +361,48 @@ ul {
   font-size: var(--texto-xs);
 }
 
+/* Campo con error: borde y halo en rojo, y el mensaje debajo del control (lo agrega acceso.js) */
+.campo__control[aria-invalid="true"],
+.campo__control[aria-invalid="true"]:hover {
+  border-color: var(--color-error);
+}
+
+.campo__control[aria-invalid="true"]:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 18%, transparent);
+}
+
+.campo__error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-1);
+  margin: 0;
+  color: var(--color-error);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.campo__error .icono {
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+}
+
+/* Contraseña con el botón para mostrarla dentro del campo (Mi cuenta, Ingresar y Crear cuenta) */
+.clave {
+  position: relative;
+}
+
+.clave .campo__control {
+  padding-right: var(--alto-control);
+}
+
+.clave__ver {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: var(--color-texto-suave);
+}
+
 /* Casilla de verificación con el estilo del sitio */
 .casilla {
   display: flex;
@@ -496,6 +538,12 @@ ul {
 
 .btn-texto--suave {
   color: var(--color-texto-suave);
+}
+
+.btn-texto:disabled {
+  color: var(--color-texto-suave);
+  text-decoration: none;
+  cursor: default;
 }
 
 /* Control de cantidad (ficha y carrito): menos, campo numérico y más en una sola caja */

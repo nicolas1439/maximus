@@ -1,0 +1,760 @@
+/* Plantilla Ingresar y Crear cuenta (vista previa: acceso.html; páginas completas: ingresar.html y crear-cuenta.html).
+   Una tarjeta centrada con las vistas (ingresar, recuperar contraseña, crear cuenta en dos pasos y cuenta creada)
+   sobre un fondo con la aurora de marca: dos manchas desenfocadas, verde y violeta, que derivan despacio, y una
+   trama de puntos que se desvanece hacia los bordes. En el borde de la tarjeta, una luz (verde, lima y violeta)
+   con su halo: con mouse aparece en el borde más cercano al puntero y crece al acercarse; en pantallas táctiles
+   recorre el borde sola. El halo se enciende más mientras se completa un campo. El botón principal lleva el degradado
+   vivo del botón Productos. Mobile: la tarjeta a todo el ancho; desde tablet, centrada a 480px.
+   Detalle en violeta (el color secundario): la mancha violeta de la aurora y el tramo violeta de la luz del borde. */
+
+.acceso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  overflow-x: clip; /* el fondo ocupa todo el ancho de la pantalla */
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.acceso__cuerpo {
+  position: relative;
+  isolation: isolate; /* el fondo y el halo quedan detrás de la tarjeta, sobre la página */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* ---------- Fondo: aurora y trama ---------- */
+
+.acceso__fondo {
+  --mancha: min(80vw, 560px);
+  position: absolute;
+  top: 0;
+  bottom: calc(var(--espacio-seccion) * -1);
+  left: 50%;
+  z-index: -1;
+  width: 100vw;
+  overflow: hidden;
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-texto) 14%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px;
+  mask-image: radial-gradient(ellipse 65% 60% at 50% 45%, #000 25%, transparent 75%);
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+.acceso__mancha {
+  position: absolute;
+  width: var(--mancha);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(72px);
+  animation: deriva 16s ease-in-out infinite alternate;
+}
+
+.acceso__mancha--verde {
+  top: 0;
+  left: calc(50% - var(--mancha) * 0.85);
+  background: var(--color-marca);
+  opacity: 0.22;
+}
+
+.acceso__mancha--violeta {
+  bottom: 10%;
+  left: calc(50% - var(--mancha) * 0.15);
+  background: var(--color-secundario);
+  opacity: 0.2;
+  animation-duration: 20s;
+  animation-direction: alternate-reverse;
+}
+
+[data-tema=oscuro] .acceso__mancha--verde {
+  opacity: 0.2;
+}
+
+[data-tema=oscuro] .acceso__mancha--violeta {
+  opacity: 0.5;
+}
+
+@keyframes deriva {
+  50% {
+    transform: translate(14%, 8%) scale(1.12);
+  }
+
+  100% {
+    transform: translate(-8%, 16%) scale(0.92);
+  }
+}
+
+/* ---------- Tarjeta ---------- */
+
+/* Ángulo de la luz que recorre el borde (registrado para poder animarlo; lo hereda el halo) */
+@property --giro {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.acceso__tarjeta {
+  --luz: conic-gradient(
+    from var(--giro),
+    transparent 0 55%,
+    var(--color-esmeralda) 68%,
+    var(--color-marca) 76%,
+    var(--color-lima) 81%,
+    var(--color-secundario) 92%,
+    transparent
+  );
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  padding: var(--espacio-6) var(--espacio-4);
+  border-color: transparent;
+  background:
+    linear-gradient(var(--color-fondo), var(--color-fondo)) padding-box,
+    var(--luz) border-box,
+    linear-gradient(var(--color-borde), var(--color-borde)) border-box;
+  box-shadow: var(--sombra);
+  scroll-margin-top: calc(var(--alto-fijo, 120px) + var(--espacio-4));
+  animation: girar-luz 7s linear infinite;
+}
+
+/* Halo: la misma luz, desenfocada detrás de la tarjeta; se enciende más mientras se completa un campo */
+.acceso__tarjeta::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--luz);
+  filter: blur(20px);
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity var(--transicion-lenta);
+}
+
+.acceso__tarjeta:focus-within::before {
+  opacity: 0.9;
+}
+
+@keyframes girar-luz {
+  to {
+    --giro: 360deg;
+  }
+}
+
+/* Con mouse, la luz no gira: aparece en el borde más cercano al puntero y crece a medida que se acerca (acceso.js
+   pone --x / --y, la posición del puntero en la tarjeta, y --alcance, el radio de la luz: 0 lejos de la tarjeta) */
+.acceso__tarjeta--puntero {
+  --luz: radial-gradient(
+    var(--alcance, 0px) circle at var(--x, 50%) var(--y, 50%),
+    var(--color-lima) 0%,
+    var(--color-marca) 25%,
+    var(--color-esmeralda) 55%,
+    var(--color-secundario) 80%,
+    transparent
+  );
+  animation: none;
+}
+
+/* Ingresar | Crear cuenta: la marca blanca (con su línea verde) se desliza a la opción elegida */
+.modo {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: var(--espacio-1);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+}
+
+.modo__opcion {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  height: var(--alto-control-s);
+  border-radius: var(--radio-s);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  transition: color var(--transicion);
+}
+
+.modo__opcion:hover,
+.modo__opcion[aria-current="page"] {
+  color: var(--color-texto);
+}
+
+.modo__marca {
+  position: absolute;
+  top: var(--espacio-1);
+  bottom: var(--espacio-1);
+  left: var(--espacio-1);
+  width: calc(50% - var(--espacio-1));
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-s);
+  background: var(--color-fondo);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.08), inset 0 -2px 0 var(--color-marca);
+  transition: translate var(--transicion);
+}
+
+.modo[data-actual="registro"] .modo__marca {
+  translate: 100% 0;
+}
+
+/* Sin JS no hay una opción marcada: la marca no se muestra */
+.acceso:not(.acceso--js) .modo__marca {
+  display: none;
+}
+
+.acceso[data-vista-actual="recuperar"] .modo,
+.acceso[data-vista-actual="bienvenida"] .modo {
+  display: none;
+}
+
+/* Vistas: entran con un fundido y un desplazamiento corto hacia el lado de la opción (--desde, lo pone acceso.js) */
+.vista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+}
+
+/* Con JS, mientras acceso.js no eligió la vista, no se muestra ninguna (evita que asomen todas al cargar) */
+@media (scripting: enabled) {
+  .acceso:not(.acceso--js) :is(.vista, [data-para]) {
+    display: none;
+  }
+}
+
+.acceso--js .vista:not([hidden]),
+.acceso--js .formulario__paso:not([hidden]) {
+  animation: entrar var(--duracion) ease both;
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    translate: var(--desde, 0) 0;
+  }
+}
+
+.vista__cab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.vista__titulo {
+  margin: 0;
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+.vista__titulo:focus {
+  outline: none;
+}
+
+.vista__bajada {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.vista__bajada strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+  overflow-wrap: anywhere;
+}
+
+.vista__volver {
+  align-self: flex-start;
+  margin-block: calc(var(--espacio-2) * -1);
+}
+
+/* Ícono sobre el degradado verde, como el de Seguimiento */
+.vista__icono {
+  display: grid;
+  place-items: center;
+  width: var(--alto-control-l);
+  height: var(--alto-control-l);
+  margin-bottom: var(--espacio-3);
+  border-radius: var(--radio-l);
+  background: linear-gradient(160deg, var(--color-marca), var(--color-esmeralda));
+  color: var(--color-sobre-marca);
+}
+
+/* ---------- Formularios ---------- */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.formulario__paso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.formulario__fila {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+}
+
+.formulario__fila--cp {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 7.5rem);
+}
+
+/* Rótulo con un control a la derecha ("¿La olvidaste?", DNI | CUIT) */
+.campo__fila-rotulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  min-height: var(--alto-control-xs);
+  margin-block: calc(var(--espacio-1) * -1);
+}
+
+.formulario__estado {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  margin: 0;
+  color: var(--color-error);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.formulario__estado:empty {
+  display: none;
+}
+
+.formulario__acciones {
+  display: flex;
+  gap: var(--espacio-3);
+}
+
+.formulario__acciones .enviar {
+  flex: 1;
+}
+
+.formulario__legal {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  text-align: center;
+}
+
+.formulario__legal a {
+  color: var(--color-acento);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Botón principal de cada vista: a todo el ancho, con el degradado vivo al pasar el mouse (luz lima que sigue
+   al puntero con retraso sobre el verde, que hacia los bordes pasa a esmeralda y violeta; acceso.js la mueve) */
+.enviar {
+  --luz-radio: 470px;
+  --luz-lima: 27%;
+  --luz-esmeralda: 95%;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  height: var(--alto-control-l);
+}
+
+.enviar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    var(--luz-radio) circle at var(--x, 50%) var(--y, 50%) in oklab,
+    var(--color-lima) 0%,
+    var(--color-marca) var(--luz-lima),
+    var(--color-esmeralda) var(--luz-esmeralda),
+    var(--color-violeta) 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transicion-lenta);
+}
+
+.enviar:hover::before {
+  opacity: 1;
+}
+
+.enviar:hover .icono {
+  transform: translateX(3px);
+}
+
+/* Enviando (de muestra): el ícono se vuelve una ruedita */
+.enviar[aria-busy="true"] {
+  cursor: progress;
+}
+
+.enviar[aria-busy="true"] .icono {
+  display: none;
+}
+
+.enviar[aria-busy="true"]::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    rotate: 1turn;
+  }
+}
+
+.acceso__alterno {
+  width: 100%;
+  height: var(--alto-control-l);
+}
+
+/* Separador con texto al medio */
+.separador {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  margin: 0 0 calc(var(--espacio-2) * -1);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  white-space: nowrap;
+}
+
+.separador::before,
+.separador::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-borde);
+}
+
+/* Bloq Mayús activado */
+.clave__mayus {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.clave__mayus .icono {
+  width: 16px;
+  height: 16px;
+  color: var(--color-aviso);
+}
+
+/* Sugerencia de correo ("¿Quisiste decir …@gmail.com?") */
+.sugerencia {
+  align-self: flex-start;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.sugerencia button {
+  color: var(--color-acento);
+  font-size: inherit;
+  font-weight: var(--peso-medio);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.sugerencia button:hover {
+  text-decoration: underline;
+}
+
+/* Fuerza de la contraseña: cuatro tramos que se encienden en rojo, ámbar y verde */
+.fuerza {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-1);
+}
+
+.fuerza__barra {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--espacio-1);
+}
+
+.fuerza__barra span {
+  height: 4px;
+  border-radius: var(--radio-pill);
+  background: var(--color-borde);
+  transition: background-color var(--transicion);
+}
+
+.fuerza[data-fuerza="1"] .fuerza__barra span:nth-child(-n + 1) {
+  background: var(--color-error);
+}
+
+.fuerza[data-fuerza="2"] .fuerza__barra span:nth-child(-n + 2) {
+  background: var(--color-aviso);
+}
+
+.fuerza[data-fuerza="3"] .fuerza__barra span:nth-child(-n + 3),
+.fuerza[data-fuerza="4"] .fuerza__barra span {
+  background: var(--color-marca);
+}
+
+.fuerza__texto {
+  min-width: 5.5em;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  text-align: right;
+}
+
+.requisitos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1) var(--espacio-4);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.requisitos li {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  transition: color var(--transicion);
+}
+
+.requisitos .icono {
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--color-superficie);
+  stroke-width: 3;
+  color: transparent;
+  transition: color var(--transicion), background-color var(--transicion);
+}
+
+.requisitos [data-cumple] {
+  color: var(--color-texto);
+}
+
+.requisitos [data-cumple] .icono {
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+/* Avance del registro: "Paso 1 de 2" y una barra de dos tramos que se llenan */
+.pasos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin-top: calc(var(--espacio-2) * -1);
+}
+
+.pasos__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.pasos__texto:focus {
+  outline: none;
+}
+
+.pasos__texto strong {
+  color: var(--color-texto);
+}
+
+.pasos__barra {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-1);
+}
+
+.pasos__tramo {
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--radio-pill);
+  background: var(--color-borde);
+}
+
+.pasos__tramo::after {
+  content: "";
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-marca), var(--color-lima));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transicion-lenta);
+}
+
+.pasos__tramo--hecho::after {
+  transform: scaleX(1);
+}
+
+/* Aviso informativo (titular del medio de pago) */
+.nota {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: var(--espacio-3);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.nota .icono {
+  color: var(--color-info);
+}
+
+/* DNI | CUIT: selector chico junto al rótulo del documento (el radio nativo queda invisible pero accesible) */
+.documento {
+  display: flex;
+  padding: 2px;
+  border-radius: var(--radio-s);
+  background: var(--color-superficie);
+}
+
+.documento__opcion {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  height: 28px;
+  padding-inline: var(--espacio-2);
+  border-radius: var(--radio-s);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+  transition: color var(--transicion), background-color var(--transicion);
+}
+
+.documento__opcion input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.documento__opcion:has(input:checked) {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.1), inset 0 -2px 0 var(--color-marca);
+}
+
+.documento__opcion:has(input:focus-visible) {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 1px;
+}
+
+/* ---------- Estados finales: correo enviado y cuenta creada ---------- */
+
+.listo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding-block: var(--espacio-6);
+  text-align: center;
+  outline: none;
+}
+
+.listo .vista__bajada {
+  max-width: 40ch;
+}
+
+.listo__icono {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--espacio-2);
+  border-radius: var(--radio-pill);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+  box-shadow: 0 0 0 8px var(--color-brillo-marca);
+  animation: aparecer 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.listo__icono .icono {
+  width: 30px;
+  height: 30px;
+  stroke-width: 2.5;
+}
+
+.listo__trazo {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: trazar 0.45s 0.3s ease-out forwards;
+}
+
+@keyframes aparecer {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes trazar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.listo__acciones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+  width: 100%;
+  margin-top: var(--espacio-4);
+}
+
+.listo__acciones .btn {
+  height: var(--alto-control-l);
+}
+
+/* Confeti de la cuenta creada: lienzo sobre toda la pantalla, sin capturar clics (lo dibuja acceso.js) */
+.confeti {
+  position: fixed;
+  inset: 0;
+  z-index: 130;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- Tablet y escritorio ---------- */
+
+@media (min-width: 768px) {
+  .acceso__cuerpo {
+    padding-block: var(--espacio-6) var(--espacio-4);
+  }
+
+  .acceso__tarjeta {
+    justify-self: center;
+    width: min(100%, 480px);
+    padding: var(--espacio-8);
+  }
+
+  .listo__acciones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

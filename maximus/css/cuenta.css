@@ -807,22 +807,6 @@
   color: var(--color-error);
 }
 
-/* Contraseña con el botón para mostrarla dentro del campo */
-.clave {
-  position: relative;
-}
-
-.clave .campo__control {
-  padding-right: var(--alto-control);
-}
-
-.clave__ver {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  color: var(--color-texto-suave);
-}
-
 /* ---------- Diálogo: subir comprobante ---------- */
 
 .dialogo {
