@@ -2,6 +2,19 @@
 
 const raiz = document.documentElement;
 
+// ---------- Cuenta ----------
+
+// Con la sesión de muestra iniciada (la guarda acceso.js en el navegador), el ícono de usuario lleva a Mi cuenta;
+// sin sesión, a Ingresar
+try {
+  if (localStorage.getItem('sesion')) {
+    document.querySelectorAll('[data-cuenta]').forEach((a) => {
+      a.href = 'mi-cuenta.html';
+      a.setAttribute('aria-label', 'Mi cuenta');
+    });
+  }
+} catch {}
+
 // ---------- Tema ----------
 
 const botonesTema = document.querySelectorAll('[data-tema-toggle]');

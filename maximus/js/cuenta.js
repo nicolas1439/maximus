@@ -109,6 +109,16 @@ document.querySelectorAll('.clave__ver').forEach((boton) =>
   })
 );
 
+// ---------- Cerrar sesión (de muestra): borra la sesión que guardó acceso.js y lleva a Ingresar ----------
+
+document.querySelectorAll('[data-cerrar-sesion]').forEach((enlace) =>
+  enlace.addEventListener('click', () => {
+    try {
+      localStorage.removeItem('sesion');
+    } catch {}
+  })
+);
+
 // ---------- Formularios (de muestra) ----------
 
 document.querySelectorAll('[data-formulario]').forEach((form) =>

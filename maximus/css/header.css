@@ -1003,14 +1003,15 @@ html:has(.menu--abierto) {
   0%, 100% {
     transform: rotate(0deg);
   }
+  /* Giros cortos (se achicaron a pedido del usuario, 16/10/2026) */
   25% {
-    transform: rotate(-35deg);
+    transform: rotate(-18deg);
   }
   50% {
-    transform: rotate(10deg);
+    transform: rotate(5deg);
   }
   75% {
-    transform: rotate(-25deg);
+    transform: rotate(-12deg);
   }
 }
 

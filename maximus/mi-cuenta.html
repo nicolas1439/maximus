@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Mi cuenta</title>
   <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <!-- Sesión de muestra (la guarda acceso.js al ingresar o crear la cuenta): sin sesión, primero hay que ingresar,
+       y después se vuelve a la sección pedida -->
+  <script>try { if (!localStorage.getItem('sesion')) location.replace('ingresar.html?volver=' + encodeURIComponent('mi-cuenta.html' + location.hash)); } catch {}</script>
   <script type="module" src="js/incluir.js"></script>
 </head>
 <body>

@@ -220,6 +220,23 @@ document.querySelectorAll('[data-form] input[type="email"]').forEach((campo) => 
   });
 });
 
+// ---------- Sesión de muestra ----------
+
+// La demostración recuerda en el navegador que se ingresó (localStorage "sesion"). La leen el header (el ícono de
+// usuario lleva a Mi cuenta o a Ingresar) y mi-cuenta.html (sin sesión, manda a ingresar.html?volver=…); la borra
+// "Cerrar sesión" de Mi cuenta. En el sitio real la sesión la maneja el servidor.
+function iniciarSesion() {
+  try {
+    localStorage.setItem('sesion', '1');
+  } catch {}
+}
+
+// Después de ingresar: la página que pidió el ingreso (?volver=, solo páginas del sitio) o Mi cuenta
+function destinoIngreso() {
+  const volver = new URLSearchParams(location.search).get('volver');
+  return volver && /^[\w-]+\.html(#[\w-]*)?$/.test(volver) ? volver : formIngresar.getAttribute('action');
+}
+
 // ---------- Ingresar ----------
 
 const formIngresar = document.querySelector('[data-form="ingresar"]');
@@ -228,15 +245,18 @@ formIngresar?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const estado = formIngresar.querySelector('.formulario__estado');
   estado.textContent = '';
-  if (!validar([...formIngresar.querySelectorAll('[required]')])) return;
+  // De muestra: con el formulario vacío ingresa directo con la cuenta de muestra; si se escribió algo, se valida.
+  // Cualquier correo y contraseña ingresan
+  const campos = [...formIngresar.querySelectorAll('[required]')];
+  if (campos.some((c) => c.value.trim()) && !validar(campos)) return;
 
-  // De muestra: cualquier correo y contraseña ingresan y llevan a Mi cuenta
   const boton = formIngresar.querySelector('.enviar');
   await procesar(boton, 'Ingresando…', 1100);
+  iniciarSesion();
   boton.querySelector('.enviar__texto').textContent = '¡Hola de nuevo!';
   boton.querySelector('use').setAttribute('href', 'recursos/iconos.svg?v=2#i-check');
   await esperar(500);
-  location.href = formIngresar.getAttribute('action');
+  location.href = destinoIngreso();
 });
 
 // ---------- Recuperar contraseña ----------
@@ -330,6 +350,7 @@ if (formRegistro) {
     bienvenida.querySelector('[data-nombre]').textContent = formRegistro.elements.nombre.value.trim();
     bienvenida.querySelector('[data-correo]').textContent = formRegistro.elements.correo.value.trim();
     cuentaCreada = true;
+    iniciarSesion();
     mostrar('bienvenida', { enfocar: true });
     // Sale del check cuando ya terminó de aparecer (y de subir la página, si hizo falta)
     setTimeout(() => confeti(bienvenida.querySelector('.listo__icono')), 500);

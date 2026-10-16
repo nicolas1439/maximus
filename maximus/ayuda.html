@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Centro de ayuda</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/faq.css">
+  <link rel="stylesheet" href="css/pedido.css">
+  <link rel="stylesheet" href="css/ayuda.css">
+  <script type="module" src="js/ayuda.js"></script>
+</head>
+<body>
+
+  <!-- Plantilla Centro de ayuda (la abren "Ayuda" del header, "Preguntas frecuentes", "Garantía" y "Botón de
+       arrepentimiento" del footer y "Ver todas las preguntas" del home). Contenido del centro de ayuda de
+       maximus.com.ar (relevado el 16/10/2026: Retiros, Envíos, Compras, Devoluciones y cambios, Garantías, Cuenta,
+       Pagos y facturación y los formularios de "¿Necesitás más ayuda?"), reescrito más corto y sin cambiar las
+       políticas. Los 12 formularios del sitio (consultas, reclamos, faltantes, facturación…) van en uno solo con el
+       motivo. Los términos y condiciones y la privacidad ("Nuestra empresa" en el sitio) quedan como enlaces.
+       js/ayuda.js: buscador en vivo, navegación de temas, enlaces a una pregunta (#p-…) y el formulario de muestra.
+       Página completa con header y footer: centro-de-ayuda.html. -->
+  <main class="centro">
+
+    <nav class="contenedor migas" aria-label="Ubicación">
+      <ol>
+        <li><a href="index.html">Inicio</a></li>
+        <li aria-current="page">Centro de ayuda</li>
+      </ol>
+    </nav>
+
+    <!-- Portada: panel oscuro en ambos modos con la aurora de marca y el buscador -->
+    <div class="contenedor">
+      <section class="portada-ayuda" aria-labelledby="centro-titulo">
+        <div class="portada-ayuda__fondo" aria-hidden="true">
+          <span class="portada-ayuda__mancha portada-ayuda__mancha--verde"></span>
+          <span class="portada-ayuda__mancha portada-ayuda__mancha--violeta"></span>
+        </div>
+        <span class="portada-ayuda__chip"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-ayuda"/></svg>Centro de ayuda</span>
+        <h1 class="portada-ayuda__titulo" id="centro-titulo">¿En qué te podemos <em>ayudar</em>?</h1>
+        <p class="portada-ayuda__bajada">Buscá tu duda o elegí un tema. Si no la encontrás, te respondemos por WhatsApp.</p>
+
+        <form class="buscador-ayuda" role="search" action="" method="get" data-buscador>
+          <label class="sr-only" for="buscar-ayuda">Buscar en el centro de ayuda</label>
+          <svg class="icono buscador-ayuda__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-buscar"/></svg>
+          <input class="buscador-ayuda__campo" id="buscar-ayuda" name="q" type="search" autocomplete="off" placeholder="¿Qué estás buscando?" aria-describedby="buscar-estado">
+          <button class="buscador-ayuda__limpiar btn-icono" type="button" aria-label="Borrar la búsqueda" hidden data-limpiar><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cerrar"/></svg></button>
+        </form>
+
+        <div class="populares">
+          <span class="populares__rotulo">Lo más consultado:</span>
+          <ul class="populares__lista">
+            <li><a href="#p-envios-seguimiento">Seguimiento del envío</a></li>
+            <li><a href="#p-compras-comprobante">Subir comprobante</a></li>
+            <li><a href="#p-pagos-medios">Medios de pago</a></li>
+            <li><a href="#p-pagos-factura">Factura A o B</a></li>
+            <li><a href="#p-garantias-plazos">Plazos de garantía</a></li>
+            <li><a href="#p-cambios-cambiar">Cambios</a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Gestiones rápidas: lo que se resuelve solo, sin escribirnos -->
+    <section class="contenedor gestiones" aria-labelledby="gestiones-titulo" data-gestiones>
+      <h2 class="seccion__titulo" id="gestiones-titulo">Gestiones rápidas</h2>
+      <ul class="gestiones__lista">
+        <li><a class="gestion" href="seguimiento.html"><span class="gestion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-envio"/></svg></span><span class="gestion__titulo">Seguí tu pedido</span><span class="gestion__texto">Con el número de pedido o de guía</span></a></li>
+        <li><a class="gestion" href="mi-cuenta.html#pedidos"><span class="gestion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-comprobante"/></svg></span><span class="gestion__titulo">Subí tu comprobante</span><span class="gestion__texto">Si pagaste por transferencia</span></a></li>
+        <li><a class="gestion" href="mi-cuenta.html#garantias"><span class="gestion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-garantia"/></svg></span><span class="gestion__titulo">Pedí una garantía</span><span class="gestion__texto">Iniciá el trámite de RMA</span></a></li>
+        <li><a class="gestion" href="mi-cuenta.html#pedidos"><span class="gestion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-descarga"/></svg></span><span class="gestion__titulo">Descargá tu factura</span><span class="gestion__texto">Desde Mis compras</span></a></li>
+        <li><a class="gestion" href="mi-cuenta.html#datos"><span class="gestion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-lapiz"/></svg></span><span class="gestion__titulo">Cambiá tus datos</span><span class="gestion__texto">Dirección, teléfono o contraseña</span></a></li>
+        <li><a class="gestion" href="#contacto" data-motivo="Anular una compra (botón de arrepentimiento)"><span class="gestion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-izquierda"/></svg></span><span class="gestion__titulo">Cancelá una compra</span><span class="gestion__texto">Botón de arrepentimiento</span></a></li>
+      </ul>
+    </section>
+
+    <div class="contenedor centro__cuerpo">
+
+      <!-- Temas: pestañas deslizables en celular y tablet; lista fija al costado en escritorio -->
+      <nav class="asuntos" aria-label="Temas de ayuda" data-asuntos>
+        <p class="asuntos__titulo">Temas</p>
+        <ul>
+          <li><a href="#envios"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-envio"/></svg>Envíos<span class="asuntos__cant" data-cant="envios"></span></a></li>
+          <li><a href="#retiros"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-tienda"/></svg>Retiros<span class="asuntos__cant" data-cant="retiros"></span></a></li>
+          <li><a href="#compras"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-carrito"/></svg>Compras<span class="asuntos__cant" data-cant="compras"></span></a></li>
+          <li><a href="#pagos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cuotas"/></svg>Pagos y facturación<span class="asuntos__cant" data-cant="pagos"></span></a></li>
+          <li><a href="#cambios"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-caja"/></svg>Cambios y devoluciones<span class="asuntos__cant" data-cant="cambios"></span></a></li>
+          <li><a href="#garantias"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-garantia"/></svg>Garantías<span class="asuntos__cant" data-cant="garantias"></span></a></li>
+          <li><a href="#cuenta"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-usuario"/></svg>Mi cuenta<span class="asuntos__cant" data-cant="cuenta"></span></a></li>
+        </ul>
+      </nav>
+
+      <div class="centro__contenido">
+
+        <!-- Resultado de la búsqueda (lo escribe ayuda.js) -->
+        <div class="resultado-busqueda" id="buscar-estado" role="status" aria-live="polite" hidden data-estado-busqueda>
+          <p class="resultado-busqueda__texto" data-estado-texto></p>
+          <button class="btn-texto" type="button" data-limpiar>Ver todos los temas</button>
+        </div>
+
+        <div class="sin-resultados" hidden data-sin-resultados>
+          <span class="sin-resultados__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-buscar"/></svg></span>
+          <p class="sin-resultados__titulo">No encontramos respuestas para “<span data-consulta></span>”</p>
+          <p class="sin-resultados__texto">Probá con otra palabra (por ejemplo: envío, factura, cuotas) o escribinos y te ayudamos.</p>
+          <a class="btn btn--primario" href="#contacto">Escribinos</a>
+        </div>
+
+        <!-- ========== Envíos ========== -->
+        <section class="asunto" id="envios" aria-labelledby="envios-titulo" data-asunto>
+          <header class="asunto__cab">
+            <span class="asunto__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-envio"/></svg></span>
+            <div>
+              <h2 class="asunto__titulo" id="envios-titulo">Envíos</h2>
+              <p class="asunto__bajada">Enviamos a todo el país con OCA. En AMBA, en 24 hs.</p>
+            </div>
+          </header>
+          <div class="faq__lista">
+            <details class="faq__item" id="p-envios-como">
+              <summary class="faq__pregunta">¿Cómo funcionan los envíos?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Enviamos a todo el país con OCA, a tu domicilio o a la sucursal de OCA que elijas al comprar. En AMBA la entrega es en 24 hs. También podés retirar sin costo en nuestras sucursales de CABA (mirá <a href="#retiros">Retiros</a>).</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-envios-plazos">
+              <summary class="faq__pregunta">¿Cuánto tarda y cuánto cuesta el envío?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>El costo y el plazo dependen de tu código postal: los ves con “Ver costo de envío” en la página de cada producto y en el carrito, antes de pagar.</p>
+                <p>En eventos de mucha demanda, como Hot Sale o Cyber Monday, los plazos pueden extenderse. No somos responsables por demoras del correo ni por casos de fuerza mayor.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-envios-embalaje">
+              <summary class="faq__pregunta">¿Cómo se embalan los paquetes?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <ul>
+                  <li>Los productos viajan en su caja original, protegidos con film de burbujas y cinta de frágil.</li>
+                  <li>Todos los envíos tienen seguro de transporte incluido, que cubre siniestros y pérdidas.</li>
+                  <li>Si el paquete se pierde, se verifica con OCA y, una vez confirmado, activamos el seguro y te reponemos el pedido.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="faq__item" id="p-envios-visitas">
+              <summary class="faq__pregunta">¿Qué pasa si no estoy cuando llega el envío?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <ul>
+                  <li>OCA hace hasta 3 visitas al domicilio y solo entrega a alguien que esté en esa dirección.</li>
+                  <li>Si no puede entregarlo, el paquete pasa a la sucursal de OCA más cercana. Ahí lo retira solo el titular de la compra, con su DNI y, si pagó con tarjeta, la tarjeta.</li>
+                  <li>Si no se retira a tiempo, vuelve a nuestro depósito y el nuevo envío corre por tu cuenta, con una nueva factura.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="faq__item" id="p-envios-seguimiento">
+              <summary class="faq__pregunta">¿Cómo sigo mi envío?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Cuando despachamos tu pedido te llega un correo con la factura y el pedido pasa a “Despachado”. Desde ahí lo seguís en <a href="seguimiento.html">Seguí tu pedido</a>, con el número de pedido o el de guía de OCA, o desde <a href="mi-cuenta.html#pedidos">Mis compras</a>.</p>
+                <p>El número de guía se genera cuando le entregamos el paquete a OCA.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-envios-demora">
+              <summary class="faq__pregunta">Mi envío está demorado, ¿qué hago?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Una vez que el paquete está en OCA, la entrega depende del correo: hacé el reclamo en <a href="https://www.oca.com.ar" target="_blank" rel="noopener">oca.com.ar</a> (tienen chat en línea) con tu número de guía. Igual estamos para ayudarte: <a href="#contacto">escribinos</a> si lo necesitás.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ========== Retiros ========== -->
+        <section class="asunto" id="retiros" aria-labelledby="retiros-titulo" data-asunto>
+          <header class="asunto__cab">
+            <span class="asunto__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-tienda"/></svg></span>
+            <div>
+              <h2 class="asunto__titulo" id="retiros-titulo">Retiros</h2>
+              <p class="asunto__bajada">Retirá sin costo en cualquiera de nuestras dos sucursales de CABA.</p>
+            </div>
+          </header>
+
+          <ul class="sucursales">
+            <li class="sucursal">
+              <p class="sucursal__nombre">Galería Jardín <span class="sucursal__tipo">Local y showroom</span></p>
+              <p class="sucursal__dato"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-sucursal"/></svg>Florida 537, Local 379 (PB), Microcentro</p>
+              <p class="sucursal__dato"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-reloj"/></svg>Lun a vie de 10 a 19 h · Sáb de 10 a 14:30 h</p>
+              <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Florida+537+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-flecha"/></svg></a>
+            </li>
+            <li class="sucursal">
+              <p class="sucursal__nombre">Floresta <span class="sucursal__tipo">Oficinas y retiro de pedidos</span></p>
+              <p class="sucursal__dato"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-sucursal"/></svg>Remedios de Escalada de San Martín 3875</p>
+              <p class="sucursal__dato"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-reloj"/></svg>Lun a vie de 9 a 17 h · Sáb de 10 a 14 h</p>
+              <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Remedios+de+Escalada+de+San+Martin+3875+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-flecha"/></svg></a>
+            </li>
+          </ul>
+
+          <div class="faq__lista">
+            <details class="faq__item" id="p-retiros-cuando">
+              <summary class="faq__pregunta">¿Cuándo puedo retirar mi pedido?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Solo cuando te llegue el correo de confirmación de retiro: quiere decir que el pedido está preparado, facturado y listo en la sucursal que elegiste.</p>
+                <p>La preparación lleva de 24 a 48 hs hábiles desde que se confirma el pago; las computadoras armadas, 72 hs hábiles.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-retiros-quien">
+              <summary class="faq__pregunta">¿Quién puede retirar el pedido?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <ul>
+                  <li><strong>Si pagaste con transferencia o depósito:</strong> el titular de la compra o una persona autorizada. Para autorizar a alguien, avisanos antes su nombre completo, DNI y teléfono.</li>
+                  <li><strong>Si pagaste con tarjeta:</strong> solo el titular de la tarjeta, con su DNI, la tarjeta que usó y la factura de compra.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="faq__item" id="p-retiros-cambiar">
+              <summary class="faq__pregunta">¿Puedo cambiar la sucursal de retiro?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Sí, mientras el pedido no haya entrado en preparación. <a href="#contacto">Escribinos</a> lo antes posible. El estado del pedido lo ves en <a href="mi-cuenta.html#pedidos">Mis compras</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-retiros-faltante">
+              <summary class="faq__pregunta">Me falta un producto en mi compra, ¿qué hago?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Escribinos por WhatsApp <strong>dentro de las 24 horas</strong> desde que recibiste el pedido, con la factura, el número de pedido y el producto que falta. Revisamos las cámaras del armado y el embalaje en una auditoría interna y te respondemos.</p>
+                <p>Te recomendamos revisar el paquete al recibirlo o retirarlo.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ========== Compras ========== -->
+        <section class="asunto" id="compras" aria-labelledby="compras-titulo" data-asunto>
+          <header class="asunto__cab">
+            <span class="asunto__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-carrito"/></svg></span>
+            <div>
+              <h2 class="asunto__titulo" id="compras-titulo">Compras</h2>
+              <p class="asunto__bajada">Cómo comprar, confirmar tu pedido y consultar el stock.</p>
+            </div>
+          </header>
+          <div class="faq__lista">
+            <details class="faq__item" id="p-compras-como">
+              <summary class="faq__pregunta">¿Cómo compro en el sitio?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Elegí el producto, tocá “Agregar al carrito” y seguí los pasos: tus datos de facturación, la entrega y el medio de pago. Al confirmar te llega un correo con el número de pedido.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-compras-cuenta">
+              <summary class="faq__pregunta">¿Necesito una cuenta para comprar?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Sí. Con tu cuenta seguís el pedido, ves tus compras, descargás la factura y pedís soporte postventa. <a href="crear-cuenta.html">Creá tu cuenta</a> en dos pasos.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-compras-registrada">
+              <summary class="faq__pregunta">¿Cómo sé si mi compra quedó registrada?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Te llega un correo automático con el número de pedido y el detalle, y la compra aparece en <a href="mi-cuenta.html#pedidos">Mis compras</a> con su estado.</p>
+                <p>Si no te llegó el correo, revisá la carpeta de spam. Si tampoco está ahí, <a href="#contacto" data-motivo="No me llegó el correo de confirmación">pedinos que te lo reenviemos</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-compras-comprobante">
+              <summary class="faq__pregunta">Pagué por transferencia, ¿dónde subo el comprobante?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>En <a href="mi-cuenta.html#pedidos">Mis compras</a>, dentro del pedido, con “Subir comprobante”. Es obligatorio: sin el comprobante no podemos validar el pago y el pedido no entra en preparación.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-compras-modificar">
+              <summary class="faq__pregunta">¿Puedo modificar mi pedido después de comprar?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Solo si todavía no se facturó ni entró en preparación. <a href="#contacto">Escribinos</a> lo antes posible.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-compras-stock">
+              <summary class="faq__pregunta">¿Cómo sé si hay stock de un producto?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Cada producto muestra su disponibilidad en su página:</p>
+                <ul>
+                  <li><strong>Con stock:</strong> disponible, sin restricciones.</li>
+                  <li><strong>Stock bajo:</strong> quedan 3 unidades o menos. Te recomendamos no esperar.</li>
+                  <li><strong>Sin stock:</strong> todas las unidades ya están asignadas a pedidos confirmados.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="faq__item" id="p-compras-presupuesto">
+              <summary class="faq__pregunta">¿Puedo pedir un presupuesto?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Sí, <a href="#contacto" data-motivo="Pedir un presupuesto">escribinos</a> con lo que querés presupuestar. Si comprás para una empresa, mirá <a href="maximus-empresas.html">Maximus Empresas</a>.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ========== Pagos y facturación ========== -->
+        <section class="asunto" id="pagos" aria-labelledby="pagos-titulo" data-asunto>
+          <header class="asunto__cab">
+            <span class="asunto__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cuotas"/></svg></span>
+            <div>
+              <h2 class="asunto__titulo" id="pagos-titulo">Pagos y facturación</h2>
+              <p class="asunto__bajada">Medios de pago, cuotas, factura A o B y refacturación.</p>
+            </div>
+          </header>
+          <div class="faq__lista">
+            <details class="faq__item" id="p-pagos-medios">
+              <summary class="faq__pregunta">¿Qué medios de pago aceptan?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <ul>
+                  <li><strong>Transferencia o depósito bancario:</strong> con 10% de descuento. Los datos bancarios te llegan al finalizar la compra y después subís el comprobante.</li>
+                  <li><strong>Tarjeta de crédito o débito con Mercado Pago:</strong> de 1 a 24 cuotas, con 3 cuotas sin interés.</li>
+                  <li><strong>Efectivo:</strong> solo en Galería Jardín o en cajeros automáticos del Banco Galicia.</li>
+                </ul>
+                <p>Se usa un solo medio de pago por pedido; la única excepción son dos tarjetas con Mercado Pago.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-pagos-dos-tarjetas">
+              <summary class="faq__pregunta">¿Puedo pagar con dos tarjetas?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Sí, con Mercado Pago podés pagar con dos tarjetas de crédito en 9, 12 o 18 cuotas, según las opciones habilitadas al momento de la compra.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-pagos-factura">
+              <summary class="faq__pregunta">¿Qué tipo de factura emiten?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <ul>
+                  <li><strong>Factura B:</strong> la de siempre, para consumidor final.</li>
+                  <li><strong>Factura A:</strong> si al comprar elegís facturar a nombre de una empresa y cargás bien el CUIT y la razón social.</li>
+                </ul>
+                <p>Elegí bien tu condición fiscal al comprar para evitar errores de facturación.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-pagos-copia">
+              <summary class="faq__pregunta">¿Cómo consigo una copia de mi factura?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>La factura electrónica te llega por correo cuando se confirma el pago. Además, la descargás cuando quieras desde <a href="mi-cuenta.html#pedidos">Mis compras</a>, en el pedido. Si no la encontrás o tiene un error, <a href="#contacto" data-motivo="Solicitar una factura">pedínosla</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-pagos-refacturar">
+              <summary class="faq__pregunta">¿Pueden refacturar mi compra?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Sí, dentro de los 10 días corridos posteriores a la compra y si se cumplen las condiciones fiscales. Mandá un correo a <a href="mailto:administracion@maximus.com.ar">administracion@maximus.com.ar</a> con:</p>
+                <ul>
+                  <li>La factura original.</li>
+                  <li>La constancia de inscripción en AFIP.</li>
+                  <li>El CUIT correcto y los datos actualizados.</li>
+                </ul>
+                <p>Si corresponde, las percepciones impositivas se abonan por transferencia. La refacturación lleva de 24 a 48 hs hábiles.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-pagos-desconocido">
+              <summary class="faq__pregunta">Tengo un cargo con tarjeta que no hice<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Escribinos de inmediato con los últimos 4 números de la tarjeta, la fecha y el monto del cargo, y una captura del resumen. Revisamos si hay una compra asociada y te ayudamos.</p>
+                <p>Los pagos con tarjeta del sitio validan la identidad y se facturan a nombre del titular. Si se confirma un uso indebido, hacé también el reclamo con tu banco o la emisora de la tarjeta.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ========== Cambios y devoluciones ========== -->
+        <section class="asunto" id="cambios" aria-labelledby="cambios-titulo" data-asunto>
+          <header class="asunto__cab">
+            <span class="asunto__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-caja"/></svg></span>
+            <div>
+              <h2 class="asunto__titulo" id="cambios-titulo">Cambios y devoluciones</h2>
+              <p class="asunto__bajada">Tenés 10 días corridos desde que recibiste el producto.</p>
+            </div>
+          </header>
+          <div class="faq__lista">
+            <details class="faq__item" id="p-cambios-devolver">
+              <summary class="faq__pregunta">¿Puedo devolver un producto?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Sí, dentro de los 10 días corridos desde que lo recibiste. El producto tiene que estar:</p>
+                <ul>
+                  <li>Sin uso y sin abrir.</li>
+                  <li>En su empaque original, completo y en perfectas condiciones.</li>
+                  <li>Con todos sus accesorios, manuales y etiquetas.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="faq__item" id="p-cambios-cambiar">
+              <summary class="faq__pregunta">¿Puedo cambiar un producto?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Sí, también dentro de los 10 días corridos y con las mismas condiciones. Lo cambiás por el mismo producto (si hay stock), por otro del mismo valor o por uno de mayor valor, pagando la diferencia.</p>
+                <p>Si el cambio es por decisión tuya, el envío corre por tu cuenta. Si nos equivocamos nosotros o el producto vino fallado, nos hacemos cargo.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-cambios-excepciones">
+              <summary class="faq__pregunta">¿Qué productos no tienen cambio ni devolución?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <ul>
+                  <li>Los productos en oferta o liquidación, y los marcados “sin cambio”.</li>
+                  <li>Las licencias que ya se activaron.</li>
+                  <li>Los productos con señales de uso o mal embalados.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="faq__item" id="p-cambios-pedir">
+              <summary class="faq__pregunta">¿Cómo pido un cambio o una devolución?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p><a href="#contacto" data-motivo="Cambio o devolución">Escribinos</a> con el número de pedido, el motivo y fotos del producto si hace falta. Revisamos el caso y te decimos cómo seguir.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-cambios-arrepentimiento">
+              <summary class="faq__pregunta">¿Cómo cancelo una compra? (botón de arrepentimiento)<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Podés arrepentirte de una compra online dentro de los 10 días corridos desde que la recibiste, sin dar explicaciones (Ley 24.240 de Defensa del Consumidor). <a href="#contacto" data-motivo="Anular una compra (botón de arrepentimiento)">Pedí la anulación</a> con el número de factura y te confirmamos los pasos.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ========== Garantías ========== -->
+        <section class="asunto" id="garantias" aria-labelledby="garantias-titulo" data-asunto>
+          <header class="asunto__cab">
+            <span class="asunto__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-garantia"/></svg></span>
+            <div>
+              <h2 class="asunto__titulo" id="garantias-titulo">Garantías</h2>
+              <p class="asunto__bajada">Plazos, requisitos y cómo iniciar el trámite (RMA).</p>
+            </div>
+          </header>
+
+          <!-- Plazos de un vistazo -->
+          <ul class="plazos" id="p-garantias-plazos" tabindex="-1">
+            <li class="plazo">
+              <span class="plazo__numero">12<small>meses</small></span>
+              <p class="plazo__titulo">En Maximus</p>
+              <p class="plazo__texto">PC armadas por Maximus y hardware.</p>
+            </li>
+            <li class="plazo">
+              <span class="plazo__numero">6<small>meses</small></span>
+              <p class="plazo__titulo">En Maximus</p>
+              <p class="plazo__texto">Periféricos (menos Logitech), conectividad y pendrives.</p>
+            </li>
+            <li class="plazo">
+              <span class="plazo__numero plazo__numero--marca"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-garantia"/></svg></span>
+              <p class="plazo__titulo">Con el fabricante</p>
+              <p class="plazo__texto">Notebooks, impresoras y monitores (10 días con Maximus), Logitech y Seagate.</p>
+            </li>
+          </ul>
+
+          <div class="faq__lista">
+            <details class="faq__item" id="p-garantias-como">
+              <summary class="faq__pregunta">¿Cómo funciona la garantía?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Revisamos el producto y, si la falla se confirma, lo reparamos o lo cambiamos por otro igual o de características y precio similares. Si no hay uno similar y no querés esperar el reemplazo (puede demorar hasta 60 días), podés cambiarlo por otro de mayor o menor valor, pagando o recibiendo la diferencia a precios actuales.</p>
+                <p>El envío a nuestro depósito corre por tu cuenta; el regreso a tu domicilio o sucursal, por la nuestra. Si el producto no tiene falla, el envío de vuelta también lo pagás vos.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-garantias-requisitos">
+              <summary class="faq__pregunta">¿Qué necesito para pedir una garantía?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <ul>
+                  <li>La factura de compra.</li>
+                  <li>El producto con su caja.</li>
+                  <li>Que no tenga daños físicos hechos después de la compra.</li>
+                  <li>Que esté dentro del plazo de garantía.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="faq__item" id="p-garantias-tramite">
+              <summary class="faq__pregunta">¿Cómo inicio el trámite?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Desde <a href="mi-cuenta.html#garantias">Mis órdenes de RMA</a>, en tu cuenta: cargás la factura, la fecha de compra y la falla. El sector de RMA está en Floresta, Remedios de Escalada de San Martín 3875.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-garantias-demora">
+              <summary class="faq__pregunta">¿Cuánto demora?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>No hay un plazo fijo: depende del producto y de la falla. Te respondemos lo antes posible después de que cargues la solicitud.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-garantias-excepciones">
+              <summary class="faq__pregunta">¿Qué no cubre la garantía?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <ul>
+                  <li>El mal uso o la manipulación incorrecta.</li>
+                  <li>Los daños físicos ocurridos después de recibir la compra.</li>
+                  <li>Detalles estéticos, pintura y corrosión que no estaban al recibirla.</li>
+                  <li>Los productos fuera de plazo.</li>
+                  <li>Los píxeles quemados en monitores: dependen de la política de cada marca.</li>
+                </ul>
+              </div>
+            </details>
+            <details class="faq__item" id="p-garantias-fabricante">
+              <summary class="faq__pregunta">¿Cómo contacto al fabricante?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Si tu producto tiene garantía con el fabricante, llamá al servicio oficial de la marca:</p>
+                <table class="fabricantes">
+                  <thead><tr><th scope="col">Marca</th><th scope="col">Contacto</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Acer</th><td><a href="tel:08004441318">0800-444-1318</a></td></tr>
+                    <tr><th scope="row">Asus</th><td><a href="tel:08001220563">0800-122-0563</a></td></tr>
+                    <tr><th scope="row">Bangho</th><td><a href="tel:08108882264">0810-888-2264</a> · Pedro Goyena 252, Alberdi, Córdoba</td></tr>
+                    <tr><th scope="row">Brother</th><td><a href="tel:08102227684">0810-222-7684</a></td></tr>
+                    <tr><th scope="row">Dell</th><td><a href="tel:08006660789">0800-666-0789</a></td></tr>
+                    <tr><th scope="row">Epson</th><td><a href="tel:08002883776">0800-288-3776</a> · <a href="tel:01151670400">011-5167-0400</a></td></tr>
+                    <tr><th scope="row">HP (notebooks y monitores)</th><td><a href="tel:08005555000">0800-555-5000</a></td></tr>
+                    <tr><th scope="row">Lenovo</th><td><a href="tel:08006660011">0800-666-0011</a> · <a href="tel:08002220279">0800-222-0279</a> (lun a vie de 9 a 18 h)</td></tr>
+                    <tr><th scope="row">LG</th><td><a href="tel:08105555454">0810-555-5454</a></td></tr>
+                    <tr><th scope="row">Logitech</th><td><a href="tel:08005553284">0800-555-3284</a></td></tr>
+                    <tr><th scope="row">Philips</th><td><a href="tel:08004447749">0800-444-7749</a> (lun a vie de 8 a 20 h, sáb de 8 a 14 h)</td></tr>
+                    <tr><th scope="row">Samsung</th><td><a href="tel:08003333733">0800-333-3733</a></td></tr>
+                    <tr><th scope="row">Seagate</th><td><a href="https://www.seagate.com/la/es/support/warranty-and-replacements/" target="_blank" rel="noopener">Registrá el producto en su sitio</a></td></tr>
+                    <tr><th scope="row">Wacom</th><td><a href="tel:08003330108">0800-333-0108</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <!-- ========== Mi cuenta ========== -->
+        <section class="asunto" id="cuenta" aria-labelledby="cuenta-titulo" data-asunto>
+          <header class="asunto__cab">
+            <span class="asunto__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-usuario"/></svg></span>
+            <div>
+              <h2 class="asunto__titulo" id="cuenta-titulo">Mi cuenta</h2>
+              <p class="asunto__bajada">Ingreso, contraseña y tus datos.</p>
+            </div>
+          </header>
+          <div class="faq__lista">
+            <details class="faq__item" id="p-cuenta-ingresar">
+              <summary class="faq__pregunta">No puedo ingresar a mi cuenta<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Si no recordás tu contraseña, tocá <a href="ingresar.html#recuperar">“¿La olvidaste?”</a> al ingresar y escribí tu correo: te mandamos los pasos para recuperarla.</p>
+                <p>Si el problema sigue, habilitá las cookies y JavaScript en tu navegador y recargá la página.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-cuenta-clave">
+              <summary class="faq__pregunta">¿Cómo cambio mi contraseña?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Ingresá a tu cuenta y andá a <a href="mi-cuenta.html#seguridad">Contraseña</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-cuenta-datos">
+              <summary class="faq__pregunta">¿Dónde veo y cambio mis datos?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>En <a href="mi-cuenta.html#datos">Mis datos</a>, dentro de tu cuenta. Tus direcciones de entrega las administrás en <a href="mi-cuenta.html#direcciones">Mis direcciones</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item" id="p-cuenta-correo">
+              <summary class="faq__pregunta">¿Cómo cambio el correo de mi cuenta?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
+              <div class="faq__respuesta">
+                <p>Lo cambiás al hacer un pedido: el correo nuevo queda en tu cuenta hasta que lo vuelvas a cambiar en otra compra.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- ========== Contacto: un solo formulario con el motivo (en el sitio, 12 formularios distintos) ========== -->
+    <section class="contenedor contacto" id="contacto" aria-labelledby="contacto-titulo">
+      <div class="tarjeta contacto__form">
+        <header class="contacto__cab">
+          <h2 class="seccion__titulo" id="contacto-titulo">¿No encontraste lo que buscabas?</h2>
+          <p class="contacto__bajada">Escribinos y te respondemos por correo. Si es urgente, mejor por WhatsApp.</p>
+        </header>
+
+        <form class="contacto__campos" novalidate data-contacto>
+          <div data-paso="cargar">
+            <div class="contacto__grilla">
+              <div class="campo contacto__ancho">
+                <label class="campo__rotulo" for="contacto-motivo">Motivo</label>
+                <span class="selector"><select class="selector__campo" id="contacto-motivo" name="motivo" required data-motivo-campo>
+                  <option value="" selected disabled>Elegí un motivo</option>
+                  <option data-pedido>Consulta sobre un pedido</option>
+                  <option data-pedido>Faltante en mi pedido</option>
+                  <option data-pedido>Cambio o devolución</option>
+                  <option data-pedido>Anular una compra (botón de arrepentimiento)</option>
+                  <option data-pedido>No me llegó el correo de confirmación</option>
+                  <option data-pedido>Cambiar la dirección de entrega</option>
+                  <option data-pedido>Solicitar una factura</option>
+                  <option data-pedido>Corregir una factura</option>
+                  <option>Pedir un presupuesto</option>
+                  <option>Consulta general</option>
+                  <option>Reclamo</option>
+                  <option>Sugerencia</option>
+                </select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></span>
+              </div>
+              <div class="campo">
+                <label class="campo__rotulo" for="contacto-nombre">Nombre y apellido</label>
+                <input class="campo__control" id="contacto-nombre" name="nombre" type="text" autocomplete="name" required>
+              </div>
+              <div class="campo">
+                <label class="campo__rotulo" for="contacto-correo">Correo electrónico</label>
+                <input class="campo__control" id="contacto-correo" name="correo" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="nombre@correo.com" required>
+              </div>
+              <div class="campo" data-campo-pedido hidden>
+                <label class="campo__rotulo" for="contacto-pedido">Número de pedido o de factura</label>
+                <input class="campo__control" id="contacto-pedido" name="pedido" type="text" inputmode="numeric" autocomplete="off" placeholder="Ej.: 422907">
+              </div>
+              <div class="campo">
+                <label class="campo__rotulo" for="contacto-telefono">Teléfono <span class="campo__opcional">(opcional)</span></label>
+                <input class="campo__control" id="contacto-telefono" name="telefono" type="tel" autocomplete="tel-national" placeholder="11 1234-5678">
+              </div>
+              <div class="campo contacto__ancho">
+                <label class="campo__rotulo" for="contacto-mensaje" data-mensaje-rotulo>Tu mensaje</label>
+                <textarea class="campo__control campo__control--area" id="contacto-mensaje" name="mensaje" rows="5" required placeholder="Contanos en qué te podemos ayudar"></textarea>
+              </div>
+            </div>
+            <div class="contacto__acciones">
+              <button class="btn btn--primario" type="submit">Enviar mensaje<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-flecha"/></svg></button>
+              <p class="contacto__estado" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- Enviado (de muestra) -->
+          <div class="contacto__listo" data-paso="listo" tabindex="-1" hidden>
+            <span class="contacto__check"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg></span>
+            <p class="contacto__listo-titulo">¡Recibimos tu mensaje!</p>
+            <p>Te respondemos a <strong data-correo></strong> lo antes posible. Si es urgente, escribinos por WhatsApp.</p>
+            <button class="btn-texto" type="button" data-otro>Enviar otro mensaje</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="contacto__lateral" aria-label="Otros canales">
+        <section class="ayuda" aria-labelledby="ayuda-titulo">
+          <svg class="icono ayuda__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-whatsapp"/></svg>
+          <div class="ayuda__texto">
+            <p class="ayuda__titulo" id="ayuda-titulo">Respuesta más rápida por WhatsApp</p>
+            <p>Escribinos al +54 11 2357-5522 con tu número de pedido, si tenés uno.</p>
+          </div>
+          <div class="ayuda__acciones">
+            <a class="btn btn--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </section>
+
+        <div class="tarjeta canales">
+          <p class="canales__titulo">Otros canales</p>
+          <ul class="canales__lista">
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-empresa"/></svg><span>Empresas<a href="mailto:empresas@maximus.com.ar">empresas@maximus.com.ar</a></span></li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-comprobante"/></svg><span>Facturación<a href="mailto:administracion@maximus.com.ar">administracion@maximus.com.ar</a></span></li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-tienda"/></svg><span>Local y showroom<a href="#retiros">Florida 537, Local 379 (PB)</a></span></li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Legales -->
+    <nav class="contenedor legales" aria-label="Información legal">
+      <ul>
+        <li><a href="#">Términos y condiciones</a></li>
+        <li><a href="#">Política de privacidad</a></li>
+        <li><a href="#p-cambios-arrepentimiento">Botón de arrepentimiento</a></li>
+        <li><a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor" target="_blank" rel="noopener">Defensa del consumidor (Ley 24.240)</a></li>
+      </ul>
+    </nav>
+
+  </main>
+
+</body>
+</html>

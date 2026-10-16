@@ -361,6 +361,22 @@ ul {
   font-size: var(--texto-xs);
 }
 
+/* "(opcional)" junto al rótulo */
+.campo__opcional {
+  color: var(--color-texto-suave);
+  font-weight: var(--peso-normal);
+}
+
+/* Área de texto con el estilo del campo (el control fija el alto de una línea): Empresas y Centro de ayuda */
+.campo__control--area {
+  height: auto;
+  font: inherit; /* el navegador le pone monoespaciada al textarea */
+  min-height: calc(var(--alto-control) * 2.5);
+  padding-block: var(--espacio-3);
+  line-height: 1.5;
+  resize: vertical;
+}
+
 /* Campo con error: borde y halo en rojo, y el mensaje debajo del control (lo agrega acceso.js) */
 .campo__control[aria-invalid="true"],
 .campo__control[aria-invalid="true"]:hover {

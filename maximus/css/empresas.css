@@ -382,21 +382,6 @@
   gap: var(--espacio-4);
 }
 
-.campo__opcional {
-  color: var(--color-texto-suave);
-  font-weight: var(--peso-normal);
-}
-
-/* Área de texto con el estilo del campo (base.css fija el alto de una línea) */
-.campo__control--area {
-  height: auto;
-  font: inherit; /* el navegador le pone monoespaciada al textarea */
-  min-height: calc(var(--alto-control) * 2.5);
-  padding-block: var(--espacio-3);
-  line-height: 1.5;
-  resize: vertical;
-}
-
 .cotizacion__acciones {
   display: flex;
   flex-wrap: wrap;
