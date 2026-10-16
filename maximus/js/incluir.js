@@ -6,7 +6,9 @@ export const listo = (async () => {
   // 1. Trae cada parte y descarta lo marcado como demostración (data-demo)
   const partes = await Promise.all(
     [...document.querySelectorAll('[data-incluir]')].map(async (lugar) => {
-      const texto = await (await fetch(lugar.dataset.incluir)).text();
+      // no-cache: siempre pregunta al servidor si la parte cambió (si no cambió, responde sin mandarla de nuevo).
+      // Sin esto, el navegador usa la copia guardada (GitHub Pages la deja 10 minutos) y muestra un header viejo
+      const texto = await (await fetch(lugar.dataset.incluir, { cache: 'no-cache' })).text();
       const doc = new DOMParser().parseFromString(texto, 'text/html');
       doc.querySelectorAll('[data-demo]').forEach((n) => n.remove());
       return { lugar, doc };
