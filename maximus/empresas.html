@@ -10,20 +10,18 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/marcas.css">
-  <link rel="stylesheet" href="css/faq.css">
   <link rel="stylesheet" href="css/banner.css">
   <link rel="stylesheet" href="css/empresas.css">
-  <script type="module" src="js/marcas.js"></script>
   <script type="module" src="js/visible.js"></script>
   <script type="module" src="js/empresas.js"></script>
 </head>
 <body>
 
   <!-- Plantilla Empresas (venta corporativa): la landing que abre el enlace "Empresas" del header. Contenido relevado
-       de la sección Maximus Empresas de maximus.com.ar (15/10/2026): propuesta, soluciones, cómo trabajan, WhatsApp Empresas
-       y correo. Los casos de "Lo que equipamos" y el formulario son de muestra (no se envía nada: js/empresas.js valida y
-       confirma en línea). Página completa con header y footer: maximus-empresas.html. -->
+       de la sección Maximus Empresas de maximus.com.ar (15 y 17/10/2026), en su orden: propuesta, soluciones, cómo trabajan
+       y cotización. Es un embudo: nada lleva a otras páginas, todo termina en la cotización (formulario,
+       WhatsApp o correo). El formulario es de muestra (no se envía nada: js/empresas.js valida y confirma en línea).
+       Página completa con header y footer: maximus-empresas.html. -->
   <main class="empresas">
 
     <div class="contenedor empresas__cab">
@@ -59,71 +57,38 @@
       </section>
     </div>
 
-    <!-- Beneficios -->
-    <section class="contenedor" aria-labelledby="beneficios-titulo">
-      <div class="seccion__cab">
-        <h2 class="seccion__titulo" id="beneficios-titulo">Por qué comprar con Maximus Empresas</h2>
+    <!-- Presupuestos pensados para cada necesidad: las 4 soluciones del sitio. No llevan a otras páginas: "Cotizar" baja al
+         formulario con la necesidad ya escrita (js/empresas.js) -->
+    <section class="contenedor" aria-labelledby="soluciones-titulo">
+      <div class="seccion__cab seccion__cab--bajada">
+        <h2 class="seccion__titulo" id="soluciones-titulo">Presupuestos pensados para cada necesidad</h2>
+        <p class="seccion__bajada">No todas las empresas necesitan lo mismo. Analizamos el uso, el presupuesto y el tipo de trabajo para recomendarte la configuración adecuada.</p>
       </div>
-      <ul class="beneficios">
-        <li class="beneficio">
-          <span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-usuario"/></svg></span>
-          <div>
-            <h3 class="beneficio__titulo">Asesoramiento especializado</h3>
-            <p class="beneficio__texto">Te recomendamos la configuración justa para cada puesto, sin equipos sobredimensionados ni cuellos de botella.</p>
-          </div>
+      <ul class="soluciones">
+        <li class="solucion">
+          <span class="solucion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-pc"/></svg></span>
+          <h3 class="solucion__titulo">PCs para oficina</h3>
+          <p class="solucion__texto">Equipos ágiles para tareas administrativas, atención al público, ventas, gestión y uso diario.</p>
+          <a class="seccion__enlace solucion__cotizar" href="#cotizacion" data-necesidad="PCs para oficina">Cotizar<span class="sr-only"> PCs para oficina</span><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-derecha"/></svg></a>
         </li>
-        <li class="beneficio">
-          <span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-etiqueta"/></svg></span>
-          <div>
-            <h3 class="beneficio__titulo">Cotización a medida</h3>
-            <p class="beneficio__texto">Presupuesto según cantidad, uso y plazo de entrega. Cuantos más equipos iguales, mejor precio.</p>
-          </div>
+        <li class="solucion">
+          <span class="solucion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-edicion"/></svg></span>
+          <h3 class="solucion__titulo">Workstations y alto rendimiento</h3>
+          <p class="solucion__texto">Configuraciones para diseño, edición, arquitectura, ingeniería, render, software técnico y multitarea exigente.</p>
+          <a class="seccion__enlace solucion__cotizar" href="#cotizacion" data-necesidad="Workstations y alto rendimiento">Cotizar<span class="sr-only"> workstations y alto rendimiento</span><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-derecha"/></svg></a>
         </li>
-        <li class="beneficio">
-          <span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-comprobante"/></svg></span>
-          <div>
-            <h3 class="beneficio__titulo">Factura A</h3>
-            <p class="beneficio__texto">Comprás a nombre de tu empresa, con CUIT y razón social. La factura electrónica llega por correo.</p>
-          </div>
+        <li class="solucion">
+          <span class="solucion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-cpu"/></svg></span>
+          <h3 class="solucion__titulo">Componentes y upgrades</h3>
+          <p class="solucion__texto">Actualización de hardware, almacenamiento, memorias, placas de video, monitores, periféricos y accesorios.</p>
+          <a class="seccion__enlace solucion__cotizar" href="#cotizacion" data-necesidad="Componentes y upgrades">Cotizar<span class="sr-only"> componentes y upgrades</span><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-derecha"/></svg></a>
         </li>
-        <li class="beneficio">
-          <span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-pc"/></svg></span>
-          <div>
-            <h3 class="beneficio__titulo">Equipos listos para usar</h3>
-            <p class="beneficio__texto">Armamos y probamos cada PC antes de entregarla. Podés pedir la misma configuración para todo el equipo.</p>
-          </div>
+        <li class="solucion">
+          <span class="solucion__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-empresa"/></svg></span>
+          <h3 class="solucion__titulo">Compras corporativas</h3>
+          <p class="solucion__texto">Atención orientada a empresas, instituciones, estudios, comercios, oficinas y equipos de trabajo.</p>
+          <a class="seccion__enlace solucion__cotizar" href="#cotizacion" data-necesidad="Compras corporativas">Cotizar<span class="sr-only"> compras corporativas</span><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-derecha"/></svg></a>
         </li>
-        <li class="beneficio">
-          <span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-envio"/></svg></span>
-          <div>
-            <h3 class="beneficio__titulo">Entrega donde la necesites</h3>
-            <p class="beneficio__texto">Envío por OCA a tu oficina o a cada sede (en AMBA, en 24 hs), o retiro en Floresta o en el local de Florida.</p>
-          </div>
-        </li>
-        <li class="beneficio">
-          <span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-garantia"/></svg></span>
-          <div>
-            <h3 class="beneficio__titulo">Garantía y posventa</h3>
-            <p class="beneficio__texto">12 meses en las PCs armadas por Maximus, garantía del fabricante en notebooks y monitores, y un canal directo para empresas.</p>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-    <!-- Qué podés equipar: los rubros, con los íconos de categoría del mega menú. Mientras no existan las otras
-         páginas, los enlaces llevan al listado real, como los del menú -->
-    <section class="contenedor" aria-labelledby="rubros-titulo">
-      <div class="seccion__cab">
-        <h2 class="seccion__titulo" id="rubros-titulo">Qué podés equipar</h2>
-        <a class="seccion__enlace" href="placas-de-video.html">Ver el catálogo<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-flecha"/></svg></a>
-      </div>
-      <ul class="rubros">
-        <li><a class="rubro" href="placas-de-video.html"><span class="rubro__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-pc"/></svg></span><strong class="rubro__titulo">PCs de oficina</strong><span class="rubro__texto">Equipos ágiles para administración, ventas y atención al público.</span></a></li>
-        <li><a class="rubro" href="placas-de-video.html"><span class="rubro__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-notebook"/></svg></span><strong class="rubro__titulo">Notebooks</strong><span class="rubro__texto">Para trabajar en cualquier lado, desde uso básico hasta modelos con placa de video.</span></a></li>
-        <li><a class="rubro" href="placas-de-video.html"><span class="rubro__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-monitor"/></svg></span><strong class="rubro__titulo">Monitores</strong><span class="rubro__texto">De 22 a 32 pulgadas, para puestos simples, dobles y salas de reunión.</span></a></li>
-        <li><a class="rubro" href="placas-de-video.html"><span class="rubro__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-mouse"/></svg></span><strong class="rubro__titulo">Periféricos</strong><span class="rubro__texto">Teclados, mouse, auriculares y webcams para cada puesto.</span></a></li>
-        <li><a class="rubro" href="placas-de-video.html"><span class="rubro__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-redes"/></svg></span><strong class="rubro__titulo">Redes y conectividad</strong><span class="rubro__texto">Routers, placas de red y cableado para la oficina.</span></a></li>
-        <li><a class="rubro" href="placas-de-video.html"><span class="rubro__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cat-cpu"/></svg></span><strong class="rubro__titulo">Armado a medida</strong><span class="rubro__texto">Workstations para diseño, render, ingeniería e IA, armadas y probadas.</span></a></li>
       </ul>
     </section>
 
@@ -169,120 +134,6 @@
           </li>
         </ol>
         <img class="proceso__foto" src="recursos/empresas/puestos.webp" alt="Puestos de trabajo con monitores y teclados en una oficina luminosa" width="1200" height="900" loading="lazy">
-      </div>
-    </section>
-
-    <!-- Marcas: la misma tira del home (marcas.css + marcas.js) -->
-    <section class="marcas contenedor" aria-label="Marcas que trabajamos">
-      <ul class="marcas__pista">
-        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/genesis.svg" alt="Genesis"><span class="marca__tono" style="mask-image: url(recursos/marcas/genesis.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/gigabyte.svg" alt="Gigabyte"><span class="marca__tono" style="mask-image: url(recursos/marcas/gigabyte.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/nvidia.svg" alt="NVIDIA"><span class="marca__tono" style="mask-image: url(recursos/marcas/nvidia.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--alta" href="#"><img class="marca__img" src="recursos/marcas/corsair.svg" alt="Corsair"><span class="marca__tono" style="mask-image: url(recursos/marcas/corsair.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--menor" href="#"><img class="marca__img" src="recursos/marcas/amd.svg" alt="AMD"><span class="marca__tono" style="mask-image: url(recursos/marcas/amd.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/msi.svg" alt="MSI"><span class="marca__tono" style="mask-image: url(recursos/marcas/msi.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--baja" href="#"><img class="marca__img" src="recursos/marcas/asus.svg" alt="ASUS"><span class="marca__tono" style="mask-image: url(recursos/marcas/asus.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/redragon.svg" alt="Redragon"><span class="marca__tono" style="mask-image: url(recursos/marcas/redragon.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/kingston.svg" alt="Kingston"><span class="marca__tono" style="mask-image: url(recursos/marcas/kingston.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--ancha" href="#"><img class="marca__img" src="recursos/marcas/lovingcool.svg" alt="Lovingcool"><span class="marca__tono" style="mask-image: url(recursos/marcas/lovingcool.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="#"><img class="marca__img" src="recursos/marcas/logitech.svg" alt="Logitech"><span class="marca__tono" style="mask-image: url(recursos/marcas/logitech.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--ancha" href="#"><img class="marca__img" src="recursos/marcas/xigmatek.svg" alt="Xigmatek"><span class="marca__tono" style="mask-image: url(recursos/marcas/xigmatek.svg)" aria-hidden="true"></span></a></li>
-      </ul>
-    </section>
-
-    <!-- Casos de muestra: inventados para ver el diseño, sin empresas reales -->
-    <section class="contenedor" aria-labelledby="casos-titulo">
-      <div class="seccion__cab">
-        <div class="seccion__titulos">
-          <h2 class="seccion__titulo" id="casos-titulo">Lo que equipamos</h2>
-          <span class="chip-secundario">Ejemplos de muestra</span>
-        </div>
-      </div>
-      <ul class="casos">
-        <li class="caso">
-          <span class="chip-secundario">Estudio contable</span>
-          <h3 class="caso__titulo">12 puestos nuevos para la temporada de balances</h3>
-          <p class="caso__texto">PCs de oficina con SSD y 16 GB de RAM, monitores de 24 pulgadas y periféricos, todas con la misma configuración para simplificar el soporte.</p>
-          <p class="caso__nota">Entrega en Microcentro en dos tandas · Factura A</p>
-        </li>
-        <li class="caso">
-          <span class="chip-secundario">Agencia de diseño</span>
-          <h3 class="caso__titulo">6 workstations para edición de video y 3D</h3>
-          <p class="caso__texto">Ryzen 7, 64 GB de RAM y GeForce RTX 5070 Ti, armadas y probadas, con monitores QHD de 27 pulgadas para el equipo creativo.</p>
-          <p class="caso__nota">Armado a medida · Retiro en Floresta</p>
-        </li>
-        <li class="caso">
-          <span class="chip-secundario">Colegio</span>
-          <h3 class="caso__titulo">30 notebooks para el aula de informática</h3>
-          <p class="caso__texto">Notebooks con Ryzen 5 y SSD, mouse y mochilas, con una sola cotización para toda la compra y envío a la institución.</p>
-          <p class="caso__nota">Envío a zona norte · Factura A a la institución</p>
-        </li>
-      </ul>
-    </section>
-
-    <!-- Preguntas frecuentes de empresas (faq.css) -->
-    <section class="faq contenedor" id="preguntas-frecuentes" aria-labelledby="faq-titulo">
-      <div class="faq__intro">
-        <h2 class="seccion__titulo" id="faq-titulo">Preguntas frecuentes</h2>
-        <p class="faq__bajada">Lo que más nos consultan las empresas antes de comprar. Si tu duda no está acá, escribinos.</p>
-        <div class="faq__acciones">
-          <a class="btn btn--primario" href="https://wa.me/541123609964?text=Hola%20Maximus,%20quiero%20pedir%20una%20cotizaci%C3%B3n%20para%20mi%20empresa." target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-whatsapp"/></svg>WhatsApp Empresas</a>
-          <a class="seccion__enlace" href="#cotizacion">Pedir cotización<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-derecha"/></svg></a>
-        </div>
-      </div>
-
-      <div class="faq__lista">
-        <details class="faq__item" name="faq-empresas">
-          <summary class="faq__pregunta">¿Emiten Factura A?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
-          <div class="faq__respuesta">
-            <p>Sí. Al pedir la cotización, o al comprar en el sitio, cargás el CUIT y la razón social de tu empresa. La factura electrónica llega por correo al confirmarse el pago y queda disponible en “Mis compras”.</p>
-          </div>
-        </details>
-        <details class="faq__item" name="faq-empresas">
-          <summary class="faq__pregunta">¿Hay precios especiales por volumen?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
-          <div class="faq__respuesta">
-            <p>Sí. La cotización se arma según la cantidad de equipos, la configuración y el plazo de entrega: cuantos más equipos iguales, mejor precio. Si comprás de forma recurrente, consultanos condiciones.</p>
-          </div>
-        </details>
-        <details class="faq__item" name="faq-empresas">
-          <summary class="faq__pregunta">¿Qué medios de pago aceptan?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
-          <div class="faq__respuesta">
-            <ul>
-              <li><strong>Transferencia o depósito bancario:</strong> con 10% de descuento; los datos se informan con la cotización o al finalizar la compra.</li>
-              <li><strong>Tarjeta de crédito o débito con Mercado Pago:</strong> en 1, 3, 6, 9, 12, 18 y 24 cuotas fijas (1 y 3 sin interés).</li>
-            </ul>
-            <p>Para otras condiciones de pago, hablalo con tu asesor al cotizar.</p>
-          </div>
-        </details>
-        <details class="faq__item" name="faq-empresas">
-          <summary class="faq__pregunta">¿Entregan los equipos armados y listos para usar?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
-          <div class="faq__respuesta">
-            <p>Sí. Las PCs armadas por Maximus se prueban antes de salir, y podés pedir la misma configuración para todos los puestos. Las computadoras armadas demoran 72 hs hábiles en estar listas. Consultanos por la instalación del sistema operativo y la configuración inicial.</p>
-          </div>
-        </details>
-        <details class="faq__item" name="faq-empresas">
-          <summary class="faq__pregunta">¿Hacen envíos a varias sedes?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
-          <div class="faq__respuesta">
-            <p>Sí. Enviamos a todo el país (excepto Tierra del Fuego) por OCA, a domicilio o a sucursal; en AMBA la entrega es en 24 hs. Si tenés más de una sede, lo coordinamos al cotizar. También podés retirar sin costo en Floresta o en el local de Florida.</p>
-          </div>
-        </details>
-        <details class="faq__item" name="faq-empresas">
-          <summary class="faq__pregunta">¿Qué garantía tienen los productos?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
-          <div class="faq__respuesta">
-            <ul>
-              <li><strong>12 meses:</strong> computadoras armadas por Maximus.</li>
-              <li><strong>6 meses en el local:</strong> periféricos, hardware, conectividad y accesorios.</li>
-              <li><strong>Directa con el fabricante:</strong> notebooks, impresoras y monitores, con 10 días de prueba con Maximus.</li>
-            </ul>
-            <p>Hace falta presentar la factura y conservar la caja y el embalaje originales.</p>
-          </div>
-        </details>
-        <details class="faq__item" name="faq-empresas">
-          <summary class="faq__pregunta">¿Necesito una cuenta para pedir una cotización?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></summary>
-          <div class="faq__respuesta">
-            <p>No. Completá el formulario o escribinos por WhatsApp o mail y te respondemos. Para comprar online sí hace falta una cuenta con los datos de facturación de tu empresa.</p>
-          </div>
-        </details>
       </div>
     </section>
 

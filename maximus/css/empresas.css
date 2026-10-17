@@ -1,10 +1,10 @@
 /* Plantilla Empresas (vista previa: empresas.html; página completa: maximus-empresas.html).
-   Landing de venta corporativa: portada (foto y propuesta), beneficios, qué podés equipar, cómo funciona, marcas
-   (marcas.css), casos de muestra, preguntas frecuentes (faq.css) y la cotización (formulario y canal directo).
+   Landing de venta corporativa armada como embudo, en el orden del sitio: portada (foto y propuesta), presupuestos
+   para cada necesidad (4 soluciones), banner de Kingston, cómo funciona y la cotización (formulario y canal directo).
    Mobile: todo en columna. Tablet: grillas de 2 y 3. Escritorio: grilla de 8 en la portada (texto 4, foto 4),
-   en cómo funciona (pasos 5, foto 3) y en la cotización (formulario 5, canal 3).
-   Detalles en violeta (el color secundario): el chip "Maximus Empresas" de la portada, los números de los pasos
-   y los chips de rubro de los casos. */
+   en las soluciones (2 columnas cada una), en cómo funciona (pasos 5, foto 3) y en la cotización (formulario 5, canal 3).
+   Detalles en violeta (el color secundario): el chip "Maximus Empresas" de la portada, los íconos de las soluciones
+   y los números de los pasos. */
 
 .empresas {
   display: flex;
@@ -137,98 +137,56 @@
   stroke-width: 2.5;
 }
 
-/* ---------- Beneficios ---------- */
+/* ---------- Presupuestos pensados para cada necesidad ---------- */
 
-.beneficios {
+.soluciones {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--espacio-3);
 }
 
-.beneficio {
+/* Ícono en violeta tenue (el detalle en violeta de la sección); "Cotizar" queda siempre al pie.
+   En celular el ícono va al costado, así las cuatro tarjetas no se alargan */
+.solucion {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--espacio-3);
-  padding: var(--espacio-4);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-l);
-  background: var(--color-fondo);
-}
-
-/* Ícono sobre el verde tenue de marca */
-.beneficio__icono {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radio);
-  background: var(--color-brillo-marca);
-  color: var(--color-acento);
-}
-
-.beneficio__titulo {
-  margin: 0 0 var(--espacio-1);
-  font-size: var(--texto-m);
-  font-weight: var(--peso-fuerte);
-  line-height: var(--interlineado-titulo);
-}
-
-.beneficio__texto {
-  margin: 0;
-  color: var(--color-texto-suave);
-  font-size: var(--texto-s);
-}
-
-/* ---------- Qué podés equipar ---------- */
-
-.rubros {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--espacio-3);
-}
-
-.rubro {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espacio-2);
+  align-content: start;
+  justify-items: start;
+  gap: var(--espacio-1) var(--espacio-3);
   height: 100%;
   padding: var(--espacio-4);
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-l);
   background: var(--color-fondo);
-  transition: border-color var(--transicion);
 }
 
-.rubro:hover {
-  border-color: var(--color-acento);
-}
-
-.rubro__icono {
+.solucion__icono {
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: var(--espacio-1);
-  border-radius: var(--radio-pill);
-  background: var(--color-superficie);
-  color: var(--color-texto);
-  transition: background-color var(--transicion), color var(--transicion);
+  grid-row: span 3;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
 }
 
-.rubro:hover .rubro__icono {
-  background: var(--color-marca);
-  color: var(--color-sobre-marca);
-}
-
-.rubro__titulo {
-  font-size: var(--texto-s);
+.solucion__titulo {
+  margin: 0;
+  font-size: var(--texto-m);
   font-weight: var(--peso-fuerte);
   line-height: var(--interlineado-titulo);
 }
 
-.rubro__texto {
+.solucion__texto {
+  margin: 0;
   color: var(--color-texto-suave);
-  font-size: var(--texto-xs);
+  font-size: var(--texto-s);
+}
+
+.solucion__cotizar {
+  margin-top: auto;
+  padding-top: var(--espacio-2);
 }
 
 /* ---------- Cómo funciona ---------- */
@@ -302,54 +260,14 @@
   object-fit: cover;
 }
 
-/* ---------- Casos de muestra ---------- */
-
-.casos {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--espacio-3);
-}
-
-.caso {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--espacio-2);
-  padding: var(--espacio-4);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-l);
-  background: var(--color-fondo);
-}
-
-.caso__titulo {
-  margin: var(--espacio-1) 0 0;
-  font-size: var(--texto-l);
-  font-weight: var(--peso-fuerte);
-  line-height: var(--interlineado-titulo);
-}
-
-.caso__texto {
-  margin: 0;
-  color: var(--color-texto-suave);
-  font-size: var(--texto-s);
-}
-
-.caso__nota {
-  margin: auto 0 0;
-  padding-top: var(--espacio-3);
-  width: 100%;
-  border-top: 1px solid var(--color-borde);
-  color: var(--color-texto-suave);
-  font-size: var(--texto-xs);
-}
-
 /* ---------- Cotización ---------- */
 
 .cotizacion {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--espacio-4);
-  scroll-margin-top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+  /* En celular y tablet el header no define --alto-fijo: al bajar queda solo su fila principal, de unos 60px */
+  scroll-margin-top: calc(var(--alto-fijo, 64px) + var(--espacio-4));
 }
 
 .cotizacion__form {
@@ -546,19 +464,27 @@
     flex: 0 0 auto;
   }
 
-  .beneficios {
+  .soluciones {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--separacion-grilla);
   }
 
-  .beneficio {
-    grid-template-columns: minmax(0, 1fr);
+  .solucion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espacio-2);
     padding: var(--espacio-6);
   }
 
-  .rubros {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--separacion-grilla);
+  .solucion__icono {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--espacio-1);
+  }
+
+  .solucion__titulo {
+    font-size: var(--texto-l);
   }
 
   /* Los pasos pasan a una fila, unidos por una línea horizontal a la altura de los números */
@@ -587,11 +513,6 @@
 
   .proceso__foto {
     aspect-ratio: 2 / 1;
-  }
-
-  .casos {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--separacion-grilla);
   }
 
   .cotizacion__form {
@@ -656,12 +577,9 @@
     background: linear-gradient(to top, color-mix(in srgb, var(--color-fondo-destacado) 55%, transparent), transparent 40%);
   }
 
-  .beneficios {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .rubros {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+  /* Las cuatro soluciones en una fila: 2 columnas de la grilla de 8 cada una */
+  .soluciones {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   /* Pasos en 5 columnas y foto en las 3 restantes */

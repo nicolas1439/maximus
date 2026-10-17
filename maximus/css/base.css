@@ -478,6 +478,19 @@ ul {
   min-width: 0;
 }
 
+/* Encabezado con una bajada debajo del título (ej. las secciones de Empresas) */
+.seccion__cab--bajada {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+}
+
+.seccion__bajada {
+  max-width: 64ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
 /* Lado derecho del encabezado cuando suma más de un control (ej. "Ver todas" + flechas del carrusel) */
 .seccion__acciones {
   display: flex;
