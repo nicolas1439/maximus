@@ -152,6 +152,23 @@ ul {
   color: var(--color-sobre-secundario);
 }
 
+/* Etiqueta con ícono delante (el fuego de las campañas) */
+.etiqueta--con-icono {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+}
+
+.etiqueta--con-icono .icono {
+  width: 14px;
+  height: 14px;
+}
+
+/* El fuego de las campañas flamea al pasar el mouse (header.js): sin recorte para que la punta no se corte */
+[data-fuego] .icono {
+  overflow: visible;
+}
+
 /* Chip en violeta tenue (el color secundario): cantidades y campañas junto a un título ("Productos (n)", "34 productos") */
 .chip-secundario {
   display: inline-flex;
