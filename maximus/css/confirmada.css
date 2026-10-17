@@ -1,0 +1,609 @@
+/* Plantilla Compra confirmada (vista previa: confirmada.html; página completa: compra-confirmada.html).
+   Gracias (check que se dibuja, pedido, estado y pasos del pedido de pedido.css), el pago (transferencia: monto y
+   datos bancarios con "Copiar"; tarjeta: pago aprobado), qué sigue y, al costado, el detalle del pedido (productos,
+   totales, entrega, facturación y pago), las acciones y la ayuda por WhatsApp (.ayuda de pedido.css).
+   Mobile y tablet: todo en columna. Escritorio: grilla de 8, lo principal en 5 columnas y el detalle en 3, fijo bajo
+   el header (--alto-fijo) cuando entra entero en la pantalla.
+   Detalles en violeta (el color secundario): el chip de productos, la línea de la campaña y los números de "Qué sigue". */
+
+.confirmada {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding-block: var(--espacio-6) var(--espacio-seccion);
+}
+
+.confirmada__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+  align-items: start;
+}
+
+.confirmada__principal,
+.confirmada__lateral {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  min-width: 0;
+}
+
+.confirmada__lateral .ayuda {
+  margin-top: 0;
+}
+
+/* ---------- Variantes (solo en la vista previa) ---------- */
+
+.variantes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+}
+
+.variantes__rotulo {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.variantes__opciones {
+  display: flex;
+  gap: var(--espacio-1);
+  padding: var(--espacio-1);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+}
+
+.variantes__btn {
+  height: var(--alto-control-xs);
+  padding-inline: var(--espacio-4);
+  border-radius: var(--radio-pill);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.variantes__btn[aria-pressed="true"] {
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+/* ---------- Gracias ---------- */
+
+.gracias {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-8) var(--espacio-4) var(--espacio-6);
+  text-align: center;
+}
+
+.gracias__icono {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--espacio-2);
+  border-radius: var(--radio-pill);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+  box-shadow: 0 0 0 8px var(--color-brillo-marca);
+  animation: gracias-aparecer 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.gracias__icono .icono {
+  width: 30px;
+  height: 30px;
+  stroke-width: 2.5;
+}
+
+.gracias__trazo {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: gracias-trazar 0.45s 0.3s ease-out forwards;
+}
+
+@keyframes gracias-aparecer {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes gracias-trazar {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.gracias__pedido {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.gracias__pedido strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.gracias__titulo {
+  margin: 0;
+  font-size: var(--texto-2xl);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+.gracias__bajada {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  text-wrap: pretty;
+}
+
+.gracias__bajada strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+  overflow-wrap: anywhere;
+}
+
+.gracias__pasos {
+  width: 100%;
+  margin-top: var(--espacio-4);
+  padding-top: var(--espacio-6);
+  border-top: 1px solid var(--color-borde);
+}
+
+/* ---------- Bloques: cabecera con ícono ---------- */
+
+.bloque__cab {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+}
+
+.bloque__icono {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio);
+  background: color-mix(in srgb, var(--color-aviso) 16%, transparent);
+  color: var(--color-texto);
+}
+
+.bloque__icono--exito {
+  background: var(--color-brillo-marca);
+}
+
+.bloque__titulo {
+  margin: 0;
+  font-size: var(--texto-l);
+  line-height: 1.3;
+}
+
+.bloque__bajada {
+  margin: 2px 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+/* ---------- Pago: monto y datos bancarios ---------- */
+
+.transferir {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.monto {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-1);
+  padding: var(--espacio-4);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+}
+
+.monto__rotulo {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.monto__valor {
+  margin: 0;
+  font-size: var(--texto-3xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+  font-variant-numeric: tabular-nums;
+}
+
+.monto__nota {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.monto__copiar {
+  margin-top: var(--espacio-3);
+}
+
+.banco {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.banco__fila {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--alto-control);
+  padding-block: var(--espacio-2);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.banco__fila:last-child {
+  border-bottom: 0;
+}
+
+.banco dt {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.banco dd {
+  grid-column: 2 / -1;
+  margin: 0;
+  font-weight: var(--peso-medio);
+  overflow-wrap: anywhere;
+}
+
+.banco__fila:has(.banco__copiar) dd {
+  grid-column: auto;
+}
+
+.banco__numero {
+  font-variant-numeric: tabular-nums;
+}
+
+.banco__copiar {
+  min-height: var(--alto-control);
+}
+
+.nota {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: var(--espacio-3);
+  border-radius: var(--radio);
+  background: color-mix(in srgb, var(--color-aviso) 12%, transparent);
+  font-size: var(--texto-s);
+}
+
+.nota .icono {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-aviso);
+}
+
+.nota strong {
+  font-weight: var(--peso-medio);
+}
+
+/* ---------- Qué sigue ---------- */
+
+.sigue {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.sigue__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.sigue__paso {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+/* Línea que une los números */
+.sigue__paso:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 36px;
+  bottom: calc(var(--espacio-4) * -1 + 4px);
+  left: 15px;
+  width: 2px;
+  border-radius: var(--radio-pill);
+  background: var(--color-borde);
+}
+
+.sigue__num {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radio-pill);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-fuerte);
+}
+
+.sigue__titulo {
+  margin: 4px 0 2px;
+  font-weight: var(--peso-medio);
+}
+
+.sigue__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.sigue__btn {
+  margin-top: var(--espacio-3);
+}
+
+/* ---------- Detalle del pedido ---------- */
+
+.pedido-detalle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.pedido-detalle__cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.lineas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.lineas li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-2);
+  font-size: var(--texto-xs);
+}
+
+.lineas img,
+.lineas__icono {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+.lineas img {
+  padding: 2px;
+  background: var(--color-fondo-imagen);
+  object-fit: contain;
+}
+
+.lineas__icono {
+  display: grid;
+  place-items: center;
+  color: var(--color-texto-suave);
+}
+
+.lineas span:not(.lineas__icono) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.lineas small {
+  color: var(--color-texto-suave);
+}
+
+.lineas strong {
+  font-weight: var(--peso-medio);
+  font-variant-numeric: tabular-nums;
+}
+
+.totales {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  font-size: var(--texto-s);
+}
+
+.totales div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.totales dt {
+  color: var(--color-texto-suave);
+}
+
+.totales dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.totales__descuento dd {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+.totales__campania dt,
+.totales__campania dd {
+  color: var(--color-secundario-texto);
+}
+
+.totales__campania dd {
+  font-weight: var(--peso-medio);
+}
+
+.totales__total {
+  margin-top: var(--espacio-1);
+  padding-top: var(--espacio-3);
+  border-top: 1px dashed var(--color-borde);
+}
+
+.totales__total dt {
+  color: var(--color-texto);
+  font-weight: var(--peso-fuerte);
+}
+
+.totales__total dd {
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.datos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  margin: 0;
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  font-size: var(--texto-s);
+}
+
+.datos__fila {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.datos dt {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.datos dd {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding-left: 24px;
+}
+
+.datos small {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.confirmada__acciones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 768px) {
+  .gracias {
+    padding: var(--espacio-8);
+  }
+
+  .gracias__titulo {
+    font-size: var(--texto-3xl);
+  }
+
+  .transferir,
+  .sigue,
+  .pedido-detalle {
+    padding: var(--espacio-6);
+  }
+
+  .monto {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    padding: var(--espacio-4) var(--espacio-6);
+  }
+
+  .monto__valor,
+  .monto__nota {
+    grid-column: 1;
+  }
+
+  .monto__copiar {
+    grid-row: 1 / 3;
+    grid-column: 2;
+    margin-top: 0;
+  }
+
+  .banco__fila {
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+  }
+
+  .confirmada__acciones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Escritorio: grilla de 8 (principal 5, detalle 3) ---------- */
+
+@media (min-width: 1024px) {
+  .confirmada__cuerpo {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  .confirmada__principal {
+    grid-column: span 5;
+  }
+
+  .confirmada__lateral {
+    grid-column: span 3;
+  }
+
+  .pedido-detalle {
+    padding: var(--espacio-4);
+  }
+
+  .confirmada__acciones {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .confirmada__lateral .ayuda {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .confirmada__lateral .ayuda__acciones {
+    grid-column: 1 / -1;
+  }
+}
+
+/* El detalle queda fijo bajo el header solo si entra entero en la pantalla (con la ayuda mide unos 950px) */
+@media (min-width: 1024px) and (min-height: 1040px) {
+  .confirmada__lateral {
+    position: sticky;
+    top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+    transition: top var(--transicion);
+  }
+}

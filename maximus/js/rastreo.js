@@ -4,7 +4,7 @@
 // Sin JS el formulario recarga la página con ?n=numero; con JS se lee ese ?n= al entrar y se actualiza al buscar.
 
 const icono = (id, clase = 'icono icono--s') =>
-  `<svg class="${clase}" aria-hidden="true"><use href="recursos/iconos.svg?v=2#${id}"/></svg>`;
+  `<svg class="${clase}" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${id}"/></svg>`;
 
 const WHATSAPP = 'https://wa.me/541123575522';
 const OCA = 'https://www.oca.com.ar/Seguimiento/Paquetes/';

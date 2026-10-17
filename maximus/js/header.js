@@ -204,6 +204,17 @@ const barraSup = document.querySelector('.barra-sup');
 const campoBuscar = document.querySelector('.buscador__campo');
 const celular = matchMedia('(max-width: 767px)');
 
+// Buscador: va a buscar.html?q=…; en los resultados queda escrito lo que se buscó, y sin texto no busca
+if (campoBuscar) {
+  if (document.querySelector('.listado')) campoBuscar.value = new URLSearchParams(location.search).get('q') || '';
+  campoBuscar.form.addEventListener('submit', (e) => {
+    if (!campoBuscar.value.trim()) {
+      e.preventDefault();
+      campoBuscar.focus();
+    }
+  });
+}
+
 // Al bajar se esconde algo y vuelve cuando el usuario sube un tramo (UMBRAL_SUBIR): en escritorio, la fila del
 // menú, que queda pegada debajo de la fila principal; en celular, el buscador. Arriba de todo queda todo en su
 // lugar, con la barra superior. En tablet no se esconde nada (el buscador comparte fila con el logo).

@@ -5,7 +5,7 @@
 
 const tramite = document.querySelector('[data-tramite]');
 const form = document.querySelector('[data-form-rma]');
-const icono = (id) => `<svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#${id}"/></svg>`;
+const icono = (id) => `<svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${id}"/></svg>`;
 
 let conSesion = false;
 try {

@@ -62,12 +62,51 @@ function leer(el) {
   d.descuento = Number(d.descuento);
   d.vendidos = Number(d.vendidos);
   d.local = d.local === '1';
+  // Texto en el que busca ?q=: nombre, marca y datos clave, sin tildes ni mayúsculas
+  d.texto = normalizar([el.querySelector('.producto__nombre')?.textContent, d.marca, d.modelo, d.vram, d.memoria, d.sub === 'amd' ? 'amd radeon' : 'nvidia geforce'].join(' '));
   return d;
 }
 
 const pesos = (n) => '$' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 const escapar = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 const textoDe = (grupo, valor) => (grupo.texto ? grupo.texto(valor) : valor);
+
+// ---------- Búsqueda (?q=, la usa el buscador del header: buscar.html) ----------
+// Muestra los productos que tienen todas las palabras buscadas, sin importar tildes ni mayúsculas ("rtx 5060",
+// "radeon 16gb"). El listado pasa a ser de resultados: título con lo buscado, sin el estante ni la guía de la
+// categoría y, si no hay nada, su propio estado vacío con búsquedas populares. En el sitio real busca el backend.
+
+function normalizar(texto) {
+  return String(texto ?? '')
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/(\d)\s+(gb|w|mm)\b/g, '$1$2'); // "16 GB" y "16GB" son lo mismo
+}
+
+const consulta = (new URLSearchParams(location.search).get('q') || '').trim().slice(0, 80);
+const palabras = normalizar(consulta).split(/\s+/).filter(Boolean);
+const coincide = (d) => palabras.every((p) => d.texto.includes(p));
+const hallados = items.filter((i) => coincide(i.datos));
+
+function modoBusqueda() {
+  if (!consulta) return;
+  const titulo = listado.querySelector('.listado__titulo');
+  titulo.textContent = `Resultados para “${consulta}”`;
+  document.title = `Maximus — Buscar: ${consulta}`;
+  // Migas: Inicio → Búsqueda
+  const migas = listado.querySelector('.migas ol');
+  if (migas) migas.innerHTML = '<li><a href="index.html">Inicio</a></li><li aria-current="page">Búsqueda</li>';
+  destacados?.remove();
+  document.querySelector('.guia')?.remove();
+  // Sin resultados: solo el estado vacío de la búsqueda (sin filtros ni orden)
+  if (!hallados.length) {
+    const vacioBusqueda = listado.querySelector('[data-vacio-busqueda]');
+    vacioBusqueda.querySelector('[data-consulta]').textContent = consulta;
+    vacioBusqueda.hidden = false;
+    listado.classList.add('listado--sin-resultados');
+  }
+}
 
 // ---------- Elementos ----------
 
@@ -92,6 +131,7 @@ const relleno = form.querySelector('[data-relleno]');
 
 // Pasa todos los filtros, salvo el del grupo indicado (para contar las opciones de ese grupo)
 function pasa(d, excepto) {
+  if (palabras.length && !coincide(d)) return false;
   if (excepto !== 'local' && estado.local && !d.local) return false;
   if (excepto !== 'precio') {
     if (estado.min !== null && d.precio < estado.min) return false;
@@ -135,7 +175,7 @@ function aplicar({ reiniciar = true, animarTodo = false } = {}) {
   barra.style.setProperty('--progreso', `${total ? (vistos / total) * 100 : 0}%`);
   verMas.hidden = vistos >= total;
   pie.hidden = total === 0;
-  vacio.hidden = total > 0;
+  vacio.hidden = total > 0 || !hallados.length;
 
   pintarFiltros();
   pintarActivos();
@@ -239,7 +279,7 @@ function pintarActivos() {
   for (const { texto, quitar } of lista) {
     const li = document.createElement('li');
     li.className = 'activo';
-    li.innerHTML = `${escapar(texto)}<button class="activo__quitar" type="button" aria-label="Quitar filtro ${escapar(texto)}"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-cerrar"/></svg></button>`;
+    li.innerHTML = `${escapar(texto)}<button class="activo__quitar" type="button" aria-label="Quitar filtro ${escapar(texto)}"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cerrar"/></svg></button>`;
     li.querySelector('button').addEventListener('click', () => {
       quitar();
       aplicar();
@@ -271,6 +311,7 @@ function limpiar() {
 
 function escribirUrl() {
   const p = new URLSearchParams();
+  if (consulta) p.set('q', consulta);
   if (estado.local) p.set('local', '1');
   if (estado.min !== null) p.set('min', estado.min);
   if (estado.max !== null) p.set('max', estado.max);
@@ -419,6 +460,7 @@ addEventListener("resize", () => {
 
 // ---------- Arranque ----------
 
+modoBusqueda();
 armarGrupos();
 leerUrl();
 aplicar({ reiniciar: false, animarTodo: true });

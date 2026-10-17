@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Quiénes somos</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/marcas.css">
+  <link rel="stylesheet" href="css/nosotros.css">
+  <script type="module" src="js/marcas.js"></script>
+</head>
+<body>
+
+  <!-- Plantilla Quiénes somos (la abre "Quiénes somos" del footer). Contenido de maximus.com.ar
+       (/quienes-somos/info/maximus.aspx, relevado el 17/10/2026): "Vivimos el gaming como vos", los cuatro pilares,
+       el blog y las reseñas de Google (5,0; las tres destacadas del sitio, con el nombre acortado). Se suman las
+       marcas (la tira del home), los dos locales con su horario y la búsqueda de personal, que en el sitio está en el
+       footer. Página completa con header y footer: quienes-somos.html. -->
+  <main class="nosotros">
+
+    <nav class="contenedor migas" aria-label="Ubicación">
+      <ol>
+        <li><a href="index.html">Inicio</a></li>
+        <li aria-current="page">Quiénes somos</li>
+      </ol>
+    </nav>
+
+    <!-- Portada: panel oscuro con la aurora de marca y los números de Maximus -->
+    <div class="contenedor">
+      <section class="portada-nos" aria-labelledby="nos-titulo">
+        <span class="aurora" aria-hidden="true"></span>
+        <div class="portada-nos__texto">
+          <span class="portada-nos__chip">Maximus Gaming Hardware</span>
+          <h1 class="portada-nos__titulo" id="nos-titulo">Vivimos el gaming <em>como vos</em></h1>
+          <p class="portada-nos__bajada">Acompañamos a gamers, creadores y entusiastas de la tecnología con productos de alto rendimiento, asesoramiento personalizado y una compra pensada para armar el setup ideal.</p>
+          <div class="portada-nos__acciones">
+            <a class="btn btn--primario" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-armar"/></svg>Armá tu PC</a>
+            <a class="btn portada-nos__btn" href="placas-de-video.html">Ver computadoras</a>
+          </div>
+        </div>
+        <dl class="cifras">
+          <div class="cifra"><dt>Años en computación y gaming</dt><dd>+10</dd></div>
+          <div class="cifra"><dt>Calificación en Google</dt><dd>5,0<svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg></dd></div>
+          <div class="cifra"><dt>Locales en CABA</dt><dd>2</dd></div>
+          <div class="cifra"><dt>Entrega en AMBA, con envíos a todo el país</dt><dd>24 hs</dd></div>
+        </dl>
+      </section>
+    </div>
+
+    <!-- Qué hacemos -->
+    <section class="contenedor historia" aria-labelledby="historia-titulo">
+      <div class="historia__intro">
+        <h2 class="seccion__titulo" id="historia-titulo">Especialistas en hardware desde hace más de 10 años</h2>
+      </div>
+      <div class="historia__texto">
+        <p>Nos especializamos en computación y gaming: computadoras listas para jugar, componentes para actualizar tu PC y periféricos de las mejores marcas del mercado.</p>
+        <p>Nuestro objetivo es que compres con confianza, elijas mejor y tengas el soporte que necesitás antes, durante y después de tu compra.</p>
+        <ul class="historia__rubros" aria-label="Lo que vas a encontrar">
+          <li><a href="placas-de-video.html">Placas de video</a></li>
+          <li><a href="placas-de-video.html">Procesadores</a></li>
+          <li><a href="placas-de-video.html">Motherboards</a></li>
+          <li><a href="placas-de-video.html">Monitores</a></li>
+          <li><a href="placas-de-video.html">Almacenamiento</a></li>
+          <li><a href="placas-de-video.html">Refrigeración</a></li>
+          <li><a href="placas-de-video.html">Gabinetes y fuentes</a></li>
+          <li><a href="placas-de-video.html">Sillas gamer</a></li>
+          <li><a href="placas-de-video.html">Periféricos</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Pilares: los cuatro del sitio -->
+    <section class="contenedor pilares" aria-label="Por qué elegirnos">
+      <ul class="pilares__lista">
+        <li class="tarjeta pilar">
+          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-reloj"/></svg></span>
+          <h3 class="pilar__titulo">+10 años de experiencia</h3>
+          <p class="pilar__texto">Especialistas en hardware, computadoras gamer y componentes de alto rendimiento.</p>
+        </li>
+        <li class="tarjeta pilar">
+          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg></span>
+          <h3 class="pilar__titulo">Envíos a todo el país</h3>
+          <p class="pilar__texto">Comprá online y recibí tu pedido en cualquier punto de Argentina. En AMBA, en 24 hs.</p>
+        </li>
+        <li class="tarjeta pilar">
+          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-ayuda"/></svg></span>
+          <h3 class="pilar__titulo">Asesoramiento personalizado</h3>
+          <p class="pilar__texto">Te ayudamos a elegir los componentes correctos según tu uso, tu presupuesto y tu objetivo.</p>
+        </li>
+        <li class="tarjeta pilar">
+          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg></span>
+          <h3 class="pilar__titulo">Las mejores marcas</h3>
+          <p class="pilar__texto">Trabajamos con marcas líderes en gaming, hardware, periféricos y tecnología.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Marcas: la tira del home -->
+    <section class="marcas contenedor" aria-label="Marcas que trabajamos">
+      <ul class="marcas__pista">
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/genesis.svg" alt="Genesis"><span class="marca__tono" style="mask-image: url(recursos/marcas/genesis.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/gigabyte.svg" alt="Gigabyte"><span class="marca__tono" style="mask-image: url(recursos/marcas/gigabyte.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/nvidia.svg" alt="NVIDIA"><span class="marca__tono" style="mask-image: url(recursos/marcas/nvidia.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--alta" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/corsair.svg" alt="Corsair"><span class="marca__tono" style="mask-image: url(recursos/marcas/corsair.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--menor" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/amd.svg" alt="AMD"><span class="marca__tono" style="mask-image: url(recursos/marcas/amd.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/msi.svg" alt="MSI"><span class="marca__tono" style="mask-image: url(recursos/marcas/msi.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--baja" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/asus.svg" alt="ASUS"><span class="marca__tono" style="mask-image: url(recursos/marcas/asus.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/redragon.svg" alt="Redragon"><span class="marca__tono" style="mask-image: url(recursos/marcas/redragon.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/kingston.svg" alt="Kingston"><span class="marca__tono" style="mask-image: url(recursos/marcas/kingston.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--ancha" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/lovingcool.svg" alt="Lovingcool"><span class="marca__tono" style="mask-image: url(recursos/marcas/lovingcool.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/logitech.svg" alt="Logitech"><span class="marca__tono" style="mask-image: url(recursos/marcas/logitech.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--ancha" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/xigmatek.svg" alt="Xigmatek"><span class="marca__tono" style="mask-image: url(recursos/marcas/xigmatek.svg)" aria-hidden="true"></span></a></li>
+      </ul>
+    </section>
+
+    <!-- Reseñas de Google: las destacadas del sitio -->
+    <section class="contenedor opiniones" aria-labelledby="opiniones-titulo">
+      <div class="opiniones__intro">
+        <h2 class="seccion__titulo" id="opiniones-titulo">Lo que opinan nuestros clientes</h2>
+        <p class="seccion__bajada">Experiencias reales de quienes eligieron Maximus para comprar, actualizar o armar su PC.</p>
+        <div class="opiniones__nota">
+          <span class="opiniones__numero">5,0</span>
+          <span class="opiniones__estrellas" role="img" aria-label="5 de 5 estrellas"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg></span>
+          <span class="opiniones__fuente">en Google</span>
+        </div>
+        <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Maximus+Gaming+Hardware+Florida+537" target="_blank" rel="noopener">Ver más reseñas en Google<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
+      </div>
+      <ul class="opiniones__lista">
+        <li class="tarjeta opinion">
+          <div class="opinion__cab"><span class="opinion__avatar" aria-hidden="true">RF</span><div><p class="opinion__nombre">Roxana F.</p><p class="opinion__fecha">8 de mayo de 2026</p></div></div>
+          <p class="opinion__titulo">Excelente atención</p>
+          <p class="opinion__texto">Excelente la atención de los chicos en el local, tienen mucha paciencia para explicar cualquier duda. También destaco el servicio de RMA: me asistieron siempre y estuvieron pendientes del caso.</p>
+        </li>
+        <li class="tarjeta opinion">
+          <div class="opinion__cab"><span class="opinion__avatar" aria-hidden="true">MC</span><div><p class="opinion__nombre">Marina C.</p><p class="opinion__fecha">8 de mayo de 2026</p></div></div>
+          <p class="opinion__titulo">Me ayudaron a elegir</p>
+          <p class="opinion__texto">La atención de Leo y Martín fue 10/10. Me ayudaron a elegir un auricular acorde a lo que necesitaba.</p>
+        </li>
+        <li class="tarjeta opinion">
+          <div class="opinion__cab"><span class="opinion__avatar" aria-hidden="true">TC</span><div><p class="opinion__nombre">Tomás C.</p><p class="opinion__fecha">17 de abril de 2026</p></div></div>
+          <p class="opinion__titulo">Muy recomendable</p>
+          <p class="opinion__texto">Excelente atención. Me atendió Aaron, muy buena predisposición, me asesoró bien y resolvió todas mis dudas.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Visitanos: los dos locales -->
+    <section class="contenedor visitanos" aria-labelledby="visitanos-titulo">
+      <h2 class="seccion__titulo" id="visitanos-titulo">Visitanos</h2>
+      <ul class="visitanos__lista">
+        <li class="tarjeta sede">
+          <span class="sede__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-tienda"/></svg></span>
+          <div class="sede__datos">
+            <h3 class="sede__titulo">Local y showroom</h3>
+            <p>Florida 537, Local 379 (PB), Galería Jardín, CABA</p>
+            <p class="sede__horario"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-reloj"/></svg>Lun. a vie. de 10 a 19 h · Sáb. de 10 a 14:30 h</p>
+            <p class="sede__nota">Vení a ver y probar los productos, retirá tu pedido o dejá un equipo para garantía.</p>
+          </div>
+          <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Florida+537+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
+        </li>
+        <li class="tarjeta sede">
+          <span class="sede__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-empresa"/></svg></span>
+          <div class="sede__datos">
+            <h3 class="sede__titulo">Oficinas y retiro de pedidos</h3>
+            <p>R. de Escalada de San Martín 3875, Floresta, CABA</p>
+            <p class="sede__horario"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-reloj"/></svg>Lun. a vie. de 9 a 17 h · Sáb. de 10 a 14 h</p>
+            <p class="sede__nota">Únicamente retiro de pedidos web y recepción de equipos para garantía.</p>
+          </div>
+          <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Remedios+de+Escalada+de+San+Martin+3875+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Blog y equipo -->
+    <section class="contenedor mas-nos" aria-label="Más de Maximus">
+      <a class="tarjeta blog" href="https://blog.maximus.com.ar/" target="_blank" rel="noopener">
+        <span class="blog__chip">Blog Maximus</span>
+        <h2 class="blog__titulo">Guías, novedades y contenido para mejorar tu setup</h2>
+        <p class="blog__texto">Recomendaciones, guías de compra, novedades del mundo gamer y consejos para sacarle el máximo rendimiento a tu PC.</p>
+        <ul class="blog__temas">
+          <li><strong>Hardware</strong>Guías para elegir mejor</li>
+          <li><strong>Gaming</strong>Novedades y recomendaciones</li>
+          <li><strong>Setup</strong>Consejos para actualizar tu PC</li>
+        </ul>
+        <span class="seccion__enlace">Ir al blog<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></span>
+      </a>
+      <div class="tarjeta equipo">
+        <span class="equipo__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-usuario"/></svg></span>
+        <h2 class="equipo__titulo">Unite al equipo Maximus</h2>
+        <p class="equipo__texto">¿Te apasiona el hardware? Mandanos tu CV con tu nombre, el puesto al que aplicás y dónde vivís.</p>
+        <a class="btn btn--secundario" href="mailto:seleccion@maximus.com.ar?subject=Postulaci%C3%B3n%20-%20Equipo%20Maximus"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-mail"/></svg>seleccion@maximus.com.ar</a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

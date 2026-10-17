@@ -634,6 +634,31 @@
   font-size: var(--texto-s);
 }
 
+/* Búsqueda sin resultados: búsquedas populares en pastillas */
+.resultados__sugerencias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+  margin-bottom: var(--espacio-3);
+}
+
+.resultados__sugerencias a {
+  display: inline-flex;
+  align-items: center;
+  height: var(--alto-control-xs);
+  padding-inline: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-xs);
+  transition: border-color var(--transicion);
+}
+
+.resultados__sugerencias a:hover {
+  border-color: var(--color-acento);
+}
+
 /* ---------- Las más elegidas: estante de destacados ---------- */
 
 /* Panel con fondo armado con código, sin imagen: degradado de base con dos brillos arriba (uno de cada color:
@@ -903,5 +928,17 @@
 @media (min-width: 1440px) {
   .destacados .productos__lista > .carrusel__item {
     flex-basis: calc((100% - 5 * var(--separacion-grilla)) / 5.3);
+  }
+}
+
+/* ---------- Búsqueda sin resultados (?q=, js/listado.js): solo el título y el estado vacío ---------- */
+
+.listado--sin-resultados :is(.filtros, .filtros-capa, .listado__abrir, .orden, .listado__total, .resultados__pie) {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .listado--sin-resultados :is(.listado__barra, .resultados) {
+    grid-column: 1 / -1;
   }
 }

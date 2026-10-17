@@ -37,7 +37,7 @@
     <!-- Cabecera y cómo funciona -->
     <header class="contenedor rma-cab">
       <div class="rma-cab__texto">
-        <span class="rma-cab__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-garantia"/></svg></span>
+        <span class="rma-cab__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg></span>
         <div>
           <h1 class="rma-cab__titulo">Garantía y RMA</h1>
           <p class="rma-cab__bajada">Si un producto que compraste en Maximus falla, iniciá el trámite acá. Te decimos al instante si está en garantía.</p>
@@ -59,9 +59,9 @@
 
         <!-- Etapas: las hechas en verde con check (se pueden volver a abrir) -->
         <ol class="etapas" aria-label="Pasos de la solicitud" data-etapas>
-          <li class="etapas__paso" aria-current="step"><button class="etapas__boton" type="button" data-ir="1"><span class="etapas__num"><span class="etapas__n">1</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg></span><span class="etapas__nombre">Producto</span></button></li>
-          <li class="etapas__paso"><button class="etapas__boton" type="button" data-ir="2" disabled><span class="etapas__num"><span class="etapas__n">2</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg></span><span class="etapas__nombre">Falla</span></button></li>
-          <li class="etapas__paso"><button class="etapas__boton" type="button" data-ir="3" disabled><span class="etapas__num"><span class="etapas__n">3</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg></span><span class="etapas__nombre">Tus datos</span></button></li>
+          <li class="etapas__paso" aria-current="step"><button class="etapas__boton" type="button" data-ir="1"><span class="etapas__num"><span class="etapas__n">1</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="etapas__nombre">Producto</span></button></li>
+          <li class="etapas__paso"><button class="etapas__boton" type="button" data-ir="2" disabled><span class="etapas__num"><span class="etapas__n">2</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="etapas__nombre">Falla</span></button></li>
+          <li class="etapas__paso"><button class="etapas__boton" type="button" data-ir="3" disabled><span class="etapas__num"><span class="etapas__n">3</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="etapas__nombre">Tus datos</span></button></li>
         </ol>
 
         <form class="tramite__form" novalidate data-form-rma>
@@ -99,17 +99,17 @@
                   <span class="compra__estado" data-estado-compra></span>
                 </label>
               </div>
-              <button class="btn-texto" type="button" data-modo-manual><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-lapiz"/></svg>No está en la lista o lo compré en el local</button>
+              <button class="btn-texto" type="button" data-modo-manual><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-lapiz"/></svg>No está en la lista o lo compré en el local</button>
             </div>
 
             <!-- Sin sesión (o fuera de la lista): carga a mano -->
             <div class="manual" data-manual>
               <div class="sesion-aviso" data-sin-sesion>
-                <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-usuario"/></svg>
+                <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-usuario"/></svg>
                 <p><strong>¿Compraste online?</strong> Ingresá a tu cuenta y elegí el producto de tus compras: no vas a tener que subir la factura.</p>
                 <a class="btn btn--secundario" href="ingresar.html?volver=garantia.html">Ingresar</a>
               </div>
-              <button class="btn-texto" type="button" data-modo-compras hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-izquierda"/></svg>Elegir de mis compras</button>
+              <button class="btn-texto" type="button" data-modo-compras hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Elegir de mis compras</button>
 
               <div class="etapa__grilla">
                 <div class="campo etapa__ancho">
@@ -126,7 +126,7 @@
                     <option value="impresora">Impresora</option>
                     <option value="logitech">Logitech (cualquier producto)</option>
                     <option value="seagate">Seagate (cualquier producto)</option>
-                  </select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-abajo"/></svg></span>
+                  </select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></span>
                 </div>
                 <div class="campo etapa__ancho">
                   <label class="campo__rotulo" for="rma-producto">Producto</label>
@@ -147,7 +147,7 @@
             <div class="veredicto" role="status" aria-live="polite" hidden data-veredicto></div>
 
             <div class="etapa__acciones">
-              <button class="btn btn--primario" type="button" data-siguiente>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-flecha"/></svg></button>
+              <button class="btn btn--primario" type="button" data-siguiente>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></button>
               <p class="etapa__estado" role="alert"></p>
             </div>
           </fieldset>
@@ -180,7 +180,7 @@
               <span class="campo__rotulo" id="rma-fotos-rotulo">Fotos del producto</span>
               <label class="adjuntos">
                 <input class="adjuntos__input" type="file" name="fotos" accept="image/jpeg,image/png" multiple aria-labelledby="rma-fotos-rotulo" aria-describedby="rma-fotos-ayuda">
-                <svg class="icono adjuntos__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-subir"/></svg>
+                <svg class="icono adjuntos__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-subir"/></svg>
                 <span class="adjuntos__texto"><strong>Elegí las fotos</strong> o arrastralas acá</span>
               </label>
               <p class="campo__ayuda" id="rma-fotos-ayuda">Hasta 5, en JPG o PNG. Que se vean el producto, su número de serie y la falla si se nota.</p>
@@ -192,14 +192,14 @@
               <span class="campo__rotulo" id="rma-factura-rotulo">Factura de compra</span>
               <label class="adjuntos adjuntos--chico">
                 <input class="adjuntos__input" type="file" name="factura" accept="application/pdf,image/jpeg,image/png" aria-labelledby="rma-factura-rotulo">
-                <svg class="icono adjuntos__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-comprobante"/></svg>
+                <svg class="icono adjuntos__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-comprobante"/></svg>
                 <span class="adjuntos__texto" data-nombre-archivo><strong>Elegí la factura</strong> (PDF, JPG o PNG)</span>
               </label>
             </div>
 
             <div class="etapa__acciones">
-              <button class="btn btn--secundario" type="button" data-anterior><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-izquierda"/></svg>Volver</button>
-              <button class="btn btn--primario" type="button" data-siguiente>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-flecha"/></svg></button>
+              <button class="btn btn--secundario" type="button" data-anterior><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Volver</button>
+              <button class="btn btn--primario" type="button" data-siguiente>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></button>
               <p class="etapa__estado" role="alert"></p>
             </div>
           </fieldset>
@@ -232,12 +232,12 @@
               <legend class="campo__rotulo">¿Cómo nos hacés llegar el producto?</legend>
               <label class="entrega__opcion">
                 <input type="radio" name="entrega" value="local" checked>
-                <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-tienda"/></svg>
+                <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-tienda"/></svg>
                 <span><strong>Lo llevo al sector de RMA</strong>Floresta, Remedios de Escalada de San Martín 3875.</span>
               </label>
               <label class="entrega__opcion">
                 <input type="radio" name="entrega" value="envio">
-                <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-envio"/></svg>
+                <svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg>
                 <span><strong>Lo envío por correo</strong>El envío hasta Maximus corre por tu cuenta; la vuelta, por la nuestra.</span>
               </label>
             </fieldset>
@@ -245,8 +245,8 @@
             <label class="casilla"><input name="condiciones" type="checkbox" required> El producto tiene su caja y no tiene golpes ni daños hechos después de la compra.</label>
 
             <div class="etapa__acciones">
-              <button class="btn btn--secundario" type="button" data-anterior><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-izquierda"/></svg>Volver</button>
-              <button class="btn btn--primario" type="submit">Enviar solicitud<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg></button>
+              <button class="btn btn--secundario" type="button" data-anterior><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Volver</button>
+              <button class="btn btn--primario" type="submit">Enviar solicitud<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></button>
               <p class="etapa__estado" role="alert"></p>
             </div>
           </fieldset>
@@ -254,7 +254,7 @@
 
         <!-- ========== Solicitud enviada (de muestra) ========== -->
         <div class="enviada" tabindex="-1" hidden data-enviada>
-          <span class="enviada__check"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg></span>
+          <span class="enviada__check"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span>
           <p class="enviada__numero">RMA #<span data-numero-rma>14907</span></p>
           <h2 class="enviada__titulo">Recibimos tu solicitud</h2>
           <p class="enviada__texto">Te escribimos a <strong data-dato="correo"></strong> con los pasos a seguir. Guardá el número de RMA para cualquier consulta.</p>
@@ -284,10 +284,10 @@
         <section class="tarjeta info-rma" aria-labelledby="requisitos-titulo">
           <h2 class="info-rma__titulo" id="requisitos-titulo">Antes de empezar</h2>
           <ul class="requisitos-rma">
-            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg>La factura de compra.</li>
-            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg>El producto con su caja.</li>
-            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg>Sin golpes ni daños físicos.</li>
-            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-check"/></svg>Dentro del plazo de garantía.</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>La factura de compra.</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>El producto con su caja.</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>Sin golpes ni daños físicos.</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>Dentro del plazo de garantía.</li>
           </ul>
 
           <h3 class="info-rma__subtitulo">Plazos</h3>
@@ -296,18 +296,18 @@
             <div><dt>6 meses</dt><dd>Periféricos (menos Logitech), conectividad y pendrives.</dd></div>
             <div><dt>Fabricante</dt><dd>Notebooks, monitores e impresoras (10 días con Maximus), Logitech y Seagate.</dd></div>
           </dl>
-          <a class="seccion__enlace" href="centro-de-ayuda.html#garantias">Preguntas sobre garantías<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-flecha"/></svg></a>
+          <a class="seccion__enlace" href="centro-de-ayuda.html#garantias">Preguntas sobre garantías<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
         </section>
 
         <section class="tarjeta info-rma" aria-labelledby="sector-titulo">
           <h2 class="info-rma__titulo" id="sector-titulo">Sector de RMA</h2>
-          <p class="info-rma__dato"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-sucursal"/></svg>Remedios de Escalada de San Martín 3875, Floresta, CABA</p>
-          <p class="info-rma__dato"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-reloj"/></svg>Lun a vie de 9 a 17 h · Sáb de 10 a 14 h</p>
-          <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Remedios+de+Escalada+de+San+Martin+3875+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-flecha"/></svg></a>
+          <p class="info-rma__dato"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-sucursal"/></svg>Remedios de Escalada de San Martín 3875, Floresta, CABA</p>
+          <p class="info-rma__dato"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-reloj"/></svg>Lun a vie de 9 a 17 h · Sáb de 10 a 14 h</p>
+          <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Remedios+de+Escalada+de+San+Martin+3875+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
         </section>
 
         <section class="ayuda" aria-labelledby="ayuda-titulo">
-          <svg class="icono ayuda__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=2#i-whatsapp"/></svg>
+          <svg class="icono ayuda__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-whatsapp"/></svg>
           <div class="ayuda__texto">
             <p class="ayuda__titulo" id="ayuda-titulo">¿Dudas con tu garantía?</p>
             <p>Escribinos por WhatsApp y te ayudamos con el trámite.</p>

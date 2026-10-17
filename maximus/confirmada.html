@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Compra confirmada</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pedido.css">
+  <link rel="stylesheet" href="css/confirmada.css">
+  <script type="module" src="js/confirmada.js"></script>
+</head>
+<body>
+
+  <!-- Plantilla Compra confirmada: la pantalla que sigue a "Confirmar compra" del checkout. js/checkout.js guarda lo
+       elegido en sessionStorage y js/confirmada.js lo muestra; si no hay nada guardado (vista previa, enlace directo)
+       queda la compra de muestra de este HTML: la del carrito de muestra con envío OCA 24 hs y transferencia.
+       Dos variantes según el pago: transferencia (esperando el pago, con los datos bancarios y el comprobante) y
+       tarjeta (pago aprobado). Número de pedido, fecha y datos bancarios son de muestra. En el sitio real el pedido
+       lo crea el backend y esta página lo trae de ahí. Página completa con header y footer: compra-confirmada.html. -->
+  <main class="confirmada" data-confirmada>
+
+    <!-- Solo para la demostración: ver las dos variantes (no va en el sitio real) -->
+    <div class="contenedor variantes" data-demo>
+      <span class="variantes__rotulo">Vista previa</span>
+      <div class="variantes__opciones" role="group" aria-label="Variante">
+        <button class="variantes__btn" type="button" data-ver="transferencia" aria-pressed="true">Transferencia</button>
+        <button class="variantes__btn" type="button" data-ver="tarjeta" aria-pressed="false">Tarjeta</button>
+      </div>
+    </div>
+
+    <div class="contenedor confirmada__cuerpo">
+
+      <div class="confirmada__principal">
+
+        <!-- Gracias: check que se dibuja, pedido, estado y los pasos del pedido -->
+        <section class="tarjeta gracias" aria-labelledby="gracias-titulo">
+          <span class="gracias__icono" data-gracias-icono><svg class="icono" aria-hidden="true" viewBox="0 0 24 24"><path class="gracias__trazo" d="M5 12.5l4.5 4.5L19 7.5" pathLength="1"/></svg></span>
+          <p class="gracias__pedido">Pedido <strong>#424105</strong> · 17 de octubre de 2026</p>
+          <h1 class="gracias__titulo" id="gracias-titulo">¡Gracias por tu compra, Martín!</h1>
+          <p class="gracias__bajada" data-bajada>Reservamos tus productos. Para completar la compra, transferí el total y subí el comprobante. Te mandamos todo a <strong>martin.gonzalez@correo.com</strong>.</p>
+          <span class="estado estado--aviso" data-estado>Esperando el pago</span>
+          <ol class="seguimiento gracias__pasos" aria-label="Seguimiento del pedido #424105" data-pasos>
+            <li class="seguimiento__paso seguimiento__paso--hecho"><span class="seguimiento__punto"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="seguimiento__texto">Confirmado<small>17/10</small></span></li>
+            <li class="seguimiento__paso seguimiento__paso--actual" aria-current="step"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Pago</span></li>
+            <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Preparación</span></li>
+            <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto" data-paso-envio>En camino</span></li>
+            <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto" data-paso-final>Entregado</span></li>
+          </ol>
+        </section>
+
+        <!-- Transferencia: el monto y los datos bancarios, con "Copiar" en cada uno -->
+        <section class="tarjeta transferir" aria-labelledby="transferir-titulo" data-variante="transferencia">
+          <header class="bloque__cab">
+            <span class="bloque__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-transferencia"/></svg></span>
+            <div>
+              <h2 class="bloque__titulo" id="transferir-titulo">Datos para transferir</h2>
+              <p class="bloque__bajada">Desde tu banco o billetera virtual, por el total exacto.</p>
+            </div>
+          </header>
+
+          <div class="monto">
+            <p class="monto__rotulo">Total a transferir</p>
+            <p class="monto__valor" data-monto>$2.671.727</p>
+            <button class="btn btn--secundario monto__copiar" type="button" data-copiar="2671727" data-copiar-nombre="Monto">Copiar monto</button>
+          </div>
+
+          <dl class="banco">
+            <div class="banco__fila"><dt>Banco</dt><dd>Banco Galicia</dd></div>
+            <div class="banco__fila"><dt>Titular</dt><dd>Grupo Maximus SRL</dd></div>
+            <div class="banco__fila"><dt>CUIT</dt><dd>30-71234567-8</dd><button class="btn-texto banco__copiar" type="button" data-copiar="30712345678" data-copiar-nombre="CUIT">Copiar</button></div>
+            <div class="banco__fila"><dt>CBU</dt><dd class="banco__numero">0070 0999 2000 0012 3456 78</dd><button class="btn-texto banco__copiar" type="button" data-copiar="0070099920000012345678" data-copiar-nombre="CBU">Copiar</button></div>
+            <div class="banco__fila"><dt>Alias</dt><dd class="banco__numero">MAXIMUS.PAGOS</dd><button class="btn-texto banco__copiar" type="button" data-copiar="MAXIMUS.PAGOS" data-copiar-nombre="Alias">Copiar</button></div>
+          </dl>
+
+          <p class="nota"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-alerta"/></svg><span>Transferí desde una cuenta a nombre de <strong>Martín González</strong>, el titular de la factura. No se aceptan pagos desde otras cuentas.</span></p>
+        </section>
+
+        <!-- Tarjeta: pago aprobado con Mercado Pago -->
+        <section class="tarjeta transferir" aria-labelledby="aprobado-titulo" data-variante="tarjeta" hidden>
+          <header class="bloque__cab">
+            <span class="bloque__icono bloque__icono--exito"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg></span>
+            <div>
+              <h2 class="bloque__titulo" id="aprobado-titulo">Pago aprobado</h2>
+              <p class="bloque__bajada" data-pago-tarjeta>Tarjeta de crédito en 3 cuotas sin interés, con Mercado Pago.</p>
+            </div>
+          </header>
+          <div class="monto monto--aprobado">
+            <p class="monto__rotulo">Total pagado</p>
+            <p class="monto__valor" data-monto-tarjeta>$2.966.607</p>
+            <p class="monto__nota" data-monto-nota>3 cuotas sin interés de $988.869</p>
+          </div>
+        </section>
+
+        <!-- Qué sigue: cambia según el pago (js/confirmada.js) -->
+        <section class="tarjeta sigue" aria-labelledby="sigue-titulo">
+          <h2 class="bloque__titulo" id="sigue-titulo">Qué sigue</h2>
+          <ol class="sigue__lista" data-sigue>
+            <li class="sigue__paso">
+              <span class="sigue__num">1</span>
+              <div><p class="sigue__titulo">Hacé la transferencia</p><p class="sigue__texto">Por el total exacto, con los datos de arriba.</p></div>
+            </li>
+            <li class="sigue__paso">
+              <span class="sigue__num">2</span>
+              <div>
+                <p class="sigue__titulo">Subí el comprobante</p>
+                <p class="sigue__texto">Sin el comprobante no podemos validar el pago y el pedido no entra en preparación.</p>
+                <a class="btn btn--primario sigue__btn" href="mi-cuenta.html#pedidos"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-subir"/></svg>Subir comprobante</a>
+              </div>
+            </li>
+            <li class="sigue__paso">
+              <span class="sigue__num">3</span>
+              <div><p class="sigue__titulo">Preparamos tu pedido</p><p class="sigue__texto">En 24 a 48 hs hábiles desde que se acredita el pago. Te avisamos por correo cuando sale.</p></div>
+            </li>
+          </ol>
+        </section>
+      </div>
+
+      <aside class="confirmada__lateral" aria-label="Detalle del pedido">
+        <section class="tarjeta pedido-detalle" aria-labelledby="detalle-titulo">
+          <div class="pedido-detalle__cab">
+            <h2 class="bloque__titulo" id="detalle-titulo">Tu pedido</h2>
+            <span class="chip-secundario"><span>Productos (<span data-cantidad>3</span>)</span></span>
+          </div>
+
+          <ul class="lineas" data-lineas>
+            <li><img src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600"><span>Placa de Video MSI Nvidia GeForce RTX 5070 Ti Ventus 3X 16GB OC GDDR7<small> × 1</small></span><strong>$2.668.800</strong></li>
+            <li><img src="recursos/productos/kingston-fury-beast-ddr5.jpg" alt="" width="600" height="600"><span>Memoria RAM Kingston Fury Beast 16GB RGB 6000 MHz DDR5 CL36 AMD EXPO<small> × 2</small></span><strong>$279.998</strong></li>
+            <li><span class="lineas__icono"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg></span><span>OCA 24 hs a domicilio</span><strong>$4.892</strong></li>
+            <li><span class="lineas__icono"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg></span><span>Seguro de envío</span><strong>$12.917</strong></li>
+          </ul>
+
+          <dl class="totales">
+            <div><dt>Subtotal de lista</dt><dd data-t-lista>$3.419.763</dd></div>
+            <div class="totales__campania" data-f-campania><dt data-t-campania-nombre>Mes de la Primavera</dt><dd data-t-campania>−$470.965</dd></div>
+            <div class="totales__descuento" data-f-descuento><dt>Transferencia −10%</dt><dd data-t-descuento>−$294.880</dd></div>
+            <div class="totales__total"><dt>Total</dt><dd data-t-total>$2.671.727</dd></div>
+          </dl>
+
+          <dl class="datos">
+            <div class="datos__fila">
+              <dt><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg>Entrega</dt>
+              <dd><span data-d-entrega>OCA 24 hs a domicilio · Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA</span><small data-d-entrega-meta>Llega el siguiente día hábil después de acreditado el pago, entre las 12 y las 20 h</small></dd>
+            </div>
+            <div class="datos__fila">
+              <dt><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-comprobante"/></svg>Facturación</dt>
+              <dd><span data-d-facturacion>Factura B a nombre de Martín González</span></dd>
+            </div>
+            <div class="datos__fila">
+              <dt><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg>Pago</dt>
+              <dd><span data-d-pago>Transferencia o depósito bancario</span></dd>
+            </div>
+          </dl>
+        </section>
+
+        <div class="confirmada__acciones">
+          <a class="btn btn--primario" href="mi-cuenta.html#pedidos">Ver mis compras</a>
+          <a class="btn btn--secundario" href="index.html">Seguir comprando</a>
+        </div>
+
+        <section class="ayuda" aria-labelledby="ayuda-titulo">
+          <svg class="icono ayuda__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-whatsapp"/></svg>
+          <div class="ayuda__texto">
+            <p class="ayuda__titulo" id="ayuda-titulo">¿Dudas con tu compra?</p>
+            <p>Escribinos por WhatsApp con tu número de pedido.</p>
+          </div>
+          <div class="ayuda__acciones">
+            <a class="btn btn--primario" href="https://wa.me/541123575522?text=Hola%2C%20tengo%20una%20consulta%20por%20el%20pedido%20%23424105" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="seccion__enlace" href="centro-de-ayuda.html">Centro de ayuda</a>
+          </div>
+        </section>
+      </aside>
+
+    </div>
+
+    <canvas class="confeti" aria-hidden="true" data-confeti hidden></canvas>
+    <p class="aviso" data-aviso role="status" aria-live="polite"></p>
+  </main>
+
+</body>
+</html>

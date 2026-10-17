@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Powered by MSI</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/carrusel.css">
+  <link rel="stylesheet" href="css/producto.css">
+  <link rel="stylesheet" href="css/productos.css">
+  <link rel="stylesheet" href="css/msi.css">
+  <script type="module" src="js/carrusel.js"></script>
+  <script type="module" src="js/msi.js"></script>
+</head>
+<body>
+
+  <!-- Plantilla de landing de marca, armada con Computadoras Powered by MSI (/POWEREDBYMSI en maximus.com.ar,
+       relevado el 17/10/2026): las tres gamas (Essential, Advanced, Ultimate) con sus textos, banners y tarjetas (las
+       imágenes del repo de Maximus, en recursos/msi/) y las PC de cada gama, todas las que mostraba el sitio ese día
+       con sus nombres y precios en efectivo (cuotas con el 10% del precio con tarjeta), en la fila deslizable del home
+       (carrusel.js). En el sitio las PC las trae el backend por grupo de artículos. Elegir una gama muestra solo esa (?gama=essential), como en el
+       sitio; "Ver todas las gamas" vuelve a la vista general (js/msi.js). Página completa: powered-by-msi.html. -->
+  <main class="msi">
+
+    <nav class="contenedor migas" aria-label="Ubicación">
+      <ol>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="placas-de-video.html">Computadoras</a></li>
+        <li aria-current="page">Powered by MSI</li>
+      </ol>
+    </nav>
+
+    <!-- Portada: el banner de la campaña y el título -->
+    <header class="contenedor msi__cab">
+      <img class="msi__banner" src="recursos/msi/powered-by-msi.webp" alt="Potenciá tu PC con MSI" width="1500" height="364">
+      <div class="msi__titulos">
+        <div>
+          <h1 class="msi__titulo">Computadoras Powered by MSI</h1>
+          <p class="msi__bajada">PC armadas y testeadas por Maximus con hardware MSI. Elegí la gama que va con vos.</p>
+        </div>
+        <ul class="msi__claves">
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>Armadas y testeadas</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg>12 meses de garantía</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg>3 cuotas sin interés</li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- Gamas: las tarjetas del sitio; cada una muestra solo su gama -->
+    <nav class="contenedor gamas" aria-label="Gamas" data-gamas>
+      <a class="gama" href="?gama=essential" data-gama="essential">
+        <img class="gama__img" src="recursos/msi/essential-tarjeta.webp" alt="" width="810" height="300" loading="lazy">
+        <span class="gama__texto"><strong>Essential</strong>Para arrancar a jugar con hardware MSI.</span>
+      </a>
+      <a class="gama" href="?gama=advanced" data-gama="advanced">
+        <img class="gama__img" src="recursos/msi/advanced-tarjeta.webp" alt="" width="810" height="300" loading="lazy">
+        <span class="gama__texto"><strong>Advanced</strong>El equilibrio justo entre precio y rendimiento.</span>
+      </a>
+      <a class="gama" href="?gama=ultimate" data-gama="ultimate">
+        <img class="gama__img" src="recursos/msi/ultimate-tarjeta.webp" alt="" width="810" height="300" loading="lazy">
+        <span class="gama__texto"><strong>Ultimate</strong>Máximo rendimiento MSI, sin límites.</span>
+      </a>
+    </nav>
+
+    <a class="contenedor msi__todas" href="?" data-todas hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Ver todas las gamas</a>
+
+    <!-- Una sección por gama: banner, título y sus PC -->
+    <section class="contenedor estante-msi" id="essential" aria-labelledby="essential-titulo" data-estante="essential">
+      <img class="estante-msi__banner" src="recursos/msi/essential.webp" alt="" width="1500" height="364" loading="lazy">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <div>
+            <div class="seccion__titulos">
+              <h2 class="seccion__titulo" id="essential-titulo">Essential</h2>
+              <span class="chip-secundario"><span>6 PC</span></span>
+            </div>
+            <p class="seccion__bajada">Para arrancar a jugar con hardware MSI.</p>
+          </div>
+          <div class="seccion__acciones">
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-05.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Athlon 3000G A520 8GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$564.319</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $209.007 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-21.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 3 3200G A520 8GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$596.899</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $221.074 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-02.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 3 3200G A520 16GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$712.189</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $263.774 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-01.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 5 5600GT A520 16GB RAM 512GB NVMe 550W Bronze WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$1.006.758</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $372.873 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-04.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 5 8600G B650 16GB RAM 512GB NVMe 650W Bronze WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$1.366.218</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $506.007 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-03.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 5 8500G A620 16GB RAM 1TB NVMe 550W Bronze WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$1.390.608</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $515.040 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="contenedor estante-msi" id="advanced" aria-labelledby="advanced-titulo" data-estante="advanced">
+      <img class="estante-msi__banner" src="recursos/msi/advanced.webp" alt="" width="1500" height="364" loading="lazy">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <div>
+            <div class="seccion__titulos">
+              <h2 class="seccion__titulo" id="advanced-titulo">Advanced</h2>
+              <span class="chip-secundario"><span>5 PC</span></span>
+            </div>
+            <p class="seccion__bajada">El equilibrio justo entre precio y rendimiento.</p>
+          </div>
+          <div class="seccion__acciones">
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-06.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced Intel i5 12400 H610M 16GB RAM 512GB NVMe 650W Gold + CPU Cooler WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$1.103.328</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $408.640 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-07.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced Ultra 5 225 B860 16GB RAM 1TB NVMe 850W Gold + CPU Cooler WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$1.681.856</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $622.910 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-08.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced AMD Ryzen 7 8700G B850 16GB RAM 1TB NVMe 850W Gold + CPU Cooler WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$1.762.856</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $652.910 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-09.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced AMD Ryzen 7 8700G B850 32GB RAM 1TB NVMe 850W Gold + Water 240 WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$2.527.406</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $936.076 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-10.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced Intel i7 14700 B760 32GB RAM 1TB NVMe 850W Gold + Water 240 mm WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$2.827.556</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $1.047.243 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="contenedor estante-msi" id="ultimate" aria-labelledby="ultimate-titulo" data-estante="ultimate">
+      <img class="estante-msi__banner" src="recursos/msi/ultimate.webp" alt="" width="1500" height="364" loading="lazy">
+      <div class="carrusel carrusel--a-sangre" data-carrusel>
+        <div class="seccion__cab">
+          <div>
+            <div class="seccion__titulos">
+              <h2 class="seccion__titulo" id="ultimate-titulo">Ultimate</h2>
+              <span class="chip-secundario"><span>8 PC</span></span>
+            </div>
+            <p class="seccion__bajada">Máximo rendimiento MSI, sin límites.</p>
+          </div>
+          <div class="seccion__acciones">
+            <div class="carrusel__flechas">
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg></button>
+              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-derecha"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <ul class="carrusel__pista productos__lista">
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-18.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate AMD Ryzen 5 5500 A520 16GB RAM 512GB RTX 3050 650W Gold CPU Cooler WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$1.464.053</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $542.242 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-17.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate AMD Ryzen 5 5500 B550 16GB RAM 1TB NVMe RTX 5050 850W Gold CPU Cooler WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$1.924.853</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $712.909 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-11.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate AMD Ryzen 5 9600X B850 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$3.447.386</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $1.276.810 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-14.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate Intel i5 14600KF B760 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$3.476.966</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $1.287.765 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-12.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate Intel Ultra 5 245KF B860 WiFi 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$3.544.762</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $1.312.875 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-16.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate Intel Ultra 7 270K Plus B860 32GB RAM 1TB RTX 5070 Ti 850W Water 360 WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$5.494.880</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $2.035.141 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-15.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate AMD Ryzen 7 9800X3D B850 32GB RAM 1TB RTX 5070 Ti 850W Gold Water 360 WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$5.510.000</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $2.040.741 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+            <li class="carrusel__item">
+              <article class="producto">
+                <div class="producto__media">
+                  <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-19.jpg" alt="" width="600" height="600">
+                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                </div>
+                <div class="producto__cuerpo">
+                  <div class="producto__meta">
+                    <span class="producto__marca">MSI</span>
+                  </div>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate Intel Ultra 9 285K B860 32GB RAM 2TB RTX 5080 850W Gold + Water 360 WiFi</a></h3>
+                  <div class="producto__precios">
+                    <p class="producto__precio">$7.405.938</p>
+                    <p class="producto__nota">Efectivo o transferencia</p>
+                  </div>
+                  <p class="producto__cuotas">3 × $2.742.940 <span class="producto__cuotas-nota">sin interés</span></p>
+                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                </div>
+              </article>
+            </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ¿No sabés cuál elegir? -->
+    <div class="contenedor">
+      <section class="tarjeta ayuda-msi" aria-labelledby="ayuda-msi-titulo">
+        <div class="ayuda-msi__texto">
+          <h2 class="ayuda-msi__titulo" id="ayuda-msi-titulo">¿No sabés qué gama elegir?</h2>
+          <p>Contanos para qué vas a usar tu PC y te mostramos las que van con vos, o armala componente por componente.</p>
+        </div>
+        <div class="ayuda-msi__acciones">
+          <a class="btn btn--primario" href="tu-pc-ideal.html">Encontrar mi PC</a>
+          <a class="btn btn--secundario" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-armar"/></svg>Armá tu PC</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+</body>
+</html>

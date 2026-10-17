@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Armá tu PC</title>
+  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/armador.css">
+  <script type="module" src="js/armador.js"></script>
+</head>
+<body>
+
+  <!-- Plantilla Armá tu PC (la abren "Armá tu PC" del header, el acceso del home y Tu PC ideal). Los 13 pasos del
+       armador de maximus.com.ar (/ARMADORPC, relevado el 17/10/2026) con sus textos y filtros, en el orden que se
+       quiera; cada paso muestra solo lo compatible con lo ya elegido. Al costado (abajo en celular), "Tu armado" con
+       el total, las cuotas, los avisos y las acciones. Productos y precios: una selección de los del sitio ese día.
+       Todo lo arma js/armador.js. Página completa con header y footer: arma-tu-pc.html. -->
+  <main class="armador">
+
+    <nav class="contenedor migas" aria-label="Ubicación">
+      <ol>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="placas-de-video.html">Computadoras</a></li>
+        <li aria-current="page">Armá tu PC</li>
+      </ol>
+    </nav>
+
+    <header class="contenedor armador__cab">
+      <div>
+        <h1 class="armador__titulo">Armá tu PC a medida</h1>
+        <p class="armador__bajada">Empezá por el componente que quieras, en el orden que quieras: te mostramos solo lo compatible con lo que ya elegiste.</p>
+      </div>
+      <a class="armador__alternativa" href="tu-pc-ideal.html"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cat-pc"/></svg><span>¿Preferís una PC lista? <strong>Encontrá tu PC ideal</strong></span></a>
+    </header>
+
+    <div class="contenedor armador__cuerpo">
+      <div class="armador__pasos" data-armador>
+        <noscript><p class="tarjeta">Para armar tu PC necesitás tener JavaScript activado.</p></noscript>
+        <ol class="pasos-arm" data-pasos-arm></ol>
+      </div>
+
+      <aside class="resumen-arm" id="tu-armado" aria-labelledby="resumen-arm-titulo" data-resumen-arm>
+        <div class="tarjeta resumen-arm__caja">
+          <div class="resumen-arm__cab">
+            <h2 class="resumen-arm__titulo" id="resumen-arm-titulo">Tu armado</h2>
+            <span class="chip-secundario"><span data-cant-arm>0 componentes</span></span>
+          </div>
+          <div class="progreso-arm">
+            <p class="progreso-arm__texto"><span>Componentes principales</span><strong data-progreso-texto>0 de 8</strong></p>
+            <span class="progreso-arm__barra" data-progreso aria-hidden="true"></span>
+          </div>
+          <ol class="resumen-arm__lista" data-resumen-lista></ol>
+          <ul class="resumen-arm__avisos" data-resumen-avisos aria-live="polite"></ul>
+          <div class="resumen-arm__total">
+            <span class="resumen-arm__total-rotulo">Total</span>
+            <span class="resumen-arm__total-valor" data-total-arm>$0</span>
+            <span class="resumen-arm__total-nota">Efectivo, transferencia o depósito</span>
+            <span class="resumen-arm__lista-precio" data-lista-arm></span>
+            <span class="resumen-arm__cuotas" data-cuotas-arm>Elegí al menos un componente</span>
+            <button class="btn-texto resumen-arm__ver-cuotas" type="button" data-ver-cuotas hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg>Ver cuotas y financiación</button>
+          </div>
+          <button class="btn btn--primario resumen-arm__agregar" type="button" data-agregar-arm disabled><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span data-agregar-texto>Agregar al carrito</span></button>
+          <div class="resumen-arm__acciones">
+            <button class="btn-texto" type="button" data-copiar-arm><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-compartir"/></svg>Copiar link</button>
+            <button class="btn-texto btn-texto--suave" type="button" data-reiniciar-arm><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-borrar"/></svg>Empezar de nuevo</button>
+          </div>
+          <ul class="resumen-arm__garantias">
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg>Garantía oficial en cada componente</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg>Envíos a todo el país o retiro gratis</li>
+          </ul>
+        </div>
+        <p class="resumen-arm__ayuda">¿Dudas con la compatibilidad? <a href="https://wa.me/541123575522" target="_blank" rel="noopener">Escribinos por WhatsApp</a>.</p>
+      </aside>
+    </div>
+
+    <!-- Celular y tablet: total fijo abajo, con atajos al resumen y al carrito -->
+    <div class="barra-arm" data-barra-arm>
+      <div>
+        <span class="barra-arm__total" data-total-arm>$0</span>
+        <span class="barra-arm__nota" data-cant-arm>0 componentes</span>
+      </div>
+      <button class="btn btn--secundario" type="button" data-ver-arm>Resumen</button>
+      <button class="btn btn--primario" type="button" data-agregar-barra disabled><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg>Agregar</button>
+    </div>
+
+    <!-- Ficha "+ info": la arma js/armador.js -->
+    <dialog class="dialogo-arm ficha-arm" aria-labelledby="ficha-arm-nombre" data-ficha-arm>
+      <div class="dialogo-arm__caja">
+        <div class="ficha-arm__cab">
+          <span class="ficha-arm__media"><img data-ficha-img src="" alt="" width="400" height="400"></span>
+          <div class="ficha-arm__datos">
+            <p class="ficha-arm__paso" data-ficha-paso></p>
+            <h2 class="ficha-arm__nombre" id="ficha-arm-nombre" data-ficha-nombre></h2>
+            <div class="ficha-arm__precios" data-ficha-precios></div>
+          </div>
+          <button class="btn-icono dialogo-arm__cerrar" type="button" data-cerrar-dialogo aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cerrar"/></svg></button>
+        </div>
+        <div class="ficha-arm__cuerpo" data-ficha-cuerpo></div>
+        <div class="dialogo-arm__pie">
+          <button class="btn btn--secundario" type="button" data-cerrar-dialogo>Volver</button>
+          <button class="btn btn--primario" type="button" data-ficha-elegir>Elegir este producto</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Cuotas y financiación del armado, con los coeficientes del sitio -->
+    <dialog class="dialogo-arm cuotas-arm" aria-labelledby="cuotas-arm-titulo" data-cuotas-dialogo>
+      <div class="dialogo-arm__caja">
+        <div class="cuotas-arm__cab">
+          <h2 class="cuotas-arm__titulo" id="cuotas-arm-titulo">Cuotas y financiación</h2>
+          <button class="btn-icono dialogo-arm__cerrar" type="button" data-cerrar-dialogo aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cerrar"/></svg></button>
+        </div>
+        <div class="cuotas-arm__cuerpo">
+          <div class="cuotas-arm__resumen">
+            <div><span>Precio de lista</span><strong data-cuotas-lista>$0</strong></div>
+            <div class="cuotas-arm__mejor"><span>Tu mejor opción · 3 cuotas sin interés</span><strong data-cuotas-mejor>$0</strong><small>Sin recargo, con Mercado Pago</small></div>
+          </div>
+          <table class="cuotas-arm__tabla">
+            <thead><tr><th scope="col">Cuotas</th><th scope="col">Valor cuota</th><th scope="col">Precio final</th></tr></thead>
+            <tbody data-cuotas-tabla></tbody>
+          </table>
+          <p class="cuotas-arm__efectivo"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-transferencia"/></svg><span>Pagando por transferencia o efectivo el total es <strong data-cuotas-efectivo>$0</strong> (10% menos).</span></p>
+          <p class="cuotas-arm__legal">Promociones sujetas a disponibilidad de medios de pago. El valor final puede variar según el medio elegido en el checkout.</p>
+        </div>
+      </div>
+    </dialog>
+
+    <p class="aviso" data-aviso-arm role="status" aria-live="polite"></p>
+  </main>
+
+</body>
+</html>

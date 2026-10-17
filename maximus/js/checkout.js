@@ -143,8 +143,39 @@ function iniciar() {
   $$('[data-continuar]').forEach((b) => b.addEventListener('click', continuar));
   $$('[data-volver]').forEach((b) => b.addEventListener('click', volver));
 
-  // Último paso: de muestra, no confirma nada
-  const confirmar = () => avisar('Vista previa: acá se confirmaría la compra');
+  // Último paso: de muestra, no se envía nada. Guarda lo elegido en sessionStorage y abre la página de compra
+  // confirmada, que lo muestra (en el sitio real, el pedido lo crea el backend y la página lo trae de ahí)
+  function confirmar() {
+    completarRevision();
+    const pago = elegido('pago')?.value;
+    const cuotas = elegido('cuotas');
+    const n = Number(cuotas?.value || 1);
+    const financiado = total.final * Number(cuotas?.dataset.factor || 1);
+    const compra = {
+      items: items().map((item) => ({
+        nombre: $('.item__nombre', item).textContent.trim(),
+        marca: $('.item__marca', item).textContent.trim(),
+        foto: $('img', item).getAttribute('src'),
+        enlace: $('.item__nombre a', item).getAttribute('href'),
+        cantidad: Number($('input', item).value) || 1,
+        precio: Number(item.dataset.precio),
+      })),
+      retiro: elegido('entrega')?.value === 'retiro',
+      entrega: $('[data-revision-entrega]').textContent,
+      entregaMeta: $('[data-revision-entrega-meta]').textContent,
+      facturacion: $('[data-revision-facturacion]').textContent,
+      pago: pago === 'transferencia' ? 'transferencia' : 'tarjeta',
+      pagoTexto: $('[data-revision-pago]').textContent,
+      cuotas: n,
+      financiado,
+      total: { ...total },
+      campania: items().find((i) => i.dataset.campania)?.dataset.campania || '',
+    };
+    try {
+      sessionStorage.setItem('compra', JSON.stringify(compra));
+    } catch {}
+    location.href = 'compra-confirmada.html';
+  }
   $$('[data-confirmar]').forEach((b) => b.addEventListener('click', confirmar));
 
   // Enlaces internos (indicador de pasos y "Editar" del resumen): cambian el paso sin saltar
@@ -343,7 +374,7 @@ function iniciar() {
     // El envío y su seguro (o el retiro) van como un ítem más, recién cuando se eligió cómo recibir el pedido.
     // Ícono genérico en el lugar de la foto hasta tener sus imágenes desde el sistema.
     const extra = (icono, texto, monto) =>
-      `<li><span class="resumen__icono"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=2#${icono}"/></svg></span><span>${texto}</span><strong>${monto}</strong></li>`;
+      `<li><span class="resumen__icono"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${icono}"/></svg></span><span>${texto}</span><strong>${monto}</strong></li>`;
     let extras = '';
     if (entrega === 'envio' && modalidad) extras = extra('i-envio', modalidad.dataset.texto, pesos(total.envio)) + extra('i-garantia', 'Seguro de envío', pesos(total.seguro));
     else if (entrega === 'retiro') extras = extra('i-tienda', elegido('retiro')?.dataset.texto || 'Retiro en tienda', 'Gratis');

@@ -1,0 +1,362 @@
+/* Plantilla de landing de campaña (vista previa: campania.html; página completa: mes-de-la-primavera.html).
+   Portada (panel oscuro en ambos modos con la aurora de base.css, más violeta, y la cuenta regresiva) → beneficios →
+   ofertas con pestañas por categoría y grilla de tarjetas (producto.css) → banner (banner.css) → bases y condiciones.
+   Mobile: todo en columna, beneficios de a 2, pestañas deslizables y grilla de 2. Tablet: grilla de 3 y beneficios
+   de a 4. Escritorio: portada texto 5 + cuenta 3 sobre la grilla de 8, grilla de 4 tarjetas (5 desde 1440px).
+   Violeta (el color secundario, el de las campañas): la etiqueta de la campaña, la aurora, los números de la cuenta
+   regresiva, los íconos de los beneficios y el chip de cantidad. */
+
+.campania {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-seccion);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.campania .migas {
+  margin-bottom: calc(var(--espacio-4) - var(--espacio-seccion));
+}
+
+/* ---------- Portada ---------- */
+
+.portada-campania {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-8);
+  overflow: hidden;
+  padding: var(--espacio-8) var(--espacio-4);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+/* Más violeta que la aurora de base: el verde queda como un brillo chico */
+.portada-campania__aurora::before {
+  opacity: 0.18;
+}
+
+.portada-campania__aurora::after {
+  top: -30%;
+  right: -20%;
+  bottom: auto;
+  width: min(110%, 760px);
+}
+
+.portada-campania__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-4);
+}
+
+.portada-campania__titulo {
+  margin: 0;
+  font-size: var(--texto-display);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+.portada-campania__titulo em {
+  color: var(--color-marca);
+  font-style: normal;
+}
+
+.portada-campania__bajada {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+  text-wrap: pretty;
+}
+
+/* Cuenta regresiva: cuatro casillas translúcidas */
+.cuenta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.cuenta__rotulo,
+.cuenta__fecha {
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-xs);
+}
+
+.cuenta__rotulo {
+  color: var(--color-secundario-sobre-barra);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.cuenta__lista {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cuenta__parte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--espacio-3) var(--espacio-1);
+  border: 1px solid var(--color-barra-borde);
+  border-radius: var(--radio-l);
+  background: rgb(255 255 255 / 0.05);
+  backdrop-filter: blur(8px);
+}
+
+.cuenta__num {
+  font-size: var(--texto-3xl);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cuenta__unidad {
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-2xs);
+}
+
+/* ---------- Beneficios ---------- */
+
+.beneficios {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+}
+
+.beneficio {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  font-size: var(--texto-xs);
+  line-height: 1.3;
+}
+
+.beneficio span:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--color-texto-suave);
+}
+
+.beneficio strong {
+  color: var(--color-texto);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.beneficio__icono {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+}
+
+/* ---------- Ofertas ---------- */
+
+.ofertas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.ofertas .seccion__cab {
+  margin: 0;
+}
+
+/* Pestañas: deslizables en celular, llegan al borde de la pantalla */
+.pestanias {
+  display: flex;
+  gap: var(--espacio-2);
+  margin-inline: calc(var(--margen-lateral) * -1);
+  padding-inline: var(--margen-lateral);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pestanias::-webkit-scrollbar {
+  display: none;
+}
+
+.pestania {
+  flex-shrink: 0;
+  height: var(--alto-control-s);
+  padding-inline: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-s);
+  transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion);
+}
+
+.pestania:hover {
+  border-color: var(--color-acento);
+}
+
+.pestania[aria-pressed="true"] {
+  border-color: var(--color-texto);
+  background: var(--color-texto);
+  color: var(--color-fondo);
+  font-weight: var(--peso-medio);
+}
+
+.ofertas__grilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+}
+
+/* Las que aparecen al cambiar de pestaña entran con un fundido escalonado (--retraso lo pone campania.js) */
+.ofertas__item--nuevo .producto {
+  animation: oferta-entrar var(--transicion) both;
+  animation-delay: var(--retraso, 0s);
+}
+
+@keyframes oferta-entrar {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+.ofertas__mas {
+  align-self: center;
+  margin-top: var(--espacio-2);
+}
+
+/* ---------- Bases y condiciones ---------- */
+
+.bases__caja {
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.bases__cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  min-height: var(--alto-control-l);
+  padding-inline: var(--espacio-4);
+  list-style: none;
+  cursor: pointer;
+}
+
+.bases__cab::-webkit-details-marker {
+  display: none;
+}
+
+.bases__titulo {
+  margin: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.bases__flecha {
+  color: var(--color-texto-suave);
+  transition: rotate var(--transicion);
+}
+
+.bases__caja[open] .bases__flecha {
+  rotate: 180deg;
+}
+
+.bases__texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: 0 var(--espacio-4) var(--espacio-4);
+}
+
+.bases__texto p {
+  max-width: 90ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  line-height: 1.6;
+}
+
+.bases__texto a {
+  color: var(--color-texto);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 768px) {
+  .portada-campania {
+    padding: var(--espacio-8);
+  }
+
+  .cuenta {
+    max-width: 420px;
+  }
+
+  .beneficios {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  .beneficio {
+    padding: var(--espacio-4);
+  }
+
+  .pestanias {
+    flex-wrap: wrap;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .ofertas__grilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+}
+
+/* ---------- Escritorio: grilla de 8 ---------- */
+
+@media (min-width: 1024px) {
+  .portada-campania {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--separacion-grilla);
+    min-height: 400px;
+    padding: var(--espacio-8) calc(var(--espacio-8) * 1.5);
+  }
+
+  .portada-campania__texto {
+    grid-column: span 5;
+  }
+
+  .cuenta {
+    grid-column: span 3;
+  }
+
+  .ofertas__grilla {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  .ofertas__grilla {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
