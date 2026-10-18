@@ -25,7 +25,10 @@
        pendientes, Mis órdenes de RMA, Cambiar mi contraseña, Favoritos, Mis direcciones, Cerrar sesión), relevadas el
        14/10/2026, más un Resumen de entrada. Todos los datos son de muestra.
        Página completa con header y footer: mi-cuenta.html. Pestañas, comprobante y formularios: js/cuenta.js
-       (sin JS se ven todas las secciones una debajo de la otra). -->
+       (sin JS se ven todas las secciones una debajo de la otra).
+       Revisión final (tanda 3c): los estados reales del pedido y del comprobante, "Comprobantes pendientes", cancelar
+       y devolver, comprobantes de hasta 5 archivos con sus errores, estados vacíos y de carga, Mis datos fijos una vez
+       activada la cuenta, direcciones por partes y el presupuesto en PDF de Favoritos. -->
   <main class="cuenta" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
@@ -51,7 +54,7 @@
           <ul>
             <li><a href="#resumen" aria-current="page"><svg class="icono" aria-hidden="true"><use href="#i-inicio"/></svg>Resumen</a></li>
             <li><a href="#pedidos"><svg class="icono" aria-hidden="true"><use href="#i-pedido"/></svg>Mis compras<span class="cuenta__aviso" data-pendiente-nav aria-label="1 pendiente">1</span></a></li>
-            <li><a href="#garantias"><svg class="icono" aria-hidden="true"><use href="#i-garantia"/></svg>Garantías</a></li>
+            <li data-con-garantias><a href="#garantias"><svg class="icono" aria-hidden="true"><use href="#i-garantia"/></svg>Garantías</a></li>
             <li><a href="#favoritos"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg>Favoritos<span class="cuenta__cant">4</span></a></li>
             <li><a href="#direcciones"><svg class="icono" aria-hidden="true"><use href="#i-sucursal"/></svg>Direcciones</a></li>
             <li><a href="#datos"><svg class="icono" aria-hidden="true"><use href="#i-usuario"/></svg>Mis datos</a></li>
@@ -63,6 +66,55 @@
 
       <div class="cuenta__contenido">
 
+        <!-- Estados de muestra (no van en el sitio real): cuenta con datos, nueva o cargando; los estados reales del
+             pedido y del comprobante, aplicados al pedido #MAX-423518; y los errores -->
+        <details class="variantes-plegable" data-demo>
+          <summary class="variantes-plegable__cab">Estados de muestra</summary>
+          <div class="variantes">
+        <span class="variantes__rotulo">Cuenta</span>
+        <div class="variantes__opciones" role="group" aria-label="Cuenta">
+          <button class="variantes__btn" type="button" data-ver-cuenta="con" aria-pressed="true">Con compras</button>
+          <button class="variantes__btn" type="button" data-ver-cuenta="nueva" aria-pressed="false">Nueva, sin datos</button>
+          <button class="variantes__btn" type="button" data-ver-cuenta="cargando" aria-pressed="false">Cargando</button>
+        </div>
+        <span class="variantes__rotulo">Estado del pedido</span>
+        <div class="variantes__opciones" role="group" aria-label="Estado del pedido">
+          <button class="variantes__btn" type="button" data-ver-pedido="pendiente" aria-pressed="true">Pendiente de pago</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="ingreso" aria-pressed="false">Ingreso del pedido</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="revision" aria-pressed="false">Pedido en revisión</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="pago" aria-pressed="false">Pago confirmado</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="despachar" aria-pressed="false">Listo para despachar</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="despachado" aria-pressed="false">Despachado</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="retirar" aria-pressed="false">Listo para retirar</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="facturado" aria-pressed="false">Facturado</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="entregado" aria-pressed="false">Entregado</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="cancelado" aria-pressed="false">Cancelado</button>
+        </div>
+        <span class="variantes__rotulo">Comprobante</span>
+        <div class="variantes__opciones" role="group" aria-label="Comprobante">
+          <button class="variantes__btn" type="button" data-ver-comprobante="subir" aria-pressed="true">Subir comprobantes</button>
+          <button class="variantes__btn" type="button" data-ver-comprobante="subidos" aria-pressed="false">Comprobantes subidos</button>
+          <button class="variantes__btn" type="button" data-ver-comprobante="revision" aria-pressed="false">En revisión</button>
+          <button class="variantes__btn" type="button" data-ver-comprobante="verificacion" aria-pressed="false">En verificación de datos</button>
+          <button class="variantes__btn" type="button" data-ver-comprobante="confirmado" aria-pressed="false">Pago confirmado</button>
+          <button class="variantes__btn" type="button" data-ver-comprobante="retirar" aria-pressed="false">Pago al retirar</button>
+          <button class="variantes__btn" type="button" data-ver-comprobante="factura" aria-pressed="false">Descargar factura</button>
+        </div>
+        <span class="variantes__rotulo">Mis datos</span>
+        <div class="variantes__opciones" role="group" aria-label="Mis datos">
+          <button class="variantes__btn" type="button" data-ver-datos="activada" aria-pressed="true">Cuenta activada</button>
+          <button class="variantes__btn" type="button" data-ver-datos="sin-activar" aria-pressed="false">Sin activar</button>
+        </div>
+        <span class="variantes__rotulo">Errores</span>
+        <div class="variantes__opciones" role="group" aria-label="Errores">
+          <button class="variantes__btn" type="button" data-error-cuenta="cancelar" aria-pressed="false">Al cancelar</button>
+          <button class="variantes__btn" type="button" data-error-cuenta="subir" aria-pressed="false">Al subir el comprobante</button>
+          <button class="variantes__btn" type="button" data-error-cuenta="eliminar" aria-pressed="false">Al eliminar una dirección</button>
+        </div>
+          </div>
+        </details>
+
+
         <!-- ==================== Resumen ==================== -->
         <section class="panel" id="panel-resumen" data-panel="resumen" aria-labelledby="resumen-titulo">
           <header class="panel__cab">
@@ -71,24 +123,24 @@
           </header>
 
           <!-- Acción pendiente: comprobante de transferencia (obligatorio para validar el pago) -->
-          <div class="alerta" data-pendiente>
-            <svg class="icono alerta__icono" aria-hidden="true"><use href="#i-alerta"/></svg>
-            <div class="alerta__texto">
+          <div class="alerta alerta--aviso alerta--accion" data-pendiente>
+            <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+            <div class="alerta__cuerpo">
               <p class="alerta__titulo">Falta el comprobante de tu pedido #MAX-423518</p>
-              <p>Pagaste por transferencia: subí el comprobante para que validemos el pago y preparemos tu pedido.</p>
+              <p>Tenés 24 hs desde la compra para subirlo; pasado ese tiempo se libera el stock. También podés enviarlo a <a href="mailto:pagos@maximus.com.ar?subject=Comprobante%20del%20pedido%20%23MAX-423518">pagos@maximus.com.ar</a> con el número de pedido.</p>
             </div>
             <button class="boton boton--primario alerta__btn" type="button" data-comprobante="423518" data-total="$2.401.920"><svg class="icono icono--s" aria-hidden="true"><use href="#i-subir"/></svg>Subir comprobante</button>
           </div>
 
           <!-- Pedido en camino, con su seguimiento -->
-          <article class="tarjeta en-curso">
+          <article class="tarjeta en-curso" data-con-compras>
             <header class="en-curso__cab">
               <div>
                 <p class="en-curso__rotulo">Pedido en camino</p>
                 <h2 class="en-curso__titulo">Pedido #MAX-422907</h2>
                 <p class="en-curso__meta">Llega el siguiente día hábil, jueves 15 de octubre · Envío a domicilio con OCA</p>
               </div>
-              <span class="estado estado--info">En camino</span>
+              <span class="estado estado--info">Despachado</span>
             </header>
             <ol class="seguimiento" aria-label="Seguimiento del pedido #MAX-422907">
               <li class="seguimiento__paso seguimiento__paso--hecho"><span class="seguimiento__punto"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="seguimiento__texto">Confirmado<small>08/10</small></span></li>
@@ -109,8 +161,16 @@
             </div>
           </article>
 
+
+          <div class="vacio-cuenta" data-vacio="resumen" hidden>
+            <span class="vacio-cuenta__icono"><svg class="icono" aria-hidden="true"><use href="#i-pedido"/></svg></span>
+            <p class="vacio-cuenta__titulo">Aún no tenés compras</p>
+            <p class="vacio-cuenta__texto">Cuando compres, acá vas a ver el estado de tu pedido, el comprobante y la factura.</p>
+            <a class="boton boton--primario" href="primavera-maximus.html">Ver ofertas</a>
+          </div>
+
           <!-- Últimas compras -->
-          <section class="bloque" aria-labelledby="ultimas-titulo">
+          <section class="bloque" aria-labelledby="ultimas-titulo" data-con-compras>
             <div class="seccion__cab">
               <h2 class="bloque__titulo" id="ultimas-titulo">Últimas compras</h2>
               <a class="seccion__enlace" href="#pedidos">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
@@ -128,7 +188,7 @@
                 <a class="fila-compra" href="#pedidos">
                   <img class="fila-compra__img" src="recursos/productos/kingston-fury-beast-ddr5.jpg" alt="" width="600" height="600">
                   <span class="fila-compra__datos"><strong>Pedido #MAX-422907</strong><span>08/10/2026 · 3 productos</span></span>
-                  <span class="estado estado--info">En camino</span>
+                  <span class="estado estado--info">Despachado</span>
                   <span class="fila-compra__total">$446.887</span>
                 </a>
               </li>
@@ -164,14 +224,48 @@
             <p class="panel__bajada">Todos tus pedidos, con su estado, el detalle y la factura.</p>
           </header>
 
-          <ul class="pedidos">
-            <!-- Pendiente de pago: transferencia sin comprobante -->
-            <li>
+          <div class="filtro-pedidos" role="group" aria-label="Qué pedidos ver" data-con-compras>
+            <button class="chip-filtro" type="button" aria-pressed="true" data-filtro-pedidos="todas">Todas <span class="chip-filtro__cant" data-cant-todas>6</span></button>
+            <button class="chip-filtro" type="button" aria-pressed="false" data-filtro-pedidos="comprobantes">Comprobantes pendientes <span class="chip-filtro__cant chip-filtro__cant--aviso" data-cant-pendientes>1</span></button>
+          </div>
+
+          <!-- Cargando tus compras: esqueletos con el alto de una tarjeta -->
+          <div class="pedidos-cargando" data-cargando-pedidos hidden aria-busy="true">
+            <p class="pedidos-cargando__texto" role="status"><svg class="icono icono--s" aria-hidden="true"><use href="#i-recargar"/></svg>Cargando tus compras…</p>
+            <span class="esqueleto pedidos-cargando__tarjeta"></span>
+            <span class="esqueleto pedidos-cargando__tarjeta"></span>
+          </div>
+
+          <div class="vacio-cuenta" data-vacio="pedidos" hidden>
+            <span class="vacio-cuenta__icono"><svg class="icono" aria-hidden="true"><use href="#i-pedido"/></svg></span>
+            <p class="vacio-cuenta__titulo">Aún no tenés compras</p>
+            <p class="vacio-cuenta__texto">Cuando compres, vas a ver acá cada pedido con su estado, el comprobante y la factura.</p>
+            <a class="boton boton--primario" href="primavera-maximus.html">Ver ofertas</a>
+          </div>
+
+          <div class="vacio-cuenta" data-vacio="comprobantes" hidden>
+            <span class="vacio-cuenta__icono"><svg class="icono" aria-hidden="true"><use href="#i-comprobante"/></svg></span>
+            <p class="vacio-cuenta__titulo">No tenés comprobantes pendientes</p>
+            <p class="vacio-cuenta__texto">Todos tus pedidos por transferencia ya tienen su comprobante.</p>
+            <button class="boton boton--secundario" type="button" data-filtro-pedidos="todas">Ver todas las compras</button>
+          </div>
+
+          <ul class="pedidos" data-con-compras>
+            <!-- Pendiente de pago: transferencia sin comprobante. Con las variantes de muestra toma cada estado real
+                 del pedido (su color y su lugar en los 5 pasos) y del comprobante -->
+            <li data-espera-comprobante data-pedido-demo>
               <article class="tarjeta pedido">
                 <header class="pedido__cab">
                   <div><h3 class="pedido__numero">Pedido #MAX-423518</h3><p class="pedido__fecha">12 de octubre de 2026</p></div>
-                  <span class="estado estado--aviso" data-pendiente-estado>Pendiente de pago</span>
+                  <span class="estado estado--aviso" data-pendiente-estado data-estado-pedido>Pendiente de pago</span>
                 </header>
+                <ol class="seguimiento pedido__pasos" aria-label="Seguimiento del pedido #MAX-423518" data-pasos-pedido>
+                  <li class="seguimiento__paso seguimiento__paso--hecho"><span class="seguimiento__punto"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="seguimiento__texto">Confirmado<small>12/10</small></span></li>
+                  <li class="seguimiento__paso seguimiento__paso--actual" aria-current="step"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Pago</span></li>
+                  <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Preparación</span></li>
+                  <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto">En camino</span></li>
+                  <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Entregado</span></li>
+                </ol>
                 <div class="pedido__resumen">
                   <ul class="miniaturas"><li><img src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600"></li></ul>
                   <div class="pedido__datos">
@@ -180,9 +274,23 @@
                   </div>
                   <p class="pedido__total"><span>Total</span>$2.401.920</p>
                 </div>
-                <p class="pedido__nota" data-pendiente>Subí el comprobante de la transferencia para validar el pago. Sin ese paso, el pedido no pasa a preparación.</p>
-                <div class="pedido__acciones">
-                  <button class="boton boton--primario" type="button" data-comprobante="423518" data-total="$2.401.920" data-pendiente><svg class="icono icono--s" aria-hidden="true"><use href="#i-subir"/></svg>Subir comprobante</button>
+                <!-- Comprobante: su estado y su acción -->
+                <div class="comprobante-estado" data-comprobante-estado>
+                  <p class="comprobante-estado__texto" data-comprobante-texto><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg><span>Subí el comprobante de la transferencia dentro de las 24 hs: sin él, el pedido no pasa a preparación y se libera el stock.</span></p>
+                </div>
+                <div class="alerta alerta--exito" role="status" data-cancelado-ok hidden>
+                  <svg class="icono" aria-hidden="true"><use href="#i-check"/></svg>
+                  <div class="alerta__cuerpo"><p class="alerta__titulo">Cancelamos tu pedido</p><p>Si ya habías pagado, pedí la devolución desde el <a href="centro-de-ayuda.html?motivo=devolucion">Centro de ayuda</a>.</p></div>
+                </div>
+                <div class="alerta alerta--error" role="alert" data-cancelado-error hidden>
+                  <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+                  <div class="alerta__cuerpo"><p class="alerta__titulo">No pudimos cancelar el pedido</p><p>Probá de nuevo en unos minutos o <a href="https://wa.me/541123575522?text=Hola%2C%20quiero%20cancelar%20el%20pedido%20%23MAX-423518">escribinos por WhatsApp</a>.</p></div>
+                </div>
+                <div class="pedido__acciones" data-acciones-pedido>
+                  <button class="boton boton--primario" type="button" data-comprobante="423518" data-total="$2.401.920" data-accion-comprobante><svg class="icono icono--s" aria-hidden="true"><use href="#i-subir"/></svg><span data-accion-texto>Subir comprobante</span></button>
+                  <a class="boton boton--secundario" href="#" data-accion-factura hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-descarga"/></svg>Descargar factura</a>
+                  <!-- Cancelar: solo antes de que se confirme el pago -->
+                  <button class="boton-texto boton-texto--suave" type="button" data-cancelar-pedido="423518">Cancelar pedido</button>
                 </div>
                 <details class="pedido__detalle plegable">
                   <summary>Ver detalle del pedido <svg class="icono icono--s" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
@@ -200,12 +308,35 @@
               </article>
             </li>
 
-            <!-- En camino -->
+            <!-- Entregado y facturado dentro del plazo: se puede devolver (10 días corridos desde que se recibió) -->
+            <li>
+              <article class="tarjeta pedido">
+                <header class="pedido__cab">
+                  <div><h3 class="pedido__numero">Pedido #MAX-423340</h3><p class="pedido__fecha">10 de octubre de 2026</p></div>
+                  <span class="estado estado--exito">Entregado</span>
+                </header>
+                <div class="pedido__resumen">
+                  <ul class="miniaturas"><li><img src="recursos/productos/kingston-nv3-1tb.jpg" alt="" width="600" height="600"></li></ul>
+                  <div class="pedido__datos">
+                    <p class="pedido__items">Disco SSD Kingston NV3 1TB M.2 NVMe PCIe 4.0</p>
+                    <p class="pedido__pago">Tarjeta de débito · Recibido el 13/10/2026</p>
+                  </div>
+                  <p class="pedido__total"><span>Total</span>$98.999</p>
+                </div>
+                <p class="pedido__plazo"><svg class="icono icono--s" aria-hidden="true"><use href="#i-devolver"/></svg>Podés devolverlo hasta el 23 de octubre (10 días corridos desde que lo recibiste).</p>
+                <div class="pedido__acciones">
+                  <a class="boton boton--secundario" href="#"><svg class="icono icono--s" aria-hidden="true"><use href="#i-descarga"/></svg>Descargar factura</a>
+                  <a class="boton boton--secundario" href="boton-de-arrepentimiento.html?pedido=423340"><svg class="icono icono--s" aria-hidden="true"><use href="#i-devolver"/></svg>Devolver compra</a>
+                </div>
+              </article>
+            </li>
+
+            <!-- Despachado -->
             <li>
               <article class="tarjeta pedido">
                 <header class="pedido__cab">
                   <div><h3 class="pedido__numero">Pedido #MAX-422907</h3><p class="pedido__fecha">8 de octubre de 2026</p></div>
-                  <span class="estado estado--info">En camino</span>
+                  <span class="estado estado--info">Despachado</span>
                 </header>
                 <div class="pedido__resumen">
                   <ul class="miniaturas">
@@ -251,7 +382,7 @@
                   <ul class="miniaturas"><li><img src="recursos/productos/msi-g242l.jpg" alt="" width="600" height="600"></li></ul>
                   <div class="pedido__datos">
                     <p class="pedido__items">Monitor Gamer IPS MSI 24" G242L E14 144Hz</p>
-                    <p class="pedido__pago">Efectivo · Retirado en Floresta el 10/07/2026</p>
+                    <p class="pedido__pago">Efectivo, pago al retirar · Retirado en Floresta el 10/07/2026</p>
                   </div>
                   <p class="pedido__total"><span>Total</span>$389.999</p>
                 </div>
@@ -303,7 +434,7 @@
         </section>
 
         <!-- ==================== Garantías (órdenes de RMA) ==================== -->
-        <section class="panel" id="panel-garantias" data-panel="garantias" aria-labelledby="garantias-titulo">
+        <section class="panel" id="panel-garantias" data-panel="garantias" aria-labelledby="garantias-titulo" data-con-garantias>
           <header class="panel__cab panel__cab--accion">
             <div>
               <h2 class="panel__titulo" id="garantias-titulo">Garantías</h2>
@@ -349,11 +480,24 @@
 
         <!-- ==================== Favoritos ==================== -->
         <section class="panel" id="panel-favoritos" data-panel="favoritos" aria-labelledby="favoritos-titulo">
-          <header class="panel__cab">
-            <h2 class="panel__titulo" id="favoritos-titulo">Favoritos</h2>
-            <p class="panel__bajada">Los productos que guardaste con el corazón.</p>
+          <header class="panel__cab panel__cab--accion">
+            <div>
+              <h2 class="panel__titulo" id="favoritos-titulo">Favoritos</h2>
+              <p class="panel__bajada">Los productos que guardaste con el corazón.</p>
+            </div>
+            <div class="panel__acciones" data-con-favoritos>
+              <button class="boton boton--primario" type="button" data-agregar-todos><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar todos al carrito</button>
+              <button class="boton boton--secundario" type="button" data-abrir-presupuesto><svg class="icono icono--s" aria-hidden="true"><use href="#i-descarga"/></svg>Descargar presupuesto en PDF</button>
+            </div>
           </header>
-          <ul class="favoritos">
+
+          <div class="vacio-cuenta" data-vacio="favoritos" hidden>
+            <span class="vacio-cuenta__icono"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></span>
+            <p class="vacio-cuenta__titulo">Todavía no guardaste favoritos</p>
+            <p class="vacio-cuenta__texto">Tocá el corazón de un producto para guardarlo acá y compararlo cuando quieras.</p>
+            <a class="boton boton--primario" href="primavera-maximus.html">Ver ofertas</a>
+          </div>
+          <ul class="favoritos" data-con-favoritos>
             <li>
               <article class="producto">
               <div class="producto__media">
@@ -453,14 +597,47 @@
             <h2 class="panel__titulo" id="direcciones-titulo">Direcciones</h2>
             <p class="panel__bajada">Las direcciones de envío que usás al comprar. La principal se elige sola en cada compra.</p>
           </header>
-          <ul class="direcciones">
+
+          <div class="vacio-cuenta" data-vacio="direcciones" hidden>
+            <span class="vacio-cuenta__icono"><svg class="icono" aria-hidden="true"><use href="#i-sucursal"/></svg></span>
+            <p class="vacio-cuenta__titulo">No tenés direcciones guardadas</p>
+            <p class="vacio-cuenta__texto">Guardá una dirección y la elegimos sola en cada compra.</p>
+            <button class="boton boton--primario" type="button" data-nueva-direccion><svg class="icono icono--s" aria-hidden="true"><use href="#i-mas"/></svg>Agregar una dirección</button>
+          </div>
+
+          <!-- Agregar o editar una dirección: por partes, como en el checkout; cada campo con su error -->
+          <form class="tarjeta formulario formulario-direccion" novalidate data-form-direccion hidden>
+            <p class="formulario__titulo" data-form-direccion-titulo>Nueva dirección</p>
+            <div class="formulario__campos">
+              <label class="campo campo--ancho"><span class="campo__rotulo">Nombre de la dirección</span><input class="campo__control" type="text" placeholder="Casa, Trabajo…" data-requerido="direccion" data-campo="nombre"></label>
+              <label class="campo campo--ancho"><span class="campo__rotulo">Calle</span><input class="campo__control" type="text" autocomplete="address-line1" data-requerido="direccion" data-campo="calle"></label>
+              <div class="campo">
+                <label class="campo__rotulo" for="direccion-numero">Número</label>
+                <input class="campo__control" id="direccion-numero" type="text" inputmode="numeric" data-requerido="direccion" data-campo="numero">
+                <label class="casilla casilla--chica"><input type="checkbox" data-sin-numero> Sin número</label>
+              </div>
+              <label class="campo"><span class="campo__rotulo">Piso <span class="campo__opcional">(opcional)</span></span><input class="campo__control" type="text"></label>
+              <label class="campo"><span class="campo__rotulo">Departamento <span class="campo__opcional">(opcional)</span></span><input class="campo__control" type="text"></label>
+              <label class="campo"><span class="campo__rotulo">Código postal</span><input class="campo__control" type="text" inputmode="numeric" maxlength="8" autocomplete="postal-code" data-requerido="direccion" data-campo="cp"></label>
+              <label class="campo"><span class="campo__rotulo">Provincia</span><span class="selector"><select class="selector__campo"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span></label>
+              <label class="campo"><span class="campo__rotulo">Localidad</span><input class="campo__control" type="text" autocomplete="address-level2" data-requerido="direccion" data-campo="localidad"></label>
+              <label class="campo"><span class="campo__rotulo">Quién recibe</span><input class="campo__control" type="text" autocomplete="name" value="Martín González" data-requerido="direccion" data-campo="recibe"></label>
+              <label class="campo"><span class="campo__rotulo">Teléfono</span><input class="campo__control" type="tel" autocomplete="tel" value="11 5555-0123" data-requerido="direccion" data-campo="telefono"></label>
+            </div>
+            <div class="formulario__acciones">
+              <button class="boton boton--primario" type="submit">Guardar dirección</button>
+              <button class="boton boton--secundario" type="button" data-cancelar-direccion>Cancelar</button>
+            </div>
+          </form>
+
+          <ul class="direcciones" data-con-direcciones>
             <li>
               <article class="tarjeta domicilio domicilio--principal">
                 <header class="domicilio__cab"><svg class="icono domicilio__icono" aria-hidden="true"><use href="#i-sucursal"/></svg><h3>Casa</h3><span class="etiqueta">Principal</span></header>
                 <p class="domicilio__texto">Av. Rivadavia 5420, piso 3, depto. B<br>C1406 · Caballito, Ciudad Autónoma de Buenos Aires</p>
                 <p class="domicilio__contacto">Recibe: Martín González · 11 5555-0123</p>
                 <div class="domicilio__acciones">
-                  <button class="boton-texto" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</button>
+                  <button class="boton-texto" type="button" data-editar-direccion><svg class="icono icono--s" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</button>
                 </div>
               </article>
             </li>
@@ -469,15 +646,16 @@
                 <header class="domicilio__cab"><svg class="icono domicilio__icono" aria-hidden="true"><use href="#i-sucursal"/></svg><h3>Trabajo</h3></header>
                 <p class="domicilio__texto">Av. Corrientes 1234, piso 7, oficina 12<br>C1043 · San Nicolás, Ciudad Autónoma de Buenos Aires</p>
                 <p class="domicilio__contacto">Recibe: Martín González · 11 5555-0123</p>
+                <p class="campo__error" role="alert" data-error-eliminar hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>No pudimos eliminar la dirección. Probá de nuevo en unos minutos.</p>
                 <div class="domicilio__acciones">
-                  <button class="boton-texto" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</button>
+                  <button class="boton-texto" type="button" data-editar-direccion><svg class="icono icono--s" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</button>
                   <button class="boton-texto" type="button">Usar como principal</button>
-                  <button class="boton-texto boton-texto--suave" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="#i-borrar"/></svg>Eliminar</button>
+                  <button class="boton-texto boton-texto--suave" type="button" data-eliminar-direccion><svg class="icono icono--s" aria-hidden="true"><use href="#i-borrar"/></svg>Eliminar</button>
                 </div>
               </article>
             </li>
             <li>
-              <button class="direccion-nueva" type="button">
+              <button class="direccion-nueva" type="button" data-nueva-direccion>
                 <svg class="icono" aria-hidden="true"><use href="#i-mas"/></svg>
                 Agregar una dirección
               </button>
@@ -499,16 +677,17 @@
                 <label class="campo"><span class="campo__rotulo">Nombre y apellido</span><input class="campo__control" id="dato-nombre" type="text" value="Martín González" autocomplete="name" required></label>
                 <label class="campo"><span class="campo__rotulo">Correo electrónico</span><input class="campo__control" id="dato-correo" type="email" value="martin.gonzalez@correo.com" autocomplete="email" required></label>
                 <label class="campo"><span class="campo__rotulo">Teléfono</span><input class="campo__control" id="dato-telefono" type="tel" value="11 5555-0123" autocomplete="tel" required></label>
-                <label class="campo"><span class="campo__rotulo">Condición fiscal</span>
-                  <span class="selector"><select class="selector__campo" id="dato-fiscal"><option>Consumidor Final</option><option>Monotributista</option><option>Responsable Inscripto</option><option>IVA Exento</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
+                <label class="campo"><span class="campo__rotulo">Condición fiscal <svg class="icono icono--s campo__candado" aria-hidden="true"><use href="#i-candado"/></svg></span>
+                  <span class="selector"><select class="selector__campo" id="dato-fiscal" disabled data-fijo><option>Consumidor Final</option><option>Monotributista</option><option>Responsable Inscripto</option><option>IVA Exento</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
                 </label>
                 <div class="campo campo--doble">
-                  <span class="campo__rotulo" id="dato-doc-rotulo">Documento</span>
+                  <span class="campo__rotulo" id="dato-doc-rotulo">Documento <svg class="icono icono--s campo__candado" aria-hidden="true"><use href="#i-candado"/></svg></span>
                   <div class="campo__fila">
-                    <span class="selector"><select class="selector__campo" id="dato-doc-tipo" aria-label="Tipo de documento"><option>DNI</option><option>CUIT</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
-                    <input class="campo__control" id="dato-doc-numero" type="text" inputmode="numeric" value="34567890" aria-labelledby="dato-doc-rotulo" required>
+                    <span class="selector"><select class="selector__campo" id="dato-doc-tipo" aria-label="Tipo de documento" disabled data-fijo><option>DNI</option><option>CUIT</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
+                    <input class="campo__control" id="dato-doc-numero" type="text" inputmode="numeric" value="34567890" aria-labelledby="dato-doc-rotulo" required disabled data-fijo data-documento>
                   </div>
                 </div>
+                <p class="campo--ancho datos__fijos" data-nota-fijos><svg class="icono icono--s" aria-hidden="true"><use href="#i-candado"/></svg><span>La condición fiscal y el documento no se cambian una vez activada la cuenta. Si hay un error, <a href="https://wa.me/541123575522?text=Hola%2C%20necesito%20corregir%20mis%20datos%20fiscales">escribinos por WhatsApp</a>.</span></p>
               </div>
             </fieldset>
 
@@ -571,6 +750,67 @@
     </div>
   </main>
 
+  <!-- Cancelar pedido: confirmación antes de cancelar (solo antes de que se confirme el pago) -->
+  <dialog class="dialogo dialogo--chico" data-dialogo-cancelar aria-labelledby="cancelar-titulo">
+    <div class="dialogo__caja">
+      <header class="dialogo__cab">
+        <h2 class="dialogo__titulo" id="cancelar-titulo">¿Estás seguro de cancelar el pedido <span data-cancelar-numero>#MAX-423518</span>?</h2>
+        <button class="boton-icono" type="button" aria-label="Cerrar" data-cerrar><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+      </header>
+      <div class="dialogo__cuerpo">
+        <p class="dialogo__texto">Liberamos los productos que te reservamos. Si ya pagaste, después pedí la devolución.</p>
+        <div class="dialogo__acciones">
+          <button class="boton boton--secundario" type="button" data-cerrar>No, volver</button>
+          <button class="boton boton--primario" type="button" data-confirmar-cancelar>Sí, cancelar pedido</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Presupuesto de Favoritos: el documento que se descarga en PDF (con "Descargar PDF" se imprime o se guarda) -->
+  <dialog class="dialogo presupuesto-dialogo" data-dialogo-presupuesto aria-labelledby="presupuesto-titulo">
+    <div class="dialogo__caja">
+      <header class="dialogo__cab">
+        <h2 class="dialogo__titulo" id="presupuesto-titulo">Presupuesto</h2>
+        <button class="boton-icono" type="button" aria-label="Cerrar" data-cerrar><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+      </header>
+      <div class="dialogo__cuerpo">
+        <article class="presupuesto" data-presupuesto>
+          <header class="presupuesto__cab">
+            <svg class="presupuesto__logo" role="img" aria-label="Maximus Gaming Hardware"><use href="#i-logo"/></svg>
+            <address class="presupuesto__empresa">
+              Grupo Maximus SRL<br>
+              Florida 537, Local 379 (PB), Galería Jardín, CABA<br>
+              WhatsApp +54 11 2357-5522 · empresas@maximus.com.ar
+            </address>
+          </header>
+          <div class="presupuesto__datos">
+            <p><strong>Presupuesto</strong></p>
+            <p>Fecha: <span data-presupuesto-fecha>18/10/2026</span></p>
+            <p>Para: Martín González</p>
+          </div>
+          <table class="presupuesto__tabla">
+            <thead><tr><th scope="col"><abbr title="Cantidad">Cant.</abbr></th><th scope="col">Producto</th><th scope="col">Precio</th><th scope="col">Importe</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</td><td>$1.489.999</td><td>$1.489.999</td></tr>
+                <tr><td>1</td><td>Micro AMD Ryzen 7 9800X3D 5.2 Ghz AM5</td><td>$739.999</td><td>$739.999</td></tr>
+                <tr><td>1</td><td>Notebook Lenovo Legion 5 15AKP10 15.6" WQXGA OLED 165hz Ryzen AI 7 350 16GB 512GB Nvme RTX 5050 8GB</td><td>$2.099.999</td><td>$2.099.999</td></tr>
+                <tr><td>1</td><td>Monitor LED IPS 27" Arkham Gaming QHD 210Hz 1ms - HDMI/DP</td><td>$369.999</td><td>$369.999</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row" colspan="3">Total</th><td>$4.699.996</td></tr></tfoot>
+          </table>
+          <p class="presupuesto__nota">Precios en efectivo o transferencia. Los precios están sujetos a modificaciones.</p>
+        </article>
+        <div class="dialogo__acciones">
+          <button class="boton boton--secundario" type="button" data-cerrar>Cerrar</button>
+          <button class="boton boton--primario" type="button" data-imprimir-presupuesto><svg class="icono icono--s" aria-hidden="true"><use href="#i-descarga"/></svg>Descargar PDF</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <p class="aviso" data-aviso role="status" aria-live="polite"></p>
+
   <!-- Subir comprobante de transferencia (lo abren los botones con data-comprobante) -->
   <dialog class="dialogo dialogo--chico" data-dialogo-comprobante aria-labelledby="comprobante-titulo">
     <form class="dialogo__caja" method="dialog" data-comprobante-form>
@@ -580,16 +820,19 @@
       </header>
       <div class="dialogo__cuerpo" data-paso="cargar">
         <p class="comprobante__pedido">Pedido <strong data-comprobante-pedido>#MAX-423518</strong> · Total <strong data-comprobante-total>$2.401.920</strong></p>
-        <label class="archivo">
-          <input class="archivo__campo" id="comprobante-archivo" type="file" accept=".pdf,.jpg,.jpeg,.png" required>
+        <!-- Hasta 5 archivos por pedido, de a uno: PDF, JPG, PNG, HEIC o WEBP de hasta 20 MB cada uno -->
+        <ul class="archivos" data-archivos></ul>
+        <label class="archivo" data-archivo-caja>
+          <input class="archivo__campo" id="comprobante-archivo" type="file" accept=".pdf,.jpg,.jpeg,.png,.heic,.webp" multiple>
           <svg class="icono archivo__icono" aria-hidden="true"><use href="#i-subir"/></svg>
           <span class="archivo__texto" data-archivo-nombre>Elegí el archivo del comprobante</span>
-          <span class="archivo__ayuda">PDF, JPG o PNG</span>
+          <span class="archivo__ayuda">PDF, JPG, PNG, HEIC o WEBP · hasta 20 MB · hasta 5 por pedido</span>
         </label>
+        <p class="campo__error" role="alert" data-archivo-error hidden></p>
         <p class="campo__ayuda">Lo revisamos y te avisamos por correo cuando se acredite el pago.</p>
         <div class="dialogo__acciones">
           <button class="boton boton--secundario" type="button" data-cerrar>Cancelar</button>
-          <button class="boton boton--primario" type="submit" data-enviar disabled>Enviar comprobante</button>
+          <button class="boton boton--primario" type="submit" data-enviar disabled>Enviar comprobantes</button>
         </div>
       </div>
       <div class="dialogo__cuerpo comprobante__listo" data-paso="listo" hidden>

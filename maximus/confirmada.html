@@ -23,16 +23,24 @@
        elegido en sessionStorage y js/confirmada.js lo muestra; si no hay nada guardado (vista previa, enlace directo)
        queda la compra de muestra de este HTML: la del carrito de muestra con envío OCA 24 hs y transferencia.
        Dos variantes según el pago: transferencia (esperando el pago, con los datos bancarios y el comprobante) y
-       tarjeta (pago aprobado). Número de pedido, fecha y datos bancarios son de muestra. En el sitio real el pedido
+       tarjeta (pago aprobado o pendiente, cuando Mercado Pago todavía lo procesa). "Qué sigue" cambia según el pago
+       y la entrega (OCA 24 hs, OCA normal o retiro). Número de pedido, fecha y datos bancarios son de muestra. En el sitio real el pedido
        lo crea el backend y esta página lo trae de ahí. Página completa con header y footer: compra-confirmada.html. -->
   <main class="confirmada" id="contenido" tabindex="-1" data-confirmada>
 
     <!-- Solo para la demostración: ver las dos variantes (no va en el sitio real) -->
     <div class="contenedor variantes" data-demo>
-      <span class="variantes__rotulo">Vista previa</span>
-      <div class="variantes__opciones" role="group" aria-label="Variante">
+      <span class="variantes__rotulo">Pago</span>
+      <div class="variantes__opciones" role="group" aria-label="Pago">
         <button class="variantes__btn" type="button" data-ver="transferencia" aria-pressed="true">Transferencia</button>
-        <button class="variantes__btn" type="button" data-ver="tarjeta" aria-pressed="false">Tarjeta</button>
+        <button class="variantes__btn" type="button" data-ver="tarjeta" aria-pressed="false">Tarjeta aprobada</button>
+        <button class="variantes__btn" type="button" data-ver="pendiente" aria-pressed="false">Tarjeta pendiente</button>
+      </div>
+      <span class="variantes__rotulo">Entrega</span>
+      <div class="variantes__opciones" role="group" aria-label="Entrega">
+        <button class="variantes__btn" type="button" data-ver-entrega="oca24" aria-pressed="true">OCA 24 hs</button>
+        <button class="variantes__btn" type="button" data-ver-entrega="oca" aria-pressed="false">OCA normal</button>
+        <button class="variantes__btn" type="button" data-ver-entrega="retiro" aria-pressed="false">Retiro</button>
       </div>
     </div>
 
@@ -82,6 +90,24 @@
           <p class="muestra"><svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>Datos bancarios de muestra: los reales aparecen al confirmar la compra.</p>
 
           <p class="nota"><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg><span>Transferí desde una cuenta a nombre de <strong>Martín González</strong>, el titular de la factura. No se aceptan pagos desde otras cuentas.</span></p>
+          <p class="nota nota--plazo"><svg class="icono icono--s" aria-hidden="true"><use href="#i-reloj"/></svg><span>Tenés <strong>24 hs</strong> para enviar el comprobante; pasado ese tiempo se libera el stock.</span></p>
+        </section>
+
+        <!-- Tarjeta pendiente: Mercado Pago todavía procesa el pago (en proceso o en revisión) -->
+        <section class="tarjeta transferir" aria-labelledby="pendiente-titulo" data-variante="pendiente" hidden>
+          <header class="apartado__cab">
+            <span class="apartado__icono apartado__icono--info"><svg class="icono" aria-hidden="true"><use href="#i-reloj"/></svg></span>
+            <div>
+              <h2 class="apartado__titulo" id="pendiente-titulo">Pago en proceso</h2>
+              <p class="apartado__bajada">Mercado Pago todavía no confirmó tu pago.</p>
+            </div>
+          </header>
+          <div class="monto monto--pendiente">
+            <p class="monto__rotulo">Total</p>
+            <p class="monto__valor" data-monto-pendiente>$2.966.607</p>
+            <p class="monto__nota">Puede tardar hasta 48 hs hábiles</p>
+          </div>
+          <p class="nota nota--info"><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg><span>No hace falta que vuelvas a pagar: te avisamos por correo cuando se acredite. Si el pago se rechaza, te escribimos para que lo hagas de nuevo.</span></p>
         </section>
 
         <!-- Tarjeta: pago aprobado con Mercado Pago -->
@@ -148,7 +174,7 @@
           <dl class="datos">
             <div class="datos__fila">
               <dt><svg class="icono icono--s" aria-hidden="true"><use href="#i-envio"/></svg>Entrega</dt>
-              <dd><span data-d-entrega>OCA 24 hs a domicilio · Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA</span><small data-d-entrega-meta>Llega el siguiente día hábil después de acreditado el pago, entre las 12 y las 20 h</small></dd>
+              <dd><span data-d-entrega>OCA 24 hs a domicilio · Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA</span><small data-d-entrega-meta>Llega el siguiente día hábil después de acreditado el pago</small></dd>
             </div>
             <div class="datos__fila">
               <dt><svg class="icono icono--s" aria-hidden="true"><use href="#i-comprobante"/></svg>Facturación</dt>

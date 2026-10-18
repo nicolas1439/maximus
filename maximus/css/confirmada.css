@@ -553,3 +553,55 @@
     transition: top var(--transicion);
   }
 }
+
+/* ---------- Revisión final (tanda 3c) ---------- */
+
+/* Pago en proceso (Mercado Pago) */
+.apartado__icono--info {
+  background: color-mix(in srgb, var(--color-info) 14%, transparent);
+  color: var(--color-info-texto);
+}
+
+.monto--pendiente {
+  background: color-mix(in srgb, var(--color-info) 8%, var(--color-fondo));
+}
+
+.nota--info {
+  background: color-mix(in srgb, var(--color-info) 10%, transparent);
+}
+
+.nota--info .icono {
+  color: var(--color-info-texto);
+}
+
+.nota--plazo .icono {
+  color: var(--color-aviso-icono);
+}
+
+.sigue__texto a,
+.sigue__extra a {
+  color: var(--color-acento);
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+/* Retiro: ¿retira otra persona? */
+.sigue__extra {
+  display: flex;
+  gap: var(--espacio-2);
+  margin: var(--espacio-3) 0 0;
+  padding: var(--espacio-3);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.sigue__extra .icono {
+  flex-shrink: 0;
+  color: var(--color-secundario-texto);
+}
+
+.sigue__extra strong {
+  color: var(--color-texto);
+}

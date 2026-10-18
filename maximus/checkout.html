@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/opcion.css">
+  <link rel="stylesheet" href="css/dialogo.css">
+  <link rel="stylesheet" href="css/carrusel.css">
+  <link rel="stylesheet" href="css/producto.css">
+  <link rel="stylesheet" href="css/productos.css">
   <link rel="stylesheet" href="css/checkout.css">
   <script type="module" src="js/checkout.js"></script>
 </head>
@@ -24,8 +28,50 @@
        Una sola página, un paso a la vista por vez (js/checkout.js; sin JS se ven todos, uno debajo del otro).
        Precios, envíos, sucursales, cuotas y textos legales son los del sitio; los productos del carrito, el cliente
        y las direcciones son de muestra (los mismos de Mi cuenta). El último paso no confirma nada: "Confirmar
-       compra" solo muestra un aviso. Página completa con header y footer: carrito.html. -->
+       compra" solo muestra un aviso. Página completa con header y footer: carrito.html.
+       Revisión final (tanda 3c): ingreso dentro del checkout, Factura A con su cuenta vinculada, domicilio por partes,
+       estados del envío y del pago, errores y "También te puede interesar"; se ven con la barra de variantes. -->
   <main class="checkout" id="contenido" tabindex="-1">
+
+    <!-- Variantes y estados del checkout, para la demostración (no van en el sitio real) -->
+    <details class="contenedor variantes-plegable" data-demo>
+      <summary class="variantes-plegable__cab">Estados de muestra</summary>
+      <div class="variantes variantes--checkout">
+      <span class="variantes__rotulo">Sesión</span>
+      <div class="variantes__opciones" role="group" aria-label="Sesión">
+        <button class="variantes__btn" type="button" data-variante="sesion:con" aria-pressed="true">Con sesión</button>
+        <button class="variantes__btn" type="button" data-variante="sesion:sin" aria-pressed="false">Sin sesión</button>
+      </div>
+      <span class="variantes__rotulo">Cliente</span>
+      <div class="variantes__opciones" role="group" aria-label="Cliente">
+        <button class="variantes__btn" type="button" data-variante="fiscal:cf" aria-pressed="true">Consumidor final</button>
+        <button class="variantes__btn" type="button" data-variante="fiscal:ri" aria-pressed="false">Responsable inscripto</button>
+        <button class="variantes__btn" type="button" data-variante="fiscal:vinculada" aria-pressed="false">Con empresa vinculada</button>
+      </div>
+      <span class="variantes__rotulo">Carrito</span>
+      <div class="variantes__opciones" role="group" aria-label="Carrito">
+        <button class="variantes__btn" type="button" data-variante="carrito:normal" aria-pressed="true">Normal</button>
+        <button class="variantes__btn" type="button" data-variante="carrito:promo" aria-pressed="false">Con regalo y descuento en pesos</button>
+      </div>
+      <span class="variantes__rotulo">Envío</span>
+      <div class="variantes__opciones" role="group" aria-label="Envío">
+        <button class="variantes__btn" type="button" data-variante="envio:normal" aria-pressed="true">Cotizado</button>
+        <button class="variantes__btn" type="button" data-variante="envio:cotizando" aria-pressed="false">Cotizando</button>
+        <button class="variantes__btn" type="button" data-variante="envio:sin-sucursales" aria-pressed="false">Sin sucursales</button>
+        <button class="variantes__btn" type="button" data-variante="envio:falla" aria-pressed="false">Falla la cotización</button>
+        <button class="variantes__btn" type="button" data-variante="envio:tdf" aria-pressed="false">Tierra del Fuego</button>
+        <button class="variantes__btn" type="button" data-variante="envio:grande" aria-pressed="false">PC o producto grande</button>
+        <button class="variantes__btn" type="button" data-variante="envio:excede" aria-pressed="false">Excede el tamaño</button>
+      </div>
+      <span class="variantes__rotulo">Errores</span>
+      <div class="variantes__opciones" role="group" aria-label="Errores">
+        <button class="variantes__btn" type="button" data-error-checkout="domicilio">Domicilio no determinado</button>
+        <button class="variantes__btn" type="button" data-error-checkout="guardar">No se guardó el domicilio</button>
+        <button class="variantes__btn" type="button" data-error-checkout="pago">Pago no completado</button>
+        <button class="variantes__btn" type="button" data-error-checkout="pedido">Error al grabar el pedido</button>
+      </div>
+      </div>
+    </details>
 
     <div class="contenedor checkout__cab">
       <h1 class="sr-only">Carrito y checkout</h1>
@@ -40,6 +86,19 @@
       </ol>
     </div>
 
+    <!-- Volviendo de Mercado Pago sin completar el pago (rechazado o cancelado; en el sitio, con ?pago=no-completado):
+         no hay página de compra rechazada, el carrito sigue guardado -->
+    <div class="contenedor checkout__alertas" data-alerta-pago hidden>
+      <div class="alerta alerta--error" role="alert">
+        <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+        <div class="alerta__cuerpo">
+          <p class="alerta__titulo">El pago no se completó</p>
+          <p>Tu carrito sigue guardado. Podés intentar de nuevo o elegir otro medio de pago.</p>
+          <div class="alerta__acciones"><button class="boton boton--primario" type="button" data-ir-pago>Volver a pagar</button></div>
+        </div>
+      </div>
+    </div>
+
     <div class="contenedor checkout__cuerpo">
       <div class="checkout__pasos">
 
@@ -51,7 +110,7 @@
           </header>
 
           <ul class="items" data-items>
-            <li class="item" data-item data-precio="2668800" data-lista="3139765" data-campania="Primavera Maximus" data-campania-descuento="15%" data-nombre="Placa de Video MSI GeForce RTX 5070 Ti Ventus 3X 16GB">
+            <li class="item" data-item data-precio="2668800" data-lista="3139765" data-iva="10.5" data-campania="Primavera Maximus" data-campania-descuento="15%" data-nombre="Placa de Video MSI GeForce RTX 5070 Ti Ventus 3X 16GB">
               <a class="item__foto" href="rtx-5070-ti-ventus.html" tabindex="-1" aria-hidden="true"><img src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600"></a>
               <div class="item__datos">
                 <p class="item__marca">MSI</p>
@@ -77,6 +136,7 @@
               <div class="item__datos">
                 <p class="item__marca">Kingston</p>
                 <h3 class="item__nombre"><a href="rtx-5070-ti-ventus.html">Memoria RAM Kingston Fury Beast 16GB RGB 6000 MHz DDR5 CL36 AMD EXPO</a></h3>
+                <p class="item__campania" data-solo-promo hidden><span class="etiqueta etiqueta--secundaria"><svg class="icono icono--s" aria-hidden="true"><use href="#i-etiqueta"/></svg>Combo Kingston · −$10.000 off</span></p>
               </div>
               <div class="item__cantidad">
                 <div class="cantidad" data-cantidad>
@@ -90,6 +150,20 @@
                 <p class="item__antes" data-item-antes hidden></p>
                 <p class="item__precio" data-item-total>$279.998</p>
                 <p class="item__unitario" data-item-unitario>$139.999 c/u</p>
+              </div>
+            </li>
+            <li class="item item--regalo" data-item data-regalo data-precio="0" data-lista="45999" data-iva="21" data-campania="Regalo de la promo" data-nombre="Cooler CPU de regalo" data-solo-promo hidden>
+              <span class="item__foto item__foto--icono" aria-hidden="true"><svg class="icono" aria-hidden="true"><use href="#i-regalo"/></svg></span>
+              <div class="item__datos">
+                <p class="item__marca">Regalo</p>
+                <h3 class="item__nombre">Cooler CPU de regalo por la compra de tu placa de video</h3>
+                <p class="item__campania"><span class="etiqueta etiqueta--secundaria">100% off</span></p>
+              </div>
+              <div class="item__cantidad"><input type="hidden" value="1"><p class="item__fijo">1 unidad · Viene con tu compra</p></div>
+              <div class="item__precios">
+                <p class="item__antes" data-item-antes><span class="sr-only">Precio de lista: </span>$45.999</p>
+                <p class="item__precio item__precio--regalo" data-item-total>$0</p>
+                <p class="item__unitario" data-item-unitario hidden></p>
               </div>
             </li>
           </ul>
@@ -106,6 +180,152 @@
             <a class="boton boton--secundario" href="placas-de-video.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Seguir comprando</a>
             <button class="boton boton--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
           </footer>
+
+          <!-- También te puede interesar: productos que suelen sumarse (en el sitio, los elige el sistema) -->
+          <section class="productos checkout__sugeridos" aria-labelledby="sugeridos-titulo" data-con-items>
+            <div class="carrusel" data-carrusel>
+              <div class="seccion__cab">
+                <h2 class="seccion__titulo" id="sugeridos-titulo">También te puede interesar</h2>
+                <div class="seccion__acciones">
+                  <div class="carrusel__flechas">
+                    <button class="boton-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
+                    <button class="boton-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
+                  </div>
+                </div>
+              </div>
+              <ul class="carrusel__pista productos__lista">
+              <li class="carrusel__item">
+                <article class="producto">
+                  <div class="producto__media">
+                    <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0LZ0-M0AA00_600.jpg" alt="" width="600" height="600">
+                    <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+                  </div>
+                  <div class="producto__cuerpo">
+                    <div class="producto__meta">
+                      <span class="producto__marca">Asus</span>
+                    </div>
+                    <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Asus TUF Gaming Nvidia GeForce RTX 5070 OC 12GB GDDR7</a></h3>
+                    <div class="producto__precios">
+                      <s class="producto__antes"></s>
+                      <p class="producto__precio">$2.025.090</p>
+                      <p class="producto__nota">Efectivo o transferencia</p>
+                    </div>
+                    <p class="producto__cuotas">3 × $750.033 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+                    <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  </div>
+                </article>
+              </li>
+              <li class="carrusel__item">
+                <article class="producto">
+                  <div class="producto__media">
+                    <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N5070GAMING-OC-12GD_600.jpg" alt="" width="600" height="600">
+                    <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+                  </div>
+                  <div class="producto__cuerpo">
+                    <div class="producto__meta">
+                      <span class="producto__marca">Gigabyte</span>
+                    <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(4<span class="sr-only"> opiniones</span>)</span></span>
+                    </div>
+                    <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Gigabyte Nvidia GeForce RTX 5070 Gaming OC 12GB GDDR7</a></h3>
+                    <div class="producto__precios">
+                      <s class="producto__antes"></s>
+                      <p class="producto__precio">$1.785.690</p>
+                      <p class="producto__nota">Efectivo o transferencia</p>
+                    </div>
+                    <p class="producto__cuotas">3 × $661.367 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+                    <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  </div>
+                </article>
+              </li>
+              <li class="carrusel__item">
+                <article class="producto">
+                  <div class="producto__media">
+                    <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V532-009_600.jpg" alt="" width="600" height="600">
+                    <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+                  </div>
+                  <div class="producto__cuerpo">
+                    <div class="producto__meta">
+                      <span class="producto__marca">MSI</span>
+                    </div>
+                    <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video MSI Nvidia GeForce RTX 5070 Ventus 2X OC 12GB GDDR7</a></h3>
+                    <div class="producto__precios">
+                      <s class="producto__antes"></s>
+                      <p class="producto__precio">$1.708.380</p>
+                      <p class="producto__nota">Efectivo o transferencia</p>
+                    </div>
+                    <p class="producto__cuotas">3 × $632.733 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+                    <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  </div>
+                </article>
+              </li>
+              <li class="carrusel__item">
+                <article class="producto">
+                  <div class="producto__media">
+                    <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0L70-M0AA00_600.jpg" alt="" width="600" height="600">
+                    <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+                  </div>
+                  <div class="producto__cuerpo">
+                    <div class="producto__meta">
+                      <span class="producto__marca">Asus</span>
+                    <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(6<span class="sr-only"> opiniones</span>)</span></span>
+                    </div>
+                    <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Asus TUF Gaming AMD Radeon RX 9070 XT OC 16GB GDDR6</a></h3>
+                    <div class="producto__precios">
+                      <s class="producto__antes"></s>
+                      <p class="producto__precio">$1.828.170</p>
+                      <p class="producto__nota">Efectivo o transferencia</p>
+                    </div>
+                    <p class="producto__cuotas">3 × $677.100 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+                    <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  </div>
+                </article>
+              </li>
+              <li class="carrusel__item">
+                <article class="producto">
+                  <div class="producto__media">
+                    <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0K60-M0AA00_600.jpg" alt="" width="600" height="600">
+                    <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+                  </div>
+                  <div class="producto__cuerpo">
+                    <div class="producto__meta">
+                      <span class="producto__marca">Asus</span>
+                    <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">5,0</span><span class="producto__opiniones">(1<span class="sr-only"> opiniones</span>)</span></span>
+                    </div>
+                    <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Asus Nvidia GeForce RTX 3050 Dual OC 6GB GDDR6</a></h3>
+                    <div class="producto__precios">
+                      <s class="producto__antes"></s>
+                      <p class="producto__precio">$513.090</p>
+                      <p class="producto__nota">Efectivo o transferencia</p>
+                    </div>
+                    <p class="producto__cuotas">3 × $190.033 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+                    <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  </div>
+                </article>
+              </li>
+              <li class="carrusel__item">
+                <article class="producto">
+                  <div class="producto__media">
+                    <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N3050WF2OCV2-6GD_600.jpg" alt="" width="600" height="600">
+                    <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+                  </div>
+                  <div class="producto__cuerpo">
+                    <div class="producto__meta">
+                      <span class="producto__marca">Gigabyte</span>
+                    </div>
+                    <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Gigabyte Nvidia GeForce RTX 3050 Windforce V2 OC 6GB GDDR6</a></h3>
+                    <div class="producto__precios">
+                      <s class="producto__antes"></s>
+                      <p class="producto__precio">$505.350</p>
+                      <p class="producto__nota">Efectivo o transferencia</p>
+                    </div>
+                    <p class="producto__cuotas">3 × $187.167 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+                    <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  </div>
+                </article>
+              </li>
+            </ul>
+            </div>
+          </section>
         </section>
 
         <!-- ==================== 2. Facturación ==================== -->
@@ -115,45 +335,125 @@
             <p class="paso__bajada">Confirmá a nombre de quién se hace esta compra.</p>
           </header>
 
-          <!-- Cliente con sesión iniciada (de muestra) -->
-          <div class="cliente">
-            <span class="cliente__avatar" aria-hidden="true">MG</span>
-            <div class="cliente__datos">
-              <p class="cliente__nombre">Martín González</p>
-              <p class="cliente__meta">martin.gonzalez@correo.com · Cliente N.º 48213</p>
+          <!-- Sin sesión: no se puede comprar sin cuenta. Se ingresa o se crea acá mismo y se vuelve a este paso con el
+               carrito (de muestra, cualquier correo y contraseña ingresan; con "error" en el correo, el error) -->
+          <div class="ingreso-checkout" data-sin-sesion-checkout hidden>
+            <p class="ingreso-checkout__intro"><svg class="icono" aria-hidden="true"><use href="#i-candado"/></svg><span>Para comprar necesitás una cuenta: con ella seguís el pedido, subís el comprobante y descargás la factura. Tu carrito queda guardado.</span></p>
+            <form class="tarjeta subpanel ingreso-checkout__form" novalidate data-ingreso-checkout>
+              <p class="subpanel__titulo">Ya tengo cuenta</p>
+              <label class="campo"><span class="campo__rotulo">Correo electrónico</span><input class="campo__control" name="correo" type="email" inputmode="email" autocomplete="username" spellcheck="false" placeholder="nombre@correo.com"></label>
+              <div class="campo">
+                <div class="campo__fila-rotulo"><label class="campo__rotulo" for="checkout-clave">Contraseña</label><a class="boton-texto" href="ingresar.html?volver=carrito.html%23facturacion#recuperar">¿La olvidaste?</a></div>
+                <div class="clave">
+                  <input class="campo__control" id="checkout-clave" name="clave" type="password" autocomplete="current-password">
+                  <button class="boton-icono clave__ver" type="button" aria-label="Mostrar contraseña" aria-pressed="false" data-ver-clave><svg class="icono icono--s" aria-hidden="true"><use href="#i-ojo"/></svg></button>
+                </div>
+              </div>
+              <p class="campo__error" role="alert" data-ingreso-error hidden></p>
+              <button class="boton boton--primario" type="submit">Ingresar y continuar</button>
+            </form>
+            <div class="tarjeta subpanel ingreso-checkout__nuevo">
+              <p class="subpanel__titulo">Es mi primera compra</p>
+              <p class="ingreso-checkout__texto">Creá tu cuenta en un minuto y volvés acá para terminar la compra.</p>
+              <a class="boton boton--secundario" href="crear-cuenta.html?volver=carrito.html%23facturacion">Crear cuenta</a>
             </div>
-            <a class="boton-texto" href="index.html">No soy yo</a>
           </div>
 
-          <fieldset class="opciones">
-            <legend class="opciones__titulo">¿Cómo vas a facturar?</legend>
-            <label class="opcion">
-              <input class="opcion__radio" type="radio" name="facturacion" value="b" checked>
-              <span class="opcion__cuerpo">
-                <span class="opcion__titulo">A mi nombre <span class="etiqueta">Factura B</span></span>
-                <span class="opcion__texto">Consumidor final. Se emite a nombre de Martín González, DNI 34.567.890.</span>
-              </span>
-            </label>
-            <label class="opcion">
-              <input class="opcion__radio" type="radio" name="facturacion" value="a">
-              <span class="opcion__cuerpo">
-                <span class="opcion__titulo">A nombre de una empresa <span class="etiqueta etiqueta--secundaria">Factura A</span></span>
-                <span class="opcion__texto">Para responsables inscriptos. Completá los datos fiscales de la empresa.</span>
-              </span>
-            </label>
-          </fieldset>
-
-          <!-- Datos de la empresa: solo con Factura A -->
-          <div class="tarjeta subpanel" data-empresa hidden>
-            <p class="subpanel__titulo">Datos de la empresa</p>
-            <div class="formulario__campos">
-              <label class="campo campo--ancho"><span class="campo__rotulo">Razón social</span><input class="campo__control" type="text" autocomplete="organization" data-requerido="a"></label>
-              <label class="campo"><span class="campo__rotulo">CUIT</span><input class="campo__control" type="text" inputmode="numeric" placeholder="30-12345678-9" data-requerido="a"></label>
-              <label class="campo"><span class="campo__rotulo">Condición fiscal</span>
-                <span class="selector"><select class="selector__campo"><option>Responsable Inscripto</option><option>Monotributista</option><option>IVA Exento</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
-              </label>
-              <label class="campo campo--ancho"><span class="campo__rotulo">Domicilio fiscal</span><input class="campo__control" type="text" autocomplete="street-address" data-requerido="a"></label>
+          <div class="facturacion" data-con-sesion-checkout>
+            <!-- Cliente con sesión iniciada (de muestra). "No soy yo" lleva a ingresar y vuelve a este paso con el carrito -->
+            <div class="cliente">
+              <span class="cliente__avatar" aria-hidden="true">MG</span>
+              <div class="cliente__datos">
+                <p class="cliente__nombre">Martín González <span class="etiqueta etiqueta--secundaria" data-sello-a hidden>Factura A</span></p>
+                <p class="cliente__meta">martin.gonzalez@correo.com · Cliente N.º 48213</p>
+              </div>
+              <a class="boton-texto" href="ingresar.html?volver=carrito.html%23facturacion">No soy yo</a>
             </div>
+
+            <fieldset class="opciones">
+              <legend class="opciones__titulo">¿Cómo vas a facturar?</legend>
+              <label class="opcion">
+                <input class="opcion__radio" type="radio" name="facturacion" value="b" checked>
+                <span class="opcion__cuerpo">
+                  <span class="opcion__titulo">A mi nombre <span class="etiqueta" data-solo-fiscal="cf vinculada">Factura B</span><span class="etiqueta etiqueta--secundaria" data-solo-fiscal="ri" hidden>Factura A</span></span>
+                  <span class="opcion__texto" data-solo-fiscal="cf vinculada">Consumidor final. Se emite a nombre de Martín González, DNI 34.567.890.</span>
+                  <span class="opcion__texto" data-solo-fiscal="ri" hidden>Responsable inscripto. Se emite a nombre de Martín González, CUIT 20-34567890-6.</span>
+                </span>
+              </label>
+              <!-- Empresa ya vinculada a la cuenta: se elige con cuál se compra -->
+              <label class="opcion" data-solo-fiscal="vinculada" hidden data-empresa-vinculada>
+                <input class="opcion__radio" type="radio" name="facturacion" value="vinculada">
+                <span class="opcion__cuerpo">
+                  <span class="opcion__titulo"><span data-vinculada-nombre>Tecno Soluciones SRL</span> <span class="etiqueta etiqueta--secundaria">Factura A</span></span>
+                  <span class="opcion__texto">Responsable inscripto · CUIT <span data-vinculada-cuit>30-70845123-8</span>. Empresa vinculada a tu cuenta.</span>
+                </span>
+              </label>
+              <label class="opcion">
+                <input class="opcion__radio" type="radio" name="facturacion" value="a">
+                <span class="opcion__cuerpo">
+                  <span class="opcion__titulo"><span data-texto-otra-empresa>A nombre de una empresa</span> <span class="etiqueta etiqueta--secundaria">Factura A</span></span>
+                  <span class="opcion__texto">Para responsables inscriptos. Damos de alta la empresa y queda vinculada a tu cuenta.</span>
+                </span>
+              </label>
+            </fieldset>
+
+            <!-- Empresa nueva: primero el CUIT con "Verificar"; si es válido completa razón social y condición fiscal
+                 (bloqueadas). Después el domicilio fiscal y la cuenta de la empresa (correo de facturación y contraseña).
+                 De muestra: un CUIT válido que empieza con 33 figura como ya registrado. -->
+            <div class="tarjeta subpanel" data-empresa hidden>
+              <p class="subpanel__titulo">Datos de la empresa</p>
+              <div class="campo">
+                <label class="campo__rotulo" for="empresa-cuit">CUIT</label>
+                <div class="cuit">
+                  <input class="campo__control" id="empresa-cuit" type="text" inputmode="numeric" maxlength="13" placeholder="30-12345678-9" data-cuit>
+                  <button class="boton boton--secundario" type="button" data-verificar-cuit>Verificar</button>
+                </div>
+                <p class="campo__ayuda" data-demo>De muestra: 30-71234567-1 es válido y 33-71234567-0 ya está registrado.</p>
+              </div>
+              <div class="alerta alerta--info" data-cuit-registrado hidden>
+                <svg class="icono" aria-hidden="true"><use href="#i-usuario"/></svg>
+                <div class="alerta__cuerpo">
+                  <p class="alerta__titulo">Este CUIT ya tiene una cuenta en Maximus</p>
+                  <p>Ingresá con el usuario asociado a la empresa para comprar a su nombre.</p>
+                  <div class="alerta__acciones"><a class="boton boton--secundario" href="ingresar.html?volver=carrito.html%23facturacion">Ir al ingreso</a></div>
+                </div>
+              </div>
+              <div class="subpanel" data-empresa-datos hidden>
+                <div class="formulario__campos">
+                  <label class="campo campo--ancho"><span class="campo__rotulo">Razón social</span><input class="campo__control" type="text" readonly data-razon-social></label>
+                  <label class="campo campo--ancho"><span class="campo__rotulo">Condición fiscal</span><input class="campo__control" type="text" readonly value="Responsable inscripto" data-condicion-fiscal></label>
+                </div>
+                <p class="subpanel__subtitulo">Domicilio fiscal</p>
+                <div class="formulario__campos">
+              <label class="campo campo--ancho"><span class="campo__rotulo">Calle</span><input class="campo__control" type="text" autocomplete="address-line1" data-requerido="a" data-campo="calle"></label>
+              <div class="campo">
+                <label class="campo__rotulo" for="a-numero">Número</label>
+                <input class="campo__control" id="a-numero" type="text" inputmode="numeric" data-requerido="a" data-campo="numero">
+                <label class="casilla casilla--chica"><input type="checkbox" data-sin-numero> Sin número</label>
+              </div>
+              <label class="campo"><span class="campo__rotulo">Piso <span class="campo__opcional">(opcional)</span></span><input class="campo__control" type="text"></label>
+              <label class="campo"><span class="campo__rotulo">Departamento <span class="campo__opcional">(opcional)</span></span><input class="campo__control" type="text"></label>
+              <label class="campo"><span class="campo__rotulo">Código postal</span><input class="campo__control" type="text" inputmode="numeric" maxlength="8" autocomplete="postal-code" data-requerido="a" data-campo="cp"></label>
+              <label class="campo"><span class="campo__rotulo">Provincia</span><span class="selector"><select class="selector__campo"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span></label>
+              <label class="campo"><span class="campo__rotulo">Localidad</span><input class="campo__control" type="text" autocomplete="address-level2" data-requerido="a" data-campo="localidad"></label>
+                </div>
+                <p class="subpanel__subtitulo">Cuenta de la empresa</p>
+                <div class="formulario__campos">
+                  <label class="campo"><span class="campo__rotulo">Correo de facturación</span><input class="campo__control" type="email" inputmode="email" autocomplete="email" data-requerido="a" data-campo="correo"></label>
+                  <div class="campo">
+                    <label class="campo__rotulo" for="empresa-clave">Contraseña</label>
+                    <div class="clave">
+                      <input class="campo__control" id="empresa-clave" type="password" autocomplete="new-password" data-requerido="a" data-campo="clave">
+                      <button class="boton-icono clave__ver" type="button" aria-label="Mostrar contraseña" aria-pressed="false" data-ver-clave><svg class="icono icono--s" aria-hidden="true"><use href="#i-ojo"/></svg></button>
+                    </div>
+                  </div>
+                </div>
+                <button class="boton boton--primario subpanel__boton" type="button" data-alta-empresa>Dar de alta y continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
+              </div>
+            </div>
+
+            <!-- Factura A: el pago sale de cuentas del mismo CUIT -->
+            <p class="subpanel__nota" data-aviso-a hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Con Factura A, pagá con tarjeta o transferencia de cuentas a nombre del CUIT de la factura.</p>
           </div>
 
           <p class="paso__error" role="alert" data-error hidden></p>
@@ -184,6 +484,15 @@
             </div>
           </div>
 
+          <div class="alerta alerta--error" role="alert" data-error-domicilio hidden>
+            <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+            <div class="alerta__cuerpo">
+              <p class="alerta__titulo">No pudimos determinar el domicilio de entrega</p>
+              <p>Revisá la calle, el número y el código postal, o elegí otra dirección.</p>
+              <div class="alerta__acciones"><button class="boton boton--secundario" type="button" data-editar-domicilio>Revisar la dirección</button></div>
+            </div>
+          </div>
+
           <fieldset class="opciones" data-lista-direcciones hidden>
             <legend class="opciones__titulo">Tus direcciones</legend>
             <label class="opcion">
@@ -207,16 +516,21 @@
             <input type="radio" name="direccion" value="nueva" data-nombre="Nueva dirección" data-texto="" hidden>
             <p class="subpanel__titulo">Nueva dirección</p>
             <div class="formulario__campos">
-              <label class="campo campo--ancho"><span class="campo__rotulo">Calle y número</span><input class="campo__control" type="text" autocomplete="street-address" data-requerido="nueva" data-nueva-calle></label>
-              <label class="campo"><span class="campo__rotulo">Piso y depto. <small>(opcional)</small></span><input class="campo__control" type="text"></label>
-              <label class="campo"><span class="campo__rotulo">Código postal</span><input class="campo__control" type="text" inputmode="numeric" autocomplete="postal-code" data-requerido="nueva" data-nueva-cp></label>
-              <label class="campo"><span class="campo__rotulo">Provincia</span>
-                <span class="selector"><select class="selector__campo"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
-              </label>
-              <label class="campo"><span class="campo__rotulo">Localidad</span><input class="campo__control" type="text" autocomplete="address-level2" data-requerido="nueva" data-nueva-localidad></label>
+              <label class="campo campo--ancho"><span class="campo__rotulo">Calle</span><input class="campo__control" type="text" autocomplete="address-line1" data-requerido="nueva" data-campo="calle" data-nueva-calle></label>
+              <div class="campo">
+                <label class="campo__rotulo" for="nueva-numero">Número</label>
+                <input class="campo__control" id="nueva-numero" type="text" inputmode="numeric" data-requerido="nueva" data-campo="numero" data-nueva-numero>
+                <label class="casilla casilla--chica"><input type="checkbox" data-sin-numero> Sin número</label>
+              </div>
+              <label class="campo"><span class="campo__rotulo">Piso <span class="campo__opcional">(opcional)</span></span><input class="campo__control" type="text"></label>
+              <label class="campo"><span class="campo__rotulo">Departamento <span class="campo__opcional">(opcional)</span></span><input class="campo__control" type="text"></label>
+              <label class="campo"><span class="campo__rotulo">Código postal</span><input class="campo__control" type="text" inputmode="numeric" maxlength="8" autocomplete="postal-code" data-requerido="nueva" data-campo="cp" data-nueva-cp></label>
+              <label class="campo"><span class="campo__rotulo">Provincia</span><span class="selector"><select class="selector__campo" data-nueva-provincia><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span></label>
+              <label class="campo"><span class="campo__rotulo">Localidad</span><input class="campo__control" type="text" autocomplete="address-level2" data-requerido="nueva" data-campo="localidad" data-nueva-localidad></label>
               <label class="campo"><span class="campo__rotulo">Quién recibe</span><input class="campo__control" type="text" autocomplete="name" value="Martín González" data-requerido="nueva"></label>
               <label class="campo"><span class="campo__rotulo">Teléfono</span><input class="campo__control" type="tel" autocomplete="tel" value="11 5555-0123" data-requerido="nueva"></label>
             </div>
+            <p class="campo__error" role="alert" data-error-guardar hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>No se pudo guardar el domicilio. Probá de nuevo en unos minutos.</p>
             <button class="boton-texto boton-texto--suave" type="button" data-usar-guardada>Usar una dirección guardada</button>
           </div>
 
@@ -242,13 +556,37 @@
 
           <!-- Envío: modalidad -->
           <div class="subpanel-grupo" data-entrega="envio">
-            <fieldset class="opciones">
+            <!-- Cotizando: el sistema consulta a OCA con el código postal -->
+            <div class="cotizando" data-estado-envio="cotizando" hidden role="status">
+              <p class="cotizando__texto"><svg class="icono icono--s" aria-hidden="true"><use href="#i-recargar"/></svg><span>Cotizando el envío a <span data-cp-cotizado>C1406</span>…</span></p>
+              <span class="esqueleto cotizando__fila"></span>
+              <span class="esqueleto cotizando__fila"></span>
+              <span class="esqueleto cotizando__fila"></span>
+            </div>
+            <div class="alerta alerta--error" role="alert" data-estado-envio="falla" hidden>
+              <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+              <div class="alerta__cuerpo">
+                <p class="alerta__titulo">No pudimos cotizar el envío</p>
+                <p>El código postal no respondió. Probá con otro o elegí retirar gratis en tienda.</p>
+                <div class="alerta__acciones"><button class="boton boton--secundario" type="button" data-otro-cp>Elegí otro código postal</button></div>
+              </div>
+            </div>
+            <div class="alerta alerta--aviso" data-estado-envio="tdf" hidden>
+              <svg class="icono" aria-hidden="true"><use href="#i-envio"/></svg>
+              <div class="alerta__cuerpo">
+                <p class="alerta__titulo">No hacemos envíos a Tierra del Fuego</p>
+                <p>Podés elegir otra dirección o retirar gratis en Floresta o en el local de Florida.</p>
+                <div class="alerta__acciones"><button class="boton boton--secundario" type="button" data-elegir-retiro>Retirar en tienda</button></div>
+              </div>
+            </div>
+            <fieldset class="opciones" data-estado-envio="cotizado">
               <legend class="opciones__titulo">Elegí la modalidad</legend>
               <label class="opcion">
                 <input class="opcion__radio" type="radio" name="modalidad" value="oca24" data-costo="4892" data-seguro="12917" data-texto="OCA 24 hs a domicilio" data-plazo="Llega el siguiente día hábil">
                 <span class="opcion__cuerpo">
                   <span class="opcion__titulo">OCA 24 hs a domicilio <span class="etiqueta">Tu zona</span></span>
                   <span class="opcion__texto">Entrega en <span data-direccion-detalle>Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA</span>. Comprando antes de las 23:59 (con el pago acreditado), llega el siguiente día hábil.</span>
+                  <span class="opcion__aviso" data-nota-excede hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Tu pedido supera el tamaño de un envío común: nos vamos a comunicar por el costo adicional.</span>
                 </span>
                 <span class="opcion__precio">$4.892</span>
               </label>
@@ -269,6 +607,7 @@
                 <span class="opcion__precio">$6.694</span>
               </label>
             </fieldset>
+            <p class="subpanel__nota" data-nota-grande hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-caja"/></svg>Las PC armadas y los productos grandes no tienen envío en 24 hs.</p>
 
             <!-- Sucursal de OCA: solo con envío a sucursal (las del CP 1406, según el sitio) -->
             <div class="tarjeta subpanel" data-sucursal hidden>
@@ -276,9 +615,10 @@
                 <span class="selector"><select class="selector__campo" data-sucursal-campo><option value="">Elegí una sucursal</option><option>Av. Rivadavia 10608, Capital Federal</option><option>Tuyutí 7215, Capital Federal</option><option>Montiel 266, Liniers</option><option>Av. Gral. Paz 11154, Liniers</option><option>Av. San Juan Bautista de La Salle 1926, Parque Avellaneda</option><option>Oliden 4302, Villa Lugano</option><option>José Ignacio de la Rosa 5770, Mataderos</option><option>Murguiondo 4324, Capital Federal</option><option>Cañada de Gómez 4821, Villa Riachuelo</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
                 <span class="campo__ayuda">Las sucursales se filtran según tu código postal.</span>
               </label>
+              <p class="subpanel__nota" data-sin-sucursales hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-sucursal"/></svg>No se encontraron sucursales de OCA para tu código postal. Elegí el envío a domicilio u otro código postal.</p>
             </div>
 
-            <p class="paso__ayuda">Los envíos van con seguro ($12.917 por este pedido). El costo se suma al total en el resumen.</p>
+            <p class="paso__ayuda">Los envíos van con seguro, proporcional al valor del pedido (<span data-seguro-texto>$12.917</span> en este). El costo se suma al total en el resumen.</p>
           </div>
 
           <!-- Retiro en tienda -->
@@ -333,10 +673,10 @@
             </label>
             <label class="opcion opcion--icono">
               <input class="opcion__radio" type="radio" name="pago" value="mercadopago">
-              <svg class="icono opcion__icono opcion__icono--mp" aria-hidden="true"><use href="#i-cuotas"/></svg>
+              <span class="opcion__icono opcion__icono--mp opcion__icono--logo"><img src="recursos/pagos/mercadopago-120.webp" alt="" width="120" height="83"></span>
               <span class="opcion__cuerpo">
                 <span class="opcion__titulo">Tarjeta de crédito o débito</span>
-                <span class="opcion__texto">Con Mercado Pago. Hasta 3 cuotas sin interés.</span>
+                <span class="opcion__texto">Con Mercado Pago. Hasta 3 cuotas sin interés. Te llevamos a Mercado Pago para pagar y volvés acá.</span>
               </span>
             </label>
           </fieldset>
@@ -362,6 +702,8 @@
               </div>
             </fieldset>
 
+            <p class="subpanel__nota subpanel__nota--info" data-debito hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-tarjeta"/></svg>Débito es un único pago: sin cuotas.</p>
+
             <fieldset class="cuotas" data-cuotas>
               <legend class="subpanel__titulo">Cantidad de cuotas</legend>
               <div class="cuotas__grilla">
@@ -378,6 +720,7 @@
             <dl class="plan" data-plan>
               <div><dt>Plan</dt><dd data-plan-nombre>1 pago</dd></div>
               <div><dt>Valor de la cuota</dt><dd data-plan-cuota></dd></div>
+              <div data-plan-fila-interes hidden><dt>Interés financiero</dt><dd data-plan-interes></dd></div>
               <div class="plan__total"><dt>Total financiado</dt><dd data-plan-total></dd></div>
             </dl>
             <p class="subpanel__nota" data-nota-retiro hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Si pagás con tarjeta, el pedido solo lo puede retirar el titular, con la tarjeta y su DNI físico.</p>
@@ -398,6 +741,22 @@
             <h2 class="paso__titulo" id="resumen-titulo">Resumen</h2>
             <p class="paso__bajada">Revisá todo antes de confirmar.</p>
           </header>
+
+          <div class="alerta alerta--error" role="alert" data-error-pedido hidden>
+            <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+            <div class="alerta__cuerpo">
+              <p class="alerta__titulo">No pudimos registrar tu pedido</p>
+              <p>Tu carrito sigue guardado: intentá de nuevo en unos minutos o comunicate con nosotros.</p>
+              <details class="plegable alerta__detalle">
+                <summary class="plegable__cab">Detalle</summary>
+                <p class="alerta__codigo">Error 503 · El pedido no se registró · Referencia CHK-7F3A2 · 18/10/2026 19:42</p>
+              </details>
+              <div class="alerta__acciones">
+                <button class="boton boton--primario" type="button" data-confirmar>Intentar de nuevo</button>
+                <a class="boton boton--secundario" href="https://wa.me/541123575522?text=Hola%2C%20no%20pude%20registrar%20mi%20pedido%20(ref.%20CHK-7F3A2)">Escribinos por WhatsApp</a>
+              </div>
+            </div>
+          </div>
 
           <div class="revision">
             <section class="tarjeta revision__bloque" aria-labelledby="rev-productos">
@@ -455,7 +814,17 @@
             <div><dt>Subtotal de lista</dt><dd data-total-lista>$3.419.763</dd></div>
             <div class="totales__campania" data-fila-campania hidden><dt data-campania-nombre>Primavera Maximus</dt><dd data-total-campania></dd></div>
             <div class="totales__descuento" data-fila-descuento hidden><dt>Transferencia −10%</dt><dd data-total-descuento></dd></div>
+            <div data-fila-a hidden><dt>Subtotal sin IVA</dt><dd data-total-neto></dd></div>
+            <div class="totales__plegable" data-fila-a hidden>
+              <details class="plegable">
+                <summary class="plegable__cab"><span>Impuestos</span><span data-total-impuestos></span></summary>
+                <dl class="totales__detalle" data-detalle-impuestos></dl>
+              </details>
+            </div>
+            <div data-fila-a hidden><dt>Percepciones</dt><dd data-total-percepciones></dd></div>
             <div class="totales__total"><dt>Total</dt><dd data-total>$2.948.798</dd></div>
+            <div data-fila-interes hidden><dt>Interés financiero</dt><dd data-total-interes></dd></div>
+            <div class="totales__financiado" data-fila-interes hidden><dt>Total financiado</dt><dd data-total-financiado></dd></div>
           </dl>
           <p class="resumen__nota" data-resumen-nota hidden></p>
           <button class="boton boton--primario resumen__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
@@ -485,6 +854,18 @@
     </div>
     <button class="boton boton--primario" type="button" data-barra-btn>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
   </div>
+
+  <!-- Paso por Mercado Pago: aviso de redirección (de muestra, sigue a Compra confirmada) -->
+  <dialog class="dialogo dialogo--chico" aria-labelledby="mp-titulo" data-dialogo-mp>
+    <div class="dialogo__caja">
+      <div class="dialogo__cuerpo redireccion">
+        <img class="redireccion__logo" src="recursos/pagos/mercadopago-120.webp" alt="" width="120" height="83">
+        <h2 class="dialogo__titulo" id="mp-titulo">Te llevamos a Mercado Pago</h2>
+        <p class="dialogo__texto">Terminá el pago ahí. Cuando se acredite, volvés a Maximus con tu pedido. Si no se completa, tu carrito sigue guardado.</p>
+        <p class="redireccion__estado" role="status"><svg class="icono icono--s" aria-hidden="true"><use href="#i-recargar"/></svg>Redirigiendo…</p>
+      </div>
+    </div>
+  </dialog>
 
   <!-- Aviso breve: producto quitado, compra de muestra -->
   <p class="aviso" data-aviso role="status" aria-live="polite"></p>

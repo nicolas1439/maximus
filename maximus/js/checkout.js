@@ -2,6 +2,12 @@
 // carrito (cantidad, quitar), las opciones de cada paso con sus subpaneles, los totales (detalle de la compra,
 // barra fija y carrito del header) y la revisión final. Todo de muestra: no se envía nada y "Confirmar compra"
 // solo avisa. Sin JS se ven todos los pasos uno debajo del otro.
+// Revisión final (tanda 3c): ingreso dentro del checkout, Factura A con alta de la empresa, domicilio por partes con
+// errores por campo, estados del envío (cotizando, sin sucursales, falla, Tierra del Fuego, PC o producto grande,
+// excede el tamaño), débito, interés de las cuotas, paso por Mercado Pago, pago no completado, error al grabar el
+// pedido y la barra de variantes de la vista previa.
+
+import { marcarError, validarCampos as validarCamposDe, iniciarCampos, cuitValido } from './campos.js';
 
 const checkout = document.querySelector('.checkout');
 if (checkout) iniciar();
@@ -14,16 +20,25 @@ function iniciar() {
   const elegido = (nombre) => $(`input[name="${nombre}"]:checked`);
 
   const DESCUENTO_TRANSFERENCIA = 0.1; // el 10% del sitio por transferencia o depósito
-  const total = { lista: 0, campania: 0, productos: 0, cantidad: 0, envio: 0, seguro: 0, descuento: 0, final: 0 };
+  // Seguro de envío proporcional al valor de los productos ($12.917 sobre los $2.948.798 del carrito de muestra)
+  const TASA_SEGURO = 12917 / 2948798;
+  // Factura A, de muestra: IVA incluido en cada precio (data-iva, 21% si no se indica) y percepción de IIBB del 2%
+  const PERCEPCION = 0.02;
+  const total = { lista: 0, campania: 0, productos: 0, cantidad: 0, envio: 0, seguro: 0, descuento: 0, final: 0, neto: 0, iva: {}, percepciones: 0 };
+  // Estado de la demostración (en el sitio real lo dan la sesión, el cliente y las respuestas del sistema)
+  const demo = { sesion: true, fiscal: 'cf', envio: 'normal', errorGuardar: false, errorPedido: false };
+  // La vista previa (sin el header) arranca con sesión; la página completa, según la sesión de muestra
+  try { demo.sesion = Boolean(localStorage.getItem('sesion')) || !document.querySelector('.cabecera'); } catch {}
 
   // ---------- Aviso breve ----------
 
   const aviso = $('[data-aviso]');
   let avisoTemporizador;
 
-  function avisar(texto) {
+  function avisar(texto, { error = false } = {}) {
     if (!aviso) return;
     aviso.textContent = texto;
+    aviso.classList.toggle('aviso--error', error);
     aviso.classList.add('aviso--visible');
     clearTimeout(avisoTemporizador);
     avisoTemporizador = setTimeout(() => aviso.classList.remove('aviso--visible'), 2600);
@@ -101,11 +116,22 @@ function iniciar() {
     const nombre = nombres[i];
 
     if (nombre === 'carrito' && !items().length) mensaje = 'Tu carrito está vacío: agregá un producto para continuar.';
-    if (nombre === 'facturacion' && elegido('facturacion')?.value === 'a') mensaje = faltante(paso, 'a') ? 'Completá los datos de la empresa.' : '';
+    if (nombre === 'facturacion') {
+      if (!demo.sesion) mensaje = 'Ingresá o creá tu cuenta para continuar.';
+      else if (elegido('facturacion')?.value === 'a') mensaje = 'Verificá el CUIT y completá los datos de la empresa. Después tocá "Dar de alta y continuar".';
+    }
     if (nombre === 'entrega') {
       if (elegido('entrega')?.value === 'envio') {
-        if (elegido('direccion')?.value === 'nueva' && faltante(paso, 'nueva')) mensaje = 'Completá la dirección nueva.';
+        const nueva = elegido('direccion')?.value === 'nueva';
+        if (nueva && !validarCampos('nueva')) mensaje = 'Revisá los datos de la dirección nueva.';
+        else if (nueva && demo.errorGuardar) {
+          $('[data-error-guardar]').hidden = false;
+          mensaje = 'No se pudo guardar el domicilio.';
+        } else if (demo.envio === 'cotizando') mensaje = 'Esperá a que termine la cotización del envío.';
+        else if (demo.envio === 'falla') mensaje = 'No pudimos cotizar el envío: elegí otro código postal o retirá en tienda.';
+        else if (demo.envio === 'tdf') mensaje = 'No hacemos envíos a Tierra del Fuego: elegí otra dirección o retirá en tienda.';
         else if (!elegido('modalidad')) mensaje = 'Elegí una modalidad de envío.';
+        else if (elegido('modalidad').value === 'ocasucursal' && demo.envio === 'sin-sucursales') mensaje = 'No hay sucursales de OCA para tu código postal: elegí el envío a domicilio.';
         else if (elegido('modalidad').value === 'ocasucursal' && !$('[data-sucursal-campo]').value) mensaje = 'Elegí la sucursal de OCA donde retirar.';
       }
     }
@@ -118,12 +144,9 @@ function iniciar() {
     return !mensaje;
   }
 
-  // Primer campo requerido vacío de un grupo (data-requerido="grupo"), y le da el foco
-  function faltante(paso, grupo) {
-    const campo = $$(`[data-requerido="${grupo}"]`, paso).find((c) => !c.value.trim());
-    campo?.focus();
-    return campo;
-  }
+  // Campos con su error debajo (js/campos.js)
+  const validarCampos = (grupo) => validarCamposDe(checkout, grupo);
+  iniciarCampos(checkout, { alCambiar: () => actualizarDireccion() });
 
   function continuar() {
     if (!validar(actual)) return;
@@ -147,6 +170,15 @@ function iniciar() {
   // confirmada, que lo muestra (en el sitio real, el pedido lo crea el backend y la página lo trae de ahí)
   function confirmar() {
     completarRevision();
+    // Error al grabar el pedido (de muestra): el carrito queda como estaba
+    const errorPedido = $('[data-error-pedido]');
+    if (demo.errorPedido) {
+      errorPedido.hidden = false;
+      errorPedido.scrollIntoView({ block: 'center', behavior: movimientoReducido ? 'auto' : 'smooth' });
+      demo.errorPedido = false; // de muestra, el siguiente intento sale bien
+      return;
+    }
+    errorPedido.hidden = true;
     const pago = elegido('pago')?.value;
     const cuotas = elegido('cuotas');
     const n = Number(cuotas?.value || 1);
@@ -155,7 +187,7 @@ function iniciar() {
       items: items().map((item) => ({
         nombre: $('.item__nombre', item).textContent.trim(),
         marca: $('.item__marca', item).textContent.trim(),
-        foto: $('img', item).getAttribute('src'),
+        foto: $('img', item)?.getAttribute('src') || '',
         enlace: $('.item__nombre a', item).getAttribute('href'),
         cantidad: Number($('input', item).value) || 1,
         precio: Number(item.dataset.precio),
@@ -174,6 +206,13 @@ function iniciar() {
     try {
       sessionStorage.setItem('compra', JSON.stringify(compra));
     } catch {}
+    // Con tarjeta, el pago sigue en Mercado Pago: aviso de redirección y, de muestra, la vuelta con el pago aprobado
+    const dialogoMp = $('[data-dialogo-mp]');
+    if (pago === 'mercadopago' && dialogoMp) {
+      dialogoMp.showModal();
+      setTimeout(() => (location.href = 'compra-confirmada.html'), 1800);
+      return;
+    }
     location.href = 'compra-confirmada.html';
   }
   $$('[data-confirmar]').forEach((b) => b.addEventListener('click', confirmar));
@@ -193,12 +232,13 @@ function iniciar() {
   // ---------- Carrito: ítems ----------
 
   const lista = $('[data-items]');
-  const items = () => $$('[data-item]', lista);
+  const items = () => $$('[data-item]', lista).filter((item) => !item.hidden);
 
   function actualizarItem(item) {
     const cantidad = Number($('input', item).value) || 1;
     const precio = Number(item.dataset.precio);
     const lista = Number(item.dataset.lista) || 0; // precio de lista, solo con campaña
+    if (item.matches('[data-regalo]')) return; // el regalo queda fijo: $0 y su precio de lista
     $('[data-item-total]', item).textContent = pesos(precio * cantidad);
     const antes = $('[data-item-antes]', item);
     antes.hidden = !lista;
@@ -267,13 +307,26 @@ function iniciar() {
     });
   }
 
+  // Factura A: cliente responsable inscripto a su nombre, o una empresa (vinculada o nueva)
+  function facturaA() {
+    const f = elegido('facturacion')?.value;
+    return f === 'vinculada' || f === 'a' || (f === 'b' && demo.fiscal === 'ri');
+  }
+
   function sincronizarTodo() {
     sincronizar('facturacion');
     $('[data-empresa]').hidden = elegido('facturacion')?.value !== 'a';
+    $('[data-aviso-a]').hidden = !facturaA();
+    $('[data-sello-a]').hidden = demo.fiscal !== 'ri';
     sincronizar('entrega');
     $('[data-sucursal]').hidden = elegido('modalidad')?.value !== 'ocasucursal';
     sincronizar('pago');
     $('[data-nota-retiro]').hidden = elegido('entrega')?.value !== 'retiro';
+    // Débito: un único pago, sin la grilla de cuotas
+    const debito = elegido('tarjeta')?.value === 'debito';
+    $('[data-debito]').hidden = !debito;
+    $('[data-cuotas]').hidden = debito;
+    if (debito) $('input[name="cuotas"][value="1"]').checked = true;
     actualizarDireccion();
   }
 
@@ -287,7 +340,8 @@ function iniciar() {
   const btnAgregar = $('[data-agregar-direccion]');
 
   function textoDireccionNueva() {
-    const calle = $('[data-nueva-calle]').value.trim();
+    const numero = $('[data-nueva-numero]');
+    const calle = [$('[data-nueva-calle]').value.trim(), numero.disabled ? 'S/N' : numero.value.trim()].filter(Boolean).join(' ');
     const cp = $('[data-nueva-cp]').value.trim();
     const localidad = $('[data-nueva-localidad]').value.trim();
     return [calle, [cp && `C${cp}`, localidad].filter(Boolean).join(' ')].filter(Boolean).join(' · ') || 'Completá los datos de abajo';
@@ -339,6 +393,14 @@ function iniciar() {
     if (error) error.hidden = true;
   });
 
+  // Foto del producto en el detalle; el regalo, que no tiene, lleva su ícono
+  function miniatura(item) {
+    const foto = $('img', item)?.getAttribute('src');
+    return foto
+      ? `<img src="${foto}" alt="" width="600" height="600">`
+      : '<span class="resumen__icono"><svg class="icono icono--s" aria-hidden="true"><use href="#i-regalo"/></svg></span>';
+  }
+
   // ---------- Totales ----------
 
   function calcular() {
@@ -355,11 +417,27 @@ function iniciar() {
     total.campania = total.lista - total.productos; // descuento de campaña (precio de lista menos precio)
     const envio = elegido('entrega')?.value === 'envio' ? elegido('modalidad') : null;
     total.envio = envio ? Number(envio.dataset.costo) : 0;
-    total.seguro = envio ? Number(envio.dataset.seguro) : 0;
+    total.seguro = envio ? Math.round(total.productos * TASA_SEGURO) : 0;
     const transferencia = elegido('pago')?.value === 'transferencia';
     const bruto = total.productos + total.envio + total.seguro; // el 10% va sobre todo el pedido, envío y seguro incluidos
     total.descuento = transferencia ? Math.round(bruto * DESCUENTO_TRANSFERENCIA) : 0;
     total.final = bruto - total.descuento;
+    // Factura A (de muestra): el mismo total separado en neto e IVA por alícuota, más la percepción de IIBB
+    total.iva = {};
+    total.neto = 0;
+    total.percepciones = 0;
+    if (facturaA()) {
+      const factor = total.final / (bruto || 1); // el descuento por transferencia se reparte en todo
+      const sumar = (monto, alicuota) => {
+        const neto = (monto * factor) / (1 + alicuota / 100);
+        total.neto += neto;
+        total.iva[alicuota] = (total.iva[alicuota] || 0) + monto * factor - neto;
+      };
+      items().forEach((item) => sumar(Number(item.dataset.precio) * (Number($('input', item).value) || 1), Number(item.dataset.iva) || 21));
+      sumar(total.envio + total.seguro, 21);
+      total.percepciones = Math.round(total.neto * PERCEPCION);
+      total.final += total.percepciones;
+    }
   }
 
   function actualizarTotales() {
@@ -383,8 +461,7 @@ function iniciar() {
       items()
         .map((item) => {
           const n = Number($('input', item).value) || 1;
-          const foto = $('img', item).getAttribute('src');
-          return `<li><img src="${foto}" alt="" width="600" height="600"><span>${item.dataset.nombre}<small> × ${n}</small></span><strong>${pesos(Number(item.dataset.precio) * n)}</strong></li>`;
+          return `<li>${miniatura(item)}<span>${item.dataset.nombre}<small> × ${n}</small></span><strong>${item.matches('[data-regalo]') ? 'Regalo' : pesos(Number(item.dataset.precio) * n)}</strong></li>`;
         })
         .join('') + extras;
 
@@ -395,6 +472,23 @@ function iniciar() {
     $('[data-total-campania]').textContent = `−${pesos(total.campania)}`;
     $('[data-fila-descuento]').hidden = !total.descuento;
     $('[data-total-descuento]').textContent = `−${pesos(total.descuento)}`;
+    // Varias campañas o promos a la vez: una sola línea con lo que descuentan entre todas
+    if (new Set(items().filter((i) => i.dataset.campania || i.dataset.lista).map((i) => i.dataset.campania || 'promo')).size > 1) $('[data-campania-nombre]').textContent = 'Campañas y promociones';
+    // Factura A: neto, impuestos (con el detalle por alícuota) y percepciones
+    const conA = facturaA();
+    $$('[data-fila-a]').forEach((fila) => (fila.hidden = !conA));
+    if (conA) {
+      [$('[data-total-lista]').parentElement, $('[data-fila-campania]')].forEach((fila) => (fila.hidden = true));
+      $('[data-fila-descuento]').hidden = true;
+      const impuestos = Object.values(total.iva).reduce((a, b) => a + b, 0);
+      $('[data-total-neto]').textContent = pesos(total.neto);
+      $('[data-total-impuestos]').textContent = pesos(impuestos);
+      $('[data-detalle-impuestos]').innerHTML = Object.entries(total.iva)
+        .sort(([a], [b]) => a - b)
+        .map(([alicuota, monto]) => `<div><dt>IVA ${String(alicuota).replace('.', ',')}%</dt><dd>${pesos(monto)}</dd></div>`)
+        .join('');
+      $('[data-total-percepciones]').textContent = pesos(total.percepciones);
+    } else $('[data-total-lista]').parentElement.hidden = false;
     $$('[data-total]').forEach((n) => (n.textContent = pesos(total.final)));
     $$('[data-ahorro]').forEach((n) => (n.textContent = n.matches('.opcion__precio') ? `Ahorrás ${pesos(ahorro)}` : pesos(ahorro)));
 
@@ -407,6 +501,14 @@ function iniciar() {
       nota.innerHTML = n === 1 ? 'En 1 pago con tarjeta.' : `<strong>${n} cuotas de ${pesos(financiado / n)}</strong>${financiado > total.final ? ` · Total financiado ${pesos(financiado)}` : ' sin interés'}.`;
     } else nota.innerHTML = '';
     nota.hidden = !nota.innerHTML;
+
+    // Interés de las cuotas: fila "Interés financiero" y "Total financiado" en el detalle
+    const financiadoTotal = pago === 'mercadopago' && cuotas ? total.final * Number(cuotas.dataset.factor) : total.final;
+    const interes = Math.round(financiadoTotal - total.final);
+    $$('[data-fila-interes]').forEach((fila) => (fila.hidden = interes <= 0));
+    $('[data-total-interes]').textContent = pesos(interes);
+    $('[data-total-financiado]').textContent = pesos(financiadoTotal);
+    $('[data-seguro-texto]').textContent = pesos(Math.round(total.productos * TASA_SEGURO));
 
     // Cuotas: el valor de cada una sobre el total con tarjeta, y el plan elegido
     $$('.cuota', checkout).forEach((cuota) => {
@@ -421,6 +523,9 @@ function iniciar() {
       $('[data-plan-nombre]').textContent = n === 1 ? '1 pago' : `${n} cuotas${Number(cuotas.dataset.factor) === 1 ? ' sin interés' : ''}`;
       $('[data-plan-cuota]').textContent = pesos(financiado / n);
       $('[data-plan-total]').textContent = pesos(financiado);
+      const interesPlan = Math.round(financiado - total.final);
+      $('[data-plan-fila-interes]').hidden = interesPlan <= 0;
+      $('[data-plan-interes]').textContent = `${pesos(interesPlan)} (${Math.round((Number(cuotas.dataset.factor) - 1) * 100)}%)`;
     }
 
     // Barra fija y carrito del header
@@ -441,8 +546,7 @@ function iniciar() {
       .map((item) => {
         const n = Number($('input', item).value) || 1;
         const precio = Number(item.dataset.precio);
-        const foto = $('img', item).getAttribute('src');
-        return `<li><img src="${foto}" alt="" width="600" height="600"><span>${item.dataset.nombre}<small>${n} × ${pesos(precio)}</small></span><strong>${pesos(precio * n)}</strong></li>`;
+        return `<li>${miniatura(item)}<span>${item.dataset.nombre}<small>${precio ? `${n} × ${pesos(precio)}` : 'Viene con tu compra'}</small></span><strong>${precio ? pesos(precio * n) : 'Regalo'}</strong></li>`;
       })
       .join('');
 
@@ -459,10 +563,15 @@ function iniciar() {
       $('[data-revision-entrega-meta]').textContent = `${modalidad?.dataset.plazo} · ${pesos(total.envio)} más ${pesos(total.seguro)} de seguro`;
     }
 
-    const empresa = elegido('facturacion')?.value === 'a';
-    $('[data-revision-facturacion]').textContent = empresa
-      ? `Factura A a nombre de ${$('[data-empresa] input').value.trim() || 'la empresa'}`
-      : 'Factura B a nombre de Martín González';
+    const facturacion = elegido('facturacion')?.value;
+    $('[data-revision-facturacion]').textContent =
+      facturacion === 'vinculada'
+        ? `Factura A a nombre de ${$('[data-vinculada-nombre]').textContent} · CUIT ${$('[data-vinculada-cuit]').textContent}`
+        : facturacion === 'a'
+          ? `Factura A a nombre de ${$('[data-razon-social]').value.trim() || 'la empresa'}`
+          : demo.fiscal === 'ri'
+            ? 'Factura A a nombre de Martín González · CUIT 20-34567890-6'
+            : 'Factura B a nombre de Martín González';
 
     const pago = elegido('pago')?.value;
     if (pago === 'transferencia') {
@@ -501,14 +610,248 @@ function iniciar() {
       ([entrada]) =>
         barra.classList.toggle('checkout__barra--visible', !entrada.isIntersecting && entrada.boundingClientRect.top > 0),
       { threshold: 0 }
-    ).observe(boton);
+    );
+    observador.observe(boton);
   }
 
   barraBtn?.addEventListener('click', () => (pasos[actual].dataset.paso === 'resumen' ? confirmar() : continuar()));
 
+  // ---------- Sesión: ingresar dentro del checkout ----------
+  // Sin sesión, el paso de facturación pide ingresar o crear la cuenta; al ingresar se queda en el paso con el carrito
+
+  function verSesion() {
+    $('[data-sin-sesion-checkout]').hidden = demo.sesion;
+    $('[data-con-sesion-checkout]').hidden = !demo.sesion;
+    // Sin sesión, el paso es solo el ingreso: sin "Continuar" y con su propia bajada
+    const paso = $('#facturacion');
+    $('.paso__pie', paso).hidden = !demo.sesion;
+    $('.paso__bajada', paso).textContent = demo.sesion ? 'Confirmá a nombre de quién se hace esta compra.' : 'Ingresá o creá tu cuenta para seguir con la compra.';
+    if (pasos[actual] === paso) actualizarBarra();
+  }
+
+  const formIngreso = $('[data-ingreso-checkout]');
+  formIngreso?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const correo = formIngreso.elements.correo;
+    const clave = formIngreso.elements.clave;
+    const error = $('[data-ingreso-error]');
+    const vacio = !correo.value.trim() || !clave.value;
+    // De muestra: con "error" en el correo, el error del sitio
+    const mal = !vacio && correo.value.toLowerCase().includes('error');
+    error.hidden = !(vacio || mal);
+    error.textContent = vacio ? 'Ingresá tu correo y tu contraseña.' : 'Correo o contraseña incorrectos.';
+    [correo, clave].forEach((c) => c.setAttribute('aria-invalid', String(vacio ? !c.value.trim() : mal)));
+    if (vacio || mal) return;
+    try { localStorage.setItem('sesion', 'muestra'); } catch {}
+    demo.sesion = true;
+    verSesion();
+    $('[data-error]', pasos[actual]).hidden = true;
+    avisar('¡Hola de nuevo, Martín!');
+  });
+
+  // Mostrar la contraseña
+  $$('[data-ver-clave]').forEach((boton) =>
+    boton.addEventListener('click', () => {
+      const campo = $('input', boton.closest('.clave'));
+      const ver = campo.type === 'password';
+      campo.type = ver ? 'text' : 'password';
+      boton.setAttribute('aria-pressed', String(ver));
+      boton.setAttribute('aria-label', ver ? 'Ocultar contraseña' : 'Mostrar contraseña');
+    })
+  );
+
+  // ---------- Factura A: verificar el CUIT y dar de alta la empresa ----------
+
+  const campoCuit = $('[data-cuit]');
+  const formatoCuit = (c) => `${c.slice(0, 2)}-${c.slice(2, 10)}-${c.slice(10)}`;
+
+  $('[data-verificar-cuit]')?.addEventListener('click', async (e) => {
+    const boton = e.currentTarget;
+    const cuit = campoCuit.value.replace(/\D/g, '');
+    const registrado = $('[data-cuit-registrado]');
+    const datos = $('[data-empresa-datos]');
+    registrado.hidden = true;
+    datos.hidden = true;
+    if (!cuitValido(cuit)) {
+      marcarError(campoCuit, 'El CUIT no es válido: revisá los 11 números.');
+      campoCuit.focus();
+      return;
+    }
+    marcarError(campoCuit, '');
+    campoCuit.value = formatoCuit(cuit);
+    boton.classList.add('cargando');
+    boton.disabled = true;
+    await new Promise((listo) => setTimeout(listo, 600));
+    boton.classList.remove('cargando');
+    boton.disabled = false;
+    if (cuit.startsWith('33')) {
+      registrado.hidden = false;
+      return;
+    }
+    // Válido: el sistema completa razón social y condición fiscal (de muestra) y quedan bloqueadas
+    $('[data-razon-social]').value = 'Distribuidora Andina SRL';
+    $('[data-condicion-fiscal]').value = 'Responsable inscripto';
+    datos.hidden = false;
+    $('[data-campo="calle"]', datos).focus();
+  });
+
+  campoCuit?.addEventListener('input', () => {
+    $('[data-empresa-datos]').hidden = true;
+    $('[data-cuit-registrado]').hidden = true;
+  });
+
+  // Alta: valida cada campo; la empresa queda vinculada a la cuenta y elegida para esta compra
+  $('[data-alta-empresa]')?.addEventListener('click', () => {
+    if (!validarCampos('a')) return;
+    const vinculada = $('[data-empresa-vinculada]');
+    $('[data-vinculada-nombre]').textContent = $('[data-razon-social]').value;
+    $('[data-vinculada-cuit]').textContent = campoCuit.value;
+    vinculada.hidden = false;
+    $('input', vinculada).checked = true;
+    $('[data-texto-otra-empresa]').textContent = 'Agregar otra empresa';
+    sincronizarTodo();
+    actualizarTotales();
+    avisar('Empresa dada de alta y vinculada a tu cuenta');
+    continuar();
+  });
+
+  // ---------- Entrega: estados de la cotización y errores del domicilio ----------
+
+  function verEnvio() {
+    const estado = demo.envio;
+    const cotizado = !['cotizando', 'falla', 'tdf'].includes(estado);
+    $$('[data-estado-envio]').forEach((el) => (el.hidden = el.dataset.estadoEnvio === 'cotizado' ? !cotizado : el.dataset.estadoEnvio !== estado));
+    $('[data-cp-cotizado]').textContent = 'C1406';
+    // PC armada o producto grande: sin 24 hs. Excede el tamaño: 24 hs con el aviso del costo adicional
+    const rapido = $('input[name="modalidad"][value="oca24"]');
+    rapido.closest('.opcion').hidden = estado === 'grande';
+    if (estado === 'grande' && rapido.checked) rapido.checked = false;
+    $('[data-nota-grande]').hidden = estado !== 'grande';
+    $('[data-nota-excede]').hidden = estado !== 'excede';
+    // Sin sucursales para el código postal
+    const sinSucursales = estado === 'sin-sucursales';
+    $('[data-sin-sucursales]').hidden = !sinSucursales;
+    $('[data-sucursal-campo]').closest('.campo').hidden = sinSucursales;
+    actualizarTotales();
+  }
+
+  $('[data-otro-cp]')?.addEventListener('click', () => {
+    btnAgregar.click();
+    $('[data-nueva-cp]').focus();
+  });
+  $('[data-elegir-retiro]')?.addEventListener('click', () => {
+    $('input[name="entrega"][value="retiro"]').checked = true;
+    sincronizarTodo();
+    actualizarTotales();
+  });
+  $('[data-editar-domicilio]')?.addEventListener('click', () => {
+    $('[data-error-domicilio]').hidden = true;
+    btnCambiar.click();
+  });
+
+  // ---------- Pago no completado (vuelta de Mercado Pago) ----------
+
+  function verPagoNoCompletado() {
+    $('[data-alerta-pago]').hidden = false;
+  }
+  $('[data-ir-pago]')?.addEventListener('click', () => {
+    $('[data-alerta-pago]').hidden = true;
+    llegarA('pago');
+  });
+
+  // Lleva a un paso completando lo mínimo de los anteriores (para las variantes y la vuelta de Mercado Pago)
+  function llegarA(nombre) {
+    if (!demo.sesion) {
+      demo.sesion = true;
+      verSesion();
+    }
+    if (!elegido('modalidad') && demo.envio !== 'grande') $('input[name="modalidad"][value="oca24"]').checked = true;
+    if (!elegido('modalidad')) $('input[name="modalidad"][value="ocanormal"]').checked = true;
+    if (nombres.indexOf(nombre) > nombres.indexOf('pago') && !elegido('pago')) $('input[name="pago"][value="transferencia"]').checked = true;
+    sincronizarTodo();
+    actualizarTotales();
+    alcanzado = Math.max(alcanzado, nombres.indexOf(nombre));
+    history.pushState(null, '', `#${nombre}`);
+    mostrar(nombres.indexOf(nombre));
+  }
+
+  // ---------- Variantes de muestra (vista previa: data-demo) ----------
+
+  const promo = (si) => {
+    $$('[data-solo-promo]').forEach((el) => (el.hidden = !si));
+    // La memoria con la promo en pesos: −$10.000 por unidad sobre su precio de lista
+    const memoria = $$('[data-item]', lista).find((i) => i.dataset.nombre.startsWith('Memoria'));
+    if (memoria) {
+      if (si) {
+        memoria.dataset.lista = String(Number(memoria.dataset.precio) + 10000);
+        memoria.dataset.campania = 'Combo Kingston';
+      } else {
+        delete memoria.dataset.lista;
+        delete memoria.dataset.campania;
+      }
+      actualizarItem(memoria);
+    }
+  };
+
+  const VARIANTES = {
+    sesion: (v) => {
+      demo.sesion = v === 'con';
+      verSesion();
+    },
+    fiscal: (v) => {
+      demo.fiscal = v;
+      $$('[data-solo-fiscal]').forEach((el) => (el.hidden = !el.dataset.soloFiscal.split(' ').includes(v)));
+      if (v !== 'vinculada' && elegido('facturacion')?.value === 'vinculada') $('input[name="facturacion"][value="b"]').checked = true;
+      $('[data-texto-otra-empresa]').textContent = v === 'vinculada' ? 'Agregar otra empresa' : 'A nombre de una empresa';
+      sincronizarTodo();
+    },
+    carrito: (v) => promo(v === 'promo'),
+    envio: (v) => {
+      demo.envio = v;
+      verEnvio();
+    },
+  };
+
+  $$('[data-variante]').forEach((boton) =>
+    boton.addEventListener('click', () => {
+      const [grupoVariante, valor] = boton.dataset.variante.split(':');
+      $$(`[data-variante^="${grupoVariante}:"]`).forEach((b) => b.setAttribute('aria-pressed', String(b === boton)));
+      VARIANTES[grupoVariante]?.(valor);
+      actualizarTotales();
+      $$('[data-error]').forEach((error) => (error.hidden = true));
+    })
+  );
+
+  const ERRORES = {
+    domicilio: () => {
+      llegarA('entrega');
+      $('[data-error-domicilio]').hidden = false;
+    },
+    guardar: () => {
+      demo.errorGuardar = true;
+      llegarA('entrega');
+      btnAgregar.click();
+      avisar('Completá la dirección nueva y tocá Continuar: no se va a poder guardar');
+    },
+    pago: () => {
+      verPagoNoCompletado();
+      llegarA('carrito');
+    },
+    pedido: () => {
+      demo.errorPedido = true;
+      llegarA('resumen');
+      avisar('Tocá "Confirmar compra" para ver el error');
+    },
+  };
+  $$('[data-error-checkout]').forEach((boton) => boton.addEventListener('click', () => ERRORES[boton.dataset.errorCheckout]()));
+
   // ---------- Arranque ----------
 
   checkout.classList.add('checkout--js');
+  verSesion();
+  $$('[data-variante="sesion:sin"]').forEach((b) => b.setAttribute('aria-pressed', String(!demo.sesion)));
+  $$('[data-variante="sesion:con"]').forEach((b) => b.setAttribute('aria-pressed', String(demo.sesion)));
+  if (new URLSearchParams(location.search).get('pago') === 'no-completado') verPagoNoCompletado();
   sincronizarTodo();
   actualizarTotales();
   const inicial = nombres.indexOf(location.hash.slice(1));

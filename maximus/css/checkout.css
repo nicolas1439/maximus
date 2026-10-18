@@ -1047,3 +1047,249 @@
     padding-bottom: 0;
   }
 }
+
+/* ---------- Revisión final (tanda 3c) ---------- */
+
+.variantes--checkout {
+  padding-block: var(--espacio-3) var(--espacio-4);
+}
+
+.checkout__alertas {
+  margin-bottom: var(--espacio-4);
+}
+
+/* Ingresar dentro del checkout (sin sesión) */
+.ingreso-checkout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+}
+
+.ingreso-checkout__intro {
+  display: flex;
+  gap: var(--espacio-3);
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.ingreso-checkout__intro .icono {
+  flex-shrink: 0;
+  color: var(--color-acento);
+}
+
+.ingreso-checkout__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.ingreso-checkout .boton {
+  align-self: flex-start;
+}
+
+.ingreso-checkout__form .boton {
+  align-self: stretch;
+}
+
+@media (min-width: 768px) {
+  .ingreso-checkout {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .ingreso-checkout__intro {
+    grid-column: 1 / -1;
+  }
+}
+
+.facturacion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+}
+
+.facturacion[hidden] {
+  display: none;
+}
+
+/* CUIT con "Verificar" al lado */
+.cuit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--espacio-2);
+}
+
+.cuit .boton {
+  height: var(--alto-control);
+}
+
+.subpanel__subtitulo {
+  margin: var(--espacio-2) 0 0;
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-fuerte);
+}
+
+.subpanel__boton {
+  align-self: flex-start;
+}
+
+/* Nota informativa (celeste), como la de aviso */
+.subpanel__nota--info {
+  background: color-mix(in srgb, var(--color-info) 12%, transparent);
+}
+
+.subpanel__nota--info .icono {
+  color: var(--color-info-texto);
+}
+
+/* Envío: cotizando */
+.cotizando {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.cotizando__texto {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.cotizando__texto .icono,
+.redireccion__estado .icono {
+  animation: girar-boton 0.9s linear infinite;
+}
+
+.cotizando__fila {
+  display: block;
+  height: 76px;
+  border-radius: var(--radio-l);
+}
+
+/* Aviso dentro de una opción (24 hs que excede el tamaño de un envío común) */
+.opcion__aviso {
+  display: flex;
+  gap: var(--espacio-1);
+  margin-top: var(--espacio-1);
+  color: var(--color-texto);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.opcion__aviso[hidden] {
+  display: none;
+}
+
+.opcion__aviso .icono {
+  flex-shrink: 0;
+  color: var(--color-aviso-icono);
+}
+
+/* Logo de Mercado Pago en el lugar del ícono */
+.opcion__icono--logo {
+  display: grid;
+  place-items: center;
+  padding: 4px;
+}
+
+.opcion__icono--logo img {
+  width: 100%;
+  height: auto;
+}
+
+/* Producto de regalo: en $0, sin cantidad ni quitar */
+.item__foto--icono {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+}
+
+.item__fijo {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.item__precio--regalo {
+  color: var(--color-acento);
+}
+
+/* Totales: impuestos plegados con el detalle por alícuota, interés y total financiado */
+.totales .totales__plegable {
+  display: block;
+}
+
+.totales__plegable summary {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  color: var(--color-texto-suave);
+}
+
+.totales__plegable summary span:first-child {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.totales__plegable summary span:last-child {
+  color: var(--color-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.totales__detalle {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: var(--espacio-1) 0 0;
+  padding-left: var(--espacio-3);
+  border-left: 2px solid var(--color-borde);
+  font-size: var(--texto-xs);
+}
+
+.totales__financiado dd {
+  font-weight: var(--peso-fuerte);
+}
+
+/* También te puede interesar */
+.checkout__sugeridos {
+  margin-top: var(--espacio-6);
+  padding-top: var(--espacio-6);
+  border-top: 1px solid var(--color-borde);
+}
+
+.checkout__sugeridos .seccion__titulo {
+  font-size: var(--texto-l);
+}
+
+/* Redirección a Mercado Pago */
+.redireccion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  text-align: center;
+}
+
+.redireccion__logo {
+  width: 96px;
+  height: auto;
+}
+
+.redireccion__estado {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}

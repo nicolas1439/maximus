@@ -830,6 +830,16 @@ a.pasos__enlace {
   font-size: var(--texto-xs);
 }
 
+/* Rótulo con un control a la derecha ("¿La olvidaste?", DNI | CUIT): Ingresar, Crear cuenta y checkout */
+.campo__fila-rotulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  min-height: var(--alto-control-xs);
+  margin-block: calc(var(--espacio-1) * -1);
+}
+
 /* "(opcional)" junto al rótulo */
 .campo__opcional {
   color: var(--color-texto-suave);
@@ -1558,4 +1568,180 @@ a.saltar {
   color: var(--color-fondo);
   text-align: center;
   white-space: normal;
+}
+
+/* Alerta: aviso dentro de la página con ícono, título, texto y acciones (checkout, Compra confirmada, Mi cuenta).
+   Tonos: info (en proceso), aviso (falta algo del cliente), error y éxito */
+.alerta {
+  --alerta: var(--color-info);
+  --alerta-icono: var(--color-info-texto);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-3);
+  margin: 0;
+  padding: var(--espacio-4);
+  border: 1px solid color-mix(in srgb, var(--alerta) 30%, transparent);
+  border-radius: var(--radio-l);
+  background: color-mix(in srgb, var(--alerta) 8%, var(--color-fondo));
+  font-size: var(--texto-s);
+}
+
+.alerta[hidden] {
+  display: none;
+}
+
+.alerta--aviso {
+  --alerta: var(--color-aviso);
+  --alerta-icono: var(--color-aviso-icono);
+  border-color: color-mix(in srgb, var(--color-aviso) 45%, transparent);
+  background: color-mix(in srgb, var(--color-aviso) 10%, var(--color-fondo));
+}
+
+.alerta--error {
+  --alerta: var(--color-error);
+  --alerta-icono: var(--color-error-texto);
+}
+
+.alerta--exito {
+  --alerta: var(--color-exito);
+  --alerta-icono: var(--color-acento);
+}
+
+.alerta > .icono {
+  color: var(--alerta-icono);
+}
+
+.alerta__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  min-width: 0;
+}
+
+.alerta__cuerpo p {
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+.alerta__cuerpo .alerta__titulo {
+  margin-bottom: -2px;
+  color: var(--color-texto);
+  font-weight: var(--peso-fuerte);
+}
+
+.alerta__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+
+.alerta__cuerpo a:not(.boton) {
+  color: var(--color-acento);
+  text-decoration: underline;
+}
+
+/* Detalle técnico plegado ("Detalle") */
+.alerta__detalle > summary {
+  width: fit-content;
+  margin-top: var(--espacio-1);
+  color: var(--color-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  text-decoration: underline;
+}
+
+.alerta__cuerpo .alerta__codigo {
+  margin-top: var(--espacio-2);
+  padding: var(--espacio-2) var(--espacio-3);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Casilla chica, debajo de un campo ("Sin número") */
+.casilla--chica {
+  gap: var(--espacio-2);
+  font-size: var(--texto-xs);
+}
+
+.casilla--chica input {
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+}
+
+.campo__control:disabled {
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  cursor: not-allowed;
+}
+
+/* Ruedita de carga en "Verificar" (.cargando): el texto se oculta y el botón no se puede tocar */
+.cuit .boton.cargando {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.cuit .boton.cargando::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  border: 2px solid var(--color-texto);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: girar-boton 0.7s linear infinite;
+}
+
+.cuit .boton--primario.cargando::after {
+  border-color: var(--color-sobre-marca);
+  border-right-color: transparent;
+}
+
+@keyframes girar-boton {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/* Variantes plegadas (cuando son muchas): "Estados de muestra" abre la barra */
+.variantes-plegable {
+  padding-block: var(--espacio-3);
+}
+
+.variantes-plegable__cab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  height: var(--alto-control-xs);
+  padding-inline: var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-pill);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+  list-style: none;
+}
+
+.variantes-plegable__cab::-webkit-details-marker {
+  display: none;
+}
+
+.variantes-plegable__cab::after {
+  content: "+";
+  font-size: var(--texto-m);
+}
+
+.variantes-plegable[open] .variantes-plegable__cab::after {
+  content: "−";
+}
+
+.variantes-plegable .variantes {
+  padding-top: var(--espacio-3);
 }
