@@ -1,0 +1,44 @@
+# Publica en GitHub Pages las dos versiones del diseño: new-design en la raíz (el link de siempre) y new-design-v2
+# en /v2/. Corre con cada push a new-design-v2 y a mano (Actions → Publicar → Run workflow). main no se toca.
+name: Publicar
+
+on:
+  push:
+    branches: [new-design-v2]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: new-design
+          path: v1
+      - uses: actions/checkout@v4
+        with:
+          ref: new-design-v2
+          path: v2
+      - name: Armar el sitio
+        run: |
+          mkdir sitio
+          rsync -a --exclude .git --exclude .github --exclude .claude v1/ sitio/
+          rsync -a --exclude .git --exclude .github --exclude .claude v2/ sitio/v2/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: sitio
+      - id: despliegue
+        uses: actions/deploy-pages@v4
