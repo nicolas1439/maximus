@@ -314,3 +314,166 @@
     grid-column: span 5;
   }
 }
+
+/* ---------- Revisión final (tanda 3b): estados del formulario y reacciones ---------- */
+
+.resenas__estado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+}
+
+.resenas__invitacion .icono {
+  margin-right: var(--espacio-1);
+  vertical-align: -0.2em;
+  color: var(--color-texto-suave);
+}
+
+.resenas__form {
+  align-items: stretch;
+  gap: var(--espacio-3);
+}
+
+.resenas__form .boton {
+  align-self: flex-start;
+}
+
+/* Calificación con estrellas: al pasar el mouse o elegir, se pintan hasta la elegida */
+.puntaje {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.puntaje__opciones {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: var(--espacio-1);
+}
+
+.puntaje__opcion {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.puntaje__estrella {
+  width: 26px;
+  height: 26px;
+  fill: var(--color-borde);
+  transition: fill var(--transicion);
+}
+
+.puntaje__opcion:has(input:focus-visible) {
+  outline: 2px solid var(--color-acento);
+}
+
+.puntaje__opcion:hover .puntaje__estrella,
+.puntaje__opcion:hover ~ .puntaje__opcion .puntaje__estrella,
+.puntaje__opcion:has(input:checked) .puntaje__estrella,
+.puntaje__opcion:has(input:checked) ~ .puntaje__opcion .puntaje__estrella {
+  fill: var(--color-calificacion);
+}
+
+.resenas__error {
+  margin: 0;
+  color: var(--color-error-texto);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+/* Avisos: en revisión (información), rechazada (error) y la propia (bien) */
+.resenas__aviso {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-3);
+  padding: var(--espacio-3);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+}
+
+.resenas__aviso > .icono {
+  color: var(--color-info-texto);
+}
+
+.resenas__aviso--error > .icono {
+  color: var(--color-error-texto);
+}
+
+.resenas__aviso--ok > .icono {
+  color: var(--color-acento);
+}
+
+.resenas__aviso .resenas__condicion {
+  margin-top: var(--espacio-1);
+}
+
+.resenas__aviso a {
+  color: var(--color-acento);
+  text-decoration: underline;
+}
+
+/* La propia, en la lista */
+.resena--propia {
+  position: relative;
+}
+
+.resena--propia::before {
+  content: "Tu reseña";
+  display: inline-block;
+  margin-bottom: var(--espacio-2);
+  padding: 2px var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+}
+
+/* Reacciones: útil / no útil */
+.resena__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-3);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.resena__reaccion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  height: 30px;
+  padding-inline: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  font-size: var(--texto-xs);
+  transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+.resena__reaccion .icono {
+  width: 14px;
+  height: 14px;
+}
+
+.resena__reaccion:hover {
+  border-color: var(--color-acento);
+}
+
+.resena__reaccion:is([aria-pressed="true"], .marcado) {
+  border-color: var(--color-marca);
+  background: color-mix(in srgb, var(--color-marca) 10%, var(--color-fondo));
+  color: var(--color-texto);
+}
+
+/* Variantes de muestra: separadas de la sección */
+.variantes--resenas {
+  margin-bottom: var(--espacio-6);
+}

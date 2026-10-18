@@ -249,3 +249,56 @@ a.msi__todas {
     flex-shrink: 0;
   }
 }
+
+/* ---------- Revisión final (tanda 3b): gama cargando o sin productos ---------- */
+
+.estante-msi__cargando {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--separacion-grilla);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.estante-msi__vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-8) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  text-align: center;
+}
+
+.estante-msi__vacio > .icono {
+  width: 40px;
+  height: 40px;
+  color: var(--color-secundario-texto);
+}
+
+.estante-msi__vacio p {
+  max-width: 44ch;
+  margin: 0;
+}
+
+.estante-msi__vacio-titulo {
+  color: var(--color-texto);
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+@media (min-width: 768px) {
+  .estante-msi__cargando {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .estante-msi__cargando {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

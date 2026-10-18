@@ -362,3 +362,144 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
+
+/* ---------- Revisión final (tanda 3b): estados de la campaña ---------- */
+
+/* Terminada: el aviso en el lugar de la cuenta regresiva */
+.regresiva__terminada {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-barra-borde);
+  border-radius: var(--radio-l);
+  background: rgb(255 255 255 / 0.05);
+  font-weight: var(--peso-medio);
+}
+
+.regresiva__terminada .icono {
+  color: var(--color-secundario-sobre-barra);
+}
+
+/* Próximamente: cronograma de días */
+.cronograma {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.cronograma .seccion__cab {
+  margin: 0;
+}
+
+.cronograma__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--separacion-grilla);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cronograma__dia {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.cronograma__fecha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+  padding: var(--espacio-1) var(--espacio-2);
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  text-transform: uppercase;
+}
+
+.cronograma__fecha strong {
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: 1.1;
+}
+
+.cronograma__texto {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.cronograma__texto strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-fuerte);
+}
+
+.cronograma__catalogo {
+  align-self: center;
+}
+
+/* Terminada: en lugar de las ofertas */
+.campania-terminada {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-8) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  color: var(--color-texto-suave);
+  text-align: center;
+}
+
+.campania-terminada p {
+  max-width: 44ch;
+  margin: 0;
+}
+
+.campania-terminada__icono {
+  width: 40px;
+  height: 40px;
+  color: var(--color-secundario-texto);
+}
+
+.campania-terminada__titulo {
+  margin: 0;
+  color: var(--color-texto);
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+}
+
+.campania-terminada__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+}
+
+.campania[data-estado="terminada"] .pestanias,
+.campania[data-estado="terminada"] .ofertas__grilla {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .cronograma__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .cronograma__lista {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -29,6 +29,16 @@
        sitio; "Ver todas las gamas" vuelve a la vista general (js/msi.js). Página completa: powered-by-msi.html.
        Los subtítulos de las gamas ("Para arrancar a jugar…", "El equilibrio justo…", "Máximo rendimiento…") son de
        muestra, provisorios hasta tener los definitivos. -->
+  <!-- Estados de las gamas, para la demostración (no van en el sitio real) -->
+  <div class="contenedor variantes" data-demo>
+    <span class="variantes__rotulo">Vista previa</span>
+    <div class="variantes__opciones" role="group" aria-label="Estado de las gamas">
+      <button class="variantes__btn" type="button" data-ver-gamas="con" aria-pressed="true">Con productos</button>
+      <button class="variantes__btn" type="button" data-ver-gamas="cargando" aria-pressed="false">Cargando</button>
+      <button class="variantes__btn" type="button" data-ver-gamas="vacia" aria-pressed="false">Sin productos</button>
+    </div>
+  </div>
+
   <main class="msi" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
@@ -76,7 +86,7 @@
     <!-- Una sección por gama: banner, título y sus PC -->
     <section class="contenedor estante-msi" id="essential" aria-labelledby="essential-titulo" data-estante="essential">
       <img class="estante-msi__banner" src="recursos/msi/essential.webp" alt="" width="1500" height="364" loading="lazy">
-      <div class="carrusel carrusel--a-sangre" data-carrusel>
+      <div class="carrusel carrusel--a-sangre" data-carrusel data-estado-gama="con">
         <div class="seccion__cab">
           <div>
             <div class="seccion__titulos">
@@ -215,11 +225,25 @@
             </li>
         </ul>
       </div>
+<!-- Cargando: esqueletos con el alto de la fila (las PC llegan después de cargar la página) -->
+      <ul class="estante-msi__cargando" aria-busy="true" aria-label="Cargando las PC Essential" hidden data-estado-gama="cargando">
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+      </ul>
+      <!-- Gama sin productos -->
+      <div class="estante-msi__vacio" hidden data-estado-gama="vacia">
+        <svg class="icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
+        <p class="estante-msi__vacio-titulo">No hay productos disponibles en esta gama por el momento</p>
+        <p>Estamos armando nuevas PC Essential. Mirá las otras gamas o consultanos por WhatsApp.</p>
+        <a class="boton boton--secundario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp</a>
+      </div>
     </section>
 
     <section class="contenedor estante-msi" id="advanced" aria-labelledby="advanced-titulo" data-estante="advanced">
       <img class="estante-msi__banner" src="recursos/msi/advanced.webp" alt="" width="1500" height="364" loading="lazy">
-      <div class="carrusel carrusel--a-sangre" data-carrusel>
+      <div class="carrusel carrusel--a-sangre" data-carrusel data-estado-gama="con">
         <div class="seccion__cab">
           <div>
             <div class="seccion__titulos">
@@ -338,11 +362,25 @@
             </li>
         </ul>
       </div>
+<!-- Cargando: esqueletos con el alto de la fila (las PC llegan después de cargar la página) -->
+      <ul class="estante-msi__cargando" aria-busy="true" aria-label="Cargando las PC Advanced" hidden data-estado-gama="cargando">
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+      </ul>
+      <!-- Gama sin productos -->
+      <div class="estante-msi__vacio" hidden data-estado-gama="vacia">
+        <svg class="icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
+        <p class="estante-msi__vacio-titulo">No hay productos disponibles en esta gama por el momento</p>
+        <p>Estamos armando nuevas PC Advanced. Mirá las otras gamas o consultanos por WhatsApp.</p>
+        <a class="boton boton--secundario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp</a>
+      </div>
     </section>
 
     <section class="contenedor estante-msi" id="ultimate" aria-labelledby="ultimate-titulo" data-estante="ultimate">
       <img class="estante-msi__banner" src="recursos/msi/ultimate.webp" alt="" width="1500" height="364" loading="lazy">
-      <div class="carrusel carrusel--a-sangre" data-carrusel>
+      <div class="carrusel carrusel--a-sangre" data-carrusel data-estado-gama="con">
         <div class="seccion__cab">
           <div>
             <div class="seccion__titulos">
@@ -520,6 +558,20 @@
               </article>
             </li>
         </ul>
+      </div>
+<!-- Cargando: esqueletos con el alto de la fila (las PC llegan después de cargar la página) -->
+      <ul class="estante-msi__cargando" aria-busy="true" aria-label="Cargando las PC Ultimate" hidden data-estado-gama="cargando">
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+      </ul>
+      <!-- Gama sin productos -->
+      <div class="estante-msi__vacio" hidden data-estado-gama="vacia">
+        <svg class="icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
+        <p class="estante-msi__vacio-titulo">No hay productos disponibles en esta gama por el momento</p>
+        <p>Estamos armando nuevas PC Ultimate. Mirá las otras gamas o consultanos por WhatsApp.</p>
+        <a class="boton boton--secundario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp</a>
       </div>
     </section>
 

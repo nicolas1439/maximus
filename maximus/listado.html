@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/carrusel.css">
   <link rel="stylesheet" href="css/producto.css">
   <link rel="stylesheet" href="css/productos.css">
+  <link rel="stylesheet" href="css/banner.css">
   <link rel="stylesheet" href="css/faq.css">
   <link rel="stylesheet" href="css/listado.css">
   <script type="module" src="js/listado.js"></script>
@@ -81,6 +82,15 @@
             <span class="interruptor__pista" aria-hidden="true"></span>
             <span class="interruptor__texto">Solo con stock en el local</span>
           </label>
+
+        <!-- Categoría: solo en los listados de varias categorías (búsqueda, campañas, Más vendidos, Outlet) -->
+        <details class="filtro" data-grupo="categoria" open hidden>
+          <summary class="filtro__titulo">Categoría<svg class="icono icono--s filtro__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
+          <div class="filtro__contenido">
+            <ul class="filtro__opciones"></ul>
+            <button class="filtro__ver-mas" type="button" hidden><span>Ver más</span><svg class="icono" aria-hidden="true"><use href="#i-abajo"/></svg></button>
+          </div>
+        </details>
 
         <details class="filtro" data-grupo="sub" open>
           <summary class="filtro__titulo">Subcategoría<svg class="icono icono--s filtro__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
@@ -170,6 +180,17 @@
         </div>
       </aside>
       <div class="filtros-capa" data-capa></div>
+
+      <!-- Banner de campaña o de marca arriba del listado (opcional: lo elige Marketing para cada categoría o
+           campaña; acá, el de MSI x AMD del home) -->
+      <div class="banner listado__banner">
+        <a class="banner__enlace" href="powered-by-msi.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+          <picture>
+            <source media="(min-width: 1024px)" srcset="recursos/banners/msi-amd-escritorio.webp" width="2180" height="364">
+            <img class="banner__img" src="recursos/banners/msi-amd-mobile.webp" alt="MSI x AMD: llevate un cooler MSI MAG CoreFrozr AA13 de regalo comprando una motherboard MSI AM5 y un micro AMD. Válido hasta agotar stock." width="1760" height="440" fetchpriority="high">
+          </picture>
+        </a>
+      </div>
 
       <!-- Las más elegidas: estante de destacados de la categoría, como el de maximus.com.ar. Las 8 más vendidas de la
            grilla en tarjeta compacta (producto--compacto: foto, marca, nombre, precio y cuotas; en el sitio real las elige
@@ -335,8 +356,10 @@
 
       <!-- Resultados -->
       <section class="resultados" aria-label="Productos">
+        <!-- Aviso de la búsqueda: corregida ("Mostramos resultados para…") o parecida ("No encontramos resultados exactos…") -->
+        <p class="resultados__aviso" role="status" hidden data-aviso-busqueda></p>
         <ul class="resultados__grilla" data-grilla>
-    <li class="resultados__item" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="1004850" data-descuento="0" data-local="1" data-vendidos="1">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="1004850" data-descuento="0" data-local="1" data-vendidos="1">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" src="recursos/productos/msi-rtx-5060-shadow.jpg" alt="" width="600" height="600">
@@ -358,7 +381,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Asus" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="995571" data-descuento="24" data-local="1" data-vendidos="2">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Asus" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="995571" data-descuento="24" data-local="1" data-vendidos="2">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0NS0-M0AA00_600.jpg" alt="" width="600" height="600">
@@ -381,7 +404,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5070 / 5070 Ti" data-vram="16 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="750 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="2401920" data-descuento="24" data-local="1" data-vendidos="3">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5070 / 5070 Ti" data-vram="16 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="750 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="2401920" data-descuento="24" data-local="1" data-vendidos="3">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
@@ -404,7 +427,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="918360" data-descuento="0" data-local="1" data-vendidos="4">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="918360" data-descuento="0" data-local="1" data-vendidos="4">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V537-017_600.jpg" alt="" width="600" height="600">
@@ -425,7 +448,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="809370" data-descuento="15" data-local="0" data-vendidos="5">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="809370" data-descuento="15" data-local="0" data-vendidos="5">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/9VN5050WO-00-G10_600.jpg" alt="" width="600" height="600">
@@ -447,7 +470,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="3" data-largo="210 a 270 mm" data-precio="1702170" data-descuento="0" data-local="1" data-vendidos="6">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="3" data-largo="210 a 270 mm" data-precio="1702170" data-descuento="0" data-local="1" data-vendidos="6">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N5070WIND-OC-12GD_600.jpg" alt="" width="600" height="600">
@@ -469,7 +492,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 3050" data-vram="6 GB" data-memoria="GDDR6" data-conector="No requiere" data-fuente="300 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="505350" data-descuento="0" data-local="1" data-vendidos="7">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 3050" data-vram="6 GB" data-memoria="GDDR6" data-conector="No requiere" data-fuente="300 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="505350" data-descuento="0" data-local="1" data-vendidos="7">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N3050WF2OCV2-6GD_600.jpg" alt="" width="600" height="600">
@@ -490,7 +513,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="969570" data-descuento="12" data-local="1" data-vendidos="8">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="969570" data-descuento="12" data-local="1" data-vendidos="8">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/9VN5060EOI-00-G10_600.jpg" alt="" width="600" height="600">
@@ -513,7 +536,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="1040130" data-descuento="0" data-local="0" data-vendidos="9">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="1040130" data-descuento="0" data-local="0" data-vendidos="9">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N5060GAMING-OC-8GD_600.jpg" alt="" width="600" height="600">
@@ -534,7 +557,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Asus" data-modelo="RTX 3050" data-vram="6 GB" data-memoria="GDDR6" data-conector="No requiere" data-fuente="300 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="513090" data-descuento="0" data-local="1" data-vendidos="10">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Asus" data-modelo="RTX 3050" data-vram="6 GB" data-memoria="GDDR6" data-conector="No requiere" data-fuente="300 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="513090" data-descuento="0" data-local="1" data-vendidos="10">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0K60-M0AA00_600.jpg" alt="" width="600" height="600">
@@ -556,7 +579,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="858690" data-descuento="0" data-local="1" data-vendidos="11">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="858690" data-descuento="0" data-local="1" data-vendidos="11">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/9VN5060EXO-00-G10_600.jpg" alt="" width="600" height="600">
@@ -577,7 +600,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="766260" data-descuento="18" data-local="1" data-vendidos="12">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="766260" data-descuento="18" data-local="1" data-vendidos="12">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V538-010_600.jpg" alt="" width="600" height="600">
@@ -599,7 +622,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="1708380" data-descuento="0" data-local="1" data-vendidos="13">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="1708380" data-descuento="0" data-local="1" data-vendidos="13">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V532-009_600.jpg" alt="" width="600" height="600">
@@ -620,7 +643,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Gigabyte" data-modelo="RX 9060 XT" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="933120" data-descuento="10" data-local="1" data-vendidos="14">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Gigabyte" data-modelo="RX 9060 XT" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="933120" data-descuento="10" data-local="1" data-vendidos="14">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-R9060XTGAMING-OC-8GD_600.jpg" alt="" width="600" height="600">
@@ -642,7 +665,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 3050" data-vram="6 GB" data-memoria="GDDR6" data-conector="No requiere" data-fuente="300 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="516240" data-descuento="0" data-local="0" data-vendidos="15">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 3050" data-vram="6 GB" data-memoria="GDDR6" data-conector="No requiere" data-fuente="300 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="516240" data-descuento="0" data-local="0" data-vendidos="15">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V812-223_600.jpg" alt="" width="600" height="600">
@@ -663,7 +686,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 3050" data-vram="6 GB" data-memoria="GDDR6" data-conector="No requiere" data-fuente="300 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="538740" data-descuento="0" data-local="1" data-vendidos="16">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 3050" data-vram="6 GB" data-memoria="GDDR6" data-conector="No requiere" data-fuente="300 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="538740" data-descuento="0" data-local="1" data-vendidos="16">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V812-201_600.jpg" alt="" width="600" height="600">
@@ -684,7 +707,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Inno3D" data-modelo="RTX 5050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="762570" data-descuento="0" data-local="0" data-vendidos="17">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Inno3D" data-modelo="RTX 5050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="Menos de 210 mm" data-precio="762570" data-descuento="0" data-local="0" data-vendidos="17">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/N50502-08D6-174071N_600.jpg" alt="" width="600" height="600">
@@ -705,7 +728,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="778770" data-descuento="0" data-local="1" data-vendidos="18">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="MSI" data-modelo="RTX 5050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="778770" data-descuento="0" data-local="1" data-vendidos="18">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V538-019_600.jpg" alt="" width="600" height="600">
@@ -726,7 +749,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Peladn" data-modelo="RTX 3060" data-vram="12 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="917820" data-descuento="20" data-local="0" data-vendidos="19">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Peladn" data-modelo="RTX 3060" data-vram="12 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="917820" data-descuento="20" data-local="0" data-vendidos="19">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/PL-RTX3060-A2X-12GD6_600.jpg" alt="" width="600" height="600">
@@ -748,7 +771,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Asus" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="1726830" data-descuento="0" data-local="1" data-vendidos="20">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Asus" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="1726830" data-descuento="0" data-local="1" data-vendidos="20">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0M17-M0AA00_600.jpg" alt="" width="600" height="600">
@@ -769,7 +792,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="941220" data-descuento="0" data-local="1" data-vendidos="21">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5060 / 5060 Ti" data-vram="8 GB" data-memoria="GDDR7" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="941220" data-descuento="0" data-local="1" data-vendidos="21">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N5060GAMING-OCV2-8GD_600.jpg" alt="" width="600" height="600">
@@ -790,7 +813,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="3" data-largo="210 a 270 mm" data-precio="1711800" data-descuento="0" data-local="0" data-vendidos="22">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="3" data-largo="210 a 270 mm" data-precio="1711800" data-descuento="0" data-local="0" data-vendidos="22">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N5070EAGLEOC-ICE-12GD_600.jpg" alt="" width="600" height="600">
@@ -811,7 +834,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="1785690" data-descuento="0" data-local="1" data-vendidos="23">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Gigabyte" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="1785690" data-descuento="0" data-local="1" data-vendidos="23">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N5070GAMING-OC-12GD_600.jpg" alt="" width="600" height="600">
@@ -833,7 +856,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Gigabyte" data-modelo="RX 9050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="500 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="671130" data-descuento="15" data-local="1" data-vendidos="24">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Gigabyte" data-modelo="RX 9050" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="500 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="671130" data-descuento="15" data-local="1" data-vendidos="24">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-R9050GAMING-OC-8GD_600.jpg" alt="" width="600" height="600">
@@ -855,7 +878,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Asus" data-modelo="RX 9060 XT" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="3" data-largo="210 a 270 mm" data-precio="939060" data-descuento="0" data-local="0" data-vendidos="25">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Asus" data-modelo="RX 9060 XT" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="3" data-largo="210 a 270 mm" data-precio="939060" data-descuento="0" data-local="0" data-vendidos="25">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0MI0-M0AA00_600.jpg" alt="" width="600" height="600">
@@ -876,7 +899,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Sapphire" data-modelo="RX 9060 XT" data-vram="16 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="1250190" data-descuento="12" data-local="1" data-vendidos="26">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Sapphire" data-modelo="RX 9060 XT" data-vram="16 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="550 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="1250190" data-descuento="12" data-local="1" data-vendidos="26">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/11350-03-20G_600.jpg" alt="" width="600" height="600">
@@ -899,7 +922,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Asus" data-modelo="RX 9070" data-vram="12 GB" data-memoria="GDDR6" data-conector="2 × 8 pines" data-fuente="650 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="1292040" data-descuento="0" data-local="0" data-vendidos="27">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Asus" data-modelo="RX 9070" data-vram="12 GB" data-memoria="GDDR6" data-conector="2 × 8 pines" data-fuente="650 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="1292040" data-descuento="0" data-local="0" data-vendidos="27">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/PRIME-RX9070GRE-O12G_600.jpg" alt="" width="600" height="600">
@@ -920,7 +943,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="ASRock" data-modelo="RX 9070 XT" data-vram="16 GB" data-memoria="GDDR6" data-conector="2 × 8 pines" data-fuente="750 W" data-coolers="3" data-largo="Más de 310 mm" data-precio="1684620" data-descuento="0" data-local="1" data-vendidos="28">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="ASRock" data-modelo="RX 9070 XT" data-vram="16 GB" data-memoria="GDDR6" data-conector="2 × 8 pines" data-fuente="750 W" data-coolers="3" data-largo="Más de 310 mm" data-precio="1684620" data-descuento="0" data-local="1" data-vendidos="28">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90-GA5VZZ-00UANZ_600.jpg" alt="" width="600" height="600">
@@ -941,7 +964,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Asus" data-modelo="RX 9070 XT" data-vram="16 GB" data-memoria="GDDR6" data-conector="2 × 8 pines" data-fuente="850 W" data-coolers="3" data-largo="Más de 310 mm" data-precio="1828170" data-descuento="0" data-local="1" data-vendidos="29">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Asus" data-modelo="RX 9070 XT" data-vram="16 GB" data-memoria="GDDR6" data-conector="2 × 8 pines" data-fuente="850 W" data-coolers="3" data-largo="Más de 310 mm" data-precio="1828170" data-descuento="0" data-local="1" data-vendidos="29">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0L70-M0AA00_600.jpg" alt="" width="600" height="600">
@@ -963,7 +986,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Asus" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="2025090" data-descuento="0" data-local="0" data-vendidos="30">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Asus" data-modelo="RTX 5070 / 5070 Ti" data-vram="12 GB" data-memoria="GDDR7" data-conector="1 × 16 pines (12V-2x6)" data-fuente="650 W" data-coolers="3" data-largo="271 a 310 mm" data-precio="2025090" data-descuento="0" data-local="0" data-vendidos="30">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0LZ0-M0AA00_600.jpg" alt="" width="600" height="600">
@@ -984,7 +1007,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="nvidia" data-marca="Peladn" data-modelo="Serie GTX" data-vram="4 GB" data-memoria="GDDR5" data-conector="No requiere" data-fuente="300 W" data-coolers="1" data-largo="Menos de 210 mm" data-precio="197352" data-descuento="28" data-local="1" data-vendidos="31">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="nvidia" data-marca="Peladn" data-modelo="Serie GTX" data-vram="4 GB" data-memoria="GDDR5" data-conector="No requiere" data-fuente="300 W" data-coolers="1" data-largo="Menos de 210 mm" data-precio="197352" data-descuento="28" data-local="1" data-vendidos="31">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/PL-750-GT-TI-1_600.jpg" alt="" width="600" height="600">
@@ -1006,7 +1029,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Peladn" data-modelo="RX 7600" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="500 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="605970" data-descuento="0" data-local="0" data-vendidos="32">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Peladn" data-modelo="RX 7600" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="500 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="605970" data-descuento="0" data-local="0" data-vendidos="32">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/PELADN-RX-7600S-8GD6_600.jpg" alt="" width="600" height="600">
@@ -1027,7 +1050,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Peladn" data-modelo="RX 6600" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="500 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="603270" data-descuento="0" data-local="1" data-vendidos="33">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Peladn" data-modelo="RX 6600" data-vram="8 GB" data-memoria="GDDR6" data-conector="1 × 8 pines" data-fuente="500 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="603270" data-descuento="0" data-local="1" data-vendidos="33">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/PL-RX6600M-8G-GDDR6_600.jpg" alt="" width="600" height="600">
@@ -1048,7 +1071,7 @@
         </div>
       </article>
     </li>
-    <li class="resultados__item" data-sub="amd" data-marca="Pcwinmax" data-modelo="RX 590" data-vram="8 GB" data-memoria="GDDR5" data-conector="1 × 8 pines" data-fuente="500 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="311445" data-descuento="19" data-local="0" data-vendidos="34">
+    <li class="resultados__item" data-categoria="Placas de video" data-sub="amd" data-marca="Pcwinmax" data-modelo="RX 590" data-vram="8 GB" data-memoria="GDDR5" data-conector="1 × 8 pines" data-fuente="500 W" data-coolers="2" data-largo="210 a 270 mm" data-precio="311445" data-descuento="19" data-local="0" data-vendidos="34">
       <article class="producto">
         <div class="producto__media">
           <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/RX590-8GD5-256-BIT_600.jpg" alt="" width="600" height="600">
@@ -1082,8 +1105,8 @@
         <!-- Búsqueda sin resultados (buscar.html?q=…): lo muestra js/listado.js -->
         <div class="resultados__vacio" data-vacio-busqueda hidden>
           <svg class="resultados__vacio-icono" aria-hidden="true"><use href="#i-buscar"/></svg>
-          <h2 class="resultados__vacio-titulo">No encontramos resultados para “<span data-consulta></span>”</h2>
-          <p>Revisá cómo está escrito o probá con algo más general, como una marca o un modelo.</p>
+          <h2 class="resultados__vacio-titulo">Tu búsqueda no arrojó resultados</h2>
+          <p>No encontramos nada para “<span data-consulta></span>”. Revisá cómo está escrito o probá con algo más general, como una marca o un modelo.</p>
           <ul class="resultados__sugerencias" aria-label="Búsquedas populares">
             <li><a href="buscar.html?q=RTX+5060">RTX 5060</a></li>
             <li><a href="buscar.html?q=RTX+5070">RTX 5070</a></li>
@@ -1091,12 +1114,22 @@
             <li><a href="buscar.html?q=16+GB">16 GB</a></li>
           </ul>
           <a class="boton boton--primario" href="placas-de-video.html">Ver todas las placas</a>
+          <h3 class="resultados__sugeridos-titulo">Te pueden interesar</h3>
+          <ul class="resultados__grilla resultados__sugeridos" data-sugeridos></ul>
         </div>
 
-        <div class="resultados__pie" data-pie>
-          <p class="resultados__progreso">Viste <span data-mostrando>34</span> de <span data-cuenta>34</span> <span data-cuenta-texto>productos</span></p>
-          <div class="resultados__barra" aria-hidden="true"><span data-barra></span></div>
+        <div class="mas-productos" data-pie>
+          <p class="mas-productos__progreso">Viste <span data-mostrando>34</span> de <span data-cuenta>34</span> <span data-cuenta-texto>productos</span></p>
+          <div class="mas-productos__barra" aria-hidden="true"><span data-barra></span></div>
           <button class="boton boton--secundario" type="button" data-ver-mas hidden>Ver más productos</button>
+          <!-- Páginas numeradas: los enlaces reales para que Google indexe todas (la navegación es "Ver más") -->
+          <nav class="paginas" aria-label="Páginas del listado" data-paginas hidden>
+            <ol>
+              <li><a class="paginas__enlace actual" href="placas-de-video.html" aria-current="page">1</a></li>
+              <li><a class="paginas__enlace" href="placas-de-video.html?pagina=2">2</a></li>
+              <li><a class="paginas__enlace" href="placas-de-video.html?pagina=3">3</a></li>
+            </ol>
+          </nav>
         </div>
       </section>
     </div>

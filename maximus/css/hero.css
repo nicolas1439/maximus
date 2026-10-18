@@ -235,3 +235,45 @@ a.hero__tarjeta {
     font-size: var(--texto-xl);
   }
 }
+
+/* Título de la página del home (H1), entre la tira de marcas y las categorías */
+.intro-home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.intro-home__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.intro-home__bajada {
+  max-width: 64ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+/* Tarjeta lateral informativa, sin enlace (ej. "3 cuotas sin interés"): un <div class="hero__tarjeta"> sin
+   flecha ni efecto al pasar el mouse */
+div.hero__tarjeta {
+  cursor: default;
+}
+
+div.hero__tarjeta:hover .hero__img,
+div.hero__tarjeta:hover .hero__icono {
+  transform: none;
+}
+
+div.hero__tarjeta .hero__cta {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .intro-home__titulo {
+    font-size: var(--texto-2xl);
+  }
+}

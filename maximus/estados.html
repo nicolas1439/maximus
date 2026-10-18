@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/producto.css">
   <link rel="stylesheet" href="css/productos.css">
+  <link rel="stylesheet" href="css/carrusel.css">
 </head>
 <body>
 <div class="mx">
@@ -34,6 +35,48 @@
         <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
         <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
       </ul>
+    </section>
+
+    <!-- El indicador del carrusel con muchas campañas (el sitio rota 14): desde 9, los puntos se achican y se ven los
+         7 más cercanos al actual. Lo usa el hero cuando tenga todas las campañas -->
+    <section aria-labelledby="muchos-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="muchos-titulo">Carrusel con 14 campañas</h2>
+      </div>
+      <div class="carrusel" data-carrusel data-bucle style="position: relative;">
+        <ul class="carrusel__pista">
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 1</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 2</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 3</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 4</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 5</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 6</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 7</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 8</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 9</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 10</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 11</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 12</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 13</li>
+          <li class="carrusel__item" style="display: grid; place-items: center; height: 180px; border-radius: var(--radio-l); background: var(--color-fondo-destacado); color: var(--color-sobre-destacado); font-weight: var(--peso-fuerte);">Campaña 14</li>
+        </ul>
+        <div class="carrusel__puntos" style="position: absolute; right: var(--espacio-3); bottom: var(--espacio-3);">
+          <button class="carrusel__punto" type="button" aria-label="Campaña 1" aria-current="true"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 2"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 3"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 4"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 5"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 6"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 7"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 8"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 9"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 10"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 11"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 12"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 13"></button>
+          <button class="carrusel__punto" type="button" aria-label="Campaña 14"></button>
+        </div>
+      </div>
     </section>
 
     <section aria-labelledby="error-titulo">

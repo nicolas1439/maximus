@@ -62,6 +62,31 @@
   background: var(--color-marca);
 }
 
+/* Muchos ítems (más de 8): puntos más angostos; se ven los 7 más cercanos al actual (data-distancia, carrusel.js)
+   y los de las puntas se achican, así el indicador mide lo mismo con 10 o con 20 campañas */
+.carrusel__puntos--muchos {
+  gap: 0;
+}
+
+.carrusel__puntos--muchos .carrusel__punto {
+  width: 14px;
+  transition: width var(--transicion), opacity var(--transicion);
+}
+
+.carrusel__puntos--muchos .carrusel__punto[aria-current="true"],
+.carrusel__puntos--muchos .carrusel__punto.actual {
+  width: 30px;
+}
+
+.carrusel__puntos--muchos .carrusel__punto[data-distancia="3"]::before {
+  width: 5px;
+  height: 5px;
+}
+
+.carrusel__puntos--muchos .carrusel__punto[data-distancia="4"] {
+  display: none;
+}
+
 /* A sangre: en pantallas angostas la pista llega al borde de la pantalla, pero arranca alineada con el margen.
    En escritorio vuelve a la columna del contenido */
 .carrusel--a-sangre .carrusel__pista {

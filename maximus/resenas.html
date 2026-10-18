@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/faq.css">
   <link rel="stylesheet" href="css/resenas.css">
+  <script type="module" src="js/resenas.js"></script>
   <style data-demo>
     /* Solo en esta vista previa: intro, rótulos de cada estado y separación entre ambos */
     .vista-demo { display: flex; flex-direction: column; align-items: flex-start; gap: var(--espacio-2); padding-block: var(--espacio-8) 0; color: var(--color-texto-suave); }
@@ -32,6 +33,25 @@
     <button class="boton boton--primario" type="button" onclick="const o = document.documentElement.classList.toggle('dark'); try { localStorage.setItem('darkmode', String(o)); } catch {}">Cambiar tema</button>
     <p class="vista-demo__rotulo">Con reseñas</p>
   </div>
+
+    <!-- Estados de "Escribir una reseña" y errores al enviar, para la demostración -->
+    <div class="contenedor variantes variantes--resenas" data-demo>
+      <span class="variantes__rotulo">Formulario</span>
+      <div class="variantes__opciones" role="group" aria-label="Estado del formulario">
+        <button class="variantes__btn" type="button" data-ver-resena="sin-sesion" aria-pressed="true">Sin sesión</button>
+        <button class="variantes__btn" type="button" data-ver-resena="no-compro" aria-pressed="false">No lo compró</button>
+        <button class="variantes__btn" type="button" data-ver-resena="escribir" aria-pressed="false">Escribir</button>
+        <button class="variantes__btn" type="button" data-ver-resena="revision" aria-pressed="false">En revisión</button>
+        <button class="variantes__btn" type="button" data-ver-resena="rechazada" aria-pressed="false">Rechazada</button>
+        <button class="variantes__btn" type="button" data-ver-resena="propia" aria-pressed="false">La propia</button>
+      </div>
+      <span class="variantes__rotulo">Error al enviar</span>
+      <div class="variantes__opciones" role="group" aria-label="Error al enviar">
+        <button class="variantes__btn" type="button" data-error-resena="ya">Ya dejó una</button>
+        <button class="variantes__btn" type="button" data-error-resena="no-compro">No lo compró</button>
+        <button class="variantes__btn" type="button" data-error-resena="general">Error general</button>
+      </div>
+    </div>
 
     <section class="resenas contenedor" id="resenas" aria-labelledby="resenas-titulo">
       <div class="seccion__cab">
@@ -57,10 +77,40 @@
             <li class="barra"><span class="barra__puntaje">2<svg class="barra__estrella" aria-hidden="true"><use href="#i-estrella"/></svg></span><span class="barra__pista"><span class="barra__relleno" style="--parte: 4%"></span></span><span class="barra__n">1</span></li>
             <li class="barra"><span class="barra__puntaje">1<svg class="barra__estrella" aria-hidden="true"><use href="#i-estrella"/></svg></span><span class="barra__pista"><span class="barra__relleno" style="--parte: 0%"></span></span><span class="barra__n">0</span></li>
           </ol>
-          <div class="resenas__escribir">
-            <p class="resenas__invitacion">¿Compraste este producto? Contanos qué te pareció.</p>
-            <button class="boton boton--secundario" type="button">Escribir una reseña</button>
-            <p class="resenas__condicion">Para dejar una reseña, iniciá sesión y comprá este producto.</p>
+          <!-- Escribir una reseña: un estado por vez según el cliente (lo decide el sistema; data-resena-estado):
+               sin sesión, no compró el producto, escribir, en revisión, rechazada o la propia ya publicada -->
+          <div class="resenas__escribir" data-resenas-escribir>
+            <div class="resenas__estado" data-resena-estado="sin-sesion">
+              <p class="resenas__invitacion">¿Compraste este producto? Contanos qué te pareció.</p>
+              <a class="boton boton--secundario" href="ingresar.html?volver=rtx-5070-ti-ventus.html">Ingresá para opinar</a>
+              <p class="resenas__condicion">Para dejar una reseña, iniciá sesión y comprá este producto.</p>
+            </div>
+            <div class="resenas__estado" hidden data-resena-estado="no-compro">
+              <p class="resenas__invitacion"><svg class="icono icono--s" aria-hidden="true"><use href="#i-candado"/></svg>Solo pueden opinar quienes compraron este producto</p>
+              <p class="resenas__condicion">Si lo compraste en el local, la compra se vincula a tu cuenta con tu DNI.</p>
+            </div>
+            <form class="resenas__estado resenas__form" hidden novalidate data-resena-estado="escribir" data-resena-form>
+              <fieldset class="puntaje">
+                <legend class="campo__rotulo">Tu calificación</legend>
+                <div class="puntaje__opciones"><label class="puntaje__opcion"><input class="sr-only" type="radio" name="puntaje" value="1"><svg class="puntaje__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">1 estrella</span></label><label class="puntaje__opcion"><input class="sr-only" type="radio" name="puntaje" value="2"><svg class="puntaje__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">2 estrellas</span></label><label class="puntaje__opcion"><input class="sr-only" type="radio" name="puntaje" value="3"><svg class="puntaje__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">3 estrellas</span></label><label class="puntaje__opcion"><input class="sr-only" type="radio" name="puntaje" value="4"><svg class="puntaje__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">4 estrellas</span></label><label class="puntaje__opcion"><input class="sr-only" type="radio" name="puntaje" value="5"><svg class="puntaje__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">5 estrellas</span></label></div>
+              </fieldset>
+              <label class="campo"><span class="campo__rotulo">Título</span><input class="campo__control" name="titulo" type="text" maxlength="80" placeholder="Resumí tu experiencia"></label>
+              <label class="campo"><span class="campo__rotulo">Tu reseña</span><textarea class="campo__control campo__control--area" name="texto" rows="4" placeholder="¿Qué te gustó? ¿Cómo lo usás?"></textarea><span class="campo__ayuda">Al menos 20 caracteres. La publicamos después de revisarla.</span></label>
+              <button class="boton boton--primario" type="submit">Publicar reseña</button>
+              <p class="resenas__error" role="alert" hidden data-resena-error></p>
+            </form>
+            <div class="resenas__estado resenas__aviso resenas__aviso--info" hidden data-resena-estado="revision">
+              <svg class="icono" aria-hidden="true"><use href="#i-reloj"/></svg>
+              <div><p class="resenas__invitacion">Tu reseña está en revisión</p><p class="resenas__condicion">La publicamos en las próximas 48 hs hábiles, si cumple con las normas de publicación.</p></div>
+            </div>
+            <div class="resenas__estado resenas__aviso resenas__aviso--error" hidden data-resena-estado="rechazada">
+              <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+              <div><p class="resenas__invitacion">Tu reseña no se publicó</p><p class="resenas__condicion">No cumple con las normas de publicación (datos personales, enlaces o lenguaje ofensivo). Podés escribir otra.</p><button class="boton-texto" type="button" data-resena-otra>Escribir otra reseña</button></div>
+            </div>
+            <div class="resenas__estado resenas__aviso resenas__aviso--ok" hidden data-resena-estado="propia">
+              <svg class="icono" aria-hidden="true"><use href="#i-check"/></svg>
+              <div><p class="resenas__invitacion">Ya dejaste tu reseña</p><p class="resenas__condicion">Gracias por contarnos. <a href="#resena-propia">Ver tu reseña</a></p></div>
+            </div>
           </div>
         </aside>
 
@@ -79,6 +129,11 @@
             </header>
             <h3 class="resena__titulo">Rinde de más en 1440p</h3>
             <p class="resena__texto">La venía siguiendo hace meses y aproveché la Primavera Maximus. En 1440p con todo al máximo no baja de 144 fps en los juegos que uso, y con DLSS 4 se va mucho más arriba. Los tres ventiladores casi no se escuchan. Llegó en 24 hs a Caballito, muy bien embalada.</p>
+            <footer class="resena__pie">
+              <span>¿Te resultó útil?</span>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="si"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Sí <span data-cuenta>12</span></button>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="no"><svg class="icono icono--s" aria-hidden="true"><use href="#i-cerrar"/></svg>No <span data-cuenta>1</span></button>
+            </footer>
           </article>
           <article class="resena">
             <header class="resena__cab">
@@ -94,6 +149,11 @@
             </header>
             <h3 class="resena__titulo">Para editar video, un cambio enorme</h3>
             <p class="resena__texto">La uso para DaVinci Resolve y Blender. Los exports que antes me llevaban 20 minutos ahora salen en 6, y los 16 GB de VRAM se notan en los proyectos 4K. Ojo con el largo: mide 32 cm, medí el gabinete antes de comprar.</p>
+            <footer class="resena__pie">
+              <span>¿Te resultó útil?</span>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="si"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Sí <span data-cuenta>8</span></button>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="no"><svg class="icono icono--s" aria-hidden="true"><use href="#i-cerrar"/></svg>No <span data-cuenta>0</span></button>
+            </footer>
           </article>
           <article class="resena">
             <header class="resena__cab">
@@ -109,6 +169,11 @@
             </header>
             <h3 class="resena__titulo">Excelente, pero tuve que cambiar la fuente</h3>
             <p class="resena__texto">Impecable la placa y muy buena la atención por WhatsApp para confirmar la compatibilidad. Le saco una estrella porque la fuente de 650 W que tenía no alcanzaba y tuve que pasar a una de 800 W: conviene leer bien los requisitos. Temperaturas muy buenas en carga.</p>
+            <footer class="resena__pie">
+              <span>¿Te resultó útil?</span>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="si"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Sí <span data-cuenta>5</span></button>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="no"><svg class="icono icono--s" aria-hidden="true"><use href="#i-cerrar"/></svg>No <span data-cuenta>2</span></button>
+            </footer>
           </article>
           <details class="faq__resto resenas__resto plegable">
             <summary class="faq__mas"><span class="faq__mas-mas">Ver las 5 reseñas</span><span class="faq__mas-menos">Ver menos</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
@@ -126,6 +191,11 @@
               </header>
               <h3 class="resena__titulo">Silenciosa y fría</h3>
               <p class="resena__texto">Venía de una RTX 3070 y la diferencia es abismal: Cyberpunk con ray tracing va fluido. El local no tenía stock, la compré online y llegó al día siguiente.</p>
+            <footer class="resena__pie">
+              <span>¿Te resultó útil?</span>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="si"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Sí <span data-cuenta>3</span></button>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="no"><svg class="icono icono--s" aria-hidden="true"><use href="#i-cerrar"/></svg>No <span data-cuenta>0</span></button>
+            </footer>
             </article>
             <article class="resena">
               <header class="resena__cab">
@@ -141,6 +211,11 @@
               </header>
               <h3 class="resena__titulo">Muy buena relación precio-rendimiento</h3>
               <p class="resena__texto">Para 4K con DLSS anda muy bien; sin DLSS, en los juegos más pesados hay que bajar alguna opción. El conector de 16 pines viene con adaptador. Las cuotas sin interés, un golazo.</p>
+            <footer class="resena__pie">
+              <span>¿Te resultó útil?</span>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="si"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Sí <span data-cuenta>1</span></button>
+              <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="no"><svg class="icono icono--s" aria-hidden="true"><use href="#i-cerrar"/></svg>No <span data-cuenta>1</span></button>
+            </footer>
             </article>
           </details>
         </div>

@@ -28,7 +28,6 @@
 
   <!-- Cuerpo del home: acá se suman sus componentes -->
   <main class="home" id="contenido" tabindex="-1">
-    <h1 class="sr-only">Maximus Gaming Hardware, especialistas en PC gamer</h1>
 
     <!-- Hero: carrusel principal de campañas + 4 tarjetas secundarias (textos de ejemplo).
          Para usar un banner: <img class="hero__img" src="recursos/..." alt=""> dentro de la tarjeta
@@ -150,6 +149,12 @@
         <li><a class="marca marca--ancha" href="#"><img class="marca__img" src="recursos/marcas/xigmatek.svg" alt="Xigmatek"><span class="marca__tono marca__tono--xigmatek" aria-hidden="true"></span></a></li>
       </ul>
     </section>
+
+    <!-- Título de la página (H1), visible: quiénes somos en una línea -->
+    <div class="contenedor intro-home">
+      <h1 class="intro-home__titulo">Especialistas en PC Gamer</h1>
+      <p class="intro-home__bajada">Componentes, PC armadas y notebooks, con asesoramiento real, envíos a todo el país y retiro gratis en CABA.</p>
+    </div>
 
     <section class="categorias contenedor" aria-labelledby="categorias-titulo">
       <div class="seccion__cab">
@@ -415,7 +420,8 @@
     </section>
 
     <!-- Lo último que viste: la misma fila de productos que Ofertas, sin "Ver todas" (fotos y nombres reales de Maximus, precios de ejemplo) -->
-    <section class="productos contenedor" aria-labelledby="vistos-titulo">
+    <!-- Solo con sesión, y no aparece si está vacía (data-con-sesion, js/sesion.js; en el sitio lo resuelve el servidor) -->
+    <section class="productos contenedor" aria-labelledby="vistos-titulo" data-con-sesion hidden>
       <div class="carrusel carrusel--a-sangre" data-carrusel>
         <div class="seccion__cab">
           <h2 class="seccion__titulo" id="vistos-titulo">Lo último que viste</h2>
@@ -805,7 +811,7 @@
 
     <!-- Banner de campaña MSI x AMD (banners reales de Maximus, adaptados al alto de los accesos destacados) -->
     <div class="banner contenedor">
-      <a class="banner__enlace" href="#" data-activo-visible data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+      <a class="banner__enlace" href="powered-by-msi.html" data-activo-visible data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
         <picture>
           <source media="(min-width: 1024px)" srcset="recursos/banners/msi-amd-escritorio.webp" width="2180" height="364">
           <img class="banner__img" src="recursos/banners/msi-amd-mobile.webp" alt="MSI x AMD: llevate un cooler MSI MAG CoreFrozr AA13 de regalo comprando una motherboard MSI AM5 y un micro AMD. Válido hasta agotar stock." width="1760" height="440" loading="lazy">
@@ -1011,7 +1017,8 @@
 
     <!-- Tus favoritos: los productos que el cliente marcó con el corazón (selección de ejemplo). En producción se arma con
          los favoritos del cliente y no se muestra si no tiene ninguno. Misma fila que Más vendidos, con el corazón marcado. -->
-    <section class="productos contenedor" aria-labelledby="favoritos-titulo">
+    <!-- Solo con sesión, y no aparece si está vacía (data-con-sesion) -->
+    <section class="productos contenedor" aria-labelledby="favoritos-titulo" data-con-sesion hidden>
       <div class="carrusel carrusel--a-sangre" data-carrusel>
         <div class="seccion__cab">
           <h2 class="seccion__titulo" id="favoritos-titulo">Tus favoritos</h2>

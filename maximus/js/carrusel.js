@@ -100,6 +100,11 @@ function iniciar(carrusel) {
   );
   if (flechas.length) pista.addEventListener('scroll', revisarFlechas, { passive: true });
 
+  // Con muchos ítems (más de 8, ej. el hero con todas las campañas) los puntos se achican y solo se ven los 7 más
+  // cercanos al actual, con los de los extremos más chicos
+  const muchos = puntos.length > 8;
+  if (muchos) puntos[0]?.parentElement.classList.add('carrusel__puntos--muchos');
+
   puntos.forEach((punto, i) =>
     punto.addEventListener('click', () => pista.scrollTo({ left: items[i].offsetLeft, behavior: comportamiento }))
   );
@@ -110,7 +115,13 @@ function iniciar(carrusel) {
       for (const { target, intersectionRatio } of entradas) {
         const visible = intersectionRatio >= 0.6;
         if (bucle) target.inert = !visible;
-        if (visible) puntos.forEach((p, i) => p.setAttribute('aria-current', items[i] === target));
+        if (visible) {
+          const actual = items.indexOf(target);
+          puntos.forEach((p, i) => {
+            p.setAttribute('aria-current', i === actual);
+            if (muchos) p.dataset.distancia = Math.min(Math.abs(i - actual), 4);
+          });
+        }
       }
     },
     { root: pista, threshold: [0, 0.6] }

@@ -10,10 +10,12 @@ E-commerce de hardware. Diseño moderno.
 
 ## Ramas y publicación (decisión del usuario, 18/10/2026)
 - Todo vive en el repo original, `origin` = `nicolas1439/maximus`. La rama `main` tiene los recursos que usa el sitio en producción: no se toca.
-- `new-design`: la versión 1 del diseño, tal como quedó; no se toca. Publicada en https://nicolas1439.github.io/maximus/ (GitHub Pages sobre esa rama).
+- `new-design`: la versión 1 del diseño, tal como quedó; no se toca. Publicada en https://nicolas1439.github.io/maximus/ (el link de siempre).
 - Tag `diseno-v1`: marca la versión 1 (el último commit de `new-design` antes de la revisión final), para compararla aunque la rama avance.
 - `new-design-v2`: la revisión final (tandas 1 a 3). Se trabaja acá; commit y push con la confirmación del usuario.
-- Publicación de la v2 en `/v2/` del mismo sitio: propuesta pendiente de aprobación (ver la conversación del 18/10/2026). Mientras tanto se ve en el repo aparte `nicolas1439/maximus-v2` (https://nicolas1439.github.io/maximus-v2/maximus/), que deja de usarse cuando la v2 se publique desde el repo original; lo borra el usuario.
+- La v2 se publica en `/v2/` del mismo sitio: https://nicolas1439.github.io/maximus/v2/maximus/ (desde el 18/10/2026). GitHub Pages publica con GitHub Actions (origen "GitHub Actions"): el workflow `.github/workflows/publicar.yml`, que está solo en `new-design-v2`, arma el sitio con `new-design` en la raíz y `new-design-v2` en `/v2/` y lo publica. Corre con cada push a `new-design-v2` (en un minuto aproximadamente) y a mano desde Actions → Publicar. El entorno `github-pages` admite las ramas `gh-pages`, `new-design` y `new-design-v2`.
+- Tags: en este repo hay tags `v2`, `v2.1` … `v5.6.23`, que son las versiones de los recursos del sitio en producción: no se crean ni se mueven tags con esos nombres. El tag propio del diseño es `diseno-v1`.
+- El repo aparte `nicolas1439/maximus-v2` se usó un día para ver la v2 y ya no se usa (lo borra el usuario).
 
 ## Reglas del sitio (definidas por el usuario, 18/10/2026)
 Van exactas en lo que dicen, con la redacción de la plantilla, en todas las páginas.
@@ -134,6 +136,7 @@ Al integrar se toman el HTML y el CSS de la plantilla y se montan sobre el sitio
 - Rendimiento: la primera fila de fotos del listado sin `loading="lazy"`; el primer slide del hero con `fetchpriority="high"` (anotado en el comentario del hero, que todavía no tiene imágenes); las animaciones fuera de pantalla se pausan (auroras, tira de marcas, luz del borde con `data-pausa`, avance automático del carrusel).
 - Contraste: `--color-error-texto` e `--color-info-texto` para texto (más de 4,5:1) y `--color-aviso-icono` para íconos de aviso (más de 3:1) en los dos modos; los colores de estado de siempre quedan para puntos, bordes y fondos tenues. "Saltar al contenido" (`.saltar`, primer enlace del header) lleva al `main` de cada plantilla (`#contenido`).
 - La fuente (Roboto) la carga el sitio: en las vistas previas su `<link>` va con `data-demo`.
+- Piezas comunes que sumó la tanda 3b (18/10/2026): `js/sesion.js` (`iniciarSesion`: lo marcado `data-con-sesion` se muestra solo con sesión y no aparece si su lista quedó vacía, `data-sin-sesion` solo sin sesión; en el sitio real lo resuelve el servidor), `.mas-productos` + `.paginas` en `base.css` ("Ver más" con avance y páginas numeradas debajo, en listado, búsqueda y campaña), `.variantes` en `base.css` (barra de estados de muestra de las vistas previas, siempre con `data-demo`), `.texto-libre` y `.aviso--error`. Los puntos del carrusel, con más de 8, se achican hacia los costados (`carrusel__puntos--muchos`).
 - Seguimiento: cada banner, slide, bloque y botón de compra lleva `data-promo-id`, `data-promo-name`, `data-promo-creative` y `data-promo-position` vacíos; los valores se completan al integrar.
 
 ## Estilos
@@ -172,13 +175,21 @@ Lo que la plantilla muestra y el sitio actual todavía no tiene: se queda y el s
 - Empresas (`empresas.html`): formulario de cotización que envía, con confirmación y error (hoy abre el correo del cliente).
 - Botón de arrepentimiento (`arrepentimiento.html`): el trámite con formulario propio y número de trámite, sin pedir ingresar (hoy el botón lleva a una pregunta del Centro de ayuda), para cumplir la norma y dar una constancia.
 - Favoritos (`producto.html`, `ficha.html`): sin sesión, el producto que se quería guardar queda marcado al volver de ingresar o crear la cuenta, para no perder la intención.
+- Home (`home.html`): título visible "Especialistas en PC Gamer" con bajada, para que la página diga qué es (y su h1); "Lo último que viste" y "Tus favoritos" solo con sesión.
+- Búsqueda (`listado.html` en modo búsqueda): corrección de lo escrito ("Mostramos resultados para…"), resultados parecidos cuando no hay exactos y, sin resultados, los más vendidos; filtros generales (categoría, subcategoría, marca y precio), para no quedar en una página vacía.
+- Listado y campaña: "Ver más" con páginas numeradas debajo, para volver a un punto o compartirlo; banner de la categoría que se oculta al filtrar.
+- Campaña (`campania.html`): tres estados por fecha (próxima, en curso, terminada) con la cuenta regresiva al inicio o al fin, cronograma por día y bases y condiciones con ancla, para no mostrar una campaña vencida.
+- Powered by MSI (`msi.html`): cada gama con carga y vacío propios, para que una gama sin productos no rompa la página.
+- Ficha (`ficha.html`): menú de compartir (redes y copiar enlace), EAN, "Comprar" directo al checkout, cotizador de envío por código postal (con retiro gratis y aviso de bulto grande), stock web y del local por separado con stock bajo, "Avisame cuando vuelva" sin stock, video, FPS en juegos, combo con precio conjunto, sello de PC armada, leyenda de las promociones, descripción como texto libre y "Lo último que viste"; errores al agregar al carrito.
+- Reseñas (`resenas.html`, `ficha.html`): el formulario según el cliente (sin sesión, no compró, escribir, en revisión, rechazada con motivo, la propia marcada en la lista), errores al enviar (ya dejó una, no compró, error general) y "¿Te resultó útil?" con contador, para que las mejores opiniones se reconozcan.
 
 ## Pendientes
 - Recomprimir `recursos/empresas/oficina.webp` (283 KB; en WebP calidad 0,72 queda en unos 123 KB sin diferencia visible): falta una herramienta de imágenes en el equipo (cwebp o ImageMagick).
 - Bajar las fotos del listado y de la ficha (hoy desde el CDN del sitio) a `recursos/productos/`.
 - Carrito: "Agregar al carrito" (tarjeta y ficha) todavía no agrega nada; en la ficha solo muestra un aviso. El carrito de `carrito.html` es de muestra (no se guarda entre páginas).
 - Logo real de Mercado Pago en el paso de pago del checkout (ya está en `recursos/pagos/`; se suma en la tanda 3c).
-- Enlaces todavía sin destino (`#`): los "Ver todas" de las filas del home (salvo Ofertas, que va a la campaña), las campañas 2 a 4 y tres tarjetas del hero, y el banner MSI x AMD. Powered by MSI todavía no tiene enlace desde ninguna página.
+- Enlaces todavía sin destino (`#`): los "Ver todas" de las filas del home (salvo Ofertas, que va a la campaña), las campañas 2 a 4 y tres tarjetas del hero. El banner MSI x AMD del home lleva a Powered by MSI.
+- Hero del home (lo revisa Marketing, no se toca): quedaron listas las piezas que pidió la tanda 3b (puntos para más de 8 slides, tarjeta lateral informativa sin enlace `div.hero__tarjeta`), pero no se aplicaron al hero; se suman cuando se defina.
 - Datos de la tarjeta de la RTX 5070 Ti Ventus en el listado: fuente "750 W" y largo "271 a 310 mm" (rangos de filtro); la ficha real dice 800 W y 320 mm. Se ofreció ajustarlos; falta que el usuario lo decida.
 - Seguimiento: conectar el resultado con el backend y el web service de OCA (hoy el sitio usa el iframe de OCA).
 - Términos y Privacidad: revisión del texto por quien lleva lo legal.

@@ -10,11 +10,13 @@ import { iniciarFuego } from './fuego.js';
 import { iniciarPausa } from './pausa.js';
 import { iniciarFlotantes } from './flotantes.js';
 import { iniciarTarjetas } from './tarjeta.js';
+import { iniciarSesion } from './sesion.js';
 
 // En las páginas que arma incluir.js, primero espera a que cada parte esté en su lugar
 if (document.querySelector('[data-incluir]')) await (await import('./incluir.js')).listo;
 
 const raiz = document.querySelector('.mx') || document;
+iniciarSesion(raiz);
 iniciarCarruseles(raiz);
 iniciarVisible(raiz);
 iniciarFuego(raiz);

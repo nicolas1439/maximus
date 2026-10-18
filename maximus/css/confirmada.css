@@ -32,45 +32,6 @@
   margin-top: 0;
 }
 
-/* ---------- Variantes (solo en la vista previa) ---------- */
-
-.variantes {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--espacio-2) var(--espacio-3);
-}
-
-.variantes__rotulo {
-  color: var(--color-texto-suave);
-  font-size: var(--texto-xs);
-}
-
-.variantes__opciones {
-  display: flex;
-  gap: var(--espacio-1);
-  padding: var(--espacio-1);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-pill);
-  background: var(--color-fondo);
-}
-
-.variantes__btn {
-  height: var(--alto-control-xs);
-  padding-inline: var(--espacio-4);
-  border-radius: var(--radio-pill);
-  color: var(--color-texto-suave);
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-medio);
-  transition: background-color var(--transicion), color var(--transicion);
-}
-
-.variantes__btn[aria-pressed="true"],
-.variantes__btn.marcado {
-  background: var(--color-marca);
-  color: var(--color-sobre-marca);
-}
-
 /* ---------- Gracias ---------- */
 
 .gracias {

@@ -632,7 +632,7 @@
   font-weight: var(--peso-fuerte);
 }
 
-.resultados__vacio p {
+.resultados__vacio > p {
   max-width: 40ch;
   margin: 0 0 var(--espacio-3);
   color: var(--color-texto-suave);
@@ -742,37 +742,6 @@
   flex-basis: 40%;
 }
 
-/* Pie: cuántos se ven, barra de avance y "ver más" */
-.resultados__pie {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--espacio-3);
-}
-
-.resultados__progreso {
-  margin: 0;
-  color: var(--color-texto-suave);
-  font-size: var(--texto-xs);
-}
-
-.resultados__barra {
-  width: 160px;
-  height: 4px;
-  border-radius: var(--radio-pill);
-  background: color-mix(in srgb, var(--color-texto-suave) 25%, transparent);
-  overflow: hidden;
-}
-
-.resultados__barra span {
-  display: block;
-  width: var(--progreso, 0%);
-  height: 100%;
-  border-radius: var(--radio-pill);
-  background: var(--color-marca);
-  transition: width var(--transicion);
-}
-
 /* ---------- Guía de la categoría: texto (SEO) y preguntas frecuentes ---------- */
 
 /* Separada de la grilla por una línea y el espacio de sección */
@@ -850,9 +819,10 @@
     grid-template-areas:
       "filtros filtros barra barra barra barra barra barra"
       "filtros filtros activos activos activos activos activos activos"
+      "filtros filtros banner banner banner banner banner banner"
       "filtros filtros destacados destacados destacados destacados destacados destacados"
       "filtros filtros resultados resultados resultados resultados resultados resultados";
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-rows: auto auto auto auto 1fr;
     align-items: start;
     column-gap: var(--separacion-grilla);
     row-gap: 0;
@@ -883,6 +853,10 @@
   .destacados {
     grid-area: destacados;
     margin-bottom: var(--espacio-6);
+  }
+
+  .listado__banner {
+    grid-area: banner;
   }
 
   .resultados {
@@ -938,7 +912,7 @@
 
 /* ---------- Búsqueda sin resultados (?q=, js/listado.js): solo el título y el estado vacío ---------- */
 
-.listado--sin-resultados :is(.filtros, .filtros-capa, .listado__abrir, .orden, .listado__total, .resultados__pie) {
+.listado--sin-resultados :is(.filtros, .filtros-capa, .listado__abrir, .orden, .listado__total, .mas-productos) {
   display: none;
 }
 
@@ -946,4 +920,38 @@
   .listado--sin-resultados :is(.listado__barra, .resultados) {
     grid-column: 1 / -1;
   }
+}
+
+/* ---------- Revisión final (tanda 3b) ---------- */
+
+/* Banner arriba del listado: se oculta con filtros aplicados, como el estante */
+.listado__banner {
+  margin-bottom: var(--espacio-6);
+}
+
+/* Aviso de la búsqueda (corregida o parecida) */
+.resultados__aviso {
+  margin: 0 0 var(--espacio-4);
+  padding: var(--espacio-3) var(--espacio-4);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  font-size: var(--texto-s);
+}
+
+.resultados__aviso strong {
+  font-weight: var(--peso-fuerte);
+}
+
+/* Sin resultados: productos sugeridos debajo de las búsquedas populares */
+.resultados__sugeridos-titulo {
+  justify-self: stretch;
+  margin: var(--espacio-8) 0 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  text-align: left;
+}
+
+.resultados__sugeridos {
+  justify-self: stretch;
+  text-align: left;
 }

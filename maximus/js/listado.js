@@ -22,6 +22,7 @@ const numerico = (a, b) => parseFloat(a) - parseFloat(b);
 // Grupos de filtro (la clave es el data-* de la tarjeta y el data-grupo del <details>): cómo se ordenan
 // sus opciones y, si hace falta, cómo se escriben
 const GRUPOS = [
+  { clave: 'categoria', orden: (a, b) => a.localeCompare(b) },
   { clave: 'sub', orden: porLista(['nvidia', 'amd']), texto: (v) => SUBCATEGORIAS[v] },
   { clave: 'marca', orden: (a, b) => a.localeCompare(b) },
   {
@@ -85,9 +86,66 @@ function normalizar(texto) {
 }
 
 const consulta = (new URLSearchParams(location.search).get('q') || '').trim().slice(0, 80);
-const palabras = normalizar(consulta).split(/\s+/).filter(Boolean);
-const coincide = (d) => palabras.every((p) => d.texto.includes(p));
+const escritas = normalizar(consulta).split(/\s+/).filter(Boolean);
+
+// Tres casos además del exacto (en el sitio real los resuelve el buscador del backend):
+// - corregida: una palabra mal escrita se corrige por la más parecida del catálogo ("rxt" → "rtx");
+// - parecida: no hay resultados con todas las palabras, se muestran los que tienen alguna;
+// - ninguna: sin coincidencias, el estado vacío con productos sugeridos y búsquedas populares.
+const todas = (lista, d) => lista.every((p) => d.texto.includes(p));
+const alguna = (lista, d) => lista.some((p) => p.length > 1 && d.texto.includes(p));
+const vocabulario = [...new Set(items.flatMap((i) => i.datos.texto.split(/[^a-z0-9]+/)).filter((w) => w.length > 2))];
+// Cambios para pasar de una palabra a otra (letra de más, de menos, distinta o dos letras invertidas)
+function distancia(a, b) {
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const costo = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + costo);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+  }
+  return d[a.length][b.length];
+}
+function corregir(p) {
+  if (p.length < 3 || items.some((i) => i.datos.texto.includes(p))) return p;
+  const tope = p.length > 5 ? 2 : 1;
+  let mejor = p, menor = tope + 1;
+  for (const w of vocabulario) {
+    const d = distancia(p, w);
+    if (d < menor) [mejor, menor] = [w, d];
+  }
+  return mejor;
+}
+
+let tipoBusqueda = 'exacta';
+let palabras = escritas;
+if (consulta && !items.some((i) => todas(escritas, i.datos))) {
+  const corregidas = escritas.map(corregir);
+  if (corregidas.join(' ') !== escritas.join(' ') && items.some((i) => todas(corregidas, i.datos))) {
+    palabras = corregidas;
+    tipoBusqueda = 'corregida';
+  } else {
+    tipoBusqueda = items.some((i) => alguna(escritas, i.datos)) ? 'parecida' : 'ninguna';
+  }
+}
+const coincide = (d) => (tipoBusqueda === 'parecida' ? alguna(palabras, d) : todas(palabras, d));
 const hallados = items.filter((i) => coincide(i.datos));
+
+// Listado de varias categorías (búsqueda, campañas, "Ver todo" de Más vendidos, Outlet): filtros de categoría y
+// subcategoría y atributos generales; los propios de una categoría se esconden. En la plantilla se activa con la
+// búsqueda o con data-general en el listado
+const general = Boolean(consulta) || listado.hasAttribute('data-general');
+const GENERALES = ['categoria', 'sub', 'marca'];
+form.querySelectorAll('details[data-grupo]').forEach((d) => {
+  const g = d.dataset.grupo;
+  if (g !== 'precio') d.hidden = general ? !GENERALES.includes(g) : g === 'categoria';
+});
+if (general) {
+  const titulo = listado.querySelector('[data-vacio] .resultados__vacio-titulo');
+  if (titulo) titulo.textContent = 'No encontramos productos con esos filtros';
+}
 
 function modoBusqueda() {
   if (!consulta) return;
@@ -98,11 +156,28 @@ function modoBusqueda() {
   const migas = listado.querySelector('.migas ol');
   if (migas) migas.innerHTML = '<li><a href="index.html">Inicio</a></li><li aria-current="page">Búsqueda</li>';
   destacados?.remove();
+  bannerListado?.remove();
   document.querySelector('.guia')?.remove();
-  // Sin resultados: solo el estado vacío de la búsqueda (sin filtros ni orden)
+  // Corregida o parecida: el aviso arriba de la grilla
+  const aviso = listado.querySelector('[data-aviso-busqueda]');
+  if (tipoBusqueda === 'corregida') {
+    aviso.innerHTML = `Mostramos resultados para <strong>${escapar(palabras.join(' '))}</strong>. Buscaste “${escapar(consulta)}”.`;
+    aviso.hidden = false;
+    titulo.textContent = `Resultados para “${palabras.join(' ')}”`;
+  }
+  if (tipoBusqueda === 'parecida') {
+    aviso.innerHTML = `No encontramos resultados exactos para <strong>“${escapar(consulta)}”</strong>. Te mostramos los más parecidos.`;
+    aviso.hidden = false;
+  }
+  // Sin resultados: el estado vacío de la búsqueda (sin filtros ni orden) con productos sugeridos (los más vendidos)
   if (!hallados.length) {
     const vacioBusqueda = listado.querySelector('[data-vacio-busqueda]');
     vacioBusqueda.querySelector('[data-consulta]').textContent = consulta;
+    const sugeridos = vacioBusqueda.querySelector('[data-sugeridos]');
+    if (sugeridos) {
+      const masVendidos = [...items].sort(ORDENES.vendidos).slice(0, 4);
+      sugeridos.append(...masVendidos.map(({ el }) => { const copia = el.cloneNode(true); copia.hidden = false; copia.removeAttribute('class'); return copia; }));
+    }
     vacioBusqueda.hidden = false;
     listado.classList.add('listado--sin-resultados');
   }
@@ -119,6 +194,7 @@ const mostrando = listado.querySelector('[data-mostrando]');
 const barra = listado.querySelector('[data-barra]');
 const verMas = listado.querySelector('[data-ver-mas]');
 const destacados = listado.querySelector('[data-destacados]');
+const bannerListado = listado.querySelector('.listado__banner');
 const selectOrden = listado.querySelector('[data-orden]');
 const filtrosN = listado.querySelector('[data-filtros-n]');
 const rangoMin = form.elements['rango-min'];
@@ -174,12 +250,30 @@ function aplicar({ reiniciar = true, animarTodo = false } = {}) {
   mostrando.textContent = vistos;
   barra.style.setProperty('--progreso', `${total ? (vistos / total) * 100 : 0}%`);
   verMas.hidden = vistos >= total;
+  pintarPaginas(Math.ceil(total / porTanda));
   pie.hidden = total === 0;
   vacio.hidden = total > 0 || !hallados.length;
 
   pintarFiltros();
   pintarActivos();
   escribirUrl();
+}
+
+// ---------- Páginas numeradas ----------
+// "Ver más" es la navegación principal; debajo, enlaces reales a cada página (?pagina=n), para que Google indexe
+// todas. La página n abre las primeras n tandas
+const navPaginas = listado.querySelector('[data-paginas]');
+function pintarPaginas(cantidad) {
+  if (!navPaginas) return;
+  navPaginas.hidden = cantidad < 2;
+  const base = new URLSearchParams(location.search);
+  navPaginas.querySelector('ol').innerHTML = Array.from({ length: cantidad }, (_, i) => {
+    const n = i + 1;
+    base.set('pagina', n);
+    if (n === 1) base.delete('pagina');
+    const href = `${location.pathname.split('/').pop()}${base.toString() ? '?' + base : ''}`;
+    return `<li><a class="paginas__enlace${n === paginas ? ' actual' : ''}" href="${escapar(href)}"${n === paginas ? ' aria-current="page"' : ''}>${n}</a></li>`;
+  }).join('');
 }
 
 // ---------- Panel de filtros ----------
@@ -298,6 +392,7 @@ function pintarActivos() {
   listado.querySelector('.filtros__limpiar').hidden = !lista.length;
   // El estante "Las más elegidas" solo se ve con el catálogo sin filtrar
   if (destacados) destacados.hidden = lista.length > 0;
+  if (bannerListado) bannerListado.hidden = lista.length > 0;
 }
 
 function limpiar() {

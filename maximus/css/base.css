@@ -463,6 +463,74 @@ a.boton--primario {
   background: var(--color-fondo);
 }
 
+/* Ver más productos (listados y campañas): cuántos se ven, barra de avance, "Ver más" y, debajo, las páginas
+   numeradas (.paginas): enlaces reales a cada página para que Google las indexe; la navegación es "Ver más" */
+.mas-productos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.mas-productos__progreso {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.mas-productos__barra {
+  width: 160px;
+  height: 4px;
+  border-radius: var(--radio-pill);
+  background: color-mix(in srgb, var(--color-texto-suave) 25%, transparent);
+  overflow: hidden;
+}
+
+.mas-productos__barra span {
+  display: block;
+  width: var(--progreso, 0%);
+  height: 100%;
+  border-radius: var(--radio-pill);
+  background: var(--color-marca);
+  transition: width var(--transicion);
+}
+
+.paginas ol {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-1);
+  margin: var(--espacio-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.paginas__enlace {
+  display: grid;
+  place-items: center;
+  min-width: 32px;
+  height: 32px;
+  padding-inline: var(--espacio-2);
+  border-radius: var(--radio-s);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+a.paginas__enlace {
+  color: var(--color-texto-suave);
+}
+
+.paginas__enlace:hover {
+  background: var(--color-superficie);
+  color: var(--color-texto);
+}
+
+.paginas__enlace:is([aria-current="page"], .actual) {
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  font-weight: var(--peso-fuerte);
+}
+
 /* Plegable: details con la altura animada (preguntas frecuentes, "Leer más", planes de cuotas, detalle de un
    pedido). Donde el navegador no anima la altura (interpolate-size), abre y cierra al instante. El summary va sin el
    triángulo del navegador. Abierto: [open] o la clase .abierto */
@@ -1292,6 +1360,47 @@ html.dark .aurora--pagina::after {
   margin-top: var(--espacio-2);
 }
 
+/* Variantes de muestra (solo en las vistas previas, data-demo): botones para ver los estados de una plantilla */
+.variantes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+}
+
+.variantes__rotulo {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+/* Si no entran en una fila, bajan a la siguiente (el radio es el de una fila: sigue redondeada) */
+.variantes__opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1);
+  padding: var(--espacio-1);
+  border: 1px solid var(--color-borde);
+  border-radius: calc(var(--alto-control-xs) / 2 + var(--espacio-1));
+  background: var(--color-fondo);
+}
+
+.variantes__btn {
+  height: var(--alto-control-xs);
+  white-space: nowrap;
+  padding-inline: var(--espacio-4);
+  border-radius: var(--radio-pill);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.variantes__btn[aria-pressed="true"],
+.variantes__btn.marcado {
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
 /* Saltar al contenido: primer enlace de la página (header), lleva al main (#contenido). Aparece arriba a la
    izquierda solo cuando recibe el foco con el teclado */
 .saltar {
@@ -1371,4 +1480,82 @@ a.saltar {
     transition-property: color, background-color, border-color, outline-color, box-shadow, opacity, fill, stroke !important;
     animation-duration: 0s !important;
   }
+}
+
+/* Texto libre: la descripción que llega del sistema como HTML con formato (párrafos, títulos, viñetas, tablas,
+   negritas, imágenes). El reset de listas e imágenes no la toca; acá recupera el estilo de lectura */
+.texto-libre {
+  font-size: var(--texto-s);
+  line-height: 1.6;
+}
+
+.texto-libre > :first-child {
+  margin-top: 0;
+}
+
+.texto-libre :is(h2, h3, h4) {
+  margin: 1.4em 0 0.4em;
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.texto-libre p {
+  margin: 0 0 0.8em;
+}
+
+.texto-libre :is(ul, ol) {
+  margin: 0 0 0.8em;
+  padding-left: 1.4em;
+}
+
+.texto-libre ul {
+  list-style: disc;
+}
+
+.texto-libre li + li {
+  margin-top: 0.3em;
+}
+
+.texto-libre :is(strong, b) {
+  font-weight: var(--peso-fuerte);
+}
+
+.texto-libre table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+
+.texto-libre :is(th, td) {
+  padding: var(--espacio-2) var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  text-align: left;
+  vertical-align: top;
+}
+
+.texto-libre th {
+  background: var(--color-superficie);
+  font-weight: var(--peso-medio);
+}
+
+.texto-libre img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radio);
+}
+
+.texto-libre a {
+  color: var(--color-acento);
+  text-decoration: underline;
+}
+
+/* Aviso breve de error (ej. "Artículo sin stock" al agregar): en rojo y en varias líneas si hace falta */
+.aviso--error {
+  max-width: calc(100% - 2 * var(--espacio-4));
+  border-radius: var(--radio-l);
+  background: var(--color-error-texto);
+  color: var(--color-fondo);
+  text-align: center;
+  white-space: normal;
 }

@@ -48,3 +48,13 @@ function iniciar() {
   addEventListener('popstate', () => ver(new URLSearchParams(location.search).get('gama')));
   ver(new URLSearchParams(location.search).get('gama'));
 }
+
+// Estados de muestra de las gamas (vista previa): con productos, cargando o sin productos. En el sitio real cada
+// gama muestra el estado que corresponde según lo que trae el backend
+document.querySelectorAll('[data-ver-gamas]').forEach((boton) =>
+  boton.addEventListener('click', () => {
+    const estado = boton.dataset.verGamas;
+    document.querySelectorAll('[data-ver-gamas]').forEach((b) => b.setAttribute('aria-pressed', b === boton));
+    document.querySelectorAll('[data-estado-gama]').forEach((el) => (el.hidden = el.dataset.estadoGama !== estado));
+  })
+);

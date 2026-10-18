@@ -26,7 +26,19 @@
        banner MSI x AMD y las bases y condiciones. La campaña, su vigencia (hasta el 31/10/2026) y las bases son de
        muestra. Para otra campaña cambian los textos, la fecha (data-fin) y los productos (en el sitio real los da
        el backend). js/campania.js: cuenta regresiva y pestañas. Página completa: primavera-maximus.html. -->
-  <main class="campania" id="contenido" tabindex="-1">
+  <!-- Estados de la campaña, para la demostración (no van en el sitio real): en curso, próximamente y terminada -->
+  <div class="contenedor variantes" data-demo>
+    <span class="variantes__rotulo">Vista previa</span>
+    <div class="variantes__opciones" role="group" aria-label="Estado de la campaña">
+      <button class="variantes__btn" type="button" data-ver-estado="curso" aria-pressed="true">En curso</button>
+      <button class="variantes__btn" type="button" data-ver-estado="proxima" aria-pressed="false">Próximamente</button>
+      <button class="variantes__btn" type="button" data-ver-estado="terminada" aria-pressed="false">Terminada</button>
+    </div>
+  </div>
+
+  <!-- La campaña tiene inicio (data-inicio) y fin (data-fin): antes del inicio se ve "próximamente" (cuenta regresiva
+       al inicio, el cronograma de días y el aviso), durante, las ofertas, y después, "terminada" (js/campania.js) -->
+  <main class="campania" id="contenido" tabindex="-1" data-inicio="2026-10-01T00:00:00-03:00" data-fin="2026-10-31T23:59:59-03:00">
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
@@ -47,15 +59,17 @@
           <a class="boton boton--primario" href="#ofertas">Ver las ofertas<svg class="icono icono--s" aria-hidden="true"><use href="#i-abajo"/></svg></a>
         </div>
 
-        <div class="regresiva" data-fin="2026-10-31T23:59:59-03:00" role="timer" aria-label="La campaña termina el 31 de octubre a las 23:59">
-          <p class="regresiva__rotulo">Termina en</p>
+        <div class="regresiva" role="timer" aria-label="La campaña termina el 31 de octubre a las 23:59">
+          <p class="regresiva__rotulo" data-rotulo>Termina en</p>
           <ol class="regresiva__lista" aria-hidden="true">
             <li class="regresiva__parte"><span class="regresiva__num" data-dias>14</span><span class="regresiva__unidad">días</span></li>
             <li class="regresiva__parte"><span class="regresiva__num" data-horas>09</span><span class="regresiva__unidad">horas</span></li>
             <li class="regresiva__parte"><span class="regresiva__num" data-minutos>59</span><span class="regresiva__unidad">min</span></li>
             <li class="regresiva__parte"><span class="regresiva__num" data-segundos>59</span><span class="regresiva__unidad">seg</span></li>
           </ol>
-          <p class="regresiva__fecha">Hasta el 31 de octubre o hasta agotar stock</p>
+          <p class="regresiva__fecha" data-fecha>Hasta el 31 de octubre o hasta agotar stock</p>
+          <!-- Terminada: el aviso en el lugar de la cuenta -->
+          <p class="regresiva__terminada" hidden data-solo="terminada"><svg class="icono" aria-hidden="true"><use href="#i-reloj"/></svg>Esta campaña terminó el 31 de octubre</p>
         </div>
       </section>
     </div>
@@ -68,8 +82,23 @@
       <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-envio"/></svg></span><span><strong>Entrega en 24 hs hábiles</strong>Con OCA, en AMBA</span></li>
     </ul>
 
+    <!-- Próximamente: el cronograma de días, como en los eventos tipo Hot Sale (de muestra) -->
+    <section class="contenedor cronograma" aria-labelledby="cronograma-titulo" hidden data-solo="proxima">
+      <div class="seccion__cab seccion__cab--bajada">
+        <h2 class="seccion__titulo" id="cronograma-titulo">Cronograma</h2>
+        <p class="seccion__bajada">Cada día, ofertas nuevas en una categoría. Se publican a las 00 h.</p>
+      </div>
+      <ol class="cronograma__lista">
+        <li class="cronograma__dia"><span class="cronograma__fecha"><strong>1</strong>oct</span><span class="cronograma__texto"><strong>Componentes</strong>Placas de video, micros y memorias</span></li>
+        <li class="cronograma__dia"><span class="cronograma__fecha"><strong>2</strong>oct</span><span class="cronograma__texto"><strong>PC armadas</strong>Gamer y de oficina</span></li>
+        <li class="cronograma__dia"><span class="cronograma__fecha"><strong>3</strong>oct</span><span class="cronograma__texto"><strong>Notebooks y monitores</strong>Para jugar y trabajar</span></li>
+        <li class="cronograma__dia"><span class="cronograma__fecha"><strong>4</strong>oct</span><span class="cronograma__texto"><strong>Periféricos y sillas</strong>Teclados, mouse, auriculares y sillas</span></li>
+      </ol>
+      <a class="boton boton--secundario cronograma__catalogo" href="placas-de-video.html">Mientras tanto, mirá el catálogo<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+    </section>
+
     <!-- Ofertas, con pestañas por categoría -->
-    <section class="contenedor ofertas" id="ofertas" aria-labelledby="ofertas-titulo">
+    <section class="contenedor ofertas" id="ofertas" aria-labelledby="ofertas-titulo" data-no-en="proxima">
       <div class="seccion__cab">
         <div class="seccion__titulos">
           <h2 class="seccion__titulo" id="ofertas-titulo">Ofertas de la campaña</h2>
@@ -361,7 +390,31 @@
         </li>
       </ul>
 
-      <a class="boton boton--secundario ofertas__mas" href="placas-de-video.html">Ver todo el catálogo<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+      <!-- Una campaña puede tener más de 100 productos: de a 8 con "Ver más" y, debajo, las páginas numeradas -->
+      <div class="mas-productos" data-no-en="terminada" data-pie-ofertas>
+        <p class="mas-productos__progreso">Viste <span data-mostrando>8</span> de <span data-total>12</span> productos</p>
+        <div class="mas-productos__barra" aria-hidden="true"><span data-barra></span></div>
+        <button class="boton boton--secundario" type="button" data-ver-mas>Ver más productos</button>
+        <nav class="paginas" aria-label="Páginas de la campaña" data-paginas>
+          <ol>
+            <li><a class="paginas__enlace actual" href="primavera-maximus.html" aria-current="page">1</a></li>
+            <li><a class="paginas__enlace" href="primavera-maximus.html?pagina=2">2</a></li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Terminada: en lugar de las ofertas -->
+      <div class="campania-terminada" hidden data-solo="terminada">
+        <svg class="campania-terminada__icono" aria-hidden="true"><use href="#i-reloj"/></svg>
+        <h3 class="campania-terminada__titulo">La Primavera Maximus terminó</h3>
+        <p>Gracias por acompañarnos. Hay más ofertas vigentes y nuevas campañas todos los meses.</p>
+        <div class="campania-terminada__acciones">
+          <a class="boton boton--primario" href="placas-de-video.html?orden=descuento">Ver las ofertas vigentes</a>
+          <a class="boton boton--secundario" href="placas-de-video.html">Ver el catálogo</a>
+        </div>
+      </div>
+
+      <a class="boton boton--secundario ofertas__mas" href="placas-de-video.html" data-no-en="terminada">Ver todo el catálogo<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
     </section>
 
     <!-- Otra promo vigente: el banner MSI x AMD del home -->
@@ -375,7 +428,7 @@
     </div>
 
     <!-- Bases y condiciones (de muestra), plegadas -->
-    <section class="contenedor bases" aria-labelledby="bases-titulo">
+    <section class="contenedor bases" id="bases" aria-labelledby="bases-titulo">
       <details class="bases__caja">
         <summary class="bases__cab"><h2 class="bases__titulo" id="bases-titulo">Bases y condiciones</h2><svg class="icono bases__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
         <div class="bases__texto">
