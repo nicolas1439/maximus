@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/header.css">
   <script type="module" src="js/header.js"></script>
+  <script type="module" src="js/sugerencias.js"></script>
 </head>
 <body>
 <div class="mx">
@@ -26,6 +27,8 @@
         <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-envio"/></svg>Envíos a todo el país</li>
         <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-cuotas"/></svg>3 cuotas sin interés</li>
         <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-sucursal"/></svg>Retiro gratis</li>
+        <li class="barra-sup__alterno"><svg class="icono icono--s" aria-hidden="true"><use href="#i-efectivo"/></svg>Precio especial de contado</li>
+        <li class="barra-sup__alterno"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Asesoramiento por WhatsApp</li>
       </ul>
       <div class="barra-sup__util">
         <a href="seguimiento.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-pedido"/></svg>Seguí tu pedido</a>
@@ -52,15 +55,31 @@
 
       <form class="buscador" role="search" action="buscar.html">
         <label class="sr-only" for="buscar">Buscar productos</label>
-        <input class="buscador__campo" id="buscar" name="q" type="search" placeholder="Buscá productos y marcas" autocomplete="off">
+        <input class="buscador__campo" id="buscar" name="q" type="search" placeholder="Buscá productos y marcas" autocomplete="off" aria-controls="sugerencias" aria-expanded="false" data-sugerir>
         <button class="buscador__btn" type="submit" aria-label="Buscar">
           <svg class="icono" aria-hidden="true"><use href="#i-buscar"/></svg>
         </button>
+        <!-- Sugerencias mientras se escribe (desde 2 letras): hasta 5 productos con foto, nombre y precio, y las
+             categorías y subcategorías que coinciden; sin coincidencias, el aviso. Las trae el sistema; en la
+             vista previa salen de datos de muestra (js/sugerencias.js) -->
+        <div class="sugerencias" id="sugerencias" hidden data-sugerencias>
+          <p class="sugerencias__titulo">Productos</p>
+          <ul class="sugerencias__productos" data-sugerencias-productos>
+            <li><a class="sugerencia" href="rtx-5070-ti-ventus.html"><img class="sugerencia__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600" loading="lazy"><span class="sugerencia__nombre">Placa de Video MSI GeForce RTX 5070 Ti Ventus 3X 16GB OC GDDR7</span><span class="sugerencia__precio">$2.401.920</span></a></li>
+          </ul>
+          <p class="sugerencias__titulo">Categorías</p>
+          <ul class="sugerencias__categorias" data-sugerencias-categorias>
+            <li><a class="sugerencia-cat" href="placas-de-video.html">Componentes<svg class="icono icono--s" aria-hidden="true"><use href="#i-derecha"/></svg><strong>Placas de video</strong></a></li>
+          </ul>
+          <p class="sugerencias__vacio" hidden data-sugerencias-vacio><svg class="icono" aria-hidden="true"><use href="#i-buscar"/></svg>No se encontraron coincidencias</p>
+          <a class="sugerencias__todo" href="buscar.html" data-sugerencias-todo>Ver todos los resultados<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+        </div>
       </form>
 
       <div class="cabecera__acciones">
-        <a class="boton-icono" href="ingresar.html" aria-label="Ingresar" data-cuenta>
+        <a class="boton-icono cabecera__usuario" href="ingresar.html" aria-label="Ingresar" data-cuenta>
           <svg class="icono" aria-hidden="true"><use href="#i-usuario"/></svg>
+          <span class="cabecera__nombre" hidden data-cuenta-nombre>Martín</span>
         </a>
         <a class="boton-icono cabecera__fav" href="mi-cuenta.html#favoritos" aria-label="Favoritos">
           <svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg>
@@ -115,7 +134,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Computadoras</strong>
@@ -146,7 +165,6 @@
                       <ul>
                         <li><a href="placas-de-video.html">Mouse inalámbrico</a></li>
                         <li><a href="placas-de-video.html">Mouse pads</a></li>
-                        <li><a href="placas-de-video.html">Mochilas</a></li>
                       </ul>
                     </div>
                     <div class="catalogo__grupo">
@@ -160,7 +178,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-notebook"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Notebooks</strong>
@@ -181,14 +199,13 @@
                   <div class="catalogo__grupos">
                     <div class="catalogo__grupo">
                       <ul>
-                        <li><a href="placas-de-video.html">Combos Intel</a></li>
                         <li><a href="placas-de-video.html">Combos AMD</a></li>
                         <li><a href="placas-de-video.html">Combos upgrade</a></li>
                       </ul>
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-combo"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Combos de actualización</strong>
@@ -266,7 +283,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-cpu"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Componentes de PC</strong>
@@ -308,10 +325,6 @@
                     </div>
                     <div class="catalogo__grupo">
                       <a class="catalogo__grupo-titulo" href="placas-de-video.html">Micrófonos</a>
-                      <ul>
-                        <li><a href="placas-de-video.html">Con cable</a></li>
-                        <li><a href="placas-de-video.html">Inalámbricos</a></li>
-                      </ul>
                     </div>
                     <div class="catalogo__grupo">
                       <a class="catalogo__grupo-titulo" href="placas-de-video.html">Volantes</a>
@@ -333,7 +346,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-mouse"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Periféricos</strong>
@@ -358,12 +371,11 @@
                         <li><a href="placas-de-video.html">100 – 144 Hz</a></li>
                         <li><a href="placas-de-video.html">165 – 180 Hz</a></li>
                         <li><a href="placas-de-video.html">200 – 240 Hz</a></li>
-                        <li><a href="placas-de-video.html">280 Hz o más</a></li>
                       </ul>
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-monitor"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Monitores</strong>
@@ -391,7 +403,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-silla"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Sillas y escritorios</strong>
@@ -419,7 +431,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-redes"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Redes y conectividad</strong>
@@ -453,7 +465,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-accesorios"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Accesorios varios</strong>
@@ -480,7 +492,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-impresora"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Impresoras y consumibles</strong>
@@ -508,7 +520,7 @@
                     </div>
                   </div>
                 </div>
-                <a class="catalogo__promo" href="placas-de-video.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+                <a class="catalogo__promo" href="placas-de-video.html?orden=descuento" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
                   <svg class="catalogo__promo-icono" aria-hidden="true"><use href="#i-cat-electro"/></svg>
                   <span class="etiqueta etiqueta--secundaria">Ofertas</span>
                   <strong>Electro</strong>
@@ -533,6 +545,7 @@
       </ul>
 
       <ul class="menu__links menu__links--fin">
+        <li><a href="https://blog.maximus.com.ar" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-blog"/></svg>Blog</a></li>
         <li><a href="maximus-empresas.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-empresa"/></svg>Empresas</a></li>
       </ul>
 
@@ -556,6 +569,12 @@
 
   <!-- Contenido de prueba para ver el comportamiento al hacer scroll (data-demo: no se incluye en la página completa) -->
   <main class="contenedor" data-demo style="padding-block: 32px; display: grid; gap: 24px;">
+    <!-- Estados de muestra del header: con o sin sesión (el nombre del cliente junto al ícono) y el carrito vacío -->
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <button class="boton boton--secundario" type="button" onclick="try { localStorage.setItem('sesion', '1'); } catch {} location.reload()">Con sesión</button>
+      <button class="boton boton--secundario" type="button" onclick="try { localStorage.removeItem('sesion'); } catch {} location.reload()">Sin sesión</button>
+      <button class="boton boton--secundario" type="button" onclick="const c = document.querySelector('.carrito'); const v = c.classList.toggle('carrito--vacio'); c.querySelector('.carrito__cant').textContent = v ? '0' : '3'; c.setAttribute('aria-label', v ? 'Carrito vacío' : 'Carrito: 3 productos, $2.948.798')">Carrito vacío / con productos</button>
+    </div>
     <div style="height: 360px; border-radius: 8px; background: var(--color-superficie);"></div>
     <div style="height: 900px; border-radius: 8px; background: var(--color-superficie);"></div>
   </main>

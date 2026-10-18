@@ -8,6 +8,8 @@ import { iniciarMarcas } from './marcas.js';
 import { iniciarVisible } from './visible.js';
 import { iniciarFuego } from './fuego.js';
 import { iniciarPausa } from './pausa.js';
+import { iniciarFlotantes } from './flotantes.js';
+import { iniciarTarjetas } from './tarjeta.js';
 
 // En las páginas que arma incluir.js, primero espera a que cada parte esté en su lugar
 if (document.querySelector('[data-incluir]')) await (await import('./incluir.js')).listo;
@@ -17,4 +19,6 @@ iniciarCarruseles(raiz);
 iniciarVisible(raiz);
 iniciarFuego(raiz);
 iniciarPausa(raiz);
+iniciarFlotantes(raiz);
+iniciarTarjetas(raiz);
 iniciarMarcas(raiz);

@@ -275,3 +275,164 @@
     font-size: var(--texto-xs);
   }
 }
+
+/* ---------- Revisión final (tanda 3a) ---------- */
+
+/* Ícono de Mercado Pago junto a "sin interés" */
+.producto__mp {
+  display: inline-block;
+  width: auto;
+  height: 1.1em;
+  margin-left: 0.35em;
+  vertical-align: -0.2em;
+}
+
+/* Varias etiquetas a la vez sobre la foto (OUTLET, sin stock, campañas, descuento), apiladas arriba a la izquierda */
+.producto__sellos {
+  position: absolute;
+  top: var(--espacio-3);
+  left: var(--espacio-3);
+  right: calc(var(--espacio-3) + 40px); /* deja libre el favorito */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-1);
+}
+
+.producto__sellos .producto__etiqueta {
+  position: static;
+}
+
+.producto__sellos .etiqueta {
+  font-size: var(--texto-2xs);
+}
+
+/* OUTLET y Sin stock: sellos neutros, oscuros en ambos modos (como la barra) */
+.etiqueta--outlet,
+.etiqueta--agotado {
+  background: var(--color-barra);
+  color: var(--color-sobre-barra);
+  letter-spacing: var(--espaciado-mayusculas);
+}
+
+.etiqueta--agotado {
+  background: var(--color-texto-suave);
+  color: var(--color-fondo);
+}
+
+/* "Obtené tu juego GRATIS": al pie de la foto, abre la explicación (no lleva al producto) */
+.producto__regalo {
+  position: absolute;
+  bottom: var(--espacio-2);
+  left: var(--espacio-2);
+  right: var(--espacio-2);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-1);
+  min-height: 28px;
+  padding: var(--espacio-1) var(--espacio-2);
+  border-radius: var(--radio-pill);
+  background: var(--color-secundario);
+  color: var(--color-sobre-secundario);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-fuerte);
+  line-height: 1.2;
+  transition: background-color var(--transicion);
+}
+
+.producto__regalo:hover {
+  filter: brightness(0.9);
+}
+
+.producto__regalo .icono {
+  width: 14px;
+  height: 14px;
+}
+
+/* Combo: el precio anterior es lo que salen los productos por separado */
+.producto__antes--combo {
+  text-decoration: none;
+}
+
+.producto__antes--combo s {
+  text-decoration: line-through;
+}
+
+/* Botón de agregar: agregando (deshabilitado), agregado y no se pudo agregar; a los 2,5 s vuelve a "Agregar" */
+.producto__agregar:is(.cargando, .agregado, .con-error) {
+  pointer-events: none;
+}
+
+.producto__agregar.cargando .icono {
+  animation: girar 0.8s linear infinite;
+}
+
+.producto__agregar.agregado {
+  background: var(--color-acento);
+  color: var(--color-fondo);
+}
+
+.producto__agregar.con-error {
+  background: var(--color-error-texto);
+  color: var(--color-fondo);
+}
+
+@keyframes girar {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/* Sin stock: la foto apagada y, en lugar de "Agregar", "Avisame cuando vuelva" */
+.producto--sin-stock .producto__img {
+  opacity: 0.55;
+}
+
+.producto__avisame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: var(--alto-control-s);
+  margin-top: auto;
+  padding-inline: var(--espacio-3);
+  font-size: var(--texto-s);
+}
+
+/* PC armadas: los nombres largos solo difieren al final ("…8GB…" contra "…16GB…"), así que van en tres renglones
+   (y el nombre completo queda en el title del enlace, al pasar el mouse) */
+.producto--pc .producto__nombre {
+  min-height: 3lh;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* Cargando: la tarjeta con el alto de siempre y un esqueleto en el lugar de cada dato */
+.producto--cargando {
+  pointer-events: none;
+}
+
+.producto--cargando .producto__media {
+  background: var(--color-superficie);
+}
+
+.producto--cargando .esqueleto {
+  height: 1lh;
+}
+
+.producto--cargando .producto__nombre .esqueleto + .esqueleto {
+  width: 70%;
+}
+
+.producto--cargando .producto__precio .esqueleto {
+  width: 60%;
+}
+
+.producto--cargando .producto__cuotas .esqueleto {
+  width: 80%;
+}
+
+.producto--cargando .producto__agregar {
+  background: var(--color-superficie);
+}

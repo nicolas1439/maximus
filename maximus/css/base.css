@@ -1176,6 +1176,122 @@ html.dark .aurora--pagina::after {
   }
 }
 
+/* Medios de pago (footer, ficha y checkout): el logo de Mercado Pago y los medios en pastillas.
+   .medios-pago--barra: sobre la barra y el footer (oscuros en ambos modos) */
+.medios-pago {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+}
+
+.medios-pago__titulo {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.medios-pago__lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+}
+
+.medios-pago__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  height: 32px;
+  padding-inline: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  white-space: nowrap;
+}
+
+.medios-pago__item--logo {
+  padding-inline: var(--espacio-2);
+  background: var(--color-fondo-imagen);
+}
+
+.medios-pago__item--logo img {
+  width: auto;
+  height: 22px;
+}
+
+.medios-pago--barra .medios-pago__titulo,
+.medios-pago--barra .medios-pago__item {
+  color: var(--color-sobre-barra-suave);
+}
+
+.medios-pago--barra .medios-pago__item {
+  border-color: var(--color-barra-borde);
+}
+
+/* Esqueleto de carga: ocupa el mismo lugar que el contenido que va a llegar (así la página no salta) y lo anuncia
+   con un brillo que recorre. Se usa en bloques sueltos (.esqueleto con su alto) o en una pieza entera con su
+   modificador --cargando (ej. producto--cargando) */
+.esqueleto {
+  display: block;
+  border-radius: var(--radio-s);
+  background: linear-gradient(90deg, var(--color-superficie) 25%, color-mix(in srgb, var(--color-superficie), var(--color-borde) 60%) 50%, var(--color-superficie) 75%) 0 0 / 300% 100%;
+  animation: esqueleto-brillo 1.4s ease-in-out infinite;
+}
+
+@keyframes esqueleto-brillo {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Error al cargar una sección: ícono, qué pasó y cómo seguir (volver a intentar o WhatsApp), en el lugar de la
+   sección, con su alto mínimo */
+.error-carga {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  min-height: 240px;
+  padding: var(--espacio-6) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  text-align: center;
+}
+
+.error-carga > .icono {
+  width: 32px;
+  height: 32px;
+  color: var(--color-error-texto);
+}
+
+.error-carga__titulo {
+  margin: 0;
+  color: var(--color-texto);
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+.error-carga p {
+  margin: 0;
+}
+
+.error-carga__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+
 /* Saltar al contenido: primer enlace de la página (header), lleva al main (#contenido). Aparece arriba a la
    izquierda solo cuando recibe el foco con el teclado */
 .saltar {

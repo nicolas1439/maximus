@@ -7,13 +7,16 @@ const raiz = document.documentElement;
 
 // ---------- Cuenta ----------
 
-// Con la sesión de muestra iniciada (la guarda acceso.js en el navegador), el ícono de usuario lleva a Mi cuenta;
-// sin sesión, a Ingresar
+// Con la sesión de muestra iniciada (la guarda acceso.js en el navegador), el ícono de usuario lleva a Mi cuenta y
+// muestra el nombre del cliente (de muestra; en el sitio real lo pone el servidor); sin sesión, a Ingresar
 try {
   if (localStorage.getItem('sesion')) {
     document.querySelectorAll('[data-cuenta]').forEach((a) => {
       a.href = 'mi-cuenta.html';
-      a.setAttribute('aria-label', 'Mi cuenta');
+      a.setAttribute('aria-label', 'Mi cuenta de Martín');
+      a.classList.add('cabecera__usuario--sesion');
+      const nombre = a.querySelector('[data-cuenta-nombre]');
+      if (nombre) nombre.hidden = false;
     });
   }
 } catch {}

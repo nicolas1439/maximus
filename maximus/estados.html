@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Estados de carga</title>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/producto.css">
+  <link rel="stylesheet" href="css/productos.css">
+</head>
+<body>
+<div class="mx">
+
+  <!-- Vista previa de los estados generales del sitio, mientras el contenido llega después de cargar la página:
+       cargando (esqueletos con el alto reservado, así la página no salta: .esqueleto y producto--cargando) y error
+       al cargar una sección (.error-carga, con "Volver a intentar" y WhatsApp). Los de cada página (sin resultados,
+       vacíos, sin sesión) están en su plantilla. La 404 es no-encontrada.html y el mantenimiento, mantenimiento.html. -->
+  <main class="contenedor" id="contenido" tabindex="-1" style="display: grid; gap: var(--espacio-seccion); padding-block: 32px;">
+
+    <section aria-labelledby="cargando-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="cargando-titulo">Cargando: un estante de productos</h2>
+      </div>
+      <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--separacion-grilla);" aria-busy="true" aria-label="Cargando productos">
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+        <li><article class="producto producto--cargando" aria-hidden="true"><div class="producto__media"></div><div class="producto__cuerpo"><div class="producto__meta"><span class="esqueleto" style="width: 40%"></span></div><div class="producto__nombre"><span class="esqueleto"></span><span class="esqueleto"></span></div><div class="producto__precios"><span class="producto__antes"></span><p class="producto__precio"><span class="esqueleto"></span></p><p class="producto__nota"><span class="esqueleto" style="width: 50%"></span></p></div><p class="producto__cuotas"><span class="esqueleto"></span></p><span class="boton producto__agregar"></span></div></article></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="error-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="error-titulo">Error al cargar una sección</h2>
+      </div>
+      <div class="error-carga" role="alert">
+        <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+        <p class="error-carga__titulo">No pudimos cargar esta sección</p>
+        <p>Puede ser un problema de conexión. Probá de nuevo en unos segundos.</p>
+        <div class="error-carga__acciones">
+          <button class="boton boton--primario" type="button" onclick="location.reload()"><svg class="icono icono--s" aria-hidden="true"><use href="#i-recargar"/></svg>Volver a intentar</button>
+          <a class="boton boton--secundario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+</body>
+</html>

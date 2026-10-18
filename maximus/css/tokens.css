@@ -74,6 +74,10 @@
   --color-info-texto: #1d5fd6;
   --color-aviso-icono: #c47a0a;
 
+  /* WhatsApp: el verde de la marca, un poco más oscuro para que el ícono blanco se lea (3,5:1) */
+  --color-whatsapp: #1b9c4b;
+  --color-sobre-whatsapp: #ffffff;
+
   /* Tipografía: Roboto, la actual de Maximus (puede cambiar más adelante) */
   --fuente-base: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
   --texto-2xs: 0.6875rem;

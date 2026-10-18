@@ -129,7 +129,7 @@
   translate: 3px 0;
 }
 
-/* Sellos (CACE, Data fiscal): lugar reservado para las imágenes */
+/* Sellos (CACE, Data fiscal): las imágenes del sitio, con un borde que se enciende al pasar el mouse */
 .pie__sellos {
   display: flex;
   gap: var(--espacio-2);
@@ -137,27 +137,20 @@
 }
 
 .pie__sello {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
-  padding: var(--espacio-1);
-  border: 1px dashed var(--color-barra-borde);
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--color-barra-borde);
   border-radius: var(--radio-s);
-  color: var(--color-sobre-barra-suave);
-  font-size: var(--texto-2xs);
-  line-height: 1.2;
-  text-align: center;
-  transition: border-color var(--transicion), color var(--transicion);
+  transition: border-color var(--transicion);
 }
 
-a.pie__sello {
-  color: var(--color-sobre-barra-suave);
+.pie__sello img {
+  width: auto;
+  height: 48px;
 }
 
 .pie__sello:hover {
   border-color: var(--color-marca);
-  color: var(--color-sobre-barra);
 }
 
 .pie__nota {
@@ -227,6 +220,11 @@ a.pie__sello {
   color: var(--color-marca);
 }
 
+/* Medios de pago, arriba de la fila final */
+.pie__pagos {
+  padding-bottom: var(--espacio-6);
+}
+
 /* Pie legal */
 .pie__final {
   border-top: 1px solid var(--color-barra-borde);
@@ -246,6 +244,13 @@ a.pie__sello {
 
 .pie__final-fila p {
   margin: 0;
+}
+
+.pie__legales {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-1) var(--espacio-4);
 }
 
 .pie__final-enlace {
@@ -325,7 +330,7 @@ a.pie__arriba {
     justify-self: center;
   }
 
-  .pie__final-enlace {
+  .pie__legales {
     justify-self: end;
   }
 }
@@ -342,5 +347,145 @@ a.pie__arriba {
   .pie__marca,
   .pie__contacto {
     grid-column: auto;
+  }
+}
+
+/* ---------- Flotantes: sticker de la campaña y WhatsApp ---------- */
+
+.flotantes {
+  position: fixed;
+  right: var(--espacio-4);
+  bottom: calc(var(--espacio-4) + env(safe-area-inset-bottom));
+  left: var(--espacio-4);
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  pointer-events: none;
+  transition: translate var(--transicion);
+}
+
+.flotantes > * {
+  pointer-events: auto;
+}
+
+/* Con una barra fija abajo (ficha, carrito, armador), suben por encima */
+.mx:has(.ficha__barra--visible, .checkout__barra--visible, .barra-arm--visible) .flotantes {
+  translate: 0 calc(-1 * var(--alto-control-l) - var(--espacio-4));
+}
+
+.whatsapp {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-left: auto;
+  border-radius: var(--radio-pill);
+  background: var(--color-whatsapp);
+  color: var(--color-sobre-whatsapp);
+  box-shadow: var(--sombra);
+  transition: transform var(--transicion), box-shadow var(--transicion);
+}
+
+a.whatsapp {
+  color: var(--color-sobre-whatsapp);
+}
+
+.whatsapp .icono {
+  width: 30px;
+  height: 30px;
+}
+
+.whatsapp:hover {
+  transform: translateY(-3px);
+}
+
+/* Sticker: en celular, solo el fuego y el descuento; desde tablet, con el nombre de la campaña */
+.sticker {
+  position: relative;
+}
+
+.sticker__enlace {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-2) var(--espacio-3) var(--espacio-2) var(--espacio-2);
+  border-radius: var(--radio-pill);
+  background: linear-gradient(135deg, var(--color-secundario), var(--color-violeta));
+  box-shadow: var(--sombra);
+  font-size: var(--texto-xs);
+  line-height: 1.2;
+  transition: transform var(--transicion);
+}
+
+a.sticker__enlace {
+  color: var(--color-sobre-secundario);
+}
+
+.sticker__enlace:hover {
+  transform: translateY(-3px);
+}
+
+.sticker__icono {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radio-pill);
+  background: rgb(255 255 255 / 0.16);
+}
+
+.sticker__icono .icono {
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+}
+
+.sticker__texto {
+  display: flex;
+  flex-direction: column;
+  font-weight: var(--peso-medio);
+}
+
+.sticker__texto strong {
+  font-size: var(--texto-s);
+  font-weight: var(--peso-fuerte);
+}
+
+.sticker__cerrar {
+  position: absolute;
+  top: calc(var(--espacio-2) * -1);
+  right: calc(var(--espacio-2) * -1);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  box-shadow: var(--sombra);
+}
+
+.sticker__cerrar .icono {
+  width: 14px;
+  height: 14px;
+}
+
+.sticker:is([hidden], .oculto) {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .sticker__texto strong {
+    display: none;
+  }
+}
+
+/* En celular y tablet, el pie deja lugar a los flotantes para que no tapen la última línea */
+@media (max-width: 1023px) {
+  .pie {
+    padding-bottom: calc(56px + 2 * var(--espacio-4));
   }
 }

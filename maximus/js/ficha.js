@@ -2,6 +2,8 @@
 // compartir, favorito, avisos breves y la barra de compra fija de mobile. El deslizamiento de la galería
 // (dedo, arrastre con el mouse y puntos) lo maneja carrusel.js.
 
+import { pedirIngresoFavorito } from './tarjeta.js';
+
 const movimientoReducido = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const comportamiento = movimientoReducido ? 'auto' : 'smooth';
 
@@ -134,10 +136,15 @@ document.querySelectorAll('[data-compartir]').forEach((boton) =>
   })
 );
 
+// Sin sesión, el favorito pide ingresar o crear la cuenta (el diálogo de la tarjeta, tarjeta.js)
 document.querySelectorAll('.ficha__favorito').forEach((boton) =>
   boton.addEventListener('click', () => {
+    let sesion = false;
+    try { sesion = Boolean(localStorage.getItem('sesion')); } catch {}
+    if (!sesion) return pedirIngresoFavorito(document.querySelector('.ficha__nombre, h1')?.textContent.trim() || '');
     const marcado = boton.getAttribute('aria-pressed') !== 'true';
     boton.setAttribute('aria-pressed', marcado);
+    boton.classList.toggle('marcado', marcado);
     avisar(marcado ? 'Guardado en favoritos' : 'Quitado de favoritos');
   })
 );

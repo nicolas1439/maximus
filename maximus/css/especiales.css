@@ -1,0 +1,192 @@
+/* Páginas especiales: no encontrada (404) y sitio en mantenimiento. Un aviso centrado (número o ícono, título,
+   texto y acciones) y, en la 404, el buscador y accesos a las categorías. El panel va oscuro en ambos modos, con la
+   aurora de marca. Detalle en violeta: la mancha de la aurora y el chip. */
+
+.especial {
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.especial__panel {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-4);
+  overflow: hidden;
+  padding: var(--espacio-8) var(--espacio-4);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+  text-align: center;
+}
+
+.especial__numero {
+  margin: 0;
+  background: linear-gradient(120deg, var(--color-lima), var(--color-marca) 45%, var(--color-secundario-sobre-barra));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: clamp(72px, 22vw, 160px);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.especial__icono {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radio-pill);
+  background: rgb(255 255 255 / 0.08);
+  color: var(--color-marca);
+}
+
+.especial__icono .icono {
+  width: 36px;
+  height: 36px;
+}
+
+.especial__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  height: 24px;
+  padding-inline: var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: color-mix(in srgb, var(--color-secundario-sobre-barra) 18%, transparent);
+  color: var(--color-secundario-sobre-barra);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.especial__titulo {
+  margin: 0;
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.especial__texto {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+}
+
+.especial__buscador {
+  display: flex;
+  width: min(100%, 480px);
+  height: var(--alto-control-l);
+  overflow: hidden;
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+}
+
+.especial__buscador input {
+  flex: 1;
+  min-width: 0;
+  padding-inline: var(--espacio-4);
+  border: 0;
+  background: transparent;
+  color: var(--color-texto);
+  outline: none;
+}
+
+.especial__buscador button {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.especial__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+}
+
+.especial__acciones .boton--secundario {
+  border-color: var(--color-barra-borde);
+  background: none;
+  color: var(--color-sobre-destacado);
+}
+
+a.especial__acciones-enlace {
+  color: var(--color-sobre-destacado);
+}
+
+/* Accesos a categorías (404) */
+.especial__categorias {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--separacion-grilla);
+  margin-top: var(--espacio-8);
+}
+
+.especial__categoria {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  transition: border-color var(--transicion);
+}
+
+.especial__categoria:hover {
+  border-color: var(--color-acento);
+}
+
+.especial__categoria .icono {
+  color: var(--color-acento);
+}
+
+/* Mantenimiento: la página sola, sin header ni footer, centrada en la pantalla */
+.especial--mantenimiento {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding-block: var(--espacio-4);
+}
+
+.especial--mantenimiento .especial__panel {
+  width: 100%;
+  max-width: 640px;
+}
+
+.especial__logo {
+  width: 168px;
+  aspect-ratio: 563.6 / 103.6;
+  color: var(--color-sobre-destacado);
+}
+
+.especial__redes {
+  display: flex;
+  gap: var(--espacio-2);
+}
+
+.especial__redes a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-barra-borde);
+  border-radius: var(--radio-pill);
+  color: var(--color-sobre-destacado);
+}
+
+@media (min-width: 768px) {
+  .especial__panel {
+    padding: calc(var(--espacio-8) * 2) var(--espacio-8);
+  }
+
+  .especial__categorias {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

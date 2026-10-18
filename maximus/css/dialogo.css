@@ -58,6 +58,28 @@
   font-weight: var(--peso-fuerte);
 }
 
+.dialogo__titulo .icono {
+  margin-right: var(--espacio-2);
+  vertical-align: -0.2em;
+  color: var(--color-secundario-texto);
+}
+
+.dialogo__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.dialogo__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  margin: 0;
+  padding-left: var(--espacio-6);
+  font-size: var(--texto-s);
+  list-style: disc;
+}
+
 .dialogo__cuerpo {
   display: flex;
   flex-direction: column;

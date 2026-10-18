@@ -165,7 +165,7 @@ function iniciar() {
           <p class="producto__precio">${pesos(p.precio)}</p>
           <p class="producto__nota">Efectivo o transferencia</p>
         </div>
-        <p class="producto__cuotas">3 × ${cuota} <span class="producto__cuotas-nota">sin interés</span></p>
+        <p class="producto__cuotas">3 × ${cuota} <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
         <button class="boton-texto resultado-pc__ver" type="button" data-specs="${p.id}">${icono('i-ojo', 'icono icono--s')}Ver especificaciones</button>
         <button class="boton boton--primario producto__agregar" type="button" data-agregar-pc data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">${icono('i-carrito', 'icono icono--s')}<span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
       </div>
