@@ -4,15 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Tarjeta de producto</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/producto.css">
 </head>
 <body>
+<div class="mx">
 
   <!-- Vista previa del componente: la tarjeta en sus casos de datos y en los anchos en que se usa (fotos y nombres reales de Maximus, precios de ejemplo) -->
   <main class="contenedor" style="padding-block: 32px; display: grid; gap: var(--espacio-seccion);">
@@ -29,12 +32,12 @@
             <div class="producto__media">
               <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">MSI</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
               <div class="producto__precios">
@@ -43,7 +46,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $551.851 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -54,7 +57,7 @@
             <div class="producto__media">
               <img class="producto__img" src="recursos/productos/ryzen-7-9800x3d.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $110.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
@@ -67,7 +70,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $274.074 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -77,7 +80,7 @@
           <article class="producto">
             <div class="producto__media">
               <img class="producto__img" src="recursos/productos/logitech-g203.jpg" alt="" width="600" height="600">
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
@@ -90,7 +93,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $22.222 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -101,7 +104,7 @@
             <div class="producto__media">
               <img class="producto__img" src="recursos/productos/coolermaster-caliber-x2.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $60.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
@@ -114,7 +117,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas"></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -125,12 +128,12 @@
             <div class="producto__media">
               <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="true"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">MSI</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
               <div class="producto__precios">
@@ -139,7 +142,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $551.851 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -177,12 +180,12 @@
             <div class="producto__media">
               <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">MSI</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
               <div class="producto__precios">
@@ -191,7 +194,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $551.851 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -201,12 +204,12 @@
             <div class="producto__media">
               <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">MSI</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
               <div class="producto__precios">
@@ -215,7 +218,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $551.851 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -225,12 +228,12 @@
             <div class="producto__media">
               <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">MSI</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
               <div class="producto__precios">
@@ -239,7 +242,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $551.851 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -248,5 +251,6 @@
 
   </main>
 
+</div>
 </body>
 </html>

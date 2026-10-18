@@ -4,20 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Powered by MSI</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/carrusel.css">
   <link rel="stylesheet" href="css/producto.css">
   <link rel="stylesheet" href="css/productos.css">
   <link rel="stylesheet" href="css/msi.css">
-  <script type="module" src="js/carrusel.js"></script>
   <script type="module" src="js/msi.js"></script>
 </head>
 <body>
+<div class="mx">
 
   <!-- Plantilla de landing de marca, armada con Computadoras Powered by MSI (/POWEREDBYMSI en maximus.com.ar,
        relevado el 17/10/2026): las tres gamas (Essential, Advanced, Ultimate) con sus banners y tarjetas (las
@@ -27,7 +29,7 @@
        sitio; "Ver todas las gamas" vuelve a la vista general (js/msi.js). Página completa: powered-by-msi.html.
        Los subtítulos de las gamas ("Para arrancar a jugar…", "El equilibrio justo…", "Máximo rendimiento…") son de
        muestra, provisorios hasta tener los definitivos. -->
-  <main class="msi">
+  <main class="msi" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
@@ -46,30 +48,30 @@
           <p class="msi__bajada">PC armadas y testeadas por Maximus con hardware MSI. Elegí la gama que va con vos.</p>
         </div>
         <ul class="msi__claves">
-          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>Armadas y testeadas</li>
-          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg>12 meses de garantía</li>
-          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg>3 cuotas sin interés</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Armadas y testeadas</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-garantia"/></svg>12 meses de garantía</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-cuotas"/></svg>3 cuotas sin interés</li>
         </ul>
       </div>
     </header>
 
     <!-- Gamas: las tarjetas del sitio; cada una muestra solo su gama -->
     <nav class="contenedor gamas" aria-label="Gamas" data-gamas>
-      <a class="gama" href="?gama=essential" data-gama="essential">
+      <a class="gama" href="?gama=essential" data-gama="essential" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
         <img class="gama__img" src="recursos/msi/essential-tarjeta.webp" alt="" width="810" height="300" loading="lazy">
         <span class="gama__texto"><strong>Essential</strong>Para arrancar a jugar con hardware MSI.</span>
       </a>
-      <a class="gama" href="?gama=advanced" data-gama="advanced">
+      <a class="gama" href="?gama=advanced" data-gama="advanced" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
         <img class="gama__img" src="recursos/msi/advanced-tarjeta.webp" alt="" width="810" height="300" loading="lazy">
         <span class="gama__texto"><strong>Advanced</strong>El equilibrio justo entre precio y rendimiento.</span>
       </a>
-      <a class="gama" href="?gama=ultimate" data-gama="ultimate">
+      <a class="gama" href="?gama=ultimate" data-gama="ultimate" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
         <img class="gama__img" src="recursos/msi/ultimate-tarjeta.webp" alt="" width="810" height="300" loading="lazy">
         <span class="gama__texto"><strong>Ultimate</strong>Máximo rendimiento MSI, sin límites.</span>
       </a>
     </nav>
 
-    <a class="contenedor msi__todas" href="?" data-todas hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Ver todas las gamas</a>
+    <a class="contenedor msi__todas" href="?" data-todas hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Ver todas las gamas</a>
 
     <!-- Una sección por gama: banner, título y sus PC -->
     <section class="contenedor estante-msi" id="essential" aria-labelledby="essential-titulo" data-estante="essential">
@@ -85,8 +87,8 @@
           </div>
           <div class="seccion__acciones">
             <div class="carrusel__flechas">
-              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg></button>
-              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-derecha"/></svg></button>
+              <button class="boton-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
+              <button class="boton-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
             </div>
           </div>
         </div>
@@ -95,7 +97,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-05.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -107,7 +109,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $209.007 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -115,7 +117,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-21.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -127,7 +129,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $221.074 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -135,7 +137,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-02.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -147,7 +149,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $263.774 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -155,7 +157,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-01.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -167,7 +169,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $372.873 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -175,7 +177,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-04.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -187,7 +189,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $506.007 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -195,7 +197,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-03.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -207,7 +209,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $515.040 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -228,8 +230,8 @@
           </div>
           <div class="seccion__acciones">
             <div class="carrusel__flechas">
-              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg></button>
-              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-derecha"/></svg></button>
+              <button class="boton-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
+              <button class="boton-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
             </div>
           </div>
         </div>
@@ -238,7 +240,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-06.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -250,7 +252,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $408.640 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -258,7 +260,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-07.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -270,7 +272,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $622.910 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -278,7 +280,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-08.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -290,7 +292,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $652.910 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -298,7 +300,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-09.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -310,7 +312,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $936.076 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -318,7 +320,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-10.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -330,7 +332,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $1.047.243 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -351,8 +353,8 @@
           </div>
           <div class="seccion__acciones">
             <div class="carrusel__flechas">
-              <button class="btn-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg></button>
-              <button class="btn-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-derecha"/></svg></button>
+              <button class="boton-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
+              <button class="boton-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
             </div>
           </div>
         </div>
@@ -361,7 +363,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-18.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -373,7 +375,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $542.242 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -381,7 +383,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-17.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -393,7 +395,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $712.909 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -401,7 +403,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-11.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -413,7 +415,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $1.276.810 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -421,7 +423,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-14.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -433,7 +435,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $1.287.765 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -441,7 +443,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-12.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -453,7 +455,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $1.312.875 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -461,7 +463,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-16.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -473,7 +475,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $2.035.141 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -481,7 +483,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-15.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -493,7 +495,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $2.040.741 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -501,7 +503,7 @@
               <article class="producto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-19.jpg" alt="" width="600" height="600">
-                  <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -513,7 +515,7 @@
                     <p class="producto__nota">Efectivo o transferencia</p>
                   </div>
                   <p class="producto__cuotas">3 × $2.742.940 <span class="producto__cuotas-nota">sin interés</span></p>
-                  <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+                  <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
                 </div>
               </article>
             </li>
@@ -529,12 +531,13 @@
           <p>Contanos para qué vas a usar tu PC y te mostramos las que van con vos, o armala componente por componente.</p>
         </div>
         <div class="ayuda-msi__acciones">
-          <a class="btn btn--primario" href="tu-pc-ideal.html">Encontrar mi PC</a>
-          <a class="btn btn--secundario" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-armar"/></svg>Armá tu PC</a>
+          <a class="boton boton--primario" href="tu-pc-ideal.html">Encontrar mi PC</a>
+          <a class="boton boton--secundario" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-armar"/></svg>Armá tu PC</a>
         </div>
       </section>
     </div>
   </main>
 
+</div>
 </body>
 </html>

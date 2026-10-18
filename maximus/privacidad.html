@@ -4,16 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Política de privacidad</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/legal.css">
   <script type="module" src="js/legal.js"></script>
 </head>
 <body>
+<div class="mx">
 
   <!-- Plantilla de página legal (la de terminos.html) con la Política de privacidad (la abren el Centro de ayuda,
        Crear cuenta y los Términos). En maximus.com.ar es un párrafo del centro de ayuda (relevado el 17/10/2026):
@@ -21,7 +24,7 @@
        SRL puede modificarla. Acá se desarrolla con lo que pide la Ley 25.326 (responsable, finalidad, derechos y la
        leyenda de la Agencia de Acceso a la Información Pública). Es de muestra: antes de publicarla la tiene que
        revisar quien lleva lo legal. Página completa con header y footer: politica-de-privacidad.html. -->
-  <main class="legal">
+  <main class="legal" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
@@ -39,12 +42,12 @@
     </header>
 
     <!-- Solo en la vista previa: el texto es de muestra -->
-    <p class="contenedor legal__muestra" data-demo><span><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-alerta"/></svg>Texto de muestra armado con la política del sitio y la Ley 25.326. Antes de publicarlo lo tiene que revisar quien lleva lo legal.</span></p>
+    <p class="contenedor legal__muestra" data-demo><span><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Texto de muestra armado con la política del sitio y la Ley 25.326. Antes de publicarlo lo tiene que revisar quien lleva lo legal.</span></p>
 
     <div class="contenedor legal__cuerpo">
 
       <details class="indice" open data-indice>
-        <summary class="indice__cab">En esta página<svg class="icono icono--s indice__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <summary class="indice__cab">En esta página<svg class="icono icono--s indice__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
         <ol class="indice__lista">
           <li><a href="#responsable">Quién es responsable</a></li>
           <li><a href="#datos">Qué datos guardamos</a></li>
@@ -124,8 +127,8 @@
           <h2 class="documento__titulo" id="t-cambios"><span class="documento__num">9</span>Cambios en esta política</h2>
           <p>Grupo Maximus SRL puede actualizar esta política. Arriba vas a ver la fecha de la última actualización; si el cambio es importante, te avisamos por correo.</p>
           <div class="documento__contacto">
-            <a class="btn btn--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-whatsapp"/></svg>WhatsApp</a>
-            <a class="btn btn--secundario" href="terminos-y-condiciones.html">Términos y condiciones</a>
+            <a class="boton boton--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+            <a class="boton boton--secundario" href="terminos-y-condiciones.html">Términos y condiciones</a>
           </div>
         </section>
 
@@ -133,5 +136,6 @@
     </div>
   </main>
 
+</div>
 </body>
 </html>

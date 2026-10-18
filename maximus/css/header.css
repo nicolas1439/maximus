@@ -396,7 +396,8 @@ html:has(.menu--abierto) {
   transition: transform var(--transicion);
 }
 
-.catalogo__btn[aria-expanded="true"] .icono:last-child {
+.catalogo__btn[aria-expanded="true"] .icono:last-child,
+.catalogo__btn.abierto .icono:last-child {
   transform: rotate(180deg);
 }
 
@@ -449,7 +450,8 @@ html:has(.menu--abierto) {
   background: var(--color-fondo);
 }
 
-.catalogo__cat[aria-expanded="true"] + .catalogo__sub {
+.catalogo__cat[aria-expanded="true"] + .catalogo__sub,
+.catalogo__cat.abierto + .catalogo__sub {
   display: block;
   animation: catalogo-entrar var(--transicion);
 }
@@ -484,6 +486,10 @@ html:has(.menu--abierto) {
   font-size: var(--texto-s);
   font-weight: var(--peso-medio);
   white-space: nowrap;
+}
+
+a.catalogo__ver-todo {
+  color: var(--color-acento);
 }
 
 .catalogo__ver-todo:hover {
@@ -544,7 +550,8 @@ html:has(.menu--abierto) {
   display: none;
 }
 
-.menu__links a[aria-current="page"] {
+.menu__links a[aria-current="page"],
+.menu__links a.actual {
   color: var(--color-acento);
 }
 
@@ -571,11 +578,11 @@ html:has(.menu--abierto) {
 /* Botón de tema: muestra la luna en claro y el sol en oscuro */
 
 .tema__sol,
-[data-tema="oscuro"] .tema__luna {
+html.dark .tema__luna {
   display: none;
 }
 
-[data-tema="oscuro"] .tema__sol {
+html.dark .tema__sol {
   display: block;
 }
 
@@ -640,12 +647,12 @@ html:has(.menu--abierto) {
     color: var(--color-marca);
   }
 
-  .barra-sup__util .btn-icono {
+  .barra-sup__util .boton-icono {
     width: 32px;
     height: 32px;
   }
 
-  .barra-sup__util .btn-icono:hover {
+  .barra-sup__util .boton-icono:hover {
     background: var(--color-barra-hover);
   }
 
@@ -829,12 +836,14 @@ html:has(.menu--abierto) {
     font-size: var(--texto-s);
   }
 
-  .catalogo__cat[aria-expanded="true"] {
+  .catalogo__cat[aria-expanded="true"],
+  .catalogo__cat.abierto {
     background: var(--color-superficie);
     font-weight: var(--peso-medio);
   }
 
-  .catalogo__cat[aria-expanded="true"] > .icono:first-child {
+  .catalogo__cat[aria-expanded="true"] > .icono:first-child,
+  .catalogo__cat.abierto > .icono:first-child {
     color: var(--color-acento);
   }
 
@@ -850,7 +859,8 @@ html:has(.menu--abierto) {
     background: none;
   }
 
-  .catalogo__cat[aria-expanded="true"] + .catalogo__sub {
+  .catalogo__cat[aria-expanded="true"] + .catalogo__sub,
+  .catalogo__cat.abierto + .catalogo__sub {
     display: grid;
     grid-template-rows: minmax(0, 1fr);
     animation: none;
@@ -957,7 +967,8 @@ html:has(.menu--abierto) {
   }
 
   .menu__links a:hover::after,
-  .menu__links a[aria-current="page"]::after {
+  .menu__links a[aria-current="page"]::after,
+  .menu__links a.actual::after {
     opacity: 1;
     transform: none;
   }
@@ -1024,7 +1035,8 @@ html:has(.menu--abierto) {
   }
 
   /* Espacio promocional del mega menú: un tercio del panel de subcategorías (unas 2 columnas) */
-  .catalogo__cat[aria-expanded="true"] + .catalogo__sub {
+  .catalogo__cat[aria-expanded="true"] + .catalogo__sub,
+  .catalogo__cat.abierto + .catalogo__sub {
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     column-gap: var(--separacion-grilla);
   }
@@ -1043,6 +1055,10 @@ html:has(.menu--abierto) {
     background: var(--color-fondo-destacado);
     color: var(--color-sobre-destacado);
     font-size: var(--texto-s);
+  }
+
+  a.catalogo__promo {
+    color: var(--color-sobre-destacado);
   }
 
   .catalogo__promo-icono {

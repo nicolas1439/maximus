@@ -4,18 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Tu PC ideal</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/dialogo.css">
   <link rel="stylesheet" href="css/producto.css">
   <link rel="stylesheet" href="css/faq.css">
   <link rel="stylesheet" href="css/pc-ideal.css">
   <script type="module" src="js/pc-ideal.js"></script>
 </head>
 <body>
+<div class="mx">
 
   <!-- Plantilla Tu PC ideal (la abren "Encontrá tu PC ideal" del home y "Elegí tu PC en 3 pasos" del hero). Contenido de
        maximus.com.ar (/computadoraideal, relevado el 17/10/2026): el embudo en 3 pasos (para qué la vas a usar →
@@ -23,7 +27,7 @@
        nuestro taller a tu escritorio" y las preguntas frecuentes. En el sitio, cada uso tiene 5 PCs por nivel (y
        suplentes) que trae el backend con stock y precio; acá cada uso tiene 5 PC elegidas entre las armadas del home
        (datos de muestra) y las Powered by MSI del sitio (js/pc-ideal.js). Página completa con header y footer: tu-pc-ideal.html. -->
-  <main class="pc-ideal">
+  <main class="pc-ideal" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
@@ -42,16 +46,16 @@
           <h1 class="portada-pc__titulo" id="pc-titulo">Tu PC ideal <em>en 3 pasos</em></h1>
           <p class="portada-pc__bajada">Para jugar, crear o trabajar. Contanos qué necesitás y encontrá la PC que va con vos.</p>
           <div class="portada-pc__accion">
-            <a class="btn btn--primario" href="#elegir" data-empezar>Encontrar mi PC<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></a>
+            <a class="boton boton--primario" href="#elegir" data-empezar>Encontrar mi PC<svg class="icono icono--s" aria-hidden="true"><use href="#i-abajo"/></svg></a>
             <span class="portada-pc__nota">3 pasos · Sin registrarte</span>
           </div>
         </div>
         <img class="portada-pc__img" src="recursos/categorias/pc-armadas.webp" alt="" width="256" height="255">
         <ul class="portada-pc__claves">
-          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>Armadas y testeadas</li>
-          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg>12 meses de garantía</li>
-          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg>3 cuotas sin interés</li>
-          <li><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg>Envío a todo el país o retiro gratis</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Armadas y testeadas</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-garantia"/></svg>12 meses de garantía</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-cuotas"/></svg>3 cuotas sin interés</li>
+          <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-envio"/></svg>Envío a todo el país o retiro gratis</li>
         </ul>
       </section>
     </div>
@@ -61,10 +65,10 @@
       <div class="tarjeta quiz">
 
         <div class="quiz__cab">
-          <ol class="quiz__pasos" aria-label="Pasos">
-            <li class="quiz__paso" data-paso-ind="1" aria-current="step"><button class="quiz__paso-btn" type="button" data-volver-a="1"><span class="quiz__num"><span>1</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="quiz__nombre">Categoría</span></button></li>
-            <li class="quiz__paso" data-paso-ind="2"><button class="quiz__paso-btn" type="button" data-volver-a="2"><span class="quiz__num"><span>2</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="quiz__nombre">Uso</span></button></li>
-            <li class="quiz__paso" data-paso-ind="3"><button class="quiz__paso-btn" type="button" data-volver-a="3"><span class="quiz__num"><span>3</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="quiz__nombre">Presupuesto</span></button></li>
+          <ol class="pasos pasos--embudo" aria-label="Pasos">
+            <li class="pasos__paso" data-paso-ind="1" aria-current="step"><button class="pasos__enlace" type="button" data-volver-a="1"><span class="pasos__num"><span class="pasos__n">1</span><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Categoría</span></button></li>
+            <li class="pasos__paso" data-paso-ind="2"><button class="pasos__enlace" type="button" data-volver-a="2"><span class="pasos__num"><span class="pasos__n">2</span><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Uso</span></button></li>
+            <li class="pasos__paso" data-paso-ind="3"><button class="pasos__enlace" type="button" data-volver-a="3"><span class="pasos__num"><span class="pasos__n">3</span><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Presupuesto</span></button></li>
           </ol>
           <!-- Lo elegido, con un toque para cambiarlo -->
           <div class="quiz__elegido" data-elegido hidden></div>
@@ -88,7 +92,7 @@
             <p class="quiz__bajada">Elegí la opción que mejor se acerque a lo que hacés.</p>
           </div>
           <div class="opciones-pc opciones-pc--usos" data-usos></div>
-          <button class="quiz__volver" type="button" data-volver-a="1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Cambiar categoría</button>
+          <button class="quiz__volver" type="button" data-volver-a="1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Cambiar categoría</button>
         </div>
 
         <!-- Paso 3 -->
@@ -100,31 +104,31 @@
             <p class="quiz__bajada">Estos valores se calculan con el precio en efectivo o transferencia de las PC disponibles.</p>
           </div>
           <div class="opciones-pc opciones-pc--presupuestos" data-presupuestos></div>
-          <button class="quiz__volver" type="button" data-volver-a="2"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Cambiar uso</button>
+          <button class="quiz__volver" type="button" data-volver-a="2"><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Cambiar uso</button>
         </div>
 
         <!-- Resultado -->
         <div class="quiz__vista" data-vista="resultado" hidden>
           <div class="quiz__textos">
-            <p class="quiz__rotulo quiz__rotulo--listo"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>Tu selección está lista</p>
+            <p class="quiz__rotulo quiz__rotulo--listo"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Tu selección está lista</p>
             <h2 class="quiz__titulo" tabindex="-1">Estas PC van con vos</h2>
             <p class="quiz__bajada" data-resultado-bajada></p>
             <p class="quiz__pensadas" data-pensadas></p>
           </div>
           <ul class="resultado-pc" data-resultado></ul>
           <div class="quiz__acciones">
-            <button class="btn btn--secundario" type="button" data-volver-a="3"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Cambiar presupuesto</button>
-            <button class="btn-texto btn-texto--suave" type="button" data-volver-a="1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-reloj"/></svg>Empezar de nuevo</button>
+            <button class="boton boton--secundario" type="button" data-volver-a="3"><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Cambiar presupuesto</button>
+            <button class="boton-texto boton-texto--suave" type="button" data-volver-a="1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-reloj"/></svg>Empezar de nuevo</button>
           </div>
           <div class="asesor">
-            <svg class="icono asesor__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-whatsapp"/></svg>
+            <svg class="icono asesor__icono" aria-hidden="true"><use href="#i-whatsapp"/></svg>
             <p><strong>¿Dudás entre dos PC?</strong> Te ayudamos a elegir o a ajustar la configuración.</p>
-            <a class="btn btn--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener" data-asesor>Consultar con un asesor</a>
+            <a class="boton boton--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener" data-asesor>Consultar con un asesor</a>
           </div>
         </div>
 
         <div class="quiz__pie">
-          <p><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>Elegís el uso. Nosotros seleccionamos las PC.</p>
+          <p><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Elegís el uso. Nosotros seleccionamos las PC.</p>
           <a href="https://wa.me/541123575522" target="_blank" rel="noopener">¿Necesitás ayuda?</a>
         </div>
 
@@ -133,8 +137,8 @@
     </section>
 
     <!-- Especificaciones de una PC ("Ver especificaciones"): las arma js/pc-ideal.js -->
-    <dialog class="specs-pc" aria-labelledby="specs-pc-nombre" data-specs-pc>
-      <div class="specs-pc__caja">
+    <dialog class="dialogo dialogo--hoja specs-pc" aria-labelledby="specs-pc-nombre" data-specs-pc>
+      <div class="dialogo__caja">
         <div class="specs-pc__cab">
           <span class="specs-pc__media"><img data-specs-img src="" alt="" width="600" height="600"></span>
           <div class="specs-pc__datos">
@@ -142,13 +146,13 @@
             <h2 class="specs-pc__nombre" id="specs-pc-nombre" data-specs-nombre></h2>
             <p class="specs-pc__precio" data-specs-precio></p>
           </div>
-          <button class="btn-icono" type="button" data-cerrar-specs aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cerrar"/></svg></button>
+          <button class="boton-icono" type="button" data-cerrar-specs aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
         </div>
         <dl class="specs-pc__lista" data-specs-lista></dl>
-        <p class="specs-pc__nota"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg>Armada y testeada por Maximus, con 12 meses de garantía. Especificaciones de muestra, sacadas del nombre de la PC.</p>
-        <div class="specs-pc__pie">
-          <button class="btn btn--secundario" type="button" data-cerrar-specs>Volver</button>
-          <button class="btn btn--primario" type="button" data-specs-agregar><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg>Agregar al carrito</button>
+        <p class="specs-pc__nota"><svg class="icono icono--s" aria-hidden="true"><use href="#i-garantia"/></svg>Armada y testeada por Maximus, con 12 meses de garantía. Especificaciones de muestra, sacadas del nombre de la PC.</p>
+        <div class="dialogo__pie">
+          <button class="boton boton--secundario" type="button" data-cerrar-specs>Volver</button>
+          <button class="boton boton--primario" type="button" data-specs-agregar><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar al carrito</button>
         </div>
       </div>
     </dialog>
@@ -159,13 +163,13 @@
         <p class="taller__rotulo">De nuestro taller a tu escritorio</p>
         <h2 class="seccion__titulo" id="taller-titulo">Vos ponés las ganas. Nosotros, la PC.</h2>
         <p class="seccion__bajada">La recibís armada y testeada, con el respaldo de personas que saben de hardware.</p>
-        <a class="seccion__enlace" href="https://wa.me/541123575522" target="_blank" rel="noopener">Hablá con nuestro equipo<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
+        <a class="seccion__enlace" href="https://wa.me/541123575522" target="_blank" rel="noopener">Hablá con nuestro equipo<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
       </div>
       <ul class="taller__lista">
-        <li class="taller__item"><span class="taller__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><h3>Armada y testeada</h3><p>Revisamos el equipo antes de que salga de nuestro taller.</p></li>
-        <li class="taller__item"><span class="taller__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-rayo"/></svg></span><h3>Lista para empezar</h3><p>Con Windows 11 instalado (versión gratuita, sin licencia). La encendés y la usás.</p></li>
-        <li class="taller__item"><span class="taller__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg></span><h3>Respaldo Maximus</h3><p>12 meses de garantía oficial y asesoramiento después de comprar.</p></li>
-        <li class="taller__item"><span class="taller__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-tienda"/></svg></span><h3>También en persona</h3><p>Showroom en Galería Jardín y punto de retiro en Floresta, CABA.</p></li>
+        <li class="taller__item"><span class="taller__icono"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><h3>Armada y testeada</h3><p>Revisamos el equipo antes de que salga de nuestro taller.</p></li>
+        <li class="taller__item"><span class="taller__icono"><svg class="icono" aria-hidden="true"><use href="#i-rayo"/></svg></span><h3>Lista para empezar</h3><p>Con Windows 11 instalado (versión gratuita, sin licencia). La encendés y la usás.</p></li>
+        <li class="taller__item"><span class="taller__icono"><svg class="icono" aria-hidden="true"><use href="#i-garantia"/></svg></span><h3>Respaldo Maximus</h3><p>12 meses de garantía oficial y asesoramiento después de comprar.</p></li>
+        <li class="taller__item"><span class="taller__icono"><svg class="icono" aria-hidden="true"><use href="#i-tienda"/></svg></span><h3>También en persona</h3><p>Showroom en Galería Jardín y punto de retiro en Floresta, CABA.</p></li>
       </ul>
     </section>
 
@@ -175,36 +179,36 @@
         <h2 class="seccion__titulo" id="faq-pc-titulo">Antes de elegir</h2>
         <p class="faq__bajada">Lo que necesitás saber para dar el próximo paso con confianza.</p>
         <div class="faq__acciones">
-          <a class="btn btn--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-whatsapp"/></svg>Escribinos por WhatsApp</a>
+          <a class="boton boton--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Escribinos por WhatsApp</a>
         </div>
       </div>
       <div class="faq__lista">
-        <details class="faq__item" name="faq-pc">
-          <summary class="faq__pregunta">¿Qué incluye la PC?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <details class="faq__item plegable" name="faq-pc">
+          <summary class="faq__pregunta">¿Qué incluye la PC?<svg class="icono faq__icono" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
           <div class="faq__respuesta"><p>El gabinete con sus componentes, armado y testeado por nuestros técnicos, con Windows 11 instalado (versión gratuita, sin licencia). Salvo que la publicación diga otra cosa, el monitor y los periféricos se compran aparte.</p></div>
         </details>
-        <details class="faq__item" name="faq-pc">
-          <summary class="faq__pregunta">¿Las PC vienen con Windows?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <details class="faq__item plegable" name="faq-pc">
+          <summary class="faq__pregunta">¿Las PC vienen con Windows?<svg class="icono faq__icono" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
           <div class="faq__respuesta"><p>Sí, todas vienen con Windows 11 instalado y listas para usar. Es la versión original de Microsoft sin licencia: no tiene límite de uso, pero queda sin activar, así que vas a ver el aviso de activación y algunas opciones de personalización deshabilitadas. Si querés la licencia original, escribinos y te pasamos las que tengamos en stock.</p></div>
         </details>
-        <details class="faq__item" name="faq-pc">
-          <summary class="faq__pregunta">¿En cuánto tiempo la despachan?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <details class="faq__item plegable" name="faq-pc">
+          <summary class="faq__pregunta">¿En cuánto tiempo la despachan?<svg class="icono faq__icono" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
           <div class="faq__respuesta"><p>Las PC armadas salen en 24 a 48 horas hábiles desde que se acredita el pago; las PC para armar, en 48 a 72 horas hábiles. A eso se suma el tiempo del envío que elijas.</p></div>
         </details>
-        <details class="faq__item" name="faq-pc">
-          <summary class="faq__pregunta">¿Cómo puedo pagar?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <details class="faq__item plegable" name="faq-pc">
+          <summary class="faq__pregunta">¿Cómo puedo pagar?<svg class="icono faq__icono" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
           <div class="faq__respuesta"><p>Con descuento por transferencia, depósito o efectivo, y en 3 cuotas sin interés o hasta 24 cuotas fijas con Mercado Pago. En cada ficha están el precio y las opciones de pago.</p></div>
         </details>
-        <details class="faq__item" name="faq-pc">
-          <summary class="faq__pregunta">¿Qué garantía tienen?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <details class="faq__item plegable" name="faq-pc">
+          <summary class="faq__pregunta">¿Qué garantía tienen?<svg class="icono faq__icono" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
           <div class="faq__respuesta"><p>Todas las PC armadas por Maximus tienen 12 meses de garantía oficial, y asesoramiento antes y después de tu compra.</p></div>
         </details>
-        <details class="faq__item" name="faq-pc">
-          <summary class="faq__pregunta">¿Hacen envíos? ¿Puedo retirar?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <details class="faq__item plegable" name="faq-pc">
+          <summary class="faq__pregunta">¿Hacen envíos? ¿Puedo retirar?<svg class="icono faq__icono" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
           <div class="faq__respuesta"><p>Enviamos con OCA a todo el país, salvo Tierra del Fuego. También podés retirar sin cargo en Galería Jardín o en Floresta, en CABA.</p></div>
         </details>
-        <details class="faq__item" name="faq-pc">
-          <summary class="faq__pregunta">¿Puedo cambiar componentes?<svg class="icono faq__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <details class="faq__item plegable" name="faq-pc">
+          <summary class="faq__pregunta">¿Puedo cambiar componentes?<svg class="icono faq__icono" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
           <div class="faq__respuesta"><p>Escribinos por WhatsApp para consultar otra configuración, o elegí cada componente con <a href="arma-tu-pc.html">Armá tu PC</a>.</p></div>
         </details>
       </div>
@@ -217,13 +221,14 @@
         <p class="cierre-pc__rotulo">El próximo paso es tuyo</p>
         <h2 class="cierre-pc__titulo" id="cierre-pc-titulo">Encontrá la PC para eso que tenés en mente</h2>
         <div class="cierre-pc__acciones">
-          <a class="btn btn--primario" href="#elegir" data-empezar>Encontrar mi PC</a>
-          <a class="btn cierre-pc__btn" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-armar"/></svg>Prefiero armarla</a>
+          <a class="boton boton--primario" href="#elegir" data-empezar>Encontrar mi PC</a>
+          <a class="boton cierre-pc__btn" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-armar"/></svg>Prefiero armarla</a>
         </div>
       </section>
     </div>
 
   </main>
 
+</div>
 </body>
 </html>

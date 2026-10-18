@@ -4,7 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Ajustes del hover de Productos</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
   <style>
     /* Herramienta de ajuste: el header de arriba es el real (header.html con su CSS y JS);
        los controles cambian en vivo las variables del efecto y muestran los valores para pasar a los archivos. */
@@ -122,12 +127,12 @@
       margin-block: var(--espacio-3) var(--espacio-2);
     }
 
-    .btn--borde {
+    .boton--borde {
       border: 1px solid var(--color-borde);
       transition: background-color var(--transicion);
     }
 
-    .btn--borde:hover {
+    .boton--borde:hover {
       background: var(--color-superficie);
     }
 
@@ -151,6 +156,7 @@
   </style>
 </head>
 <body>
+<div class="mx">
 
   <!-- Header real, desde su archivo: el botón Productos es el de verdad, con su CSS y su JS -->
   <div data-incluir="header.html"></div>
@@ -200,19 +206,17 @@
       const v = getComputedStyle(raiz).getPropertyValue('--sombra-interior');
       return parseFloat(v.match(/\/\s*([\d.]+)/)?.[1] ?? 0);
     };
-    const temaInicial = raiz.dataset.tema;
+    const temaInicial = raiz.classList.contains('dark');
     const base = {};
     for (const it of items) {
       if (it.en === 'raiz') base[it.id] = getComputedStyle(raiz).getPropertyValue(it.variable).trim();
       if (it.en === 'boton') base[it.id] = parseFloat(getComputedStyle(boton).getPropertyValue(it.variable));
       if (it.en === 'sombra') {
-        if (it.tema === 'oscuro') raiz.dataset.tema = 'oscuro';
-        else delete raiz.dataset.tema;
+        raiz.classList.toggle('dark', it.tema === 'oscuro');
         base[it.id] = leerSombra();
       }
     }
-    if (temaInicial) raiz.dataset.tema = temaInicial;
-    else delete raiz.dataset.tema;
+    raiz.classList.toggle('dark', temaInicial);
 
     // ---------- Estado ----------
     let valores = { ...base };
@@ -221,7 +225,7 @@
       if (guardado) valores = { ...base, ...guardado };
     } catch {}
 
-    const temaActual = () => (raiz.dataset.tema === 'oscuro' ? 'oscuro' : 'claro');
+    const temaActual = () => (raiz.classList.contains('dark') ? 'oscuro' : 'claro');
 
     function aplicar() {
       for (const it of items) {
@@ -238,7 +242,7 @@
     }
 
     // Al cambiar el tema desde el header, la sombra toma la intensidad de ese tema
-    new MutationObserver(aplicar).observe(raiz, { attributes: true, attributeFilter: ['data-tema'] });
+    new MutationObserver(aplicar).observe(raiz, { attributes: true, attributeFilter: ['class'] });
 
     function textoValores() {
       const v = valores;
@@ -248,7 +252,7 @@
         `--color-esmeralda: ${v.esmeralda};`,
         `--color-violeta: ${v.violeta};`,
         `--sombra-interior: rgb(0 0 0 / ${v['sombra-claro']}); /* :root (modo claro) */`,
-        `--sombra-interior: rgb(0 0 0 / ${v['sombra-oscuro']}); /* [data-tema="oscuro"] */`,
+        `--sombra-interior: rgb(0 0 0 / ${v['sombra-oscuro']}); /* html.dark */`,
         '',
         '/* css/header.css (.catalogo__btn) */',
         `--luz-radio: ${v.radio}px;`,
@@ -298,8 +302,8 @@
       <h2>Valores para los archivos</h2>
       <textarea readonly spellcheck="false" aria-label="Valores resultantes"></textarea>
       <div class="valores__acciones">
-        <button class="btn btn--primario" type="button" data-copiar>Copiar</button>
-        <button class="btn btn--borde" type="button" data-restablecer>Volver a los valores de los archivos</button>
+        <button class="boton boton--primario" type="button" data-copiar>Copiar</button>
+        <button class="boton boton--borde" type="button" data-restablecer>Volver a los valores de los archivos</button>
       </div>
       <p class="valores__aviso">El retraso nuevo se aplica al volver a entrar al botón.</p>`;
     contenedor.append(valoresSeccion);
@@ -333,5 +337,6 @@
     mostrar();
     aplicar();
   </script>
+</div>
 </body>
 </html>

@@ -4,16 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Términos y condiciones</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/legal.css">
   <script type="module" src="js/legal.js"></script>
 </head>
 <body>
+<div class="mx">
 
   <!-- Plantilla de página legal, con Términos y condiciones (la abren el footer, el Centro de ayuda, Crear cuenta y el
        último paso del checkout). maximus.com.ar no tiene el texto publicado ("disponible en el documento
@@ -21,7 +24,7 @@
        y la Ley 24.240, sin cambiarlas. Es de muestra: antes de publicarlo lo tiene que revisar quien lleva lo legal.
        La misma plantilla (css/legal.css, js/legal.js) arma la Política de privacidad (privacidad.html).
        Página completa con header y footer: terminos-y-condiciones.html. -->
-  <main class="legal">
+  <main class="legal" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
@@ -39,12 +42,12 @@
     </header>
 
     <!-- Solo en la vista previa: el texto es de muestra -->
-    <p class="contenedor legal__muestra" data-demo><span><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-alerta"/></svg>Texto de muestra armado con las políticas del Centro de ayuda. Antes de publicarlo lo tiene que revisar quien lleva lo legal.</span></p>
+    <p class="contenedor legal__muestra" data-demo><span><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Texto de muestra armado con las políticas del Centro de ayuda. Antes de publicarlo lo tiene que revisar quien lleva lo legal.</span></p>
 
     <div class="contenedor legal__cuerpo">
 
       <details class="indice" open data-indice>
-        <summary class="indice__cab">En esta página<svg class="icono icono--s indice__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <summary class="indice__cab">En esta página<svg class="icono icono--s indice__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
         <ol class="indice__lista">
           <li><a href="#generales">Generalidades</a></li>
           <li><a href="#cuenta">Tu cuenta</a></li>
@@ -174,8 +177,8 @@
           <h2 class="documento__titulo" id="t-contacto"><span class="documento__num">13</span>Contacto y reclamos</h2>
           <p>Ante cualquier consulta o reclamo, escribinos y lo resolvemos. Si no quedás conforme, podés recurrir a <a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor" target="_blank" rel="noopener">Defensa del Consumidor</a>.</p>
           <div class="documento__contacto">
-            <a class="btn btn--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-whatsapp"/></svg>WhatsApp</a>
-            <a class="btn btn--secundario" href="centro-de-ayuda.html#contacto">Escribinos</a>
+            <a class="boton boton--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+            <a class="boton boton--secundario" href="centro-de-ayuda.html#contacto">Escribinos</a>
           </div>
         </section>
 
@@ -183,5 +186,6 @@
     </div>
   </main>
 
+</div>
 </body>
 </html>

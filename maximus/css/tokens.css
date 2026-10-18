@@ -1,4 +1,4 @@
-/* Tokens de Maximus. Modo claro por defecto; el oscuro se activa con data-tema="oscuro" en <html>. */
+/* Tokens de Maximus. Modo claro por defecto; el oscuro se activa con la clase dark en <html> (la preferencia va en localStorage, clave darkmode: "true" / "false", la que ya usa el sitio). */
 
 :root {
   color-scheme: light;
@@ -62,11 +62,17 @@
   --color-sobre-imagen: #5d636a; /* íconos sobre la foto (favorito) */
   --color-favorito: #ff3040; /* corazón al pasar el mouse y marcado: el rojo del "me gusta" de Instagram */
 
-  /* Estados (pedidos, garantías, avisos): se usan en puntos, íconos y fondos tenues; el texto queda en --color-texto */
+  /* Estados (pedidos, garantías, avisos): se usan en puntos, íconos y fondos tenues; el texto queda en --color-texto,
+     salvo los mensajes de error e informativos (--color-error-texto, --color-info-texto) */
   --color-exito: var(--color-marca);
   --color-aviso: #f5a524; /* pendiente: falta una acción del cliente */
   --color-info: #3b82f6; /* en proceso */
   --color-error: #e5484d; /* cancelado o rechazado */
+  /* Versiones con contraste (WCAG AA) para usar como color de texto (4,5:1) y de ícono (3:1) sobre fondo, fondo
+     suave y superficie. Los de arriba quedan para puntos, bordes y fondos tenues */
+  --color-error-texto: #c62d33;
+  --color-info-texto: #1d5fd6;
+  --color-aviso-icono: #c47a0a;
 
   /* Tipografía: Roboto, la actual de Maximus (puede cambiar más adelante) */
   --fuente-base: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -118,7 +124,7 @@
   --transicion-muy-lenta: var(--duracion-muy-lenta) ease;
 }
 
-[data-tema="oscuro"] {
+html.dark {
   color-scheme: dark;
 
   --color-acento: #16e000;
@@ -134,6 +140,9 @@
   --color-barra: #070808;
   --color-fondo-destacado: #171a1d;
   --color-capa: rgb(0 0 0 / 0.65);
+  --color-error-texto: #ef6166;
+  --color-info-texto: #3b82f6;
+  --color-aviso-icono: #f5a524;
   --sombra: 0 6px 20px rgb(0 0 0 / 0.5);
   --sombra-interior: rgb(0 0 0 / 0.19);
 

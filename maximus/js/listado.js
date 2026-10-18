@@ -191,7 +191,7 @@ function armarGrupos() {
     const valores = [...new Set(items.map((i) => i.datos[grupo.clave]))].sort(grupo.orden);
     details.querySelector('.filtro__opciones').innerHTML = valores
       .map(
-        (v) => `<li><label class="opcion"><input class="sr-only" type="checkbox" name="${grupo.clave}" value="${escapar(v)}"><span class="opcion__caja"></span><span class="opcion__texto">${escapar(textoDe(grupo, v))}</span><span class="opcion__cuenta"></span></label></li>`
+        (v) => `<li><label class="filtro-opcion"><input class="sr-only" type="checkbox" name="${grupo.clave}" value="${escapar(v)}"><span class="filtro-opcion__caja"></span><span class="filtro-opcion__texto">${escapar(textoDe(grupo, v))}</span><span class="filtro-opcion__cuenta"></span></label></li>`
       )
       .join('');
 
@@ -229,9 +229,9 @@ function pintarFiltros() {
       const n = base.filter((i) => i.datos[grupo.clave] === input.value).length;
       input.checked = estado.grupos[grupo.clave].has(input.value);
       input.disabled = n === 0 && !input.checked;
-      const opcion = input.closest('.opcion');
-      opcion.querySelector('.opcion__cuenta').textContent = n;
-      opcion.classList.toggle('opcion--sin', input.disabled);
+      const opcion = input.closest('.filtro-opcion');
+      opcion.querySelector('.filtro-opcion__cuenta').textContent = n;
+      opcion.classList.toggle('filtro-opcion--sin', input.disabled);
       if (input.checked && input.closest('li').hidden) elegidoEscondido = true;
     });
     // Si eligió algo que estaba detrás del "Ver más", el grupo se despliega
@@ -279,7 +279,7 @@ function pintarActivos() {
   for (const { texto, quitar } of lista) {
     const li = document.createElement('li');
     li.className = 'activo';
-    li.innerHTML = `${escapar(texto)}<button class="activo__quitar" type="button" aria-label="Quitar filtro ${escapar(texto)}"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cerrar"/></svg></button>`;
+    li.innerHTML = `${escapar(texto)}<button class="activo__quitar" type="button" aria-label="Quitar filtro ${escapar(texto)}"><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>`;
     li.querySelector('button').addEventListener('click', () => {
       quitar();
       aplicar();

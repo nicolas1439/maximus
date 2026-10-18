@@ -1,13 +1,12 @@
 /* Preguntas frecuentes del home: intro (título, bajada y acciones) y acordeón nativo (details/summary).
-   Con name="faq" se abre de a una. La altura de la respuesta se anima donde el navegador lo soporta
-   (interpolate-size); en el resto, abre y cierra al instante.
+   Con name="faq" se abre de a una. La altura de la respuesta se anima con .plegable (base.css)
+   donde el navegador lo soporta; en el resto, abre y cierra al instante.
    Mobile/tablet: en columna. Escritorio: la intro ocupa las 2 columnas laterales de la grilla de 8 (y queda
    fija al hacer scroll) y el acordeón (o .faq__cuerpo, cuando hay más contenido además del acordeón) las 6 restantes. */
 
 .faq {
   display: grid;
   gap: var(--espacio-6);
-  interpolate-size: allow-keywords;
 }
 
 .faq__bajada {
@@ -54,12 +53,9 @@
   transition: color var(--transicion);
 }
 
-.faq__pregunta::-webkit-details-marker {
-  display: none;
-}
-
 .faq__pregunta:hover,
-.faq__item[open] .faq__pregunta {
+.faq__item[open] .faq__pregunta,
+.faq__item.abierto .faq__pregunta {
   color: var(--color-acento);
 }
 
@@ -75,20 +71,11 @@
   transition: transform var(--transicion), background-color var(--transicion), color var(--transicion);
 }
 
-.faq__item[open] .faq__icono {
+.faq__item[open] .faq__icono,
+.faq__item.abierto .faq__icono {
   transform: rotate(180deg);
   background: var(--color-marca);
   color: var(--color-sobre-marca);
-}
-
-.faq__item::details-content {
-  height: 0;
-  overflow: clip;
-  transition: height var(--transicion), content-visibility var(--transicion) allow-discrete;
-}
-
-.faq__item[open]::details-content {
-  height: auto;
 }
 
 .faq__respuesta {
@@ -124,16 +111,6 @@
   flex-direction: column;
 }
 
-.faq__resto::details-content {
-  height: 0;
-  overflow: clip;
-  transition: height var(--transicion), content-visibility var(--transicion) allow-discrete;
-}
-
-.faq__resto[open]::details-content {
-  height: auto;
-}
-
 .faq__mas {
   order: 1;
   display: inline-flex;
@@ -148,28 +125,28 @@
   list-style: none;
 }
 
-.faq__mas::-webkit-details-marker {
-  display: none;
-}
-
 .faq__mas .icono {
   transition: transform var(--transicion);
 }
 
-.faq__resto[open] > .faq__mas .icono {
+.faq__resto[open] > .faq__mas .icono,
+.faq__resto.abierto > .faq__mas .icono {
   transform: rotate(180deg);
 }
 
 .faq__mas-menos,
-.faq__resto[open] > .faq__mas .faq__mas-mas {
+.faq__resto[open] > .faq__mas .faq__mas-mas,
+.faq__resto.abierto > .faq__mas .faq__mas-mas {
   display: none;
 }
 
-.faq__resto[open] > .faq__mas .faq__mas-menos {
+.faq__resto[open] > .faq__mas .faq__mas-menos,
+.faq__resto.abierto > .faq__mas .faq__mas-menos {
   display: inline;
 }
 
-.faq__resto[open] > .faq__mas {
+.faq__resto[open] > .faq__mas,
+.faq__resto.abierto > .faq__mas {
   margin-top: var(--espacio-2);
 }
 

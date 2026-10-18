@@ -137,7 +137,8 @@
 }
 
 /* Con una gama elegida, la suya queda marcada y las otras se apagan */
-.gama[aria-current] {
+.gama[aria-current],
+.gama.actual {
   border-color: var(--color-marca);
   box-shadow: 0 0 0 1px var(--color-marca);
 }
@@ -158,6 +159,10 @@
   color: var(--color-acento);
   font-size: var(--texto-s);
   font-weight: var(--peso-medio);
+}
+
+a.msi__todas {
+  color: var(--color-acento);
 }
 
 .msi__todas[hidden] {

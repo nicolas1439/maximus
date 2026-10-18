@@ -29,6 +29,10 @@
   color: var(--color-sobre-destacado);
 }
 
+a.hero__tarjeta {
+  color: var(--color-sobre-destacado);
+}
+
 /* Carrusel principal: todo el ancho en mobile; en escritorio, la columna central */
 .hero__principal {
   grid-column: 1 / -1;
@@ -152,11 +156,11 @@
 }
 
 .hero__tarjeta:hover .hero__cta .icono,
-.hero__tarjeta:hover .btn .icono {
+.hero__tarjeta:hover .boton .icono {
   transform: translateX(3px);
 }
 
-.hero__tarjeta:hover .btn--primario {
+.hero__tarjeta:hover .boton--primario {
   background: var(--color-marca-hover);
 }
 

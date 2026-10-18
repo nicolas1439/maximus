@@ -83,6 +83,10 @@
   transition: border-color var(--transicion), background-color var(--transicion);
 }
 
+a.portada-nos__btn {
+  color: var(--color-sobre-destacado);
+}
+
 .portada-nos__btn:hover {
   border-color: var(--color-marca);
   background: var(--color-barra-hover);
@@ -486,7 +490,7 @@
   font-size: var(--texto-s);
 }
 
-.equipo .btn {
+.equipo .boton {
   max-width: 100%;
   margin-top: auto;
 }

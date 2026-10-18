@@ -276,7 +276,7 @@ function marcar(control, mensaje) {
     (control.closest('.selector') || control).after(nota);
     control.setAttribute('aria-describedby', nota.id);
   }
-  nota.innerHTML = `<svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-alerta"/></svg><span>${mensaje}</span>`;
+  nota.innerHTML = `<svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg><span>${mensaje}</span>`;
   control.setAttribute('aria-invalid', 'true');
 }
 

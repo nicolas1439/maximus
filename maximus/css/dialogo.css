@@ -1,0 +1,134 @@
+/* Diálogo: caja sobre una capa oscura, con un fundido corto al abrir. Abierto: [open] (showModal) o la clase
+   .abierto. El ancho y el alto máximos salen de --dialogo-ancho y --dialogo-alto; cada diálogo pone los suyos.
+   Partes: .dialogo__caja (el contenido en columna, con scroll propio donde haga falta), .dialogo__cab con
+   .dialogo__titulo, .dialogo__cuerpo, .dialogo__acciones, .dialogo__cerrar y .dialogo__pie (las acciones fijas al pie).
+   Variantes: .dialogo--hoja sube desde abajo en celular (Armá tu PC y Tu PC ideal); .dialogo--chico es el
+   centrado, con borde y sombra suave (subir comprobante en Mi cuenta). */
+
+.dialogo {
+  --dialogo-ancho: 640px;
+  --dialogo-alto: 760px;
+  width: min(100% - 2 * var(--margen-lateral), var(--dialogo-ancho));
+  max-width: none;
+  max-height: min(88vh, var(--dialogo-alto));
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.35);
+}
+
+.dialogo::backdrop {
+  background: var(--color-capa);
+  backdrop-filter: blur(2px);
+}
+
+.dialogo:is([open], .abierto) {
+  animation: dialogo-entrar var(--transicion) both;
+}
+
+@keyframes dialogo-entrar {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+}
+
+.dialogo__caja {
+  display: flex;
+  flex-direction: column;
+  max-height: inherit;
+}
+
+.dialogo__cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-2) var(--espacio-3) var(--espacio-4);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.dialogo__titulo {
+  margin: 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+}
+
+.dialogo__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding: var(--espacio-4);
+}
+
+.dialogo__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--espacio-2);
+}
+
+.dialogo__acciones .boton:is([disabled], .deshabilitado) {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.dialogo__cerrar {
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.dialogo__pie {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4) max(var(--espacio-3), env(safe-area-inset-bottom));
+  border-top: 1px solid var(--color-borde);
+  background: var(--color-fondo);
+}
+
+/* Centrado y chico, con borde y sombra suave */
+.dialogo--chico {
+  --dialogo-ancho: 480px;
+  width: min(100% - 2 * var(--espacio-4), var(--dialogo-ancho));
+  max-width: calc(100% - 6px - 2em); /* el del navegador */
+  max-height: calc(100dvh - 2 * var(--espacio-4));
+  overflow: auto;
+  border: 1px solid var(--color-borde);
+  box-shadow: var(--sombra);
+}
+
+.dialogo--chico::backdrop {
+  backdrop-filter: none;
+}
+
+@media (max-width: 767px) {
+  .dialogo--hoja {
+    width: 100%;
+    max-height: 92vh;
+    margin: auto 0 0;
+    border-radius: var(--radio-l) var(--radio-l) 0 0;
+  }
+
+  .dialogo--hoja:is([open], .abierto) {
+    animation-name: dialogo-subir;
+  }
+}
+
+@keyframes dialogo-subir {
+  from {
+    translate: 0 40%;
+  }
+}
+
+@media (min-width: 768px) {
+  .dialogo__pie {
+    grid-template-columns: auto auto;
+    justify-content: end;
+    padding-inline: var(--espacio-6);
+  }
+}

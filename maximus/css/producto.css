@@ -83,13 +83,15 @@
 }
 
 .producto__favorito:hover,
-.producto__favorito[aria-pressed="true"] {
+.producto__favorito[aria-pressed="true"],
+.producto__favorito.marcado {
   background: none;
   color: var(--color-favorito);
 }
 
 .producto__favorito:hover .icono,
-.producto__favorito[aria-pressed="true"] .icono {
+.producto__favorito[aria-pressed="true"] .icono,
+.producto__favorito.marcado .icono {
   fill: currentColor;
 }
 

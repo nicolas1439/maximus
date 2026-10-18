@@ -71,27 +71,27 @@
 }
 
 /* Cuenta regresiva: cuatro casillas translúcidas */
-.cuenta {
+.regresiva {
   display: flex;
   flex-direction: column;
   gap: var(--espacio-3);
 }
 
-.cuenta__rotulo,
-.cuenta__fecha {
+.regresiva__rotulo,
+.regresiva__fecha {
   margin: 0;
   color: var(--color-sobre-barra-suave);
   font-size: var(--texto-xs);
 }
 
-.cuenta__rotulo {
+.regresiva__rotulo {
   color: var(--color-secundario-sobre-barra);
   font-weight: var(--peso-medio);
   letter-spacing: var(--espaciado-mayusculas);
   text-transform: uppercase;
 }
 
-.cuenta__lista {
+.regresiva__lista {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--espacio-2);
@@ -100,7 +100,7 @@
   list-style: none;
 }
 
-.cuenta__parte {
+.regresiva__parte {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,14 +112,14 @@
   backdrop-filter: blur(8px);
 }
 
-.cuenta__num {
+.regresiva__num {
   font-size: var(--texto-3xl);
   font-weight: var(--peso-fuerte);
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
-.cuenta__unidad {
+.regresiva__unidad {
   color: var(--color-sobre-barra-suave);
   font-size: var(--texto-2xs);
 }
@@ -209,7 +209,8 @@
   border-color: var(--color-acento);
 }
 
-.pestania[aria-pressed="true"] {
+.pestania[aria-pressed="true"],
+.pestania.marcado {
   border-color: var(--color-texto);
   background: var(--color-texto);
   color: var(--color-fondo);
@@ -274,7 +275,8 @@
   transition: rotate var(--transicion);
 }
 
-.bases__caja[open] .bases__flecha {
+.bases__caja[open] .bases__flecha,
+.bases__caja.abierto .bases__flecha {
   rotate: 180deg;
 }
 
@@ -306,7 +308,7 @@
     padding: var(--espacio-8);
   }
 
-  .cuenta {
+  .regresiva {
     max-width: 420px;
   }
 
@@ -346,7 +348,7 @@
     grid-column: span 5;
   }
 
-  .cuenta {
+  .regresiva {
     grid-column: span 3;
   }
 

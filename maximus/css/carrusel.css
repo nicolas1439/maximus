@@ -51,11 +51,13 @@
   transition: width var(--transicion), background-color var(--transicion);
 }
 
-.carrusel__punto[aria-current="true"] {
+.carrusel__punto[aria-current="true"],
+.carrusel__punto.actual {
   width: 32px;
 }
 
-.carrusel__punto[aria-current="true"]::before {
+.carrusel__punto[aria-current="true"]::before,
+.carrusel__punto.actual::before {
   width: 24px;
   background: var(--color-marca);
 }
@@ -93,7 +95,8 @@
   color: var(--color-acento);
 }
 
-.carrusel__flecha[aria-disabled="true"] {
+.carrusel__flecha[aria-disabled="true"],
+.carrusel__flecha.deshabilitado {
   opacity: 0.4;
   color: inherit;
   cursor: default;
@@ -107,8 +110,8 @@
     cursor: grab;
   }
 
-  .carrusel--desplazable .carrusel__pista :is(.btn, button),
-  .carrusel--desplazable .carrusel__pista :is(.btn, button) * {
+  .carrusel--desplazable .carrusel__pista :is(.boton, button),
+  .carrusel--desplazable .carrusel__pista :is(.boton, button) * {
     cursor: pointer;
   }
 }

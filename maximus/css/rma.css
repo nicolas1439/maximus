@@ -116,103 +116,14 @@
   scroll-margin-top: calc(var(--alto-fijo, 120px) + var(--espacio-4));
 }
 
-/* Etapas (como el indicador del checkout): las hechas en verde con check, la actual con halo */
-.etapas {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  width: 100%;
+/* Etapas: el indicador .pasos de base.css, centrado y con el nombre en texto chico */
+.tramite .pasos {
   max-width: 420px;
   margin: 0 auto;
-  padding: 0;
-  list-style: none;
 }
 
-.etapas__paso {
-  position: relative;
-  text-align: center;
-}
-
-.etapas__paso:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 13px;
-  right: calc(-50% + 18px);
-  left: calc(50% + 18px);
-  height: 2px;
-  border-radius: var(--radio-pill);
-  background: var(--color-borde);
-  transition: background-color var(--transicion);
-}
-
-.etapas__paso--hecho:not(:last-child)::after {
-  background: var(--color-marca);
-}
-
-.etapas__boton {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--espacio-1);
-  width: 100%;
-  color: var(--color-texto-suave);
+.tramite .pasos__enlace {
   font-size: var(--texto-xs);
-  line-height: 1.3;
-}
-
-.etapas__boton:disabled {
-  cursor: default;
-}
-
-.etapas__num {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border: 2px solid var(--color-borde);
-  border-radius: var(--radio-pill);
-  background: var(--color-fondo);
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-fuerte);
-  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
-}
-
-.etapas__num .icono {
-  display: none;
-  width: 14px;
-  height: 14px;
-  stroke-width: 3;
-}
-
-.etapas__paso--hecho .etapas__num {
-  border-color: var(--color-marca);
-  background: var(--color-marca);
-  color: var(--color-sobre-marca);
-}
-
-.etapas__paso--hecho .etapas__n {
-  display: none;
-}
-
-.etapas__paso--hecho .etapas__num .icono {
-  display: block;
-}
-
-.etapas__paso[aria-current="step"] .etapas__num {
-  border-color: var(--color-marca);
-  color: var(--color-texto);
-  box-shadow: 0 0 0 4px var(--color-brillo-marca);
-}
-
-.etapas__paso--hecho .etapas__boton,
-.etapas__paso[aria-current="step"] .etapas__boton {
-  color: var(--color-texto);
-  font-weight: var(--peso-medio);
-}
-
-.etapas__paso--hecho .etapas__boton:hover .etapas__nombre {
-  text-decoration: underline;
 }
 
 /* Cada etapa entra con un fundido corto */
@@ -280,7 +191,7 @@
 .etapa__estado {
   flex-basis: 100%;
   margin: 0;
-  color: var(--color-error);
+  color: var(--color-error-texto);
   font-size: var(--texto-s);
   font-weight: var(--peso-medio);
 }
@@ -299,8 +210,8 @@
   gap: var(--espacio-4);
 }
 
-.compras > :not(.btn-texto),
-.manual > :not(.btn-texto) {
+.compras > :not(.boton-texto),
+.manual > :not(.boton-texto) {
   align-self: stretch;
 }
 
@@ -311,45 +222,15 @@
 }
 
 /* Compra elegible como tarjeta con radio (el radio nativo queda invisible pero accesible, como en el checkout) */
-.compra {
-  position: relative;
+.compra-rma {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
   align-items: center;
   gap: var(--espacio-1) var(--espacio-3);
   padding: var(--espacio-3);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-l);
-  background: var(--color-fondo);
-  cursor: pointer;
-  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
 }
 
-.compra:hover {
-  border-color: var(--color-acento);
-}
-
-.compra__radio {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.compra:has(.compra__radio:checked) {
-  border-color: var(--color-marca);
-  background: color-mix(in srgb, var(--color-marca) 6%, var(--color-fondo));
-  box-shadow: 0 0 0 1px var(--color-marca);
-}
-
-.compra:has(.compra__radio:focus-visible) {
-  outline: 2px solid var(--color-acento);
-  outline-offset: 2px;
-}
-
-.compra__img {
+.compra-rma__img {
   grid-row: span 2;
   width: 56px;
   height: 56px;
@@ -358,25 +239,25 @@
   object-fit: contain;
 }
 
-.compra__texto {
+.compra-rma__texto {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-.compra__nombre {
+.compra-rma__nombre {
   font-size: var(--texto-s);
   font-weight: var(--peso-medio);
   line-height: 1.3;
 }
 
-.compra__meta {
+.compra-rma__meta {
   color: var(--color-texto-suave);
   font-size: var(--texto-xs);
 }
 
 /* Estado de la garantía de cada compra: punto de color y texto (como .estado de pedido.css, más chico) */
-.compra__estado {
+.compra-rma__estado {
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-1);
@@ -386,7 +267,7 @@
   font-weight: var(--peso-medio);
 }
 
-.compra__estado::before {
+.compra-rma__estado::before {
   content: "";
   width: 8px;
   height: 8px;
@@ -394,15 +275,15 @@
   background: currentColor;
 }
 
-.compra__estado--ok::before {
+.compra-rma__estado--ok::before {
   background: var(--color-exito);
 }
 
-.compra__estado--info::before {
+.compra-rma__estado--info::before {
   background: var(--color-info);
 }
 
-.compra__estado--aviso::before {
+.compra-rma__estado--aviso::before {
   background: var(--color-aviso);
 }
 
@@ -433,7 +314,7 @@
   font-weight: var(--peso-medio);
 }
 
-.sesion-aviso .btn {
+.sesion-aviso .boton {
   grid-column: 2;
   justify-self: start;
   height: var(--alto-control-s);
@@ -461,12 +342,13 @@
 
 .veredicto--aviso {
   --veredicto: var(--color-aviso);
+  --veredicto-icono: var(--color-aviso-icono);
 }
 
 .veredicto > .icono {
   grid-row: span 2;
   margin-top: 1px;
-  color: var(--veredicto);
+  color: var(--veredicto-icono, var(--veredicto));
 }
 
 .veredicto--ok > .icono {
@@ -546,7 +428,8 @@
   border-color: var(--color-acento);
 }
 
-.falla input:checked + span {
+.falla input:checked + span,
+.falla.elegida span {
   border-color: var(--color-marca);
   background: var(--color-marca);
   color: var(--color-sobre-marca);
@@ -589,8 +472,9 @@
   outline-offset: 2px;
 }
 
-.adjuntos[aria-invalid="true"] {
-  border-color: var(--color-error);
+.adjuntos[aria-invalid="true"],
+.adjuntos.con-error {
+  border-color: var(--color-error-texto);
 }
 
 .adjuntos__input {
@@ -690,41 +574,12 @@
 }
 
 .entrega__opcion {
-  position: relative;
   display: grid;
   clear: both;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: start;
   gap: var(--espacio-3);
   padding: var(--espacio-3) var(--espacio-4);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-l);
-  background: var(--color-fondo);
-  cursor: pointer;
-  transition: border-color var(--transicion), background-color var(--transicion);
-}
-
-.entrega__opcion:hover {
-  border-color: var(--color-acento);
-}
-
-.entrega__opcion input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  opacity: 0;
-}
-
-.entrega__opcion:has(input:checked) {
-  border-color: var(--color-marca);
-  background: color-mix(in srgb, var(--color-marca) 6%, var(--color-fondo));
-  box-shadow: 0 0 0 1px var(--color-marca);
-}
-
-.entrega__opcion:has(input:focus-visible) {
-  outline: 2px solid var(--color-acento);
-  outline-offset: 2px;
 }
 
 .entrega__opcion .icono {
@@ -732,7 +587,7 @@
   color: var(--color-texto-suave);
 }
 
-.entrega__opcion:has(input:checked) .icono {
+.entrega__opcion:is(:has(.opcion__radio:checked), .elegida) .icono {
   color: var(--color-acento);
 }
 
@@ -996,15 +851,15 @@
     grid-column: 1 / -1;
   }
 
-  .compra {
+  .compra-rma {
     grid-template-columns: 56px minmax(0, 1fr) auto;
   }
 
-  .compra__img {
+  .compra-rma__img {
     grid-row: auto;
   }
 
-  .compra__estado {
+  .compra-rma__estado {
     justify-self: end;
     white-space: nowrap;
   }

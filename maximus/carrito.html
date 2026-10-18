@@ -4,10 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Carrito | Maximus Gaming Hardware</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
   <script type="module" src="js/incluir.js"></script>
 </head>
 <body>
+<div class="mx">
 
   <!-- Página completa del carrito y el checkout: header + plantilla de checkout + footer.
        Como index.html, no tiene código propio: js/incluir.js arma la página desde los archivos de cada parte. -->
@@ -15,5 +21,6 @@
   <div data-incluir="checkout.html"></div>
   <div data-incluir="footer.html"></div>
 
+</div>
 </body>
 </html>

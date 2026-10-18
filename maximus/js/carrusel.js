@@ -8,7 +8,13 @@
 const movimientoReducido = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const comportamiento = movimientoReducido ? 'auto' : 'smooth';
 
-document.querySelectorAll('[data-carrusel]').forEach(iniciar);
+// Inicia los carruseles que hay dentro de raiz (cada uno una sola vez)
+export function iniciarCarruseles(raiz = document) {
+  raiz.querySelectorAll('[data-carrusel]:not(.carrusel--listo)').forEach((carrusel) => {
+    carrusel.classList.add('carrusel--listo');
+    iniciar(carrusel);
+  });
+}
 
 function iniciar(carrusel) {
   const pista = carrusel.querySelector('.carrusel__pista');
@@ -173,17 +179,24 @@ function iniciar(carrusel) {
   }, true);
 
   // ---------- Avance automático ----------
-  // Se detiene mientras se usa el carrusel o con la pestaña oculta. Con movimiento reducido no corre
+  // Se detiene mientras se usa el carrusel, cuando sale de la pantalla o con la pestaña oculta. Con movimiento
+  // reducido no corre
 
   if (!intervalo || movimientoReducido) return;
 
   let enUso = false;
+  let aLaVista = true;
   let temporizador;
 
   function actualizar() {
     clearInterval(temporizador);
-    if (!enUso && !document.hidden) temporizador = setInterval(siguiente, intervalo);
+    if (!enUso && aLaVista && !document.hidden) temporizador = setInterval(siguiente, intervalo);
   }
+
+  new IntersectionObserver(([e]) => {
+    aLaVista = e.isIntersecting;
+    actualizar();
+  }).observe(carrusel);
 
   const usar = (valor) => () => {
     enUso = valor;

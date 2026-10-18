@@ -4,16 +4,17 @@
 // envía nada. Sin JS se ven todas las vistas.
 
 import { confeti } from './confeti.js';
+import { iniciarLuz } from './luz.js';
+import { iniciarLuzBorde } from './luz-borde.js';
 
 const acceso = document.querySelector('[data-acceso]');
-const conMouse = matchMedia('(hover: hover) and (pointer: fine)');
-const icono = (id) => `<svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${id}"/></svg>`;
+const icono = (id) => `<svg class="icono" aria-hidden="true"><use href="#${id}"/></svg>`;
 const esperar = (ms) => new Promise((listo) => setTimeout(listo, ms));
 
 // ---------- Vistas ----------
 
 const vistas = [...document.querySelectorAll('[data-vista]')];
-const tarjeta = document.querySelector('.acceso__tarjeta');
+const tarjeta = document.querySelector('.ingreso__tarjeta');
 const modo = document.querySelector('[data-modo]');
 const orden = ['recuperar', 'ingresar', 'registro', 'bienvenida'];
 const titulos = { ingresar: 'Ingresar', recuperar: 'Recuperar contraseña', registro: 'Crear cuenta', bienvenida: 'Cuenta creada' };
@@ -170,7 +171,7 @@ document.querySelectorAll('.clave__ver').forEach((boton) =>
     campo.type = ver ? 'text' : 'password';
     boton.setAttribute('aria-pressed', ver);
     boton.setAttribute('aria-label', ver ? 'Ocultar contraseña' : 'Mostrar contraseña');
-    boton.querySelector('use').setAttribute('href', `recursos/iconos.svg?v=3#${ver ? 'i-ojo-no' : 'i-ojo'}`);
+    boton.querySelector('use').setAttribute('href', `#${ver ? 'i-ojo-no' : 'i-ojo'}`);
   })
 );
 
@@ -244,7 +245,7 @@ const formIngresar = document.querySelector('[data-form="ingresar"]');
 
 formIngresar?.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const estado = formIngresar.querySelector('.formulario__estado');
+  const estado = formIngresar.querySelector('.ingreso__estado');
   estado.textContent = '';
   // De muestra: con el formulario vacío ingresa directo con la cuenta de muestra; si se escribió algo, se valida.
   // Cualquier correo y contraseña ingresan
@@ -255,7 +256,7 @@ formIngresar?.addEventListener('submit', async (e) => {
   await procesar(boton, 'Ingresando…', 1100);
   iniciarSesion();
   boton.querySelector('.enviar__texto').textContent = '¡Hola de nuevo!';
-  boton.querySelector('use').setAttribute('href', 'recursos/iconos.svg?v=3#i-check');
+  boton.querySelector('use').setAttribute('href', '#i-check');
   await esperar(500);
   location.href = destinoIngreso();
 });
@@ -325,16 +326,16 @@ if (formRegistro) {
     pasos.forEach((p) => (p.hidden = Number(p.dataset.registroPaso) !== n));
     avance.querySelector('[data-paso-numero]').textContent = n;
     avance.querySelector('[data-paso-nombre]').textContent = nombresPaso[n - 1];
-    avance.querySelectorAll('.pasos__tramo')[1].classList.toggle('pasos__tramo--hecho', n === 2);
+    avance.querySelectorAll('.avance__tramo')[1].classList.toggle('avance__tramo--hecho', n === 2);
     if (tarjeta.getBoundingClientRect().top < 0) tarjeta.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    const texto = avance.querySelector('.pasos__texto');
+    const texto = avance.querySelector('.avance__texto');
     texto.tabIndex = -1;
     texto.focus({ preventScroll: true });
   }
 
   pasos.forEach((p) => (p.hidden = p.dataset.registroPaso !== '1'));
 
-  const camposDe = (n) => [...pasos[n - 1].querySelectorAll('[required]')];
+  const camposDe = (n) => [...avance[n - 1].querySelectorAll('[required]')];
   const siguiente = () => validar(camposDe(1)) && irAPaso(2);
 
   formRegistro.querySelector('[data-siguiente]').addEventListener('click', siguiente);
@@ -427,128 +428,15 @@ function cuitValido(n) {
   return dv === Number(n[10]);
 }
 
-// ---------- Degradado vivo de los botones (con mouse) ----------
+// ---------- Degradado vivo de los botones y luz del borde de la tarjeta (luz.js y luz-borde.js) ----------
 
-// Sigue al puntero con retraso: cada cuadro recorre una parte del camino que falta (por tiempo real, así el
-// retraso es el mismo con cualquier frecuencia de pantalla). `pintar` recibe la posición actual.
-function seguir(elemento, pintar, { tramo = 0.08 } = {}) {
-  let actualP = null;
-  let destino = null;
-  let dentro = false;
-  let cuadro = 0;
-  let previo = 0;
-
-  const posicion = (e) => {
-    const r = elemento.getBoundingClientRect();
-    return { x: e.clientX - r.left, y: e.clientY - r.top, ancho: r.width, alto: r.height };
-  };
-
-  function paso(t) {
-    const dt = previo ? Math.min((t - previo) / (1000 / 60), 4) : 1;
-    previo = t;
-    const k = 1 - Math.pow(1 - tramo, dt);
-    actualP.x += (destino.x - actualP.x) * k;
-    actualP.y += (destino.y - actualP.y) * k;
-    pintar(actualP, destino);
-    const quieto = Math.abs(destino.x - actualP.x) < 0.5 && Math.abs(destino.y - actualP.y) < 0.5;
-    cuadro = quieto && !dentro ? 0 : requestAnimationFrame(paso);
-  }
-
-  const arrancar = () => {
-    if (cuadro) return;
-    previo = 0;
-    cuadro = requestAnimationFrame(paso);
-  };
-
-  elemento.addEventListener('pointerenter', (e) => {
-    if (e.pointerType !== 'mouse') return;
-    dentro = true;
-    destino = posicion(e);
-    actualP ??= { ...destino };
-    arrancar();
-  });
-  elemento.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse' || !dentro) return;
-    destino = posicion(e);
-    arrancar();
-  });
-  elemento.addEventListener('pointerleave', () => (dentro = false));
-}
-
-if (conMouse.matches) {
-  document.querySelectorAll('.enviar').forEach((boton) =>
-    seguir(boton, (p) => {
-      boton.style.setProperty('--x', `${p.x}px`);
-      boton.style.setProperty('--y', `${p.y}px`);
-    }, { tramo: 0.06 })
-  );
-}
-
-// ---------- Luz del borde de la tarjeta (con mouse) ----------
-
-// La luz va hacia el puntero en toda la página: aparece en el borde más cercano cuando el puntero está a menos de
-// LEJOS px de la tarjeta (o adentro) y crece a medida que se acerca. Se mueve con un retraso corto, como el
-// degradado vivo. Sin mouse, la luz recorre el borde sola (CSS).
-if (tarjeta && conMouse.matches) {
-  const RADIO = 260; // radio de la luz con el puntero sobre el borde
-  const LEJOS = 180; // desde esta distancia a la tarjeta empieza a aparecer
-  const luz = { x: 0, y: 0, alcance: 0 };
-  let destino = null;
-  let puntero = null;
-  let cuadro = 0;
-  let previo = 0;
-
-  tarjeta.classList.add('acceso__tarjeta--puntero');
-
-  function apuntar() {
-    if (!puntero) return;
-    const r = tarjeta.getBoundingClientRect();
-    const x = puntero.x - r.left;
-    const y = puntero.y - r.top;
-    // Distancia del puntero a la tarjeta (0 si está adentro)
-    const dx = Math.max(-x, 0, x - r.width);
-    const dy = Math.max(-y, 0, y - r.height);
-    const cerca = Math.max(0, 1 - Math.hypot(dx, dy) / LEJOS);
-    if (!destino) Object.assign(luz, { x, y });
-    destino = { x, y, alcance: RADIO * cerca };
-    if (!cuadro) {
-      previo = 0;
-      cuadro = requestAnimationFrame(paso);
-    }
-  }
-
-  function paso(t) {
-    const dt = previo ? Math.min((t - previo) / (1000 / 60), 4) : 1;
-    previo = t;
-    const k = 1 - Math.pow(1 - 0.16, dt);
-    for (const c of ['x', 'y', 'alcance']) luz[c] += (destino[c] - luz[c]) * k;
-    tarjeta.style.setProperty('--x', `${luz.x.toFixed(1)}px`);
-    tarjeta.style.setProperty('--y', `${luz.y.toFixed(1)}px`);
-    tarjeta.style.setProperty('--alcance', `${Math.max(luz.alcance, 0).toFixed(1)}px`);
-    const quieto = ['x', 'y', 'alcance'].every((c) => Math.abs(destino[c] - luz[c]) < 0.5);
-    cuadro = quieto ? 0 : requestAnimationFrame(paso);
-  }
-
-  addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse') return;
-    puntero = { x: e.clientX, y: e.clientY };
-    apuntar();
-  }, { passive: true });
-
-  // Al hacer scroll la tarjeta se mueve bajo el puntero quieto; al salir de la ventana, la luz se apaga
-  addEventListener('scroll', apuntar, { passive: true });
-  document.documentElement.addEventListener('pointerleave', () => {
-    puntero = null;
-    if (!destino) return;
-    destino = { ...destino, alcance: 0 };
-    if (!cuadro) cuadro = requestAnimationFrame(paso);
-  });
-}
+document.querySelectorAll('.enviar').forEach((boton) => iniciarLuz(boton, { tramo: 0.06 }));
+iniciarLuzBorde(tarjeta, 'ingreso__tarjeta--puntero');
 
 // ---------- Inicio ----------
 
 if (acceso) {
-  acceso.classList.add('acceso--js');
+  acceso.classList.add('ingreso--js');
   mostrar(location.hash.slice(1));
   addEventListener('hashchange', () => mostrar(location.hash.slice(1), { enfocar: true }));
 }

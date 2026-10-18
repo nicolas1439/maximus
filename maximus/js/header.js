@@ -1,4 +1,7 @@
-// Header: tema claro/oscuro, menú lateral, departamentos y fila fija compacta.
+// Header: tema claro/oscuro, menú lateral, departamentos y fila fija compacta. El fuego de Ofertas lo inicia
+// fuego.js (efectos.js en las vistas previas).
+
+import { iniciarLuz } from './luz.js';
 
 const raiz = document.documentElement;
 
@@ -19,9 +22,10 @@ try {
 
 const botonesTema = document.querySelectorAll('[data-tema-toggle]');
 
+// El oscuro es la clase dark en <html>, y la preferencia va en localStorage con la clave darkmode ("true" / "false"),
+// las mismas del sitio actual: así se conserva lo que ya eligió cada cliente
 function aplicarTema(tema) {
-  if (tema === 'oscuro') raiz.dataset.tema = 'oscuro';
-  else delete raiz.dataset.tema;
+  raiz.classList.toggle('dark', tema === 'oscuro');
   botonesTema.forEach((b) => b.setAttribute('aria-pressed', tema === 'oscuro'));
 }
 
@@ -52,13 +56,13 @@ function cambiarTema(tema, boton) {
 
 botonesTema.forEach((boton) =>
   boton.addEventListener('click', () => {
-    const tema = raiz.dataset.tema === 'oscuro' ? 'claro' : 'oscuro';
+    const tema = raiz.classList.contains('dark') ? 'claro' : 'oscuro';
     cambiarTema(tema, boton);
-    try { localStorage.setItem('tema', tema); } catch {}
+    try { localStorage.setItem('darkmode', String(tema === 'oscuro')); } catch {}
   })
 );
 
-aplicarTema(raiz.dataset.tema === 'oscuro' ? 'oscuro' : 'claro');
+aplicarTema(raiz.classList.contains('dark') ? 'oscuro' : 'claro');
 
 // ---------- Menú lateral (mobile/tablet) ----------
 
@@ -157,44 +161,9 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ---------- Luz del botón Productos ----------
-// La luz del degradado (ver header.css) sigue al puntero con retraso: cada 1/60 s recorre una fracción
-// (--luz-seguimiento, en header.css) de lo que le falta. Se calcula por tiempo real, así el retraso es el
-// mismo a cualquier frecuencia de pantalla.
+// ---------- Luz del botón Productos (degradado vivo, luz.js) ----------
 
-let seguimiento = 0.035;
-let luzObjetivo, luzActual, luzCuadro = 0, luzUltimo = 0;
-
-function pintarLuz() {
-  botonCatalogo.style.setProperty('--x', `${luzActual.x}px`);
-  botonCatalogo.style.setProperty('--y', `${luzActual.y}px`);
-}
-
-function animarLuz(ahora) {
-  const cuadros = luzUltimo ? Math.min((ahora - luzUltimo) / (1000 / 60), 10) : 1;
-  const paso = 1 - (1 - seguimiento) ** cuadros;
-  luzUltimo = ahora;
-  luzActual.x += (luzObjetivo.x - luzActual.x) * paso;
-  luzActual.y += (luzObjetivo.y - luzActual.y) * paso;
-  pintarLuz();
-  const lejos = Math.abs(luzObjetivo.x - luzActual.x) > 0.3 || Math.abs(luzObjetivo.y - luzActual.y) > 0.3;
-  luzCuadro = lejos ? requestAnimationFrame(animarLuz) : 0;
-  if (!lejos) luzUltimo = 0;
-}
-
-function seguirLuz(e) {
-  const r = botonCatalogo.getBoundingClientRect();
-  luzObjetivo = { x: e.clientX - r.left, y: e.clientY - r.top };
-  if (e.type === 'pointerenter' || !luzActual) {
-    seguimiento = parseFloat(getComputedStyle(botonCatalogo).getPropertyValue('--luz-seguimiento')) || seguimiento;
-    luzActual = { ...luzObjetivo };
-    pintarLuz();
-    return;
-  }
-  if (!luzCuadro) luzCuadro = requestAnimationFrame(animarLuz);
-}
-
-['pointerenter', 'pointermove', 'pointerleave'].forEach((ev) => botonCatalogo.addEventListener(ev, seguirLuz));
+iniciarLuz(botonCatalogo, { saltar: true });
 
 // ---------- Fila principal compacta al hacer scroll ----------
 // Se compacta en cuanto queda fija (al salir de pantalla la barra superior): un solo achique
@@ -270,56 +239,3 @@ celular.addEventListener('change', alDesplazar);
 // Si la página carga ya desplazada, arranca escondido
 alDesplazar();
 if (cabecera.classList.contains('cabecera--compacta') && (escritorio.matches || celular.matches)) esconder(true);
-
-// ---------- Fuego de Ofertas ----------
-
-// Al pasar el mouse (o con el foco del teclado) la llama flamea: la punta se balancea y sube y baja con ondas
-// superpuestas, redibujando el trazo en cada cuadro. Solo con mouse (en táctil no hay salida del hover) y sin
-// "reducir movimiento"; al salir vuelve al dibujo original.
-const conMouse = matchMedia('(hover: hover)');
-const reducirMovimiento = matchMedia('(prefers-reduced-motion: reduce)');
-
-document.querySelectorAll('[data-fuego]').forEach((enlace) => {
-  const llama = enlace.querySelector('path');
-  if (!llama) return;
-
-  const original = llama.getAttribute('d');
-  let cuadro = 0;
-  let inicio = 0;
-  let hover = false;
-  let foco = false;
-
-  function animar(ahora) {
-    const t = (ahora - inicio) / 1000;
-    const entrada = Math.min(1, t / 0.18);
-    const balanceo = (Math.sin(t * 7) * 0.95 + Math.sin(t * 12) * 0.25) * entrada;
-    const altura = Math.sin(t * 9) * 0.8 * entrada;
-
-    llama.setAttribute(
-      'd',
-      `M8.5 14.5 A2.5 2.5 0 0 0 11 12
-       C11 10.62 ${10.5 + balanceo * 0.2} 10 ${10 + balanceo * 0.3} 9
-       C${8.928 + balanceo * 0.6} ${6.857 + altura * 0.4} ${9.776 + balanceo} ${4.946 + altura * 0.7} ${12 + balanceo} ${3 + altura}
-       C${12.5 + balanceo} ${5.5 + altura * 0.6} ${14 + balanceo * 0.4} 7.9 16 9.5
-       C18 11.1 19 13 19 15 A7 7 0 1 1 5 15 C5 13.847 5.433 12.706 6 12 A2.5 2.5 0 0 0 8.5 14.5 Z`
-    );
-
-    cuadro = requestAnimationFrame(animar);
-  }
-
-  function actualizar() {
-    cancelAnimationFrame(cuadro);
-    if ((hover || foco) && conMouse.matches && !reducirMovimiento.matches) {
-      inicio = performance.now();
-      cuadro = requestAnimationFrame(animar);
-    } else {
-      llama.setAttribute('d', original);
-    }
-  }
-
-  enlace.addEventListener('mouseenter', () => { hover = true; actualizar(); });
-  enlace.addEventListener('mouseleave', () => { hover = false; actualizar(); });
-  enlace.addEventListener('focus', () => { foco = true; actualizar(); });
-  enlace.addEventListener('blur', () => { foco = false; actualizar(); });
-  reducirMovimiento.addEventListener('change', actualizar);
-});

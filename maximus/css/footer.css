@@ -151,6 +151,10 @@
   transition: border-color var(--transicion), color var(--transicion);
 }
 
+a.pie__sello {
+  color: var(--color-sobre-barra-suave);
+}
+
 .pie__sello:hover {
   border-color: var(--color-marca);
   color: var(--color-sobre-barra);
@@ -265,6 +269,10 @@
   color: var(--color-sobre-barra);
   transition: border-color var(--transicion), color var(--transicion), transform var(--transicion),
     box-shadow var(--transicion);
+}
+
+a.pie__arriba {
+  color: var(--color-sobre-barra);
 }
 
 .pie__arriba .icono {

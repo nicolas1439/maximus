@@ -4,16 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Carrito y checkout</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/opcion.css">
   <link rel="stylesheet" href="css/checkout.css">
   <script type="module" src="js/checkout.js"></script>
 </head>
 <body>
+<div class="mx">
 
   <!-- Plantilla de carrito y checkout: los cinco pasos del checkout de maximus.com.ar (relevado el 15/10/2026 con
        un producto en el carrito): Carrito → Facturación (el sitio lo llama Identidad) → Entrega → Pago → Resumen.
@@ -21,18 +25,18 @@
        Precios, envíos, sucursales, cuotas y textos legales son los del sitio; los productos del carrito, el cliente
        y las direcciones son de muestra (los mismos de Mi cuenta). El último paso no confirma nada: "Confirmar
        compra" solo muestra un aviso. Página completa con header y footer: carrito.html. -->
-  <main class="checkout">
+  <main class="checkout" id="contenido" tabindex="-1">
 
     <div class="contenedor checkout__cab">
       <h1 class="sr-only">Carrito y checkout</h1>
 
       <!-- Pasos: los ya hechos se pueden volver a abrir -->
       <ol class="pasos" aria-label="Pasos de la compra" data-pasos>
-        <li class="pasos__paso" aria-current="step"><a class="pasos__enlace" href="#carrito"><span class="pasos__num"><span class="pasos__n">1</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="pasos__nombre">Carrito</span></a></li>
-        <li class="pasos__paso"><a class="pasos__enlace" href="#facturacion"><span class="pasos__num"><span class="pasos__n">2</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="pasos__nombre">Facturación</span></a></li>
-        <li class="pasos__paso"><a class="pasos__enlace" href="#entrega"><span class="pasos__num"><span class="pasos__n">3</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="pasos__nombre">Entrega</span></a></li>
-        <li class="pasos__paso"><a class="pasos__enlace" href="#pago"><span class="pasos__num"><span class="pasos__n">4</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="pasos__nombre">Pago</span></a></li>
-        <li class="pasos__paso"><a class="pasos__enlace" href="#resumen"><span class="pasos__num"><span class="pasos__n">5</span><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg></span><span class="pasos__nombre">Resumen</span></a></li>
+        <li class="pasos__paso" aria-current="step"><a class="pasos__enlace" href="#carrito"><span class="pasos__num"><span class="pasos__n">1</span><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Carrito</span></a></li>
+        <li class="pasos__paso"><a class="pasos__enlace" href="#facturacion"><span class="pasos__num"><span class="pasos__n">2</span><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Facturación</span></a></li>
+        <li class="pasos__paso"><a class="pasos__enlace" href="#entrega"><span class="pasos__num"><span class="pasos__n">3</span><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Entrega</span></a></li>
+        <li class="pasos__paso"><a class="pasos__enlace" href="#pago"><span class="pasos__num"><span class="pasos__n">4</span><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Pago</span></a></li>
+        <li class="pasos__paso"><a class="pasos__enlace" href="#resumen"><span class="pasos__num"><span class="pasos__n">5</span><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Resumen</span></a></li>
       </ol>
     </div>
 
@@ -56,11 +60,11 @@
               </div>
               <div class="item__cantidad">
                 <div class="cantidad" data-cantidad>
-                  <button class="cantidad__btn" type="button" aria-label="Una unidad menos" data-paso="-1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-menos"/></svg></button>
+                  <button class="cantidad__btn" type="button" aria-label="Una unidad menos" data-paso="-1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-menos"/></svg></button>
                   <input class="cantidad__campo" type="number" value="1" min="1" max="1" inputmode="numeric" aria-label="Cantidad">
-                  <button class="cantidad__btn" type="button" aria-label="Una unidad más" data-paso="1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-mas"/></svg></button>
+                  <button class="cantidad__btn" type="button" aria-label="Una unidad más" data-paso="1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-mas"/></svg></button>
                 </div>
-                <button class="btn-texto btn-texto--suave item__quitar" type="button" aria-label="Quitar del carrito" data-quitar><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-borrar"/></svg><span class="item__quitar-texto">Quitar</span></button>
+                <button class="boton-texto boton-texto--suave item__quitar" type="button" aria-label="Quitar del carrito" data-quitar><svg class="icono icono--s" aria-hidden="true"><use href="#i-borrar"/></svg><span class="item__quitar-texto">Quitar</span></button>
               </div>
               <div class="item__precios">
                 <p class="item__antes" data-item-antes><span class="sr-only">Precio de lista: </span>$3.139.765</p>
@@ -76,11 +80,11 @@
               </div>
               <div class="item__cantidad">
                 <div class="cantidad" data-cantidad>
-                  <button class="cantidad__btn" type="button" aria-label="Una unidad menos" data-paso="-1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-menos"/></svg></button>
+                  <button class="cantidad__btn" type="button" aria-label="Una unidad menos" data-paso="-1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-menos"/></svg></button>
                   <input class="cantidad__campo" type="number" value="2" min="1" max="2" inputmode="numeric" aria-label="Cantidad">
-                  <button class="cantidad__btn" type="button" aria-label="Una unidad más" data-paso="1"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-mas"/></svg></button>
+                  <button class="cantidad__btn" type="button" aria-label="Una unidad más" data-paso="1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-mas"/></svg></button>
                 </div>
-                <button class="btn-texto btn-texto--suave item__quitar" type="button" aria-label="Quitar del carrito" data-quitar><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-borrar"/></svg><span class="item__quitar-texto">Quitar</span></button>
+                <button class="boton-texto boton-texto--suave item__quitar" type="button" aria-label="Quitar del carrito" data-quitar><svg class="icono icono--s" aria-hidden="true"><use href="#i-borrar"/></svg><span class="item__quitar-texto">Quitar</span></button>
               </div>
               <div class="item__precios">
                 <p class="item__antes" data-item-antes hidden></p>
@@ -92,15 +96,15 @@
 
           <!-- Carrito vacío: aparece cuando se quita el último producto -->
           <div class="vacio" data-vacio hidden>
-            <svg class="icono vacio__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg>
+            <svg class="icono vacio__icono" aria-hidden="true"><use href="#i-carrito"/></svg>
             <p class="vacio__titulo">Tu carrito está vacío</p>
             <p class="vacio__texto">Cuando agregues productos, los vas a ver acá.</p>
-            <a class="btn btn--primario" href="placas-de-video.html">Ver ofertas</a>
+            <a class="boton boton--primario" href="placas-de-video.html">Ver ofertas</a>
           </div>
 
           <footer class="paso__pie" data-con-items>
-            <a class="btn btn--secundario" href="placas-de-video.html"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Seguir comprando</a>
-            <button class="btn btn--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></button>
+            <a class="boton boton--secundario" href="placas-de-video.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Seguir comprando</a>
+            <button class="boton boton--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
           </footer>
         </section>
 
@@ -118,7 +122,7 @@
               <p class="cliente__nombre">Martín González</p>
               <p class="cliente__meta">martin.gonzalez@correo.com · Cliente N.º 48213</p>
             </div>
-            <a class="btn-texto" href="index.html">No soy yo</a>
+            <a class="boton-texto" href="index.html">No soy yo</a>
           </div>
 
           <fieldset class="opciones">
@@ -146,7 +150,7 @@
               <label class="campo campo--ancho"><span class="campo__rotulo">Razón social</span><input class="campo__control" type="text" autocomplete="organization" data-requerido="a"></label>
               <label class="campo"><span class="campo__rotulo">CUIT</span><input class="campo__control" type="text" inputmode="numeric" placeholder="30-12345678-9" data-requerido="a"></label>
               <label class="campo"><span class="campo__rotulo">Condición fiscal</span>
-                <span class="selector"><select class="selector__campo"><option>Responsable Inscripto</option><option>Monotributista</option><option>IVA Exento</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></span>
+                <span class="selector"><select class="selector__campo"><option>Responsable Inscripto</option><option>Monotributista</option><option>IVA Exento</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
               </label>
               <label class="campo campo--ancho"><span class="campo__rotulo">Domicilio fiscal</span><input class="campo__control" type="text" autocomplete="street-address" data-requerido="a"></label>
             </div>
@@ -155,8 +159,8 @@
           <p class="paso__error" role="alert" data-error hidden></p>
 
           <footer class="paso__pie">
-            <button class="btn btn--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Volver</button>
-            <button class="btn btn--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></button>
+            <button class="boton boton--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Volver</button>
+            <button class="boton boton--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
           </footer>
         </section>
 
@@ -169,14 +173,14 @@
 
           <!-- Dirección elegida, como en el sitio: una tarjeta con "Cambiar" (lista de direcciones guardadas) y "Agregar" (dirección nueva) -->
           <div class="direccion" data-direccion-caja>
-            <svg class="icono direccion__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-sucursal"/></svg>
+            <svg class="icono direccion__icono" aria-hidden="true"><use href="#i-sucursal"/></svg>
             <div class="direccion__texto">
               <p class="direccion__nombre" data-direccion-nombre>Casa <span class="etiqueta">Principal</span></p>
               <p class="direccion__detalle" data-direccion-detalle>Av. Rivadavia 5420, piso 3, depto. B · C1406 Caballito, CABA</p>
             </div>
             <div class="direccion__acciones">
-              <button class="btn btn--secundario" type="button" data-cambiar-direccion aria-expanded="false">Cambiar</button>
-              <button class="btn btn--secundario" type="button" data-agregar-direccion aria-expanded="false"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-mas"/></svg>Agregar</button>
+              <button class="boton boton--secundario" type="button" data-cambiar-direccion aria-expanded="false">Cambiar</button>
+              <button class="boton boton--secundario" type="button" data-agregar-direccion aria-expanded="false"><svg class="icono icono--s" aria-hidden="true"><use href="#i-mas"/></svg>Agregar</button>
             </div>
           </div>
 
@@ -207,20 +211,20 @@
               <label class="campo"><span class="campo__rotulo">Piso y depto. <small>(opcional)</small></span><input class="campo__control" type="text"></label>
               <label class="campo"><span class="campo__rotulo">Código postal</span><input class="campo__control" type="text" inputmode="numeric" autocomplete="postal-code" data-requerido="nueva" data-nueva-cp></label>
               <label class="campo"><span class="campo__rotulo">Provincia</span>
-                <span class="selector"><select class="selector__campo"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></span>
+                <span class="selector"><select class="selector__campo"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
               </label>
               <label class="campo"><span class="campo__rotulo">Localidad</span><input class="campo__control" type="text" autocomplete="address-level2" data-requerido="nueva" data-nueva-localidad></label>
               <label class="campo"><span class="campo__rotulo">Quién recibe</span><input class="campo__control" type="text" autocomplete="name" value="Martín González" data-requerido="nueva"></label>
               <label class="campo"><span class="campo__rotulo">Teléfono</span><input class="campo__control" type="tel" autocomplete="tel" value="11 5555-0123" data-requerido="nueva"></label>
             </div>
-            <button class="btn-texto btn-texto--suave" type="button" data-usar-guardada>Usar una dirección guardada</button>
+            <button class="boton-texto boton-texto--suave" type="button" data-usar-guardada>Usar una dirección guardada</button>
           </div>
 
           <fieldset class="opciones opciones--dos">
             <legend class="opciones__titulo">¿Cómo querés recibir tu pedido?</legend>
             <label class="opcion opcion--icono">
               <input class="opcion__radio" type="radio" name="entrega" value="envio" checked>
-              <svg class="icono opcion__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg>
+              <svg class="icono opcion__icono" aria-hidden="true"><use href="#i-envio"/></svg>
               <span class="opcion__cuerpo">
                 <span class="opcion__titulo">Envío por correo OCA</span>
                 <span class="opcion__texto">A domicilio o a una sucursal, a todo el país excepto Tierra del Fuego. En AMBA llega en 24 hs hábiles.</span>
@@ -228,7 +232,7 @@
             </label>
             <label class="opcion opcion--icono">
               <input class="opcion__radio" type="radio" name="entrega" value="retiro">
-              <svg class="icono opcion__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-tienda"/></svg>
+              <svg class="icono opcion__icono" aria-hidden="true"><use href="#i-tienda"/></svg>
               <span class="opcion__cuerpo">
                 <span class="opcion__titulo">Retiro en tienda <span class="etiqueta">Gratis</span></span>
                 <span class="opcion__texto">En Floresta o en el local de Florida. Listo en 24 a 48 hs hábiles.</span>
@@ -269,7 +273,7 @@
             <!-- Sucursal de OCA: solo con envío a sucursal (las del CP 1406, según el sitio) -->
             <div class="tarjeta subpanel" data-sucursal hidden>
               <label class="campo"><span class="campo__rotulo">Sucursal de OCA</span>
-                <span class="selector"><select class="selector__campo" data-sucursal-campo><option value="">Elegí una sucursal</option><option>Av. Rivadavia 10608, Capital Federal</option><option>Tuyutí 7215, Capital Federal</option><option>Montiel 266, Liniers</option><option>Av. Gral. Paz 11154, Liniers</option><option>Av. San Juan Bautista de La Salle 1926, Parque Avellaneda</option><option>Oliden 4302, Villa Lugano</option><option>José Ignacio de la Rosa 5770, Mataderos</option><option>Murguiondo 4324, Capital Federal</option><option>Cañada de Gómez 4821, Villa Riachuelo</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></span>
+                <span class="selector"><select class="selector__campo" data-sucursal-campo><option value="">Elegí una sucursal</option><option>Av. Rivadavia 10608, Capital Federal</option><option>Tuyutí 7215, Capital Federal</option><option>Montiel 266, Liniers</option><option>Av. Gral. Paz 11154, Liniers</option><option>Av. San Juan Bautista de La Salle 1926, Parque Avellaneda</option><option>Oliden 4302, Villa Lugano</option><option>José Ignacio de la Rosa 5770, Mataderos</option><option>Murguiondo 4324, Capital Federal</option><option>Cañada de Gómez 4821, Villa Riachuelo</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
                 <span class="campo__ayuda">Las sucursales se filtran según tu código postal.</span>
               </label>
             </div>
@@ -304,8 +308,8 @@
           <p class="paso__error" role="alert" data-error hidden></p>
 
           <footer class="paso__pie">
-            <button class="btn btn--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Volver</button>
-            <button class="btn btn--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></button>
+            <button class="boton boton--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Volver</button>
+            <button class="boton boton--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
           </footer>
         </section>
 
@@ -320,7 +324,7 @@
             <legend class="sr-only">Medio de pago</legend>
             <label class="opcion opcion--icono">
               <input class="opcion__radio" type="radio" name="pago" value="transferencia">
-              <svg class="icono opcion__icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-transferencia"/></svg>
+              <svg class="icono opcion__icono" aria-hidden="true"><use href="#i-transferencia"/></svg>
               <span class="opcion__cuerpo">
                 <span class="opcion__titulo">Transferencia o depósito bancario <span class="etiqueta">10% off</span></span>
                 <span class="opcion__texto">El mejor precio. Al confirmar la compra te mostramos los datos bancarios.</span>
@@ -329,7 +333,7 @@
             </label>
             <label class="opcion opcion--icono">
               <input class="opcion__radio" type="radio" name="pago" value="mercadopago">
-              <svg class="icono opcion__icono opcion__icono--mp" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg>
+              <svg class="icono opcion__icono opcion__icono--mp" aria-hidden="true"><use href="#i-cuotas"/></svg>
               <span class="opcion__cuerpo">
                 <span class="opcion__titulo">Tarjeta de crédito o débito</span>
                 <span class="opcion__texto">Con Mercado Pago. Hasta 3 cuotas sin interés.</span>
@@ -345,7 +349,7 @@
               <li>Hacés la transferencia o el depósito por el total.</li>
               <li>Subís el comprobante desde <a href="mi-cuenta.html#pedidos">Mi cuenta</a> y, acreditado el pago, preparamos tu pedido.</li>
             </ol>
-            <p class="subpanel__nota"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-alerta"/></svg>El pago lo tiene que hacer la misma persona o empresa a cuyo nombre se emite la factura. No se aceptan pagos desde otras cuentas.</p>
+            <p class="subpanel__nota"><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>El pago lo tiene que hacer la misma persona o empresa a cuyo nombre se emite la factura. No se aceptan pagos desde otras cuentas.</p>
           </div>
 
           <!-- Mercado Pago: tipo de tarjeta y cuotas -->
@@ -361,13 +365,13 @@
             <fieldset class="cuotas" data-cuotas>
               <legend class="subpanel__titulo">Cantidad de cuotas</legend>
               <div class="cuotas__grilla">
-                <label class="cuota"><input type="radio" name="cuotas" value="1" data-factor="1" checked><span class="cuota__n">1 pago</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Sin interés</span></label>
-                <label class="cuota"><input type="radio" name="cuotas" value="3" data-factor="1"><span class="cuota__n">3 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Sin interés</span></label>
-                <label class="cuota"><input type="radio" name="cuotas" value="6" data-factor="1.16"><span class="cuota__n">6 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
-                <label class="cuota"><input type="radio" name="cuotas" value="9" data-factor="1.23"><span class="cuota__n">9 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
-                <label class="cuota"><input type="radio" name="cuotas" value="12" data-factor="1.31"><span class="cuota__n">12 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
-                <label class="cuota"><input type="radio" name="cuotas" value="18" data-factor="1.52"><span class="cuota__n">18 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
-                <label class="cuota"><input type="radio" name="cuotas" value="24" data-factor="1.67"><span class="cuota__n">24 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="opcion opcion--libre cuota"><input class="opcion__radio" type="radio" name="cuotas" value="1" data-factor="1" checked><span class="cuota__n">1 pago</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Sin interés</span></label>
+                <label class="opcion opcion--libre cuota"><input class="opcion__radio" type="radio" name="cuotas" value="3" data-factor="1"><span class="cuota__n">3 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Sin interés</span></label>
+                <label class="opcion opcion--libre cuota"><input class="opcion__radio" type="radio" name="cuotas" value="6" data-factor="1.16"><span class="cuota__n">6 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="opcion opcion--libre cuota"><input class="opcion__radio" type="radio" name="cuotas" value="9" data-factor="1.23"><span class="cuota__n">9 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="opcion opcion--libre cuota"><input class="opcion__radio" type="radio" name="cuotas" value="12" data-factor="1.31"><span class="cuota__n">12 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="opcion opcion--libre cuota"><input class="opcion__radio" type="radio" name="cuotas" value="18" data-factor="1.52"><span class="cuota__n">18 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
+                <label class="opcion opcion--libre cuota"><input class="opcion__radio" type="radio" name="cuotas" value="24" data-factor="1.67"><span class="cuota__n">24 cuotas</span><span class="cuota__valor" data-cuota-valor></span><span class="cuota__nota">Con interés</span></label>
               </div>
             </fieldset>
 
@@ -376,15 +380,15 @@
               <div><dt>Valor de la cuota</dt><dd data-plan-cuota></dd></div>
               <div class="plan__total"><dt>Total financiado</dt><dd data-plan-total></dd></div>
             </dl>
-            <p class="subpanel__nota" data-nota-retiro hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-alerta"/></svg>Si pagás con tarjeta, el pedido solo lo puede retirar el titular, con la tarjeta y su DNI físico.</p>
+            <p class="subpanel__nota" data-nota-retiro hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Si pagás con tarjeta, el pedido solo lo puede retirar el titular, con la tarjeta y su DNI físico.</p>
             <p class="campo__ayuda">En Mercado Pago vas a elegir las cuotas de nuevo. El valor financiado se calcula según lo que elijas acá.</p>
           </div>
 
           <p class="paso__error" role="alert" data-error hidden></p>
 
           <footer class="paso__pie">
-            <button class="btn btn--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Volver</button>
-            <button class="btn btn--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></button>
+            <button class="boton boton--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Volver</button>
+            <button class="boton boton--primario paso__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
           </footer>
         </section>
 
@@ -398,16 +402,16 @@
           <div class="revision">
             <section class="tarjeta revision__bloque" aria-labelledby="rev-productos">
               <header class="revision__cab">
-                <h3 class="revision__titulo" id="rev-productos"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-caja"/></svg>Productos</h3>
-                <a class="btn-texto" href="#carrito"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-lapiz"/></svg>Editar</a>
+                <h3 class="revision__titulo" id="rev-productos"><svg class="icono" aria-hidden="true"><use href="#i-caja"/></svg>Productos</h3>
+                <a class="boton-texto" href="#carrito"><svg class="icono icono--s" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</a>
               </header>
               <ul class="revision__items" data-revision-items></ul>
             </section>
 
             <section class="tarjeta revision__bloque" aria-labelledby="rev-entrega">
               <header class="revision__cab">
-                <h3 class="revision__titulo" id="rev-entrega"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg>Entrega</h3>
-                <a class="btn-texto" href="#entrega"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-lapiz"/></svg>Editar</a>
+                <h3 class="revision__titulo" id="rev-entrega"><svg class="icono" aria-hidden="true"><use href="#i-envio"/></svg>Entrega</h3>
+                <a class="boton-texto" href="#entrega"><svg class="icono icono--s" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</a>
               </header>
               <p class="revision__dato" data-revision-entrega></p>
               <p class="revision__meta" data-revision-entrega-meta></p>
@@ -415,8 +419,8 @@
 
             <section class="tarjeta revision__bloque" aria-labelledby="rev-facturacion">
               <header class="revision__cab">
-                <h3 class="revision__titulo" id="rev-facturacion"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-comprobante"/></svg>Facturación</h3>
-                <a class="btn-texto" href="#facturacion"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-lapiz"/></svg>Editar</a>
+                <h3 class="revision__titulo" id="rev-facturacion"><svg class="icono" aria-hidden="true"><use href="#i-comprobante"/></svg>Facturación</h3>
+                <a class="boton-texto" href="#facturacion"><svg class="icono icono--s" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</a>
               </header>
               <p class="revision__dato" data-revision-facturacion></p>
               <p class="revision__meta">martin.gonzalez@correo.com</p>
@@ -424,8 +428,8 @@
 
             <section class="tarjeta revision__bloque" aria-labelledby="rev-pago">
               <header class="revision__cab">
-                <h3 class="revision__titulo" id="rev-pago"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg>Pago</h3>
-                <a class="btn-texto" href="#pago"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-lapiz"/></svg>Editar</a>
+                <h3 class="revision__titulo" id="rev-pago"><svg class="icono" aria-hidden="true"><use href="#i-cuotas"/></svg>Pago</h3>
+                <a class="boton-texto" href="#pago"><svg class="icono icono--s" aria-hidden="true"><use href="#i-lapiz"/></svg>Editar</a>
               </header>
               <p class="revision__dato" data-revision-pago></p>
               <p class="revision__meta" data-revision-pago-meta></p>
@@ -433,7 +437,7 @@
           </div>
 
           <footer class="paso__pie paso__pie--final">
-            <button class="btn btn--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-izquierda"/></svg>Volver</button>
+            <button class="boton boton--secundario" type="button" data-volver><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Volver</button>
           </footer>
         </section>
 
@@ -454,10 +458,10 @@
             <div class="totales__total"><dt>Total</dt><dd data-total>$2.948.798</dd></div>
           </dl>
           <p class="resumen__nota" data-resumen-nota hidden></p>
-          <button class="btn btn--primario resumen__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></button>
-          <button class="btn btn--primario resumen__confirmar" type="button" data-confirmar hidden><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-candado"/></svg>Confirmar compra</button>
+          <button class="boton boton--primario resumen__continuar" type="button" data-continuar>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
+          <button class="boton boton--primario resumen__confirmar" type="button" data-confirmar hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-candado"/></svg>Confirmar compra</button>
           <p class="paso__legal" data-legal hidden>Al confirmar aceptás los <a href="terminos-y-condiciones.html">términos y condiciones</a>. Vista previa: en esta demostración no se cobra ni se envía nada.</p>
-          <p class="resumen__seguro"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-candado"/></svg>Compra protegida · Datos cifrados</p>
+          <p class="resumen__seguro"><svg class="icono icono--s" aria-hidden="true"><use href="#i-candado"/></svg>Compra protegida · Datos cifrados</p>
         </div>
         <p class="resumen__ayuda">¿Dudas con tu compra? <a href="https://wa.me/541123575522">Escribinos por WhatsApp</a>.</p>
       </aside>
@@ -470,11 +474,12 @@
       <span class="checkout__barra-total" data-total>$2.948.798</span>
       <span class="checkout__barra-nota" data-barra-nota>3 productos</span>
     </div>
-    <button class="btn btn--primario" type="button" data-barra-btn>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></button>
+    <button class="boton boton--primario" type="button" data-barra-btn>Continuar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
   </div>
 
   <!-- Aviso breve: producto quitado, compra de muestra -->
   <p class="aviso" data-aviso role="status" aria-live="polite"></p>
 
+</div>
 </body>
 </html>

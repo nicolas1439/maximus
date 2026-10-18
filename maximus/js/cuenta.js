@@ -105,7 +105,7 @@ document.querySelectorAll('.clave__ver').forEach((boton) =>
     campo.type = ver ? 'text' : 'password';
     boton.setAttribute('aria-pressed', ver);
     boton.setAttribute('aria-label', ver ? 'Ocultar contraseña' : 'Mostrar contraseña');
-    boton.querySelector('use').setAttribute('href', `recursos/iconos.svg?v=3#${ver ? 'i-ojo-no' : 'i-ojo'}`);
+    boton.querySelector('use').setAttribute('href', `#${ver ? 'i-ojo-no' : 'i-ojo'}`);
   })
 );
 

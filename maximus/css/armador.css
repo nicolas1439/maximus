@@ -52,6 +52,10 @@
   transition: border-color var(--transicion);
 }
 
+a.armador__alternativa {
+  color: var(--color-texto-suave);
+}
+
 .armador__alternativa:hover {
   border-color: var(--color-acento);
 }
@@ -283,11 +287,11 @@
   display: none;
 }
 
-.paso-arm:has(.paso-arm__acciones:not([hidden])) .paso-arm__flecha {
+.paso-arm:is(:has(.paso-arm__acciones:not([hidden])), .elegido) .paso-arm__flecha {
   display: none;
 }
 
-.paso-arm:has(.paso-arm__acciones:not([hidden])) .paso-arm__abrir {
+.paso-arm:is(:has(.paso-arm__acciones:not([hidden])), .elegido) .paso-arm__abrir {
   padding-right: var(--espacio-2);
 }
 
@@ -312,7 +316,7 @@
 }
 
 .paso-arm__quitar:hover {
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
 
 /* Cuerpo del paso */
@@ -370,12 +374,13 @@
 
 .aviso-paso--alerta {
   --aviso: var(--color-aviso);
+  --aviso-icono: var(--color-aviso-icono);
 }
 
 .aviso-paso > .icono {
   flex-shrink: 0;
   margin-top: 1px;
-  color: var(--aviso);
+  color: var(--aviso-icono, var(--aviso));
 }
 
 .aviso-paso--exito > .icono {
@@ -412,7 +417,8 @@
   color: var(--color-texto);
 }
 
-.salto[aria-pressed="true"] {
+.salto[aria-pressed="true"],
+.salto.marcado {
   border-style: solid;
   border-color: var(--color-texto);
   background: var(--color-superficie);
@@ -510,7 +516,8 @@
   border-color: var(--color-acento);
 }
 
-.chip-arm[aria-pressed="true"] {
+.chip-arm[aria-pressed="true"],
+.chip-arm.marcado {
   border-color: var(--color-texto);
   background: var(--color-texto);
   color: var(--color-fondo);
@@ -688,7 +695,6 @@
   border-color: var(--color-acento);
   color: var(--color-texto);
 }
-
 
 /* Check de la pieza elegida, arriba a la derecha sobre la foto */
 .pieza__marca {
@@ -911,7 +917,7 @@
 }
 
 .resumen-arm__quitar:hover {
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
 
 .resumen-arm__avisos {
@@ -941,14 +947,14 @@
 .aviso-arm > .icono {
   flex-shrink: 0;
   margin-top: 1px;
-  color: var(--color-aviso);
+  color: var(--color-aviso-icono);
 }
 
 .aviso-arm--info > .icono {
-  color: var(--color-info);
+  color: var(--color-info-texto);
 }
 
-.aviso-arm .btn-texto {
+.aviso-arm .boton-texto {
   display: inline;
   min-height: 0;
   font-size: inherit;
@@ -1063,7 +1069,8 @@
   mask-composite: add;
 }
 
-.resumen-arm__agregar:disabled {
+.resumen-arm__agregar:disabled,
+.resumen-arm__agregar.deshabilitado {
   opacity: 0.45;
   cursor: not-allowed;
 }
@@ -1108,56 +1115,6 @@
 }
 
 /* ---------- Diálogos: ficha "+ info" y cuotas ---------- */
-
-.dialogo-arm {
-  width: min(100% - 2 * var(--margen-lateral), 640px);
-  max-width: none;
-  max-height: min(88vh, 760px);
-  margin: auto;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  border-radius: var(--radio-l);
-  background: var(--color-fondo);
-  color: var(--color-texto);
-  box-shadow: 0 24px 60px rgb(0 0 0 / 0.35);
-}
-
-.dialogo-arm::backdrop {
-  background: var(--color-capa);
-  backdrop-filter: blur(2px);
-}
-
-.dialogo-arm[open] {
-  animation: dialogo-entrar var(--transicion) both;
-}
-
-@keyframes dialogo-entrar {
-  from {
-    opacity: 0;
-    translate: 0 16px;
-  }
-}
-
-.dialogo-arm__caja {
-  display: flex;
-  flex-direction: column;
-  max-height: inherit;
-}
-
-.dialogo-arm__cerrar {
-  flex-shrink: 0;
-  align-self: flex-start;
-}
-
-.dialogo-arm__pie {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--espacio-3);
-  padding: var(--espacio-3) var(--espacio-4) max(var(--espacio-3), env(safe-area-inset-bottom));
-  border-top: 1px solid var(--color-borde);
-  background: var(--color-fondo);
-}
 
 /* Ficha */
 .ficha-arm__cab {
@@ -1323,7 +1280,7 @@
 
 /* Cuotas */
 .cuotas-arm {
-  width: min(100% - 2 * var(--margen-lateral), 480px);
+  --dialogo-ancho: 480px;
 }
 
 .cuotas-arm__cab {
@@ -1483,34 +1440,22 @@
   font-size: var(--texto-2xs);
 }
 
-.barra-arm .btn {
+.barra-arm .boton {
   flex-shrink: 0;
   padding-inline: var(--espacio-3);
 }
 
-body:has(.barra-arm--visible) {
+.mx:has(.barra-arm--visible) {
   padding-bottom: calc(var(--alto-control) + 2 * var(--espacio-2));
 }
 
-body:has(.barra-arm--visible) .aviso {
+.mx:has(.barra-arm--visible) .aviso {
   bottom: calc(var(--alto-control) + 3 * var(--espacio-3) + env(safe-area-inset-bottom));
 }
 
 /* ---------- Celular: los diálogos como hoja desde abajo ---------- */
 
 @media (max-width: 767px) {
-  .dialogo-arm {
-    width: 100%;
-    max-height: 92vh;
-    margin: auto 0 0;
-    border-radius: var(--radio-l) var(--radio-l) 0 0;
-  }
-
-  @keyframes dialogo-entrar {
-    from {
-      translate: 0 40%;
-    }
-  }
 
   .ficha-arm__cab {
     grid-template-columns: 72px minmax(0, 1fr) auto;
@@ -1548,7 +1493,6 @@ body:has(.barra-arm--visible) .aviso {
     padding: 0 var(--espacio-6) var(--espacio-6);
   }
 
-
   .piezas {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--espacio-3);
@@ -1578,12 +1522,6 @@ body:has(.barra-arm--visible) .aviso {
 
   .ficha-arm__usos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .dialogo-arm__pie {
-    grid-template-columns: auto auto;
-    justify-content: end;
-    padding-inline: var(--espacio-6);
   }
 
   .cuotas-arm__resumen {
@@ -1630,7 +1568,7 @@ body:has(.barra-arm--visible) .aviso {
     display: none;
   }
 
-  body:has(.barra-arm--visible) {
+  .mx:has(.barra-arm--visible) {
     padding-bottom: 0;
   }
 }

@@ -219,11 +219,13 @@
   transition: translate var(--transicion);
 }
 
-.interruptor input:checked + .interruptor__pista {
+.interruptor input:checked + .interruptor__pista,
+.interruptor.encendido .interruptor__pista {
   background: var(--color-marca);
 }
 
-.interruptor input:checked + .interruptor__pista::after {
+.interruptor input:checked + .interruptor__pista::after,
+.interruptor.encendido .interruptor__pista::after {
   translate: 18px 0;
 }
 
@@ -264,7 +266,8 @@
   transition: transform var(--transicion);
 }
 
-.filtro[open] .filtro__flecha {
+.filtro[open] .filtro__flecha,
+.filtro.abierto .filtro__flecha {
   transform: rotate(180deg);
 }
 
@@ -307,7 +310,7 @@
 }
 
 /* Opción con casilla propia (la nativa queda solo para lectores de pantalla y el teclado) */
-.opcion {
+.filtro-opcion {
   display: flex;
   align-items: center;
   gap: var(--espacio-3);
@@ -317,7 +320,7 @@
   transition: opacity var(--transicion);
 }
 
-.opcion__caja {
+.filtro-opcion__caja {
   display: grid;
   flex-shrink: 0;
   place-items: center;
@@ -329,7 +332,7 @@
   transition: border-color var(--transicion), background-color var(--transicion);
 }
 
-.opcion__caja::after {
+.filtro-opcion__caja::after {
   content: "";
   width: 9px;
   height: 5px;
@@ -342,35 +345,37 @@
   transition: opacity var(--transicion);
 }
 
-.opcion:hover .opcion__caja {
+.filtro-opcion:hover .filtro-opcion__caja {
   border-color: var(--color-acento);
 }
 
-.opcion input:checked + .opcion__caja {
+.filtro-opcion input:checked + .filtro-opcion__caja,
+.filtro-opcion.elegida .filtro-opcion__caja {
   border-color: var(--color-marca);
   background: var(--color-marca);
 }
 
-.opcion input:checked + .opcion__caja::after {
+.filtro-opcion input:checked + .filtro-opcion__caja::after,
+.filtro-opcion.elegida .filtro-opcion__caja::after {
   opacity: 1;
 }
 
-.opcion input:focus-visible + .opcion__caja {
+.filtro-opcion input:focus-visible + .filtro-opcion__caja {
   outline: 2px solid var(--color-acento);
   outline-offset: 2px;
 }
 
-.opcion__texto {
+.filtro-opcion__texto {
   flex: 1;
 }
 
-.opcion__cuenta {
+.filtro-opcion__cuenta {
   color: var(--color-texto-suave);
   font-size: var(--texto-xs);
 }
 
 /* Sin resultados con los demás filtros: queda apagada */
-.opcion--sin {
+.filtro-opcion--sin {
   opacity: 0.45;
   cursor: default;
 }
@@ -565,7 +570,7 @@
     background: var(--color-fondo);
   }
 
-  .filtros__pie .btn {
+  .filtros__pie .boton {
     padding-inline: var(--espacio-4);
     font-size: var(--texto-s);
   }
@@ -909,7 +914,7 @@
     margin-bottom: var(--espacio-2);
   }
 
-  .opcion {
+  .filtro-opcion {
     min-height: var(--alto-control-xs);
   }
 }

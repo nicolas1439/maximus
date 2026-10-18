@@ -132,104 +132,9 @@
   gap: var(--espacio-4);
 }
 
-/* Indicador: número en círculo y nombre, unidos por una línea que se pinta de verde */
-.quiz__pasos {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+/* Indicador: .pasos--embudo de base.css */
+.quiz .pasos {
   width: min(100%, 520px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.quiz__paso {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.quiz__paso:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 15px;
-  left: calc(50% + 22px);
-  right: calc(-50% + 22px);
-  height: 2px;
-  border-radius: var(--radio-pill);
-  background: var(--color-borde);
-  transition: background-color var(--transicion);
-}
-
-.quiz__paso--hecho:not(:last-child)::after {
-  background: var(--color-marca);
-}
-
-.quiz__paso-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--espacio-1);
-  border-radius: var(--radio);
-}
-
-.quiz__paso-btn:disabled {
-  cursor: default;
-}
-
-.quiz__num {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border: 2px solid var(--color-borde);
-  border-radius: var(--radio-pill);
-  background: var(--color-fondo);
-  color: var(--color-texto-suave);
-  font-size: var(--texto-s);
-  font-weight: var(--peso-fuerte);
-  transition: background-color var(--transicion), border-color var(--transicion), color var(--transicion), box-shadow var(--transicion);
-}
-
-.quiz__num .icono {
-  display: none;
-  width: 16px;
-  height: 16px;
-  stroke-width: 3;
-}
-
-.quiz__paso[aria-current] .quiz__num {
-  border-color: var(--color-marca);
-  background: var(--color-marca);
-  color: var(--color-sobre-marca);
-  box-shadow: 0 0 0 4px var(--color-brillo-marca);
-}
-
-.quiz__paso--hecho .quiz__num {
-  border-color: var(--color-marca);
-  color: var(--color-acento);
-}
-
-.quiz__paso--hecho .quiz__num span {
-  display: none;
-}
-
-.quiz__paso--hecho .quiz__num .icono {
-  display: block;
-}
-
-.quiz__paso--hecho .quiz__paso-btn:hover .quiz__num {
-  background: var(--color-brillo-marca);
-}
-
-.quiz__nombre {
-  color: var(--color-texto-suave);
-  font-size: var(--texto-xs);
-}
-
-.quiz__paso[aria-current] .quiz__nombre,
-.quiz__paso--hecho .quiz__nombre {
-  color: var(--color-texto);
-  font-weight: var(--peso-medio);
 }
 
 .quiz__elegido {
@@ -614,38 +519,14 @@
   font-weight: var(--peso-medio);
 }
 
-.asesor .btn {
+.asesor .boton {
   grid-column: 1 / -1;
 }
 
-/* Especificaciones de una PC: diálogo (hoja desde abajo en celular) */
+/* Especificaciones de una PC: el diálogo de dialogo.css (hoja desde abajo en celular), más angosto */
 .specs-pc {
-  width: min(100% - 2 * var(--margen-lateral), 560px);
-  max-width: none;
-  max-height: min(88vh, 720px);
-  margin: auto;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  border-radius: var(--radio-l);
-  background: var(--color-fondo);
-  color: var(--color-texto);
-  box-shadow: 0 24px 60px rgb(0 0 0 / 0.35);
-}
-
-.specs-pc::backdrop {
-  background: var(--color-capa);
-  backdrop-filter: blur(2px);
-}
-
-.specs-pc[open] {
-  animation: quiz-entrar var(--transicion) both;
-}
-
-.specs-pc__caja {
-  display: flex;
-  flex-direction: column;
-  max-height: inherit;
+  --dialogo-ancho: 560px;
+  --dialogo-alto: 720px;
 }
 
 .specs-pc__cab {
@@ -760,23 +641,6 @@
   color: var(--color-acento);
 }
 
-.specs-pc__pie {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--espacio-3);
-  padding: var(--espacio-3) var(--espacio-4) max(var(--espacio-3), env(safe-area-inset-bottom));
-  border-top: 1px solid var(--color-borde);
-}
-
-@media (max-width: 767px) {
-  .specs-pc {
-    width: 100%;
-    max-height: 92vh;
-    margin: auto 0 0;
-    border-radius: var(--radio-l) var(--radio-l) 0 0;
-  }
-}
-
 /* ---------- De nuestro taller a tu escritorio ---------- */
 
 .taller {
@@ -889,6 +753,10 @@
   border: 1px solid var(--color-barra-borde);
   color: var(--color-sobre-destacado);
   transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+a.cierre-pc__btn {
+  color: var(--color-sobre-destacado);
 }
 
 .cierre-pc__btn:hover {
@@ -1032,7 +900,7 @@
     padding: var(--espacio-4) var(--espacio-6);
   }
 
-  .asesor .btn {
+  .asesor .boton {
     grid-column: auto;
   }
 
@@ -1051,12 +919,6 @@
   }
 
   .specs-pc__lista {
-    padding-inline: var(--espacio-6);
-  }
-
-  .specs-pc__pie {
-    grid-template-columns: auto auto;
-    justify-content: end;
     padding-inline: var(--espacio-6);
   }
 }

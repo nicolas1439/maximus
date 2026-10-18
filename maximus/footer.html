@@ -4,10 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Footer</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/footer.css">
@@ -18,10 +20,11 @@
   </style>
 </head>
 <body>
+<div class="mx">
 
   <main class="contenedor vista-demo" data-demo>
     <p>Vista previa del footer. Cambiá el tema para verlo en claro y oscuro.</p>
-    <button class="btn btn--primario" type="button" onclick="const o = document.documentElement.dataset.tema !== 'oscuro'; if (o) document.documentElement.dataset.tema = 'oscuro'; else delete document.documentElement.dataset.tema; try { localStorage.setItem('tema', o ? 'oscuro' : 'claro'); } catch {}">Cambiar tema</button>
+    <button class="boton boton--primario" type="button" onclick="const o = document.documentElement.classList.toggle('dark'); try { localStorage.setItem('darkmode', String(o)); } catch {}">Cambiar tema</button>
   </main>
 
   <!-- Footer: misma distribución, textos y orden que el de maximus.com.ar (marca y redes | Empresa | Soporte | Legal | Contacto,
@@ -31,15 +34,15 @@
 
       <div class="pie__marca">
         <a class="pie__logo-enlace" href="index.html" aria-label="Maximus, ir al inicio">
-          <svg class="pie__logo" aria-hidden="true"><use href="recursos/iconos.svg?v=3#logo"/></svg>
+          <svg class="pie__logo" aria-hidden="true"><use href="#i-logo"/></svg>
         </a>
         <p class="pie__lema">La tienda N°1 en Computación y Gaming.</p>
         <ul class="pie__redes" aria-label="Redes sociales">
-          <li><a href="https://www.facebook.com/Maximusgamingok" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-facebook"/></svg></a></li>
-          <li><a href="https://www.instagram.com/maximusgamingok" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-instagram"/></svg></a></li>
-          <li><a href="https://ar.linkedin.com/company/maximus-gaming-hardware" aria-label="LinkedIn" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-linkedin"/></svg></a></li>
-          <li><a href="https://www.tiktok.com/@maximusgamingok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-tiktok"/></svg></a></li>
-          <li><a href="https://www.youtube.com/@MAXIMUSGAMINGTV" aria-label="YouTube" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-youtube"/></svg></a></li>
+          <li><a href="https://www.facebook.com/Maximusgamingok" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-facebook"/></svg></a></li>
+          <li><a href="https://www.instagram.com/maximusgamingok" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-instagram"/></svg></a></li>
+          <li><a href="https://ar.linkedin.com/company/maximus-gaming-hardware" aria-label="LinkedIn" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
+          <li><a href="https://www.tiktok.com/@maximusgamingok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-tiktok"/></svg></a></li>
+          <li><a href="https://www.youtube.com/@MAXIMUSGAMINGTV" aria-label="YouTube" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-youtube"/></svg></a></li>
         </ul>
       </div>
 
@@ -80,15 +83,15 @@
         <h2 class="pie__titulo">Contacto</h2>
         <ul>
           <li class="pie__dato">
-            <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-whatsapp"/></svg>
+            <svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>
             <div><span class="pie__rotulo">WhatsApp</span><a href="https://wa.me/541123575522" target="_blank" rel="noopener">+54 11 2357-5522</a></div>
           </li>
           <li class="pie__dato">
-            <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-mail"/></svg>
+            <svg class="icono icono--s" aria-hidden="true"><use href="#i-mail"/></svg>
             <div><span class="pie__rotulo">Empresas</span><a href="mailto:empresas@maximus.com.ar">empresas@maximus.com.ar</a></div>
           </li>
           <li class="pie__dato">
-            <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-sucursal"/></svg>
+            <svg class="icono icono--s" aria-hidden="true"><use href="#i-sucursal"/></svg>
             <div>
               <span class="pie__rotulo">Local / Showroom</span>
               Florida 537 Local 379 (PB), CABA
@@ -96,7 +99,7 @@
             </div>
           </li>
           <li class="pie__dato">
-            <svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-pedido"/></svg>
+            <svg class="icono icono--s" aria-hidden="true"><use href="#i-pedido"/></svg>
             <div>
               <span class="pie__rotulo">Oficinas / Retiro de pedidos</span>
               R. de Escalada de San Martín 3875, CABA
@@ -111,12 +114,13 @@
     <div class="pie__final">
       <div class="contenedor pie__final-fila">
         <p>© 2026 Maximus Gaming Hardware.</p>
-        <a class="pie__arriba" href="#" aria-label="Volver arriba"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-arriba"/></svg></a>
+        <a class="pie__arriba" href="#" aria-label="Volver arriba"><svg class="icono" aria-hidden="true"><use href="#i-arriba"/></svg></a>
         <a class="pie__final-enlace" href="terminos-y-condiciones.html">Términos y condiciones</a>
       </div>
       <p class="pie__erp">Powered by GlobalBluePoint© ERP</p>
     </div>
   </footer>
 
+</div>
 </body>
 </html>

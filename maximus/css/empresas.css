@@ -101,19 +101,19 @@
   margin-top: var(--espacio-1);
 }
 
-.portada__acciones .btn {
+.portada__acciones .boton {
   flex: 1 1 auto;
   height: var(--alto-control-l);
 }
 
 /* El botón secundario sobre el fondo oscuro: contorno y fondo tenues de la barra */
-.portada .btn--secundario {
+.portada .boton--secundario {
   border-color: var(--color-barra-borde);
   background: var(--color-barra-hover);
   color: inherit;
 }
 
-.portada .btn--secundario:hover {
+.portada .boton--secundario:hover {
   border-color: var(--color-marca);
 }
 
@@ -307,7 +307,7 @@
   gap: var(--espacio-3) var(--espacio-4);
 }
 
-.cotizacion__acciones .btn {
+.cotizacion__acciones .boton {
   height: var(--alto-control-l);
 }
 
@@ -322,7 +322,7 @@
 }
 
 .cotizacion__estado--error {
-  color: var(--color-error);
+  color: var(--color-error-texto);
 }
 
 /* Envío confirmado (de muestra) */
@@ -460,7 +460,7 @@
     width: auto;
   }
 
-  .portada__acciones .btn {
+  .portada__acciones .boton {
     flex: 0 0 auto;
   }
 
@@ -521,10 +521,6 @@
 
   .cotizacion__campos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .campo--ancho {
-    grid-column: 1 / -1;
   }
 
   .canal {

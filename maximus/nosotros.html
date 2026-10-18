@@ -4,24 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Quiénes somos</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/marcas.css">
   <link rel="stylesheet" href="css/nosotros.css">
-  <script type="module" src="js/marcas.js"></script>
 </head>
 <body>
+<div class="mx">
 
   <!-- Plantilla Quiénes somos (la abre "Quiénes somos" del footer). Contenido de maximus.com.ar
        (/quienes-somos/info/maximus.aspx, relevado el 17/10/2026): "Vivimos el gaming como vos", los cuatro pilares,
        el blog y las reseñas de Google (5,0; las tres destacadas del sitio, con el nombre acortado). Se suman las
        marcas (la tira del home), los dos locales con su horario y la búsqueda de personal, que en el sitio está en el
        footer. Página completa con header y footer: quienes-somos.html. -->
-  <main class="nosotros">
+  <main class="nosotros" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
@@ -39,13 +41,13 @@
           <h1 class="portada-nos__titulo" id="nos-titulo">Vivimos el gaming <em>como vos</em></h1>
           <p class="portada-nos__bajada">Acompañamos a gamers, creadores y entusiastas de la tecnología con productos de alto rendimiento, asesoramiento personalizado y una compra pensada para armar el setup ideal.</p>
           <div class="portada-nos__acciones">
-            <a class="btn btn--primario" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-armar"/></svg>Armá tu PC</a>
-            <a class="btn portada-nos__btn" href="placas-de-video.html">Ver computadoras</a>
+            <a class="boton boton--primario" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-armar"/></svg>Armá tu PC</a>
+            <a class="boton portada-nos__btn" href="placas-de-video.html">Ver computadoras</a>
           </div>
         </div>
         <dl class="cifras">
           <div class="cifra"><dt>Años en computación y gaming</dt><dd>+10</dd></div>
-          <div class="cifra"><dt>Calificación en Google</dt><dd>5,0<svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg></dd></div>
+          <div class="cifra"><dt>Calificación en Google</dt><dd>5,0<svg class="icono" aria-hidden="true"><use href="#i-estrella"/></svg></dd></div>
           <div class="cifra"><dt>Locales en CABA</dt><dd>2</dd></div>
           <div class="cifra"><dt>Entrega en AMBA, con envíos a todo el país excepto Tierra del Fuego</dt><dd>24 hs hábiles</dd></div>
         </dl>
@@ -78,22 +80,22 @@
     <section class="contenedor pilares" aria-label="Por qué elegirnos">
       <ul class="pilares__lista">
         <li class="tarjeta pilar">
-          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-reloj"/></svg></span>
+          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="#i-reloj"/></svg></span>
           <h3 class="pilar__titulo">+10 años de experiencia</h3>
           <p class="pilar__texto">Especialistas en hardware, computadoras gamer y componentes de alto rendimiento.</p>
         </li>
         <li class="tarjeta pilar">
-          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg></span>
+          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="#i-envio"/></svg></span>
           <h3 class="pilar__titulo">Envíos a todo el país</h3>
           <p class="pilar__texto">Comprá online y recibí tu pedido en todo el país, excepto Tierra del Fuego. En AMBA, en 24 hs hábiles.</p>
         </li>
         <li class="tarjeta pilar">
-          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-ayuda"/></svg></span>
+          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="#i-ayuda"/></svg></span>
           <h3 class="pilar__titulo">Asesoramiento personalizado</h3>
           <p class="pilar__texto">Te ayudamos a elegir los componentes correctos según tu uso, tu presupuesto y tu objetivo.</p>
         </li>
         <li class="tarjeta pilar">
-          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-garantia"/></svg></span>
+          <span class="pilar__icono"><svg class="icono" aria-hidden="true"><use href="#i-garantia"/></svg></span>
           <h3 class="pilar__titulo">Las mejores marcas</h3>
           <p class="pilar__texto">Trabajamos con marcas líderes en gaming, hardware, periféricos y tecnología.</p>
         </li>
@@ -103,18 +105,18 @@
     <!-- Marcas: la tira del home -->
     <section class="marcas contenedor" aria-label="Marcas que trabajamos">
       <ul class="marcas__pista">
-        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/genesis.svg" alt="Genesis"><span class="marca__tono" style="mask-image: url(recursos/marcas/genesis.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/gigabyte.svg" alt="Gigabyte"><span class="marca__tono" style="mask-image: url(recursos/marcas/gigabyte.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/nvidia.svg" alt="NVIDIA"><span class="marca__tono" style="mask-image: url(recursos/marcas/nvidia.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--alta" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/corsair.svg" alt="Corsair"><span class="marca__tono" style="mask-image: url(recursos/marcas/corsair.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--menor" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/amd.svg" alt="AMD"><span class="marca__tono" style="mask-image: url(recursos/marcas/amd.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/msi.svg" alt="MSI"><span class="marca__tono" style="mask-image: url(recursos/marcas/msi.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--baja" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/asus.svg" alt="ASUS"><span class="marca__tono" style="mask-image: url(recursos/marcas/asus.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/redragon.svg" alt="Redragon"><span class="marca__tono" style="mask-image: url(recursos/marcas/redragon.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/kingston.svg" alt="Kingston"><span class="marca__tono" style="mask-image: url(recursos/marcas/kingston.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--ancha" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/lovingcool.svg" alt="Lovingcool"><span class="marca__tono" style="mask-image: url(recursos/marcas/lovingcool.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/logitech.svg" alt="Logitech"><span class="marca__tono" style="mask-image: url(recursos/marcas/logitech.svg)" aria-hidden="true"></span></a></li>
-        <li><a class="marca marca--ancha" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/xigmatek.svg" alt="Xigmatek"><span class="marca__tono" style="mask-image: url(recursos/marcas/xigmatek.svg)" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/genesis.svg" alt="Genesis"><span class="marca__tono marca__tono--genesis" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/gigabyte.svg" alt="Gigabyte"><span class="marca__tono marca__tono--gigabyte" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/nvidia.svg" alt="NVIDIA"><span class="marca__tono marca__tono--nvidia" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--alta" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/corsair.svg" alt="Corsair"><span class="marca__tono marca__tono--corsair" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--menor" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/amd.svg" alt="AMD"><span class="marca__tono marca__tono--amd" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/msi.svg" alt="MSI"><span class="marca__tono marca__tono--msi" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--baja" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/asus.svg" alt="ASUS"><span class="marca__tono marca__tono--asus" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/redragon.svg" alt="Redragon"><span class="marca__tono marca__tono--redragon" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/kingston.svg" alt="Kingston"><span class="marca__tono marca__tono--kingston" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--ancha" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/lovingcool.svg" alt="Lovingcool"><span class="marca__tono marca__tono--lovingcool" aria-hidden="true"></span></a></li>
+        <li><a class="marca" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/logitech.svg" alt="Logitech"><span class="marca__tono marca__tono--logitech" aria-hidden="true"></span></a></li>
+        <li><a class="marca marca--ancha" href="placas-de-video.html"><img class="marca__img" src="recursos/marcas/xigmatek.svg" alt="Xigmatek"><span class="marca__tono marca__tono--xigmatek" aria-hidden="true"></span></a></li>
       </ul>
     </section>
 
@@ -125,11 +127,11 @@
         <p class="seccion__bajada">Experiencias reales de quienes eligieron Maximus para comprar, actualizar o armar su PC.</p>
         <div class="opiniones__nota">
           <span class="opiniones__numero">5,0</span>
-          <span class="opiniones__estrellas" role="img" aria-label="5 de 5 estrellas"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg></span>
+          <span class="opiniones__estrellas" role="img" aria-label="5 de 5 estrellas"><svg class="icono" aria-hidden="true"><use href="#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="#i-estrella"/></svg><svg class="icono" aria-hidden="true"><use href="#i-estrella"/></svg></span>
           <span class="opiniones__fuente">en Google</span>
         </div>
-        <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Maximus+Gaming+Hardware+Florida+537" target="_blank" rel="noopener">Ver más reseñas en Google<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
-        <p class="muestra"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-alerta"/></svg>La nota y las fechas de las reseñas son de muestra; en el sitio se toman de Google.</p>
+        <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Maximus+Gaming+Hardware+Florida+537" target="_blank" rel="noopener">Ver más reseñas en Google<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+        <p class="muestra"><svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>La nota y las fechas de las reseñas son de muestra; en el sitio se toman de Google.</p>
       </div>
       <ul class="opiniones__lista">
         <li class="tarjeta opinion">
@@ -155,24 +157,24 @@
       <h2 class="seccion__titulo" id="visitanos-titulo">Visitanos</h2>
       <ul class="visitanos__lista">
         <li class="tarjeta sede">
-          <span class="sede__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-tienda"/></svg></span>
+          <span class="sede__icono"><svg class="icono" aria-hidden="true"><use href="#i-tienda"/></svg></span>
           <div class="sede__datos">
             <h3 class="sede__titulo">Local y showroom</h3>
             <p>Florida 537, Local 379 (PB), Galería Jardín, CABA</p>
-            <p class="sede__horario"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-reloj"/></svg>Lun a vie de 10 a 19 h · Sáb de 10 a 14:30 h</p>
+            <p class="sede__horario"><svg class="icono icono--s" aria-hidden="true"><use href="#i-reloj"/></svg>Lun a vie de 10 a 19 h · Sáb de 10 a 14:30 h</p>
             <p class="sede__nota">Vení a ver y probar los productos, retirá tu pedido o dejá un equipo para garantía.</p>
           </div>
-          <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Florida+537+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
+          <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Florida+537+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
         </li>
         <li class="tarjeta sede">
-          <span class="sede__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-empresa"/></svg></span>
+          <span class="sede__icono"><svg class="icono" aria-hidden="true"><use href="#i-empresa"/></svg></span>
           <div class="sede__datos">
             <h3 class="sede__titulo">Oficinas y retiro de pedidos</h3>
             <p>R. de Escalada de San Martín 3875, Floresta, CABA</p>
-            <p class="sede__horario"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-reloj"/></svg>Lun a vie de 9 a 17 h · Sáb de 10 a 14 h</p>
+            <p class="sede__horario"><svg class="icono icono--s" aria-hidden="true"><use href="#i-reloj"/></svg>Lun a vie de 9 a 17 h · Sáb de 10 a 14 h</p>
             <p class="sede__nota">Únicamente retiro de pedidos web y recepción de equipos para garantía.</p>
           </div>
-          <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Remedios+de+Escalada+de+San+Martin+3875+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
+          <a class="seccion__enlace" href="https://www.google.com/maps/search/?api=1&amp;query=Remedios+de+Escalada+de+San+Martin+3875+CABA" target="_blank" rel="noopener">Cómo llegar<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
         </li>
       </ul>
     </section>
@@ -188,17 +190,18 @@
           <li><strong>Gaming</strong>Novedades y recomendaciones</li>
           <li><strong>Setup</strong>Consejos para actualizar tu PC</li>
         </ul>
-        <span class="seccion__enlace">Ir al blog<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></span>
+        <span class="seccion__enlace">Ir al blog<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></span>
       </a>
       <div class="tarjeta equipo">
-        <span class="equipo__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-usuario"/></svg></span>
+        <span class="equipo__icono"><svg class="icono" aria-hidden="true"><use href="#i-usuario"/></svg></span>
         <h2 class="equipo__titulo">Unite al equipo Maximus</h2>
         <p class="equipo__texto">¿Te apasiona el hardware? Mandanos tu CV con tu nombre, el puesto al que aplicás y dónde vivís.</p>
-        <a class="btn btn--secundario" href="mailto:seleccion@maximus.com.ar?subject=Postulaci%C3%B3n%20-%20Equipo%20Maximus"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-mail"/></svg>seleccion@maximus.com.ar</a>
+        <a class="boton boton--secundario" href="mailto:seleccion@maximus.com.ar?subject=Postulaci%C3%B3n%20-%20Equipo%20Maximus"><svg class="icono icono--s" aria-hidden="true"><use href="#i-mail"/></svg>seleccion@maximus.com.ar</a>
       </div>
     </section>
 
   </main>
 
+</div>
 </body>
 </html>

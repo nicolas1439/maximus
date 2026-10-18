@@ -121,12 +121,14 @@
 }
 
 .ficha__favorito:hover,
-.ficha__favorito[aria-pressed="true"] {
+.ficha__favorito[aria-pressed="true"],
+.ficha__favorito.marcado {
   color: var(--color-favorito);
 }
 
 .ficha__favorito:hover .icono,
-.ficha__favorito[aria-pressed="true"] .icono {
+.ficha__favorito[aria-pressed="true"] .icono,
+.ficha__favorito.marcado .icono {
   fill: currentColor;
 }
 
@@ -186,7 +188,8 @@
   background: color-mix(in srgb, var(--color-sobre-imagen) 35%, transparent);
 }
 
-.galeria .carrusel__punto[aria-current="true"]::before {
+.galeria .carrusel__punto[aria-current="true"]::before,
+.galeria .carrusel__punto.actual::before {
   background: var(--color-marca);
 }
 
@@ -242,7 +245,8 @@
   border-color: var(--color-acento);
 }
 
-.galeria__miniatura[aria-current="true"] {
+.galeria__miniatura[aria-current="true"],
+.galeria__miniatura.actual {
   border-color: var(--color-marca);
   box-shadow: 0 0 0 3px var(--color-brillo-marca);
 }
@@ -381,21 +385,7 @@
   font-weight: var(--peso-medio);
 }
 
-/* Planes de cuotas: plegados en un details con la altura animada (como el acordeón de preguntas) */
-.compra__planes {
-  interpolate-size: allow-keywords;
-}
-
-.compra__planes::details-content {
-  height: 0;
-  overflow: clip;
-  transition: height var(--transicion), content-visibility var(--transicion) allow-discrete;
-}
-
-.compra__planes[open]::details-content {
-  height: auto;
-}
-
+/* Planes de cuotas: plegados en un details con la altura animada (.plegable de base.css) */
 .compra__planes-abrir {
   display: inline-flex;
   align-items: center;
@@ -408,15 +398,12 @@
   list-style: none;
 }
 
-.compra__planes-abrir::-webkit-details-marker {
-  display: none;
-}
-
 .compra__planes-abrir .icono {
   transition: transform var(--transicion);
 }
 
-.compra__planes[open] .compra__planes-abrir .icono {
+.compra__planes[open] .compra__planes-abrir .icono,
+.compra__planes.abierto .compra__planes-abrir .icono {
   transform: rotate(180deg);
 }
 
@@ -509,7 +496,7 @@
   flex-direction: column;
 }
 
-.estado {
+.condicion {
   display: flex;
   gap: var(--espacio-3);
   padding-block: var(--espacio-3);
@@ -517,30 +504,30 @@
   font-size: var(--texto-s);
 }
 
-.estado .icono {
+.condicion .icono {
   color: var(--color-texto-suave);
 }
 
-.estado--ok .icono {
+.condicion--ok .icono {
   color: var(--color-acento);
 }
 
-.estado strong {
+.condicion strong {
   display: block;
   font-weight: var(--peso-medio);
 }
 
-.estado--sin strong {
+.condicion--sin strong {
   color: var(--color-texto-suave);
 }
 
-.estado span {
+.condicion span {
   display: block;
   color: var(--color-texto-suave);
   font-size: var(--texto-xs);
 }
 
-.estado a,
+.condicion a,
 .compra__consulta a {
   color: var(--color-acento);
   text-decoration: underline;
@@ -805,12 +792,12 @@
   font-size: var(--texto-2xs);
 }
 
-.ficha__barra .btn {
+.ficha__barra .boton {
   margin-left: auto;
   padding-inline: var(--espacio-4);
 }
 
-body:has(.ficha__barra--visible) {
+.mx:has(.ficha__barra--visible) {
   padding-bottom: calc(var(--alto-control) + 2 * var(--espacio-2));
 }
 
@@ -831,7 +818,8 @@ body:has(.ficha__barra--visible) {
 }
 
 /* Entra con un fundido (animación: funciona aunque el navegador no transicione display) */
-.visor[open] {
+.visor[open],
+.visor.abierto {
   display: grid;
   animation: visor-entrar var(--transicion);
 }
@@ -876,7 +864,7 @@ body:has(.ficha__barra--visible) {
 }
 
 /* Botones sobre un fondo oscuro translúcido: se ven tanto sobre la foto blanca como sobre el fondo */
-.visor .btn-icono {
+.visor .boton-icono {
   position: absolute;
   border-radius: var(--radio-pill);
   background: var(--color-capa);
@@ -884,7 +872,7 @@ body:has(.ficha__barra--visible) {
   transition: background-color var(--transicion);
 }
 
-.visor .btn-icono:hover {
+.visor .boton-icono:hover {
   background: var(--color-barra);
 }
 
@@ -909,7 +897,7 @@ body:has(.ficha__barra--visible) {
 }
 
 /* Con la barra de compra a la vista, el aviso sube */
-body:has(.ficha__barra--visible) .aviso {
+.mx:has(.ficha__barra--visible) .aviso {
   bottom: calc(var(--alto-control) + 3 * var(--espacio-3) + env(safe-area-inset-bottom));
 }
 

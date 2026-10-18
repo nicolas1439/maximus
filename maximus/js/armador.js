@@ -8,6 +8,8 @@
 // total de cada paso son de muestra. En el sitio real todo eso lo trae el backend.
 // El armado queda en la URL (?armado=…) para copiar el link o volver; "Agregar al carrito" es de muestra.
 
+import { iniciarLuz } from './luz.js';
+
 const raiz = document.querySelector('[data-armador]');
 if (raiz) iniciar();
 
@@ -15,7 +17,7 @@ function iniciar() {
   const $ = (s, r = raiz) => r.querySelector(s);
   const $$ = (s, r = raiz) => [...r.querySelectorAll(s)];
   const pesos = (n) => `$${Math.round(n).toLocaleString('es-AR')}`;
-  const icono = (id, clase = 'icono icono--s') => `<svg class="${clase}" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${id}"/></svg>`;
+  const icono = (id, clase = 'icono icono--s') => `<svg class="${clase}" aria-hidden="true"><use href="#${id}"/></svg>`;
   const cdn = (codigo) => `https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/${codigo}_400.jpg`;
   const local = (nombre) => `recursos/productos/${nombre}.jpg`;
   const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)');
@@ -380,7 +382,7 @@ function iniciar() {
         </button>
         <div class="paso-arm__acciones" data-acciones hidden>
           <button class="paso-arm__cambiar" type="button" data-abrir="${p.clave}">Cambiar</button>
-          <button class="btn-icono paso-arm__quitar" type="button" data-quitar aria-label="Quitar ${p.titulo.toLowerCase()}">${icono('i-cerrar')}</button>
+          <button class="boton-icono paso-arm__quitar" type="button" data-quitar aria-label="Quitar ${p.titulo.toLowerCase()}">${icono('i-cerrar')}</button>
         </div>
       </div>
       <div class="paso-arm__cuerpo" id="cuerpo-${p.clave}" hidden>
@@ -398,8 +400,8 @@ function iniciar() {
         <div class="paso-arm__resultados"><p class="paso-arm__cuenta" data-cuenta-paso></p>${p.buscar ? `<label class="orden-arm"><span class="sr-only">Ordenar</span><span class="selector"><select class="selector__campo" data-orden><option value="menor">Menor a mayor</option><option value="mayor">Mayor a menor</option></select>${icono('i-abajo', 'icono icono--s selector__flecha')}</span></label>` : ''}</div>
         <ul class="piezas" data-piezas></ul>
         <div class="paso-arm__pie">
-          ${p.total > p.piezas.length ? `<button class="btn btn--secundario paso-arm__mas-productos" type="button" data-mas-productos>${icono('i-abajo')}Ver más productos (<span data-restantes></span> restantes)</button>` : ''}
-          ${p.max > 1 ? `<button class="btn btn--primario paso-arm__listo" type="button" data-listo>Listo, seguir${icono('i-flecha')}</button>` : ''}
+          ${p.total > p.piezas.length ? `<button class="boton boton--secundario paso-arm__mas-productos" type="button" data-mas-productos>${icono('i-abajo')}Ver más productos (<span data-restantes></span> restantes)</button>` : ''}
+          ${p.max > 1 ? `<button class="boton boton--primario paso-arm__listo" type="button" data-listo>Listo, seguir${icono('i-flecha')}</button>` : ''}
         </div>
       </div>
     </li>`
@@ -523,12 +525,12 @@ function iniciar() {
       return `<li class="resumen-arm__fila${Array.isArray(e) ? ' resumen-arm__fila--elegida' : ''}">
         <button class="resumen-arm__abrir" type="button" data-abrir="${paso.clave}">${foto}<span class="resumen-arm__textos"><span class="resumen-arm__paso">${paso.titulo}</span><span class="resumen-arm__dato">${texto}</span></span></button>
         <span class="resumen-arm__precio">${precio}</span>
-        ${e !== null ? `<button class="btn-icono resumen-arm__quitar" type="button" data-quitar="${paso.clave}" aria-label="Quitar ${paso.titulo.toLowerCase()}">${icono('i-cerrar')}</button>` : '<span></span>'}
+        ${e !== null ? `<button class="boton-icono resumen-arm__quitar" type="button" data-quitar="${paso.clave}" aria-label="Quitar ${paso.titulo.toLowerCase()}">${icono('i-cerrar')}</button>` : '<span></span>'}
       </li>`;
     }).join('');
 
     $('[data-resumen-avisos]', resumen).innerHTML = avisos()
-      .map(([tipo, texto, clave]) => `<li class="aviso-arm aviso-arm--${tipo}">${icono(tipo === 'alerta' ? 'i-alerta' : 'i-ayuda')}<span>${texto} <button class="btn-texto" type="button" data-abrir="${clave}">Ver</button></span></li>`)
+      .map(([tipo, texto, clave]) => `<li class="aviso-arm aviso-arm--${tipo}">${icono(tipo === 'alerta' ? 'i-alerta' : 'i-ayuda')}<span>${texto} <button class="boton-texto" type="button" data-abrir="${clave}">Ver</button></span></li>`)
       .join('');
 
     $('[data-progreso-texto]', resumen).textContent = `${hechos} de ${PRINCIPALES.length}`;
@@ -648,8 +650,8 @@ function iniciar() {
     const sel = Array.isArray(elegido[clave]) && elegido[clave].some((e) => e.id === id);
     const elegirBtn = $('[data-ficha-elegir]', ficha);
     elegirBtn.innerHTML = sel ? `${icono('i-cerrar')}Quitar de mi armado` : `${icono('i-check')}Elegir este producto`;
-    elegirBtn.classList.toggle('btn--primario', !sel);
-    elegirBtn.classList.toggle('btn--secundario', sel);
+    elegirBtn.classList.toggle('boton--primario', !sel);
+    elegirBtn.classList.toggle('boton--secundario', sel);
     $('[data-ficha-cuerpo]', ficha).scrollTop = 0;
     ficha.showModal();
   }
@@ -790,39 +792,10 @@ function iniciar() {
     revisarCompatibilidad();
   }
 
-  // ---------- Degradado vivo de "Agregar al carrito" (como el botón Productos del header) ----------
-  // La luz sigue al puntero con retraso: cada cuadro recorre una parte del camino que falta.
+  // ---------- Degradado vivo de "Agregar al carrito" (luz.js, como el botón Productos del header) ----------
 
   const agregar = $('[data-agregar-arm]', resumen);
-  if (conMouse.matches && !sinMovimiento.matches) {
-    let actual = null;
-    let destino = null;
-    let dentro = false;
-    let cuadro = 0;
-    const posicion = (e) => {
-      const r = agregar.getBoundingClientRect();
-      return { x: e.clientX - r.left, y: e.clientY - r.top };
-    };
-    const paso = () => {
-      actual.x += (destino.x - actual.x) * 0.06;
-      actual.y += (destino.y - actual.y) * 0.06;
-      agregar.style.setProperty('--x', `${actual.x}px`);
-      agregar.style.setProperty('--y', `${actual.y}px`);
-      const quieto = Math.abs(destino.x - actual.x) < 0.5 && Math.abs(destino.y - actual.y) < 0.5;
-      cuadro = quieto && !dentro ? 0 : requestAnimationFrame(paso);
-    };
-    agregar.addEventListener('pointerenter', (e) => {
-      dentro = true;
-      destino = posicion(e);
-      actual ??= { ...destino };
-      if (!cuadro) cuadro = requestAnimationFrame(paso);
-    });
-    agregar.addEventListener('pointermove', (e) => {
-      destino = posicion(e);
-      if (!cuadro) cuadro = requestAnimationFrame(paso);
-    });
-    agregar.addEventListener('pointerleave', () => (dentro = false));
-  }
+  if (!sinMovimiento.matches) iniciarLuz(agregar, { tramo: 0.06 });
 
   // ---------- Aviso breve ----------
 

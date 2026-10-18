@@ -5,7 +5,7 @@
 
 const tramite = document.querySelector('[data-tramite]');
 const form = document.querySelector('[data-form-rma]');
-const icono = (id) => `<svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${id}"/></svg>`;
+const icono = (id) => `<svg class="icono" aria-hidden="true"><use href="#${id}"/></svg>`;
 
 let conSesion = false;
 try {
@@ -133,7 +133,7 @@ function validar(controles) {
 
 if (tramite && form) {
   const etapas = [...form.querySelectorAll('[data-etapa]')];
-  const pasos = [...tramite.querySelectorAll('.etapas__paso')];
+  const pasos = [...tramite.querySelectorAll('.pasos__paso')];
   const veredicto = form.querySelector('[data-veredicto]');
   const bloqueCompras = form.querySelector('[data-con-sesion]');
   const bloqueManual = form.querySelector('[data-manual]');
@@ -156,16 +156,16 @@ if (tramite && form) {
   }
 
   // Estado de cada compra (chip) y verificación de la elegida
-  form.querySelectorAll('.compra__radio').forEach((radio) => {
+  form.querySelectorAll('.compra-rma .opcion__radio').forEach((radio) => {
     const r = verificar({ ...radio.dataset });
-    const chip = radio.closest('.compra').querySelector('[data-estado-compra]');
+    const chip = radio.closest('.compra-rma').querySelector('[data-estado-compra]');
     chip.textContent = r.chip;
-    chip.classList.add(`compra__estado--${r.tipo}`);
+    chip.classList.add(`compra-rma__estado--${r.tipo}`);
   });
 
   function datosProducto() {
     if (modo === 'compras') {
-      const radio = form.querySelector('.compra__radio:checked');
+      const radio = form.querySelector('.compra-rma .opcion__radio:checked');
       return radio ? { ...radio.dataset } : null;
     }
     return {
@@ -186,7 +186,7 @@ if (tramite && form) {
   }
 
   form.addEventListener('change', (e) => {
-    if (e.target.matches('.compra__radio, [data-categoria], [data-fecha]')) actualizarVeredicto();
+    if (e.target.matches('.compra-rma .opcion__radio, [data-categoria], [data-fecha]')) actualizarVeredicto();
     if (e.target.getAttribute('aria-invalid') || e.target.type === 'radio' || e.target.type === 'checkbox') {
       if (e.target.closest('.campo, .fallas, .casilla')) marcar(e.target, errorDe(e.target));
     }
@@ -221,7 +221,7 @@ if (tramite && form) {
     etapas.forEach((f) => (f.hidden = Number(f.dataset.etapa) !== n));
     pasos.forEach((p, i) => {
       const num = i + 1;
-      p.classList.toggle('etapas__paso--hecho', num < n || (num < alcanzada && num !== n));
+      p.classList.toggle('pasos__paso--hecho', num < n || (num < alcanzada && num !== n));
       if (num === n) p.setAttribute('aria-current', 'step');
       else p.removeAttribute('aria-current');
       p.querySelector('button').disabled = num > alcanzada || num === n;
@@ -236,7 +236,7 @@ if (tramite && form) {
     estado.textContent = '';
 
     if (n === 1) {
-      if (modo === 'compras' && !form.querySelector('.compra__radio:checked')) {
+      if (modo === 'compras' && !form.querySelector('.compra-rma .opcion__radio:checked')) {
         estado.textContent = 'Elegí el producto que falla.';
         return false;
       }
@@ -364,7 +364,7 @@ if (tramite && form) {
     enviada.querySelector('[data-numero-rma]').textContent = 14907 + Math.floor(Math.random() * 40);
 
     pasos.forEach((p) => {
-      p.classList.add('etapas__paso--hecho');
+      p.classList.add('pasos__paso--hecho');
       p.removeAttribute('aria-current');
       p.querySelector('button').disabled = true;
     });

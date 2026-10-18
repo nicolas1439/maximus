@@ -11,7 +11,7 @@ function iniciar() {
   const $ = (selector) => raiz.querySelector(selector);
   const $$ = (selector) => [...raiz.querySelectorAll(selector)];
   const pesos = (n) => `$${Math.round(n).toLocaleString('es-AR')}`;
-  const icono = (id) => `<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${id}"/></svg>`;
+  const icono = (id) => `<svg class="icono icono--s" aria-hidden="true"><use href="#${id}"/></svg>`;
   const escapar = (texto) => String(texto).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
   let compra = null;
@@ -95,7 +95,7 @@ function iniciar() {
       if (i === actual) paso.setAttribute('aria-current', 'step');
       else paso.removeAttribute('aria-current');
       const punto = paso.querySelector('.seguimiento__punto');
-      punto.innerHTML = i < actual ? '<svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-check"/></svg>' : '';
+      punto.innerHTML = i < actual ? '<svg class="icono" aria-hidden="true"><use href="#i-check"/></svg>' : '';
       const fecha = paso.querySelector('small');
       if (i < actual && !fecha) paso.querySelector('.seguimiento__texto').insertAdjacentHTML('beforeend', '<small>17/10</small>');
       if (i >= actual) fecha?.remove();
@@ -107,7 +107,7 @@ function iniciar() {
       .map(
         ([titulo, texto, comprobante], i) => `<li class="sigue__paso"><span class="sigue__num">${i + 1}</span><div>
           <p class="sigue__titulo">${titulo}</p><p class="sigue__texto">${texto}</p>
-          ${comprobante ? `<a class="btn btn--primario sigue__btn" href="mi-cuenta.html#pedidos">${icono('i-subir')}Subir comprobante</a>` : ''}
+          ${comprobante ? `<a class="boton boton--primario sigue__btn" href="mi-cuenta.html#pedidos">${icono('i-subir')}Subir comprobante</a>` : ''}
         </div></li>`
       )
       .join('');

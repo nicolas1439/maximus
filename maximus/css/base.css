@@ -1,61 +1,182 @@
-/* Base: reset mínimo, etiquetas y utilidades comunes. */
+/* Base: reset mínimo, etiquetas y utilidades comunes.
 
-*,
-*::before,
-*::after {
+   Todo el diseño va dentro de un contenedor .mx (en el sitio real conviven Bootstrap 5.3 y una hoja global vieja).
+   El reset y los estilos de etiquetas se escriben con :where(.mx), que no suma especificidad: quedan con el peso de
+   una etiqueta, así pisan a las de Bootstrap y de la hoja global (cargan antes) y cualquier clase del diseño los pisa
+   a ellos. Sin @layer: lo que va en una capa pierde contra Bootstrap, que no usa capas.
+   La descripción de los productos llega del sistema como HTML libre (viñetas, tablas, imágenes): va en .texto-libre
+   y el reset de listas e imágenes no la toca. */
+
+:where(.mx),
+:where(.mx) *,
+:where(.mx) *::before,
+:where(.mx) *::after {
   box-sizing: border-box;
 }
 
-html {
+html:has(.mx) {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
 }
 
-body {
+/* Solo en las vistas previas, donde .mx es el contenido de la página */
+body:has(> .mx) {
   margin: 0;
+  background: var(--color-fondo-suave);
+}
+
+.mx {
   font-family: var(--fuente-base);
   font-size: var(--texto-m);
+  font-weight: var(--peso-normal);
   line-height: 1.5;
   color: var(--color-texto);
   background: var(--color-fondo-suave);
 }
 
-img,
-svg {
+/* La hoja global fuerza el peso normal en estas etiquetas: acá heredan, como sin ella */
+:where(.mx) div,
+:where(.mx) span,
+:where(.mx) p,
+:where(.mx) li,
+:where(.mx) a,
+:where(.mx) label,
+:where(.mx) dt,
+:where(.mx) dd,
+:where(.mx) td,
+:where(.mx) section,
+:where(.mx) article,
+:where(.mx) header,
+:where(.mx) footer,
+:where(.mx) nav,
+:where(.mx) main,
+:where(.mx) aside {
+  font-weight: inherit;
+}
+
+/* Etiquetas con los valores del navegador, que es con lo que cuenta el diseño: Bootstrap les cambia márgenes,
+   tamaños, interlineado y pesos */
+:where(.mx) h1 { margin-block: 0.67em; font-size: 2em; }
+:where(.mx) h2 { margin-block: 0.83em; font-size: 1.5em; }
+:where(.mx) h3 { margin-block: 1em; font-size: 1.17em; }
+:where(.mx) h4 { margin-block: 1.33em; font-size: 1em; }
+:where(.mx) h5 { margin-block: 1.67em; font-size: 0.83em; }
+:where(.mx) h6 { margin-block: 2.33em; font-size: 0.67em; }
+
+:where(.mx) h1,
+:where(.mx) h2,
+:where(.mx) h3,
+:where(.mx) h4,
+:where(.mx) h5,
+:where(.mx) h6 {
+  font-weight: bold;
+  line-height: inherit;
+  color: inherit;
+}
+
+:where(.mx) p,
+:where(.mx) dl {
+  margin-block: 1em;
+}
+
+:where(.mx) ol:not(:where(.texto-libre *)) {
+  margin-block: 1em;
+  padding-left: 40px;
+}
+
+:where(.mx) dd {
+  margin-bottom: 0;
+  margin-left: 40px;
+}
+
+:where(.mx) small {
+  font-size: smaller;
+}
+
+:where(.mx) address {
+  margin-bottom: 0;
+}
+
+:where(.mx) caption {
+  padding-block: 0;
+  color: inherit;
+  text-align: center;
+  caption-side: top;
+}
+
+:where(.mx) label {
+  display: inline;
+}
+
+:where(.mx) legend {
+  float: none;
+  width: auto;
+  margin-bottom: 0;
+  padding-inline: 2px;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+:where(.mx) thead,
+:where(.mx) tbody,
+:where(.mx) tfoot,
+:where(.mx) tr,
+:where(.mx) th,
+:where(.mx) td {
+  border-style: none;
+  border-width: medium;
+}
+
+:where(.mx) img:not(:where(.texto-libre *)),
+:where(.mx) svg:not(:where(.texto-libre *)) {
   display: block;
   max-width: 100%;
 }
 
-[hidden] {
+:where(.mx) [hidden] {
   display: none !important;
 }
 
-a {
+/* Enlaces: :is(:any-link, :hover) les da el mismo peso que el a:hover de la hoja global (verde y subrayado),
+   en todos los estados. Un enlace con color propio lo lleva en un selector con su etiqueta o su estado */
+:where(.mx) a,
+:where(.mx) a:is(:any-link, :hover) {
   color: inherit;
   text-decoration: none;
 }
 
-button,
-input,
-select {
+:where(.mx) button,
+:where(.mx) input,
+:where(.mx) select {
+  margin: 0;
   font: inherit;
   color: inherit;
 }
 
-button {
+/* Casillas y radios con el margen del navegador (Bootstrap lo pone en 0) */
+:where(.mx) input:where([type="checkbox"]) {
+  margin: 3px 3px 3px 4px;
+}
+
+:where(.mx) input:where([type="radio"]) {
+  margin: 3px 3px 0 5px;
+}
+
+:where(.mx) button {
   padding: 0;
   border: 0;
+  border-radius: 0;
   background: none;
   cursor: pointer;
 }
 
-ul {
+:where(.mx) ul:not(:where(.texto-libre *)) {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-:focus-visible {
+:where(.mx) :focus-visible {
   outline: 2px solid var(--color-acento);
   outline-offset: 2px;
 }
@@ -83,7 +204,7 @@ ul {
   height: 18px;
 }
 
-.btn-icono {
+.boton-icono {
   position: relative;
   display: grid;
   place-items: center;
@@ -93,12 +214,12 @@ ul {
   transition: background-color var(--transicion);
 }
 
-.btn-icono:hover {
+.boton-icono:hover {
   background: var(--color-superficie);
 }
 
 /* Botón */
-.btn {
+.boton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -111,26 +232,30 @@ ul {
   transition: background-color var(--transicion);
 }
 
-.btn .icono {
+.boton .icono {
   transition: transform var(--transicion);
 }
 
-.btn--primario {
+.boton--primario {
   background: var(--color-marca);
   color: var(--color-sobre-marca);
 }
 
-.btn--primario:hover {
+a.boton--primario {
+  color: var(--color-sobre-marca);
+}
+
+.boton--primario:hover {
   background: var(--color-marca-hover);
 }
 
-.btn--secundario {
+.boton--secundario {
   border: 1px solid var(--color-borde);
   background: var(--color-fondo);
   transition: border-color var(--transicion), background-color var(--transicion);
 }
 
-.btn--secundario:hover {
+.boton--secundario:hover {
   border-color: var(--color-acento);
 }
 
@@ -205,7 +330,7 @@ ul {
   width: 14px;
   height: 14px;
   margin-top: 1px;
-  color: var(--color-aviso);
+  color: var(--color-aviso-icono);
 }
 
 /* Selector: select nativo con estilo propio y flecha propia (va después del select, dentro de .selector).
@@ -338,6 +463,247 @@ ul {
   background: var(--color-fondo);
 }
 
+/* Plegable: details con la altura animada (preguntas frecuentes, "Leer más", planes de cuotas, detalle de un
+   pedido). Donde el navegador no anima la altura (interpolate-size), abre y cierra al instante. El summary va sin el
+   triángulo del navegador. Abierto: [open] o la clase .abierto */
+.plegable {
+  interpolate-size: allow-keywords;
+}
+
+.plegable > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.plegable > summary::-webkit-details-marker {
+  display: none;
+}
+
+.plegable::details-content {
+  height: 0;
+  overflow: clip;
+  transition: height var(--transicion), content-visibility var(--transicion) allow-discrete;
+}
+
+.plegable:is([open], .abierto)::details-content {
+  height: auto;
+}
+
+/* Indicador de pasos (checkout, Garantía y RMA, Tu PC ideal): número en círculo y nombre, unidos por una línea que
+   se pinta de marca a medida que se avanza. Tantas columnas como pasos. Los hechos (.pasos__paso--hecho) van en
+   verde con check y se pueden volver a abrir; el actual (aria-current="step" o .actual) lleva un halo; los que no
+   se alcanzaron no se pueden abrir (aria-disabled="true", disabled o .deshabilitado). El ancho lo pone cada página.
+   .pasos--embudo: el de Tu PC ideal, como el del sitio (más grande, el paso actual relleno y los hechos en blanco) */
+.pasos {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pasos__paso {
+  position: relative;
+  text-align: center;
+}
+
+.pasos__paso:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: calc(50% + 18px);
+  right: calc(-50% + 18px);
+  height: 2px;
+  border-radius: var(--radio-pill);
+  background: var(--color-borde);
+  transition: background-color var(--transicion);
+}
+
+.pasos__paso--hecho:not(:last-child)::after {
+  background: var(--color-marca);
+}
+
+.pasos__enlace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-1);
+  width: 100%;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  line-height: 1.3;
+}
+
+a.pasos__enlace {
+  color: var(--color-texto-suave);
+}
+
+.pasos__enlace:is([aria-disabled="true"], :disabled, .deshabilitado) {
+  cursor: default;
+  pointer-events: none;
+}
+
+.pasos__num {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
+}
+
+.pasos__num .icono {
+  display: none;
+  width: 14px;
+  height: 14px;
+  stroke-width: 3;
+}
+
+.pasos__paso--hecho .pasos__num {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.pasos__paso--hecho .pasos__n {
+  display: none;
+}
+
+.pasos__paso--hecho .pasos__num .icono {
+  display: block;
+}
+
+.pasos__paso:is([aria-current="step"], .actual) .pasos__num {
+  border-color: var(--color-marca);
+  color: var(--color-texto);
+  box-shadow: 0 0 0 4px var(--color-brillo-marca);
+}
+
+.pasos__paso--hecho .pasos__enlace,
+.pasos__paso:is([aria-current="step"], .actual) .pasos__enlace {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.pasos__paso--hecho .pasos__enlace:hover .pasos__nombre {
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .pasos__enlace {
+    font-size: var(--texto-xs);
+  }
+}
+
+.pasos--embudo .pasos__paso {
+  display: flex;
+  justify-content: center;
+}
+
+.pasos--embudo .pasos__paso:not(:last-child)::after {
+  top: 15px;
+  left: calc(50% + 22px);
+  right: calc(-50% + 22px);
+}
+
+.pasos--embudo .pasos__enlace {
+  width: auto;
+  border-radius: var(--radio);
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.pasos--embudo .pasos__num {
+  width: 32px;
+  height: 32px;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  transition: background-color var(--transicion), border-color var(--transicion), color var(--transicion), box-shadow var(--transicion);
+}
+
+.pasos--embudo .pasos__num .icono {
+  width: 16px;
+  height: 16px;
+}
+
+.pasos--embudo .pasos__paso:is([aria-current="step"], .actual) .pasos__num {
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.pasos--embudo .pasos__paso--hecho .pasos__num {
+  background: var(--color-fondo);
+  color: var(--color-acento);
+}
+
+.pasos--embudo .pasos__paso--hecho .pasos__enlace:hover .pasos__num {
+  background: var(--color-brillo-marca);
+}
+
+.pasos--embudo .pasos__paso--hecho .pasos__enlace:hover .pasos__nombre {
+  text-decoration: none;
+}
+
+.pasos--embudo .pasos__nombre {
+  font-size: var(--texto-xs);
+}
+
+/* Totales de una compra (carrito y compra confirmada): filas con rótulo e importe, el total separado con una línea
+   punteada */
+.totales {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  font-size: var(--texto-s);
+}
+
+.totales__total {
+  margin-top: var(--espacio-1);
+  padding-top: var(--espacio-3);
+  border-top: 1px dashed var(--color-borde);
+}
+
+/* Formulario: los campos en columna; desde tablet, de a dos (.campo--ancho ocupa la fila entera y
+   .formulario__campos--uno deja una sola columna angosta) */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.formulario__campos {
+  clear: both;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+}
+
+.campo--ancho {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .formulario__campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .formulario__campos--uno {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 420px;
+  }
+}
+
 /* Campo de formulario: rótulo, control (input o .selector) y ayuda opcional. El texto va en 16px para que el
    celular no haga zoom al enfocar. Solo lectura: fondo de superficie y texto suave */
 .campo {
@@ -414,11 +780,14 @@ ul {
 
 /* Campo con error: borde y halo en rojo, y el mensaje debajo del control (lo agrega acceso.js) */
 .campo__control[aria-invalid="true"],
-.campo__control[aria-invalid="true"]:hover {
-  border-color: var(--color-error);
+.campo__control[aria-invalid="true"]:hover,
+.campo__control.con-error,
+.campo__control.con-error:hover {
+  border-color: var(--color-error-texto);
 }
 
-.campo__control[aria-invalid="true"]:focus-visible {
+.campo__control[aria-invalid="true"]:focus-visible,
+.campo__control.con-error:focus-visible {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 18%, transparent);
 }
 
@@ -427,7 +796,7 @@ ul {
   align-items: flex-start;
   gap: var(--espacio-1);
   margin: 0;
-  color: var(--color-error);
+  color: var(--color-error-texto);
   font-size: var(--texto-xs);
   font-weight: var(--peso-medio);
 }
@@ -526,6 +895,10 @@ ul {
   font-weight: var(--peso-medio);
 }
 
+a.seccion__enlace {
+  color: var(--color-acento);
+}
+
 .seccion__enlace .icono {
   transition: transform var(--transicion);
 }
@@ -580,13 +953,14 @@ ul {
   vertical-align: middle;
 }
 
-.migas [aria-current] {
+.migas [aria-current],
+.migas .actual {
   color: var(--color-texto);
   font-weight: var(--peso-medio);
 }
 
 /* Botón de texto (acciones secundarias dentro de tarjetas: editar, quitar, ver más) */
-.btn-texto {
+.boton-texto {
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-1);
@@ -596,15 +970,24 @@ ul {
   font-weight: var(--peso-medio);
 }
 
-.btn-texto:hover {
+a.boton-texto {
+  color: var(--color-acento);
+}
+
+.boton-texto:hover {
   text-decoration: underline;
 }
 
-.btn-texto--suave {
+.boton-texto--suave {
   color: var(--color-texto-suave);
 }
 
-.btn-texto:disabled {
+a.boton-texto--suave {
+  color: var(--color-texto-suave);
+}
+
+.boton-texto:disabled,
+.boton-texto.deshabilitado {
   color: var(--color-texto-suave);
   text-decoration: none;
   cursor: default;
@@ -638,7 +1021,8 @@ ul {
   color: var(--color-acento);
 }
 
-.cantidad__btn:disabled {
+.cantidad__btn:disabled,
+.cantidad__btn.deshabilitado {
   opacity: 0.35;
   color: inherit;
   cursor: default;
@@ -690,9 +1074,11 @@ ul {
   transition: opacity var(--transicion), translate var(--transicion);
 }
 
-/* Aurora de marca para paneles oscuros (Quiénes somos y landings): trama de puntos y dos manchas desenfocadas,
-   verde y violeta, que derivan despacio. Va como primer hijo del panel, que necesita position: relative,
-   isolation: isolate y overflow: hidden. (El Centro de ayuda y Acceso tienen la suya en su CSS.) */
+/* Aurora de marca (Quiénes somos, Centro de ayuda, Ingresar y landings): trama de puntos y dos manchas
+   desenfocadas, verde y violeta, que derivan despacio. Va como primer hijo de su contenedor, que necesita
+   position: relative e isolation: isolate. En un panel oscuro (el caso base) el panel lleva overflow: hidden;
+   .aurora--pagina es la versión para el fondo de la página, en claro y oscuro: ocupa todo el ancho de la pantalla,
+   con la trama que se desvanece hacia los bordes (Ingresar y Crear cuenta). */
 .aurora {
   position: absolute;
   inset: 0;
@@ -738,6 +1124,96 @@ ul {
   }
 }
 
+.aurora--pagina {
+  --mancha: min(80vw, 560px);
+  top: 0;
+  bottom: calc(var(--espacio-seccion) * -1);
+  left: 50%;
+  width: 100vw;
+  overflow: hidden;
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-texto) 14%, transparent) 1px, transparent 1.5px) 0 0 / 22px 22px;
+  mask-image: radial-gradient(ellipse 65% 60% at 50% 45%, #000 25%, transparent 75%);
+  translate: -50% 0;
+}
+
+.aurora--pagina::before,
+.aurora--pagina::after {
+  width: var(--mancha);
+  filter: blur(72px);
+  animation: aurora-deriva-pagina 16s ease-in-out infinite alternate;
+}
+
+.aurora--pagina::before {
+  top: 0;
+  left: calc(50% - var(--mancha) * 0.85);
+  opacity: 0.22;
+}
+
+.aurora--pagina::after {
+  right: auto;
+  bottom: 10%;
+  left: calc(50% - var(--mancha) * 0.15);
+  opacity: 0.2;
+  animation-duration: 20s;
+  animation-direction: alternate-reverse;
+}
+
+html.dark .aurora--pagina::before {
+  opacity: 0.2;
+}
+
+html.dark .aurora--pagina::after {
+  opacity: 0.5;
+}
+
+@keyframes aurora-deriva-pagina {
+  50% {
+    transform: translate(14%, 8%) scale(1.12);
+  }
+
+  100% {
+    transform: translate(-8%, 16%) scale(0.92);
+  }
+}
+
+/* Saltar al contenido: primer enlace de la página (header), lleva al main (#contenido). Aparece arriba a la
+   izquierda solo cuando recibe el foco con el teclado */
+.saltar {
+  position: fixed;
+  top: var(--espacio-2);
+  left: var(--espacio-2);
+  z-index: 200;
+  padding: var(--espacio-2) var(--espacio-4);
+  border-radius: var(--radio);
+  background: var(--color-marca);
+  font-weight: var(--peso-medio);
+  translate: 0 calc(-100% - var(--espacio-4));
+  transition: translate var(--transicion);
+}
+
+a.saltar {
+  color: var(--color-sobre-marca);
+}
+
+.saltar:focus-visible {
+  translate: 0 0;
+}
+
+/* Lo que recibe el foco solo por programa (el main al saltar) no muestra el contorno */
+:where(.mx) [tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* Animaciones en pausa mientras no están a la vista (js/pausa.js: auroras, tira de marcas, luz del borde) */
+.en-pausa,
+.en-pausa::before,
+.en-pausa::after,
+.en-pausa *,
+.en-pausa *::before,
+.en-pausa *::after {
+  animation-play-state: paused !important;
+}
+
 /* Confeti de marca (cuenta creada y compra confirmada): lienzo sobre toda la pantalla, sin capturar clics
    (lo dibuja js/confeti.js) */
 .confeti {
@@ -769,13 +1245,13 @@ ul {
 /* Reducir movimiento (preferencia del sistema): se quitan los movimientos (desplazamientos, zooms,
    animaciones y scroll suave) y se conservan los fundidos de color y opacidad, que no marean. */
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html:has(.mx) {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
+  :where(.mx) *,
+  :where(.mx) *::before,
+  :where(.mx) *::after {
     transition-property: color, background-color, border-color, outline-color, box-shadow, opacity, fill, stroke !important;
     animation-duration: 0s !important;
   }

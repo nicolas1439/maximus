@@ -53,7 +53,7 @@
 
 .legal__muestra .icono {
   flex-shrink: 0;
-  color: var(--color-aviso);
+  color: var(--color-aviso-icono);
 }
 
 .legal__cuerpo {
@@ -91,7 +91,8 @@
   transition: rotate var(--transicion);
 }
 
-.indice[open] .indice__flecha {
+.indice[open] .indice__flecha,
+.indice.abierto .indice__flecha {
   rotate: 180deg;
 }
 
@@ -130,13 +131,15 @@
   color: var(--color-texto);
 }
 
-.indice__lista a[aria-current] {
+.indice__lista a[aria-current],
+.indice__lista a.actual {
   background: var(--color-superficie);
   color: var(--color-texto);
   font-weight: var(--peso-medio);
 }
 
-.indice__lista a[aria-current]::before {
+.indice__lista a[aria-current]::before,
+.indice__lista a.actual::before {
   color: var(--color-secundario-texto);
   font-weight: var(--peso-fuerte);
 }
@@ -210,14 +213,14 @@
   font-weight: var(--peso-medio);
 }
 
-.documento a:not(.btn) {
+.documento a:not(.boton) {
   color: var(--color-texto);
   text-decoration: underline;
   text-decoration-color: var(--color-acento);
   text-underline-offset: 3px;
 }
 
-.documento a:not(.btn):hover {
+.documento a:not(.boton):hover {
   color: var(--color-acento);
 }
 

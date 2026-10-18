@@ -32,9 +32,11 @@ export const listo = (async () => {
   }
   await Promise.all(cargas);
 
-  // 3. Contenido, en el orden de la página
+  // 3. Contenido, en el orden de la página. Cada parte trae su propio contenedor .mx: se inserta lo de adentro,
+  //    porque la página ya tiene el suyo
   for (const { lugar, doc } of partes) {
-    lugar.replaceWith(...[...doc.body.childNodes].map((n) => document.importNode(n, true)));
+    const cuerpo = doc.body.querySelector(':scope > .mx') || doc.body;
+    lugar.replaceWith(...[...cuerpo.childNodes].map((n) => document.importNode(n, true)));
   }
 
   // 4. Scripts de todas las partes, sin repetir

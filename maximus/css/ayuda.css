@@ -35,50 +35,6 @@
   text-align: center;
 }
 
-/* Aurora: dos manchas desenfocadas que derivan despacio y trama de puntos */
-.portada-ayuda__fondo {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(circle, rgb(255 255 255 / 0.09) 1px, transparent 1.5px) 0 0 / 20px 20px;
-  pointer-events: none;
-}
-
-.portada-ayuda__mancha {
-  position: absolute;
-  width: min(70%, 520px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  filter: blur(70px);
-  animation: deriva-ayuda 18s ease-in-out infinite alternate;
-}
-
-.portada-ayuda__mancha--verde {
-  top: -45%;
-  left: -12%;
-  background: var(--color-marca);
-  opacity: 0.32;
-}
-
-.portada-ayuda__mancha--violeta {
-  right: -12%;
-  bottom: -55%;
-  background: var(--color-secundario);
-  opacity: 0.85;
-  animation-duration: 22s;
-  animation-direction: alternate-reverse;
-}
-
-@keyframes deriva-ayuda {
-  50% {
-    transform: translate(10%, 12%) scale(1.1);
-  }
-
-  100% {
-    transform: translate(-6%, 6%) scale(0.95);
-  }
-}
-
 .portada-ayuda__chip {
   display: inline-flex;
   align-items: center;
@@ -338,13 +294,15 @@
   border-color: var(--color-acento);
 }
 
-.asuntos a[aria-current="true"] {
+.asuntos a[aria-current="true"],
+.asuntos a.actual {
   border-color: var(--color-marca);
   background: var(--color-marca);
   color: var(--color-sobre-marca);
 }
 
-.asuntos a[aria-current="true"] .icono {
+.asuntos a[aria-current="true"] .icono,
+.asuntos a.actual .icono {
   color: inherit;
 }
 
@@ -368,7 +326,8 @@
   line-height: 1;
 }
 
-.asuntos a[aria-current="true"] .asuntos__cant {
+.asuntos a[aria-current="true"] .asuntos__cant,
+.asuntos a.actual .asuntos__cant {
   background: color-mix(in srgb, var(--color-sobre-marca) 15%, transparent);
   color: inherit;
 }
@@ -424,7 +383,6 @@
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-l);
   background: var(--color-fondo);
-  interpolate-size: allow-keywords;
 }
 
 .asunto .faq__item {
@@ -648,7 +606,7 @@
   font-size: var(--texto-s);
 }
 
-.sin-resultados .btn {
+.sin-resultados .boton {
   margin-top: var(--espacio-2);
 }
 
@@ -697,7 +655,7 @@
 
 .contacto__estado {
   margin: 0;
-  color: var(--color-error);
+  color: var(--color-error-texto);
   font-size: var(--texto-s);
   font-weight: var(--peso-medio);
 }
@@ -970,17 +928,20 @@
     background: var(--color-superficie);
   }
 
-  .asuntos a[aria-current="true"] {
+  .asuntos a[aria-current="true"],
+  .asuntos a.actual {
     background: var(--color-fondo);
     color: var(--color-texto);
     box-shadow: 0 1px 3px rgb(0 0 0 / 0.06); /* sin línea verde al costado (se quitó, pedido del usuario, 16/10/2026) */
   }
 
-  .asuntos a[aria-current="true"] .icono {
+  .asuntos a[aria-current="true"] .icono,
+  .asuntos a.actual .icono {
     color: var(--color-acento);
   }
 
-  .asuntos a[aria-current="true"] .asuntos__cant {
+  .asuntos a[aria-current="true"] .asuntos__cant,
+  .asuntos a.actual .asuntos__cant {
     background: var(--color-secundario-suave);
     color: var(--color-secundario-texto);
   }

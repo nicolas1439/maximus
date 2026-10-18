@@ -21,102 +21,9 @@
   justify-content: center;
 }
 
-/* Pasos unidos por una línea que se pinta de marca a medida que avanza la compra (como el seguimiento del pedido) */
-.pasos {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  width: 100%;
+/* Pasos de la compra: el indicador .pasos de base.css */
+.checkout__cab .pasos {
   max-width: 640px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.pasos__paso {
-  position: relative;
-  text-align: center;
-}
-
-.pasos__paso:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 13px;
-  left: calc(50% + 18px);
-  right: calc(-50% + 18px);
-  height: 2px;
-  border-radius: var(--radio-pill);
-  background: var(--color-borde);
-}
-
-.pasos__paso--hecho:not(:last-child)::after {
-  background: var(--color-marca);
-}
-
-.pasos__enlace {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--espacio-1);
-  color: var(--color-texto-suave);
-  font-size: var(--texto-2xs);
-  line-height: 1.3;
-}
-
-/* Los pasos que todavía no se alcanzaron no se pueden abrir */
-.pasos__enlace[aria-disabled="true"] {
-  pointer-events: none;
-}
-
-.pasos__num {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border: 2px solid var(--color-borde);
-  border-radius: var(--radio-pill);
-  background: var(--color-fondo);
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-fuerte);
-  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
-}
-
-.pasos__num .icono {
-  display: none;
-  width: 14px;
-  height: 14px;
-  stroke-width: 3;
-}
-
-.pasos__paso--hecho .pasos__num {
-  border-color: var(--color-marca);
-  background: var(--color-marca);
-  color: var(--color-sobre-marca);
-}
-
-.pasos__paso--hecho .pasos__n {
-  display: none;
-}
-
-.pasos__paso--hecho .pasos__num .icono {
-  display: block;
-}
-
-.pasos__paso[aria-current="step"] .pasos__num {
-  border-color: var(--color-marca);
-  color: var(--color-texto);
-  box-shadow: 0 0 0 4px var(--color-brillo-marca);
-}
-
-.pasos__paso--hecho .pasos__enlace,
-.pasos__paso[aria-current="step"] .pasos__enlace {
-  color: var(--color-texto);
-  font-weight: var(--peso-medio);
-}
-
-.pasos__paso--hecho .pasos__enlace:hover .pasos__nombre {
-  text-decoration: underline;
 }
 
 /* ---------- Cuerpo: pasos y detalle de la compra ---------- */
@@ -177,7 +84,7 @@
   padding: var(--espacio-3);
   border-radius: var(--radio);
   background: color-mix(in srgb, var(--color-error) 10%, transparent);
-  color: var(--color-error);
+  color: var(--color-error-texto);
   font-size: var(--texto-s);
   font-weight: var(--peso-medio);
 }
@@ -190,11 +97,11 @@
   padding-top: var(--espacio-2);
 }
 
-.paso__pie .btn {
+.paso__pie .boton {
   height: var(--alto-control-l);
 }
 
-.paso__pie .btn--secundario .icono {
+.paso__pie .boton--secundario .icono {
   margin-left: calc(var(--espacio-1) * -1);
 }
 
@@ -479,175 +386,20 @@
   gap: var(--espacio-2);
 }
 
-.direccion__acciones .btn {
+.direccion__acciones .boton {
   flex: 1;
   height: var(--alto-control-s);
   padding-inline: var(--espacio-4);
   font-size: var(--texto-s);
 }
 
-.direccion__acciones .btn[aria-expanded="true"] {
+.direccion__acciones .boton[aria-expanded="true"],
+.direccion__acciones .boton.abierto {
   border-color: var(--color-acento);
   color: var(--color-acento);
 }
 
 /* ---------- Opciones: tarjetas con radio (facturación, entrega, pago) ---------- */
-
-.opciones {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--espacio-2);
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-/* Rótulo del grupo (se probó en violeta y mayúsculas y se descartó: decisión del usuario, 15/10/2026) */
-.opciones__titulo {
-  margin-bottom: var(--espacio-2);
-  padding: 0;
-  font-size: var(--texto-s);
-  font-weight: var(--peso-medio);
-}
-
-.opcion {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: var(--espacio-3);
-  padding: var(--espacio-3) var(--espacio-4);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-l);
-  background: var(--color-fondo);
-  cursor: pointer;
-  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
-}
-
-.opcion:hover {
-  border-color: var(--color-acento);
-}
-
-/* El radio nativo queda invisible pero accesible: el círculo lo dibuja ::before y el foco lo marca la tarjeta */
-.opcion__radio {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.opcion::before {
-  content: "";
-  grid-row: 1 / -1;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--color-borde);
-  border-radius: var(--radio-pill);
-  background: var(--color-fondo);
-  transition: border-color var(--transicion), box-shadow var(--transicion);
-}
-
-.opcion:has(.opcion__radio:checked) {
-  border-color: var(--color-marca);
-  background: color-mix(in srgb, var(--color-marca) 6%, var(--color-fondo));
-  box-shadow: 0 0 0 1px var(--color-marca);
-}
-
-.opcion:has(.opcion__radio:checked)::before {
-  border-width: 6px;
-  border-color: var(--color-marca);
-}
-
-.opcion:has(.opcion__radio:focus-visible) {
-  outline: 2px solid var(--color-acento);
-  outline-offset: 2px;
-}
-
-.opcion__cuerpo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.opcion__titulo {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--espacio-2);
-  font-weight: var(--peso-medio);
-}
-
-.opcion__titulo .etiqueta {
-  padding-block: 0;
-  font-size: var(--texto-2xs);
-}
-
-.opcion__texto {
-  color: var(--color-texto-suave);
-  font-size: var(--texto-xs);
-}
-
-/* Precio de la opción (envíos): debajo del texto en celular, a la derecha desde tablet */
-.opcion__precio {
-  grid-column: 2;
-  font-weight: var(--peso-fuerte);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-.opcion__precio--gratis,
-.opcion__precio--ahorro {
-  color: var(--color-acento);
-}
-
-.opcion__precio--ahorro {
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-medio);
-}
-
-/* Con ícono (forma de entrega, medio de pago) */
-.opcion--icono {
-  grid-template-columns: auto auto minmax(0, 1fr);
-}
-
-.opcion__icono {
-  width: 36px;
-  height: 36px;
-  padding: 7px;
-  border-radius: var(--radio);
-  background: var(--color-superficie);
-  color: var(--color-texto-suave);
-  transition: background-color var(--transicion), color var(--transicion);
-}
-
-.opcion:has(.opcion__radio:checked) .opcion__icono {
-  background: color-mix(in srgb, var(--color-marca) 16%, transparent);
-  color: var(--color-acento);
-}
-
-/* Tarjeta de crédito o débito: el celeste de Mercado Pago sobre el ícono */
-.opcion:has(.opcion__radio:checked) .opcion__icono--mp {
-  background: color-mix(in srgb, var(--color-info) 16%, transparent);
-  color: var(--color-info);
-}
-
-.opcion--icono .opcion__precio {
-  grid-column: 3;
-}
-
-/* "Enviar a otra dirección": línea punteada, sin fondo */
-.opcion--nueva {
-  border-style: dashed;
-  background: none;
-}
-
-.opcion--nueva .opcion__titulo {
-  color: var(--color-acento);
-}
 
 /* ---------- Subpaneles: lo que depende de la opción elegida ---------- */
 
@@ -686,14 +438,7 @@
 
 .subpanel__nota .icono {
   flex-shrink: 0;
-  color: var(--color-aviso);
-}
-
-.formulario__campos {
-  clear: both;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--espacio-4);
+  color: var(--color-aviso-icono);
 }
 
 .campo__rotulo small {
@@ -769,7 +514,7 @@
   border-color: var(--color-acento);
 }
 
-.chip:has(input:checked) span {
+.chip:is(:has(input:checked), .elegida) span {
   border-color: var(--color-marca);
   background: var(--color-marca);
   color: var(--color-sobre-marca);
@@ -790,47 +535,18 @@
 }
 
 .cuota {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
   padding: var(--espacio-3) var(--espacio-2);
-  border: 1px solid var(--color-borde);
   border-radius: var(--radio);
-  background: var(--color-fondo);
   text-align: center;
-  cursor: pointer;
-  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
 }
 
 /* Siete planes en dos columnas: el último ocupa la fila entera */
 .cuota:nth-child(7):last-child {
   grid-column: 1 / -1;
-}
-
-.cuota input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.cuota:hover {
-  border-color: var(--color-acento);
-}
-
-.cuota:has(input:checked) {
-  border-color: var(--color-marca);
-  background: color-mix(in srgb, var(--color-marca) 6%, var(--color-fondo));
-  box-shadow: 0 0 0 1px var(--color-marca);
-}
-
-.cuota:has(input:focus-visible) {
-  outline: 2px solid var(--color-acento);
-  outline-offset: 2px;
 }
 
 .cuota__n {
@@ -976,7 +692,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.paso__pie--final .btn--primario {
+.paso__pie--final .boton--primario {
   font-weight: var(--peso-fuerte);
 }
 
@@ -1062,16 +778,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.totales {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espacio-2);
-  margin: 0;
-  padding-top: var(--espacio-4);
-  border-top: 1px solid var(--color-borde);
-  font-size: var(--texto-s);
-}
-
 .totales div {
   display: flex;
   align-items: baseline;
@@ -1101,12 +807,6 @@
 
 .totales__campania dd {
   font-weight: var(--peso-medio);
-}
-
-.totales__total {
-  margin-top: var(--espacio-1);
-  padding-top: var(--espacio-3);
-  border-top: 1px dashed var(--color-borde);
 }
 
 .totales__total dt {
@@ -1216,26 +916,22 @@
   white-space: nowrap;
 }
 
-.checkout__barra .btn {
+.checkout__barra .boton {
   margin-left: auto;
   padding-inline: var(--espacio-4);
 }
 
-body:has(.checkout__barra--visible) {
+.mx:has(.checkout__barra--visible) {
   padding-bottom: calc(var(--alto-control) + 2 * var(--espacio-2));
 }
 
-body:has(.checkout__barra--visible) .aviso {
+.mx:has(.checkout__barra--visible) .aviso {
   bottom: calc(var(--alto-control) + 3 * var(--espacio-3) + env(safe-area-inset-bottom));
 }
 
 /* ---------- Tablet: 768px ---------- */
 
 @media (min-width: 768px) {
-  .pasos__enlace {
-    font-size: var(--texto-xs);
-  }
-
   .paso__titulo {
     font-size: var(--texto-2xl);
   }
@@ -1278,14 +974,6 @@ body:has(.checkout__barra--visible) .aviso {
     min-width: 9rem;
   }
 
-  .opciones--dos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .opciones--dos .opcion {
-    align-content: start;
-  }
-
   .direccion {
     grid-template-columns: auto minmax(0, 1fr) auto;
   }
@@ -1294,42 +982,12 @@ body:has(.checkout__barra--visible) .aviso {
     grid-column: auto;
   }
 
-  .direccion__acciones .btn {
+  .direccion__acciones .boton {
     flex: none;
-  }
-
-  .opcion {
-    padding: var(--espacio-4);
-  }
-
-  .opcion__precio {
-    grid-column: 3;
-    grid-row: 1;
-    margin-left: var(--espacio-3);
-  }
-
-  .opcion--icono .opcion__precio {
-    grid-column: 4;
-  }
-
-  .opcion:not(.opcion--icono):has(.opcion__precio) {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-  }
-
-  .opcion--icono:has(.opcion__precio) {
-    grid-template-columns: auto auto minmax(0, 1fr) auto;
   }
 
   .subpanel {
     padding: var(--espacio-6);
-  }
-
-  .formulario__campos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .campo--ancho {
-    grid-column: 1 / -1;
   }
 
   .cuotas__grilla {
@@ -1381,12 +1039,11 @@ body:has(.checkout__barra--visible) .aviso {
     display: inline-flex;
   }
 
-
   .checkout__barra {
     display: none;
   }
 
-  body:has(.checkout__barra--visible) {
+  .mx:has(.checkout__barra--visible) {
     padding-bottom: 0;
   }
 }

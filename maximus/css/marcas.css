@@ -80,10 +80,58 @@
   inset: 26px var(--espacio-6);
   background: currentColor;
   color: var(--color-texto-suave);
-  mask-size: contain; /* la imagen de la máscara va en el style de cada logo (ruta relativa a la página) */
+  mask-size: contain;
   mask-position: center;
   mask-repeat: no-repeat;
   opacity: calc(0.75 - var(--cerca) * 0.75);
   transition: opacity var(--transicion);
 }
 
+/* La máscara de cada marca (la ruta es relativa a esta hoja, así funciona desde cualquier página o dominio) */
+.marca__tono--amd {
+  mask-image: url(../recursos/marcas/amd.svg);
+}
+
+.marca__tono--asus {
+  mask-image: url(../recursos/marcas/asus.svg);
+}
+
+.marca__tono--corsair {
+  mask-image: url(../recursos/marcas/corsair.svg);
+}
+
+.marca__tono--genesis {
+  mask-image: url(../recursos/marcas/genesis.svg);
+}
+
+.marca__tono--gigabyte {
+  mask-image: url(../recursos/marcas/gigabyte.svg);
+}
+
+.marca__tono--kingston {
+  mask-image: url(../recursos/marcas/kingston.svg);
+}
+
+.marca__tono--logitech {
+  mask-image: url(../recursos/marcas/logitech.svg);
+}
+
+.marca__tono--lovingcool {
+  mask-image: url(../recursos/marcas/lovingcool.svg);
+}
+
+.marca__tono--msi {
+  mask-image: url(../recursos/marcas/msi.svg);
+}
+
+.marca__tono--nvidia {
+  mask-image: url(../recursos/marcas/nvidia.svg);
+}
+
+.marca__tono--redragon {
+  mask-image: url(../recursos/marcas/redragon.svg);
+}
+
+.marca__tono--xigmatek {
+  mask-image: url(../recursos/marcas/xigmatek.svg);
+}

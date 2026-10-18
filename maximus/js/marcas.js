@@ -7,7 +7,6 @@
 //    Con puntero, la luz es el puntero sobre la tira. En táctil, la luz queda fija en el centro y, como la tira
 //    se mueve, cada logo se enciende al pasar por ahí; solo mientras la tira está a la vista.
 
-const tira = document.querySelector('.marcas');
 const ALCANCE = 240; // px: desde esta distancia el logo empieza a tomar color
 
 async function incrustar(enlace) {
@@ -24,7 +23,11 @@ async function incrustar(enlace) {
   } catch {}
 }
 
-if (tira) {
+// Arma la tira de marcas que hay dentro de raiz
+export async function iniciarMarcas(raiz = document) {
+  const tira = raiz.querySelector('.marcas:not(.marcas--lista)');
+  if (!tira) return;
+  tira.classList.add('marcas--lista');
   const pista = tira.querySelector('.marcas__pista');
   const originales = [...pista.children];
   await Promise.all(originales.map((li) => incrustar(li.querySelector('.marca'))));

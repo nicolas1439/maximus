@@ -4,19 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maximus — Primavera Maximus</title>
-  <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/producto.css">
   <link rel="stylesheet" href="css/banner.css">
   <link rel="stylesheet" href="css/campania.css">
-  <script type="module" src="js/visible.js"></script>
   <script type="module" src="js/campania.js"></script>
 </head>
 <body>
+<div class="mx">
 
   <!-- Plantilla de landing de campaña, armada con "Primavera Maximus" (la abren el hero y "Ver todas" de Ofertas del
        home y el banner de campaña). Portada con la cuenta regresiva, los beneficios, las ofertas con pestañas por
@@ -24,7 +26,7 @@
        banner MSI x AMD y las bases y condiciones. La campaña, su vigencia (hasta el 31/10/2026) y las bases son de
        muestra. Para otra campaña cambian los textos, la fecha (data-fin) y los productos (en el sitio real los da
        el backend). js/campania.js: cuenta regresiva y pestañas. Página completa: primavera-maximus.html. -->
-  <main class="campania">
+  <main class="campania" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
@@ -42,28 +44,28 @@
           <span class="etiqueta etiqueta--secundaria etiqueta--con-icono" data-fuego><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>Primavera Maximus</span>
           <h1 class="portada-campania__titulo" id="campania-titulo">Hasta <em>35% off</em> en hardware y setup</h1>
           <p class="portada-campania__bajada">En productos seleccionados, por tiempo limitado. Y pagando por transferencia, 10% off por medio de pago.</p>
-          <a class="btn btn--primario" href="#ofertas">Ver las ofertas<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></a>
+          <a class="boton boton--primario" href="#ofertas">Ver las ofertas<svg class="icono icono--s" aria-hidden="true"><use href="#i-abajo"/></svg></a>
         </div>
 
-        <div class="cuenta" data-fin="2026-10-31T23:59:59-03:00" role="timer" aria-label="La campaña termina el 31 de octubre a las 23:59">
-          <p class="cuenta__rotulo">Termina en</p>
-          <ol class="cuenta__lista" aria-hidden="true">
-            <li class="cuenta__parte"><span class="cuenta__num" data-dias>14</span><span class="cuenta__unidad">días</span></li>
-            <li class="cuenta__parte"><span class="cuenta__num" data-horas>09</span><span class="cuenta__unidad">horas</span></li>
-            <li class="cuenta__parte"><span class="cuenta__num" data-minutos>59</span><span class="cuenta__unidad">min</span></li>
-            <li class="cuenta__parte"><span class="cuenta__num" data-segundos>59</span><span class="cuenta__unidad">seg</span></li>
+        <div class="regresiva" data-fin="2026-10-31T23:59:59-03:00" role="timer" aria-label="La campaña termina el 31 de octubre a las 23:59">
+          <p class="regresiva__rotulo">Termina en</p>
+          <ol class="regresiva__lista" aria-hidden="true">
+            <li class="regresiva__parte"><span class="regresiva__num" data-dias>14</span><span class="regresiva__unidad">días</span></li>
+            <li class="regresiva__parte"><span class="regresiva__num" data-horas>09</span><span class="regresiva__unidad">horas</span></li>
+            <li class="regresiva__parte"><span class="regresiva__num" data-minutos>59</span><span class="regresiva__unidad">min</span></li>
+            <li class="regresiva__parte"><span class="regresiva__num" data-segundos>59</span><span class="regresiva__unidad">seg</span></li>
           </ol>
-          <p class="cuenta__fecha">Hasta el 31 de octubre o hasta agotar stock</p>
+          <p class="regresiva__fecha">Hasta el 31 de octubre o hasta agotar stock</p>
         </div>
       </section>
     </div>
 
     <!-- Beneficios de la campaña -->
     <ul class="contenedor beneficios" aria-label="Beneficios">
-      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-etiqueta"/></svg></span><span><strong>Hasta 35% off</strong>En productos seleccionados</span></li>
-      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-transferencia"/></svg></span><span><strong>10% off</strong>Pagando por transferencia</span></li>
-      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg></span><span><strong>3 cuotas sin interés</strong>Con Mercado Pago</span></li>
-      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg></span><span><strong>Entrega en 24 hs hábiles</strong>Con OCA, en AMBA</span></li>
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-etiqueta"/></svg></span><span><strong>Hasta 35% off</strong>En productos seleccionados</span></li>
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-transferencia"/></svg></span><span><strong>10% off</strong>Pagando por transferencia</span></li>
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-cuotas"/></svg></span><span><strong>3 cuotas sin interés</strong>Con Mercado Pago</span></li>
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-envio"/></svg></span><span><strong>Entrega en 24 hs hábiles</strong>Con OCA, en AMBA</span></li>
     </ul>
 
     <!-- Ofertas, con pestañas por categoría -->
@@ -91,12 +93,12 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml12.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $180.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">Maximus</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(19<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(19<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Armada AMD Ryzen 5 5500 RTX 3050 16GB 512GB</a></h3>
               <div class="producto__precios">
@@ -105,7 +107,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $444.444 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -114,7 +116,7 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml2.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $80.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
@@ -127,7 +129,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $259.259 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -136,12 +138,12 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">MSI</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
               <div class="producto__precios">
@@ -150,7 +152,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $551.851 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -159,7 +161,7 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/ryzen-7-9800x3d.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $110.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
@@ -172,7 +174,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $274.074 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -181,12 +183,12 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/msi-g242l.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $60.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">MSI</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Monitor Gamer IPS MSI 24" G242L E14 144Hz HDMI - DP</a></h3>
               <div class="producto__precios">
@@ -195,7 +197,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $144.444 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -204,7 +206,7 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/redragon-k552.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $40.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
@@ -217,7 +219,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $88.889 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -226,12 +228,12 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/redragon-zeus-x.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $30.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">Redragon</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Auricular c/mic Redragon ZEUS X H510 White RGB</a></h3>
               <div class="producto__precios">
@@ -240,7 +242,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $81.481 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -249,12 +251,12 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/logitech-g203.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $35.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">Logitech G</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Mouse Logitech G203 Lightsync Black</a></h3>
               <div class="producto__precios">
@@ -263,7 +265,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $68.518 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -272,7 +274,7 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/lenovo-loq-15.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $250.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
@@ -285,7 +287,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $611.111 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -294,12 +296,12 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/coolermaster-caliber-x2.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $60.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">Cooler Master</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,5</span><span class="producto__opiniones">(12<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,5</span><span class="producto__opiniones">(12<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Silla Gamer Coolermaster Caliber X2 Gray</a></h3>
               <div class="producto__precios">
@@ -308,7 +310,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas"></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -317,12 +319,12 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml11.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $120.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
                 <span class="producto__marca">Maximus</span>
-                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(15<span class="sr-only"> opiniones</span>)</span></span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(15<span class="sr-only"> opiniones</span>)</span></span>
               </div>
               <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Armada AMD Ryzen 5 4500 RX 7600 16GB 512GB</a></h3>
               <div class="producto__precios">
@@ -331,7 +333,7 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $481.481 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
@@ -340,7 +342,7 @@
             <div class="producto__media">
               <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml13.jpg" alt="" width="600" height="600">
               <span class="etiqueta producto__etiqueta">Ahorrá $100.000</span>
-              <button class="btn-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-favorito"/></svg></button>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
             </div>
             <div class="producto__cuerpo">
               <div class="producto__meta">
@@ -353,18 +355,18 @@
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
               <p class="producto__cuotas">3 × $388.889 <span class="producto__cuotas-nota">sin interés</span></p>
-              <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
         </li>
       </ul>
 
-      <a class="btn btn--secundario ofertas__mas" href="placas-de-video.html">Ver todo el catálogo<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-flecha"/></svg></a>
+      <a class="boton boton--secundario ofertas__mas" href="placas-de-video.html">Ver todo el catálogo<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
     </section>
 
     <!-- Otra promo vigente: el banner MSI x AMD del home -->
     <div class="banner contenedor">
-      <a class="banner__enlace" href="placas-de-video.html" data-activo-visible>
+      <a class="banner__enlace" href="placas-de-video.html" data-activo-visible data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
         <picture>
           <source media="(min-width: 1024px)" srcset="recursos/banners/msi-amd-escritorio.webp" width="2180" height="364">
           <img class="banner__img" src="recursos/banners/msi-amd-mobile.webp" alt="MSI x AMD: llevate un cooler MSI MAG CoreFrozr AA13 de regalo comprando una motherboard MSI AM5 y un micro AMD. Válido hasta agotar stock." width="1760" height="440" loading="lazy">
@@ -375,7 +377,7 @@
     <!-- Bases y condiciones (de muestra), plegadas -->
     <section class="contenedor bases" aria-labelledby="bases-titulo">
       <details class="bases__caja">
-        <summary class="bases__cab"><h2 class="bases__titulo" id="bases-titulo">Bases y condiciones</h2><svg class="icono bases__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
+        <summary class="bases__cab"><h2 class="bases__titulo" id="bases-titulo">Bases y condiciones</h2><svg class="icono bases__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
         <div class="bases__texto">
           <p>Promoción “Primavera Maximus” válida del 1 al 31 de octubre de 2026 o hasta agotar stock, para compras en www.maximus.com.ar y en el local de Florida 537, CABA.</p>
           <p>Los descuentos se aplican sobre el precio de lista de los productos seleccionados y ya están incluidos en el precio publicado. El precio en efectivo o transferencia suma además el 10% por medio de pago. Las cuotas sin interés son con Mercado Pago.</p>
@@ -386,5 +388,6 @@
 
   </main>
 
+</div>
 </body>
 </html>

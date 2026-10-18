@@ -1,0 +1,198 @@
+/* Opción con radio: tarjeta que se marca entera (borde y fondo tenue de marca); el radio nativo queda invisible
+   pero accesible, el círculo lo dibuja ::before y el foco lo marca la tarjeta. Elegida: el radio marcado o la clase
+   .elegida. Grupo: .opciones (un fieldset), con .opciones--dos para dos por fila desde tablet.
+   La usan el checkout (facturación, entrega, pago), los planes de cuotas y Garantía y RMA (la compra y cómo llega
+   el producto). Con .opcion--libre va sin el círculo y el bloque que la acompaña pone su distribución
+   (ej. class="opcion opcion--libre cuota"). */
+
+.opciones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Rótulo del grupo (se probó en violeta y mayúsculas y se descartó: decisión del usuario, 15/10/2026) */
+.opciones__titulo {
+  margin-bottom: var(--espacio-2);
+  padding: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.opcion {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  cursor: pointer;
+  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
+}
+
+.opcion:hover {
+  border-color: var(--color-acento);
+}
+
+/* El radio nativo queda invisible pero accesible: el círculo lo dibuja ::before y el foco lo marca la tarjeta */
+.opcion__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opcion::before {
+  content: "";
+  grid-row: 1 / -1;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.opcion:is(:has(.opcion__radio:checked), .elegida) {
+  border-color: var(--color-marca);
+  background: color-mix(in srgb, var(--color-marca) 6%, var(--color-fondo));
+  box-shadow: 0 0 0 1px var(--color-marca);
+}
+
+.opcion:is(:has(.opcion__radio:checked), .elegida)::before {
+  border-width: 6px;
+  border-color: var(--color-marca);
+}
+
+.opcion:has(.opcion__radio:focus-visible) {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+.opcion__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.opcion__titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  font-weight: var(--peso-medio);
+}
+
+.opcion__titulo .etiqueta {
+  padding-block: 0;
+  font-size: var(--texto-2xs);
+}
+
+.opcion__texto {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+/* Precio de la opción (envíos): debajo del texto en celular, a la derecha desde tablet */
+.opcion__precio {
+  grid-column: 2;
+  font-weight: var(--peso-fuerte);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.opcion__precio--gratis,
+.opcion__precio--ahorro {
+  color: var(--color-acento);
+}
+
+.opcion__precio--ahorro {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+/* Con ícono (forma de entrega, medio de pago) */
+.opcion--icono {
+  grid-template-columns: auto auto minmax(0, 1fr);
+}
+
+.opcion__icono {
+  width: 36px;
+  height: 36px;
+  padding: 7px;
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.opcion:is(:has(.opcion__radio:checked), .elegida) .opcion__icono {
+  background: color-mix(in srgb, var(--color-marca) 16%, transparent);
+  color: var(--color-acento);
+}
+
+/* Tarjeta de crédito o débito: el celeste de Mercado Pago sobre el ícono */
+.opcion:is(:has(.opcion__radio:checked), .elegida) .opcion__icono--mp {
+  background: color-mix(in srgb, var(--color-info) 16%, transparent);
+  color: var(--color-info-texto);
+}
+
+.opcion--icono .opcion__precio {
+  grid-column: 3;
+}
+
+/* "Enviar a otra dirección": línea punteada, sin fondo */
+.opcion--nueva {
+  border-style: dashed;
+  background: none;
+}
+
+.opcion--nueva .opcion__titulo {
+  color: var(--color-acento);
+}
+
+@media (min-width: 768px) {
+  .opciones--dos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .opciones--dos .opcion {
+    align-content: start;
+  }
+
+  .opcion {
+    padding: var(--espacio-4);
+  }
+
+  .opcion__precio {
+    grid-column: 3;
+    grid-row: 1;
+    margin-left: var(--espacio-3);
+  }
+
+  .opcion--icono .opcion__precio {
+    grid-column: 4;
+  }
+
+  .opcion:not(.opcion--icono):has(.opcion__precio) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .opcion--icono:has(.opcion__precio) {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+  }
+}
+
+.opcion--libre::before {
+  content: none;
+}

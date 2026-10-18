@@ -4,7 +4,7 @@
 // Sin JS el formulario recarga la página con ?n=numero; con JS se lee ese ?n= al entrar y se actualiza al buscar.
 
 const icono = (id, clase = 'icono icono--s') =>
-  `<svg class="${clase}" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${id}"/></svg>`;
+  `<svg class="${clase}" aria-hidden="true"><use href="#${id}"/></svg>`;
 
 const WHATSAPP = 'https://wa.me/541123575522';
 const OCA = 'https://www.oca.com.ar/Seguimiento/Paquetes/';
@@ -119,7 +119,7 @@ function datosHtml(p) {
   } else {
     filas.push(['Destino', p.destino]);
     filas.push(['Guía de OCA', p.guia
-      ? `<span class="resultado__guia">${agrupar(p.guia)}</span><button class="btn-texto" type="button" data-copiar="${p.guia}">Copiar</button>`
+      ? `<span class="resultado__guia">${agrupar(p.guia)}</span><button class="boton-texto" type="button" data-copiar="${p.guia}">Copiar</button>`
       : '<span class="resultado__suave">Te la mandamos por mail cuando despachemos el pedido.</span>']);
   }
   return `<dl class="resultado__datos">${filas.map(([dt, dd]) => `<div><dt>${dt}</dt><dd>${dd}</dd></div>`).join('')}</dl>`;
@@ -142,13 +142,13 @@ function render(numero) {
     ? `<div class="resultado__alerta">${icono('i-alerta', 'icono resultado__alerta-icono')}`
       + '<div><p><strong>Preparamos tu pedido cuando se acredite el pago.</strong></p>'
       + '<p>Si ya transferiste, subí el comprobante desde Mi cuenta.</p></div>'
-      + `<a class="btn btn--primario" href="mi-cuenta.html#pedidos">${icono('i-subir')}Subir comprobante</a></div>`
+      + `<a class="boton boton--primario" href="mi-cuenta.html#pedidos">${icono('i-subir')}Subir comprobante</a></div>`
     : '';
 
   const acciones = [
-    p.guia ? `<a class="btn btn--secundario" href="${OCA}${p.guia}" target="_blank" rel="noopener">Ver en OCA${icono('i-flecha')}</a>` : '',
-    p.retiro ? `<a class="btn btn--secundario" href="${p.retiro.mapa}" target="_blank" rel="noopener">${icono('i-sucursal')}Cómo llegar</a>` : '',
-    `<a class="btn btn--secundario" href="${whatsapp}" target="_blank" rel="noopener">${icono('i-whatsapp')}Consultar</a>`,
+    p.guia ? `<a class="boton boton--secundario" href="${OCA}${p.guia}" target="_blank" rel="noopener">Ver en OCA${icono('i-flecha')}</a>` : '',
+    p.retiro ? `<a class="boton boton--secundario" href="${p.retiro.mapa}" target="_blank" rel="noopener">${icono('i-sucursal')}Cómo llegar</a>` : '',
+    `<a class="boton boton--secundario" href="${whatsapp}" target="_blank" rel="noopener">${icono('i-whatsapp')}Consultar</a>`,
   ].join('');
 
   const nota = p.guia ? 'Los datos del envío los informa OCA y pueden tardar unas horas en actualizarse.' : '';

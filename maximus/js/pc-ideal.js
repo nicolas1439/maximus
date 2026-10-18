@@ -11,7 +11,7 @@ function iniciar() {
   const $ = (s, r = raiz) => r.querySelector(s);
   const $$ = (s, r = raiz) => [...r.querySelectorAll(s)];
   const pesos = (n) => `$${Math.round(n).toLocaleString('es-AR')}`;
-  const icono = (id, clase = 'icono') => `<svg class="${clase}" aria-hidden="true"><use href="recursos/iconos.svg?v=3#${id}"/></svg>`;
+  const icono = (id, clase = 'icono') => `<svg class="${clase}" aria-hidden="true"><use href="#${id}"/></svg>`;
   const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)');
 
   // ---------- Datos ----------
@@ -166,8 +166,8 @@ function iniciar() {
           <p class="producto__nota">Efectivo o transferencia</p>
         </div>
         <p class="producto__cuotas">3 × ${cuota} <span class="producto__cuotas-nota">sin interés</span></p>
-        <button class="btn-texto resultado-pc__ver" type="button" data-specs="${p.id}">${icono('i-ojo', 'icono icono--s')}Ver especificaciones</button>
-        <button class="btn btn--primario producto__agregar" type="button" data-agregar-pc>${icono('i-carrito', 'icono icono--s')}<span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+        <button class="boton-texto resultado-pc__ver" type="button" data-specs="${p.id}">${icono('i-ojo', 'icono icono--s')}Ver especificaciones</button>
+        <button class="boton boton--primario producto__agregar" type="button" data-agregar-pc data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">${icono('i-carrito', 'icono icono--s')}<span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
       </div>
     </article></li>`;
   }
@@ -228,7 +228,7 @@ function iniciar() {
     const paso = vista === 'resultado' ? 4 : Number(vista);
     $$('[data-paso-ind]').forEach((li) => {
       const n = Number(li.dataset.pasoInd);
-      li.classList.toggle('quiz__paso--hecho', n < paso);
+      li.classList.toggle('pasos__paso--hecho', n < paso);
       $('button', li).disabled = n >= paso;
       if (n === Math.min(paso, 3)) li.setAttribute('aria-current', 'step');
       else li.removeAttribute('aria-current');
@@ -309,7 +309,7 @@ function iniciar() {
   const aviso = document.createElement('p');
   aviso.className = 'aviso';
   aviso.setAttribute('role', 'status');
-  document.body.append(aviso);
+  (document.querySelector('.mx') || document.body).append(aviso);
   let temporizador;
   function avisar(texto) {
     aviso.textContent = texto;

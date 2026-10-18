@@ -8,11 +8,7 @@
 
 const MINIMO_VISIBLE = 0.6;
 const tactil = matchMedia('(hover: none) and (max-width: 1023px)');
-const elementos = [...document.querySelectorAll('[data-activo-visible]')].map((el) => ({
-  el,
-  grupo: el.dataset.activoVisible,
-  recortes: ancestrosQueRecortan(el),
-}));
+const elementos = [];
 let cuadro = 0;
 
 function ancestrosQueRecortan(el) {
@@ -68,5 +64,13 @@ function armar() {
   programar();
 }
 
-armar();
+// Suma lo marcado con data-activo-visible dentro de raiz (una vez cada elemento) y arranca
+export function iniciarVisible(raiz = document) {
+  for (const el of raiz.querySelectorAll('[data-activo-visible]')) {
+    if (elementos.some((item) => item.el === el)) continue;
+    elementos.push({ el, grupo: el.dataset.activoVisible, recortes: ancestrosQueRecortan(el) });
+  }
+  armar();
+}
+
 tactil.addEventListener('change', armar);

@@ -1,7 +1,7 @@
 // Landing de campaña: cuenta regresiva hasta data-fin y pestañas que filtran las ofertas por categoría (data-cat).
 // La pestaña elegida queda en la URL (?cat=…) para compartir o volver atrás. Sin JS se ven todas las ofertas.
 
-const cuenta = document.querySelector('.cuenta[data-fin]');
+const cuenta = document.querySelector('.regresiva[data-fin]');
 const pestanias = document.querySelector('[data-pestanias]');
 const grilla = document.querySelector('[data-ofertas]');
 
@@ -18,7 +18,7 @@ if (cuenta) {
     const valores = [Math.floor(s / 86400), Math.floor(s / 3600) % 24, Math.floor(s / 60) % 60, s % 60];
     partes.forEach((el, i) => (el.textContent = i ? dos(valores[i]) : valores[i]));
     if (!resta) {
-      cuenta.querySelector('.cuenta__rotulo').textContent = 'La campaña terminó';
+      cuenta.querySelector('.regresiva__rotulo').textContent = 'La campaña terminó';
       clearInterval(intervalo);
     }
   }
