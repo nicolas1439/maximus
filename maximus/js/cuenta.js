@@ -61,7 +61,7 @@ if (dialogo) {
     const boton = e.target.closest('[data-comprobante]');
     if (!boton) return;
     pedido = boton.dataset.comprobante;
-    dialogo.querySelector('[data-comprobante-pedido]').textContent = `#${pedido}`;
+    dialogo.querySelector('[data-comprobante-pedido]').textContent = `#MAX-${pedido}`;
     dialogo.querySelector('[data-comprobante-total]').textContent = boton.dataset.total || '';
     reiniciar();
     dialogo.showModal();

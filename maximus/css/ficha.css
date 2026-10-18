@@ -493,6 +493,11 @@
   font-weight: var(--peso-medio);
 }
 
+.compra__cantidad-max {
+  color: var(--color-texto-suave);
+  font-weight: var(--peso-normal);
+}
+
 .compra__agregar {
   height: var(--alto-control-l);
   padding-inline: var(--espacio-4);

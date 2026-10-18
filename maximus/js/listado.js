@@ -93,7 +93,7 @@ function modoBusqueda() {
   if (!consulta) return;
   const titulo = listado.querySelector('.listado__titulo');
   titulo.textContent = `Resultados para “${consulta}”`;
-  document.title = `Maximus — Buscar: ${consulta}`;
+  document.title = `Buscar: ${consulta} | Maximus Gaming Hardware`;
   // Migas: Inicio → Búsqueda
   const migas = listado.querySelector('.migas ol');
   if (migas) migas.innerHTML = '<li><a href="index.html">Inicio</a></li><li aria-current="page">Búsqueda</li>';

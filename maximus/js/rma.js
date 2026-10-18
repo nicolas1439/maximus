@@ -16,15 +16,15 @@ try {
 
 const reglas = {
   pc: { meses: 12, nombre: 'Las PC armadas por Maximus tienen 12 meses de garantía' },
-  hardware: { meses: 12, nombre: 'El hardware tiene 12 meses de garantía' },
-  periferico: { meses: 6, nombre: 'Los periféricos tienen 6 meses de garantía' },
-  conectividad: { meses: 6, nombre: 'Los productos de conectividad tienen 6 meses de garantía' },
-  pendrive: { meses: 6, nombre: 'Los pendrives tienen 6 meses de garantía' },
+  hardware: { meses: 6, nombre: 'El hardware tiene 6 meses de garantía con Maximus' },
+  periferico: { meses: 6, nombre: 'Los periféricos tienen 6 meses de garantía con Maximus' },
+  conectividad: { meses: 6, nombre: 'Los productos de conectividad tienen 6 meses de garantía con Maximus' },
+  accesorio: { meses: 6, nombre: 'Los accesorios tienen 6 meses de garantía con Maximus' },
   notebook: { dias: 10, tipo: 'notebooks' },
   monitor: { dias: 10, tipo: 'monitores' },
   impresora: { dias: 10, tipo: 'impresoras' },
-  logitech: { marca: 'Logitech', contacto: 'Llamá al servicio oficial: <a href="tel:08005553284">0800-555-3284</a>.' },
-  seagate: { marca: 'Seagate', contacto: 'Registrá el producto en <a href="https://www.seagate.com/la/es/support/warranty-and-replacements/" target="_blank" rel="noopener">el sitio de Seagate</a>.' },
+  logitech: { dias: 10, tipo: 'productos Logitech', marca: 'Logitech' },
+  seagate: { dias: 10, tipo: 'productos Seagate', marca: 'Seagate' },
 };
 
 const fechaLarga = (d) => d.toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -51,13 +51,6 @@ function verificar({ categoria, fecha, marca, rma }) {
     return { elegible: false, tipo: 'aviso', icono: 'i-alerta', titulo: 'Revisá la fecha de compra', texto: 'No puede ser posterior a hoy.' };
   }
 
-  if (regla.marca) {
-    return {
-      elegible: false, tipo: 'info', chip: 'Con el fabricante', icono: 'i-garantia',
-      titulo: `La garantía es directamente con ${regla.marca}`, texto: regla.contacto,
-    };
-  }
-
   const hasta = new Date(compra);
   if (regla.meses) hasta.setMonth(hasta.getMonth() + regla.meses);
   else hasta.setDate(hasta.getDate() + regla.dias);
@@ -75,7 +68,7 @@ function verificar({ categoria, fecha, marca, rma }) {
   if (regla.dias) {
     return {
       elegible: false, tipo: 'info', chip: 'Con el fabricante', icono: 'i-garantia',
-      titulo: `La garantía es con ${marca || 'el fabricante'}`,
+      titulo: `La garantía es con ${marca || regla.marca || 'el fabricante'}`,
       texto: `En ${regla.tipo}, después de los 10 días desde la compra la garantía la da el servicio oficial de la marca. <a href="centro-de-ayuda.html#p-garantias-fabricante">Ver los teléfonos de los fabricantes</a>.`,
     };
   }
@@ -364,7 +357,7 @@ if (tramite && form) {
     const datos = datosProducto();
     const falla = form.querySelector('[name="tipo_falla"]:checked').value;
     const llenar = (clave, texto) => (enviada.querySelector(`[data-dato="${clave}"]`).textContent = texto);
-    llenar('correo', form.elements.correo.value.trim());
+    llenar('telefono', form.elements.telefono.value.trim());
     llenar('producto', datos.producto);
     llenar('falla', `${falla}. ${form.elements.falla.value.trim()}`);
     llenar('entrega', form.elements.entrega.value === 'local' ? 'Lo llevás al sector de RMA (Floresta)' : 'Lo enviás por correo');

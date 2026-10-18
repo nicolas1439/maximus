@@ -138,7 +138,7 @@ function iniciar() {
     },
     {
       clave: 'armado', titulo: 'Armado de PC', saltar: null, total: 2,
-      ayuda: '¿Querés que <b>armemos tu PC</b> por vos? La ensamblamos, testeamos y te la entregamos lista para enchufar. Si preferís armarla vos, recibís los componentes en sus cajas (PC en piezas).',
+      ayuda: '¿Querés que <b>armemos tu PC</b> por vos? La ensamblamos, testeamos y te la entregamos lista para enchufar, con 12 meses de garantía en la PC armada. Si preferís armarla vos, recibís los componentes en sus cajas (PC en piezas).',
       piezas: [
         { id: 5653, n: 'Servicio de armado de PC (48 hs hábiles)', p: 12510, img: cdn('ARMADODEPC') },
         { id: 7495, n: 'Sin servicio de armado (PC en piezas)', p: 0, img: cdn('noarmadopc') },
@@ -236,10 +236,10 @@ function iniciar() {
     },
     video: {
       que: '¿Qué es esta placa de video?',
-      texto: (p) => `La ${p.n.replace('Placa de Video ', '')} procesa los gráficos de tu PC. Para que rinda bien conviene una fuente de ${p.w} W o más.`,
+      texto: (p) => `La ${p.n.replace('Placa de Video ', '')} procesa los gráficos de tu PC. Para que rinda bien, acompañala con una fuente de las recomendadas para ella.`,
       usos: [['Gaming', 'Define la resolución y los cuadros por segundo de tus juegos.'], ['Diseño', 'Acelera programas de diseño y 3D.'], ['Edición de video', 'Exporta más rápido con aceleración por hardware.'], ['Streaming', 'Codifica la transmisión sin cargar al procesador.']],
-      compat: (p) => `Ranura PCIe x16, presente en todas las motherboards de este armador. Fuente recomendada: ${p.w} W.`,
-      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace('Placa de Video ', '')], ['Memoria', `${busca(p.n, /(\d+)GB/i)} GB`], ['Tipo de memoria', busca(p.n, /(G?DDR\d)/i)], ['Interfaz', 'PCIe x16'], ['Fuente recomendada', `${p.w} W`]],
+      compat: (p) => `Ranura PCIe x16, presente en todas las motherboards de este armador. Necesita una fuente acorde a su consumo.`,
+      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace('Placa de Video ', '')], ['Memoria', `${busca(p.n, /(\d+)GB/i)} GB`], ['Tipo de memoria', busca(p.n, /(G?DDR\d)/i)], ['Interfaz', 'PCIe x16']],
     },
     discos: {
       que: '¿Qué es este disco?',
@@ -257,15 +257,15 @@ function iniciar() {
     },
     fuente: {
       que: '¿Qué es esta fuente?',
-      texto: (p) => `La ${p.n.replace('Fuente ', '')} entrega ${p.w} W a todos los componentes. Una fuente confiable protege tu inversión.`,
+      texto: (p) => `La ${p.n.replace('Fuente ', '')} alimenta a todos los componentes de tu PC. Una fuente confiable protege tu inversión.`,
       usos: [['Gaming', 'Alimenta la placa de video sin cortes.'], ['Uso continuo', 'Trabaja estable durante horas.'], ['Eficiencia', 'Las certificadas 80 PLUS desperdician menos energía.'], ['Ampliación', 'Margen de potencia para sumar componentes.']],
-      compat: (p) => `Formato ATX. Alcanza para placas de video que piden hasta ${p.w} W.`,
-      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace('Fuente ', '')], ['Potencia', `${p.w} W`], ['Certificación', busca(p.n, /(80 PLUS \w+)/i, 'Sin certificación')], ['Formato', 'ATX']],
+      compat: () => 'Formato ATX, para gabinetes estándar. En el resumen te avisamos si queda justa para tu placa de video.',
+      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace('Fuente ', '')], ['Certificación', busca(p.n, /(80 PLUS \w+)/i, 'Sin certificación')], ['Formato', 'ATX']],
     },
     armado: {
       que: '¿Qué incluye?',
       texto: (p) => (p.p ? 'Ensamblamos tu PC, ordenamos los cables, actualizamos lo necesario y la testeamos antes de entregarla.' : 'Recibís los componentes en sus cajas para armarla vos.'),
-      usos: [['Listo para usar', 'La enchufás y empezás.'], ['Testeada', 'La probamos antes de que salga.'], ['Garantía', 'Respaldo de Maximus sobre el armado.'], ['Plazo', 'Lista en 48 hs hábiles.']],
+      usos: [['Listo para usar', 'La enchufás y empezás.'], ['Testeada', 'La probamos antes de que salga.'], ['Garantía', '12 meses de garantía en la PC armada.'], ['Plazo', 'Lista en 48 hs hábiles.']],
       compat: () => 'Para cualquier armado de este armador.',
       specs: (p) => [['Servicio', p.n], ['Plazo', p.p ? '48 hs hábiles' : '—']],
     },
@@ -336,7 +336,7 @@ function iniciar() {
     if (clave === 'cooler' && micro?.sinCooler) return ['alerta', 'Tu procesador viene sin cooler: elegí uno para que pueda funcionar.'];
     if (clave === 'video' && micro?.video) return ['info', 'Tu procesador tiene gráficos integrados: si no vas a jugar ni editar, podés no incluir placa de video.'];
     if (clave === 'video' && micro && !micro.video) return ['alerta', 'Tu procesador no tiene gráficos integrados: necesitás una placa de video para tener imagen.'];
-    if (clave === 'fuente' && video) return ['info', `Para tu placa de video te recomendamos una fuente de ${video.w} W o más.`];
+    if (clave === 'fuente' && video) return ['info', 'Elegí una fuente de las recomendadas para tu placa de video.'];
     if (clave === 'ram') return ['info', 'Recomendado: 2 módulos iguales, así la memoria trabaja en doble canal.'];
     if (clave === 'so' && !(Array.isArray(elegido.armado) && elegido.armado[0].id === 5653)) return ['info', 'La instalación del sistema operativo va con el servicio de armado.'];
     return null;
@@ -494,7 +494,7 @@ function iniciar() {
     if (micro?.sinCooler && !Array.isArray(elegido.cooler))
       lista.push(['alerta', 'Tu procesador viene sin cooler: sumá uno para que funcione.', 'cooler']);
     if (video && fuente && fuente.w < video.w)
-      lista.push(['alerta', `La fuente de ${fuente.w} W queda justa para tu placa de video: te recomendamos ${video.w} W o más.`, 'fuente']);
+      lista.push(['alerta', 'La fuente que elegiste queda justa para tu placa de video: te recomendamos una de más potencia.', 'fuente']);
     if (Array.isArray(elegido.so) && elegido.so[0].id === 10648 && !(Array.isArray(elegido.armado) && elegido.armado[0].id === 5653))
       lista.push(['alerta', 'La instalación del sistema operativo va con el servicio de armado.', 'armado']);
     const faltan = PRINCIPALES.filter((k) => elegido[k] === null);

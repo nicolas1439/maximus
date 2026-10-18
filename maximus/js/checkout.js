@@ -357,13 +357,14 @@ function iniciar() {
     total.envio = envio ? Number(envio.dataset.costo) : 0;
     total.seguro = envio ? Number(envio.dataset.seguro) : 0;
     const transferencia = elegido('pago')?.value === 'transferencia';
-    total.descuento = transferencia ? Math.round(total.productos * DESCUENTO_TRANSFERENCIA) : 0;
-    total.final = total.productos + total.envio + total.seguro - total.descuento;
+    const bruto = total.productos + total.envio + total.seguro; // el 10% va sobre todo el pedido, envío y seguro incluidos
+    total.descuento = transferencia ? Math.round(bruto * DESCUENTO_TRANSFERENCIA) : 0;
+    total.final = bruto - total.descuento;
   }
 
   function actualizarTotales() {
     calcular();
-    const ahorro = Math.round(total.productos * DESCUENTO_TRANSFERENCIA);
+    const ahorro = Math.round((total.productos + total.envio + total.seguro) * DESCUENTO_TRANSFERENCIA);
     const entrega = elegido('entrega')?.value;
     const modalidad = elegido('modalidad');
     const pago = elegido('pago')?.value;

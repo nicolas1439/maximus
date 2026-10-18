@@ -16,7 +16,7 @@ const PASOS_RETIRO = ['Confirmado', 'Pago', 'Preparación', 'Para retirar', 'Ret
 const RETIRO_FLORESTA = {
   lugar: 'Oficinas de Maximus, Floresta',
   direccion: 'R. de Escalada de San Martín 3875, CABA',
-  horario: 'Lunes a viernes de 9 a 17 h<br>Sábados de 10 a 14 h',
+  horario: 'Lun a vie de 9 a 17 h<br>Sáb de 10 a 14 h',
   mapa: 'https://www.google.com/maps/search/?api=1&query=R.+de+Escalada+de+San+Mart%C3%ADn+3875,+CABA',
 };
 
@@ -27,7 +27,7 @@ const PEDIDOS = {
     fecha: '08/10/2026',
     estado: ['info', 'En camino'],
     titulo: 'Llega el jueves 15 de octubre',
-    entrega: 'Envío a domicilio con OCA, 24 hs',
+    entrega: 'Envío a domicilio con OCA, 24 hs hábiles',
     destino: 'Caballito, CABA',
     guia: '5746700000000398214',
     pasos: PASOS_ENVIO,
@@ -62,7 +62,7 @@ const PEDIDOS = {
     fecha: '12/10/2026',
     estado: ['aviso', 'Esperando el pago'],
     titulo: 'Falta el comprobante de pago',
-    entrega: 'Envío a domicilio con OCA, 24 hs',
+    entrega: 'Envío a domicilio con OCA, 24 hs hábiles',
     destino: 'Caballito, CABA',
     pendiente: true,
     pasos: PASOS_ENVIO,
@@ -74,7 +74,7 @@ const PEDIDOS = {
     fecha: '08/07/2026',
     estado: ['exito', 'Entregado'],
     titulo: 'Entregado el viernes 10 de julio',
-    entrega: 'Envío a domicilio con OCA, 24 hs',
+    entrega: 'Envío a domicilio con OCA, 24 hs hábiles',
     destino: 'Caballito, CABA',
     guia: '5746700000000351776',
     pasos: PASOS_ENVIO,
@@ -109,7 +109,7 @@ function pasosHtml(p, numero) {
       + `<span class="seguimiento__punto">${hecho ? icono('i-check', 'icono') : ''}</span>`
       + `<span class="seguimiento__texto">${nombre}${fecha}</span></li>`;
   });
-  return `<ol class="seguimiento" aria-label="Pasos del pedido #${numero}">${items.join('')}</ol>`;
+  return `<ol class="seguimiento" aria-label="Pasos del pedido #MAX-${numero}">${items.join('')}</ol>`;
 }
 
 function datosHtml(p) {
@@ -136,7 +136,7 @@ function historialHtml(p) {
 
 function render(numero) {
   const p = PEDIDOS[numero];
-  const whatsapp = `${WHATSAPP}?text=${encodeURIComponent(`Hola Maximus, quiero consultar por mi pedido #${numero}.`)}`;
+  const whatsapp = `${WHATSAPP}?text=${encodeURIComponent(`Hola Maximus, quiero consultar por mi pedido #MAX-${numero}.`)}`;
 
   const pendiente = p.pendiente
     ? `<div class="resultado__alerta">${icono('i-alerta', 'icono resultado__alerta-icono')}`
@@ -155,7 +155,7 @@ function render(numero) {
 
   return `<header class="resultado__cab">
       <div>
-        <p class="resultado__pedido">Pedido #${numero} · ${p.fecha}</p>
+        <p class="resultado__pedido">Pedido #MAX-${numero} · ${p.fecha}</p>
         <h2 class="resultado__titulo" id="resultado-titulo" tabindex="-1">${p.titulo}</h2>
       </div>
       <span class="estado estado--${p.estado[0]}">${p.estado[1]}</span>
@@ -189,12 +189,13 @@ if (form) {
 
   // Valida, "consulta" (una espera corta, como la del pedido real al servidor) y muestra el resultado
   const buscar = async (valor, { enfocar = true } = {}) => {
-    const n = valor.replace(/[\s#.-]/g, '');
+    // Acepta el pedido con o sin "MAX-" (y con #, espacios o guiones)
+    const n = valor.replace(/^\s*#?\s*max/i, '').replace(/[\s#.-]/g, '');
     campo.value = n;
     let texto = '';
     if (!n) texto = 'Ingresá el número de pedido o el de guía.';
     else if (!/^\d+$/.test(n) || !(n.length === 19 || (n.length >= 4 && n.length <= 7))) {
-      texto = 'Revisá el número: el de pedido tiene 6 números y el de guía, 19.';
+      texto = 'Revisá el número: el de pedido tiene 6 números (con o sin MAX-) y el de guía, 19.';
     }
     if (texto) {
       mostrarError(texto);
@@ -222,7 +223,7 @@ if (form) {
 
     resultado.innerHTML = render(numero);
     resultado.hidden = false;
-    ayudaWhatsapp.href = `${WHATSAPP}?text=${encodeURIComponent(`Hola Maximus, quiero consultar por mi pedido #${numero}.`)}`;
+    ayudaWhatsapp.href = `${WHATSAPP}?text=${encodeURIComponent(`Hola Maximus, quiero consultar por mi pedido #MAX-${numero}.`)}`;
     history.replaceState(null, '', `?n=${n}`);
     if (enfocar) {
       const titulo = resultado.querySelector('.resultado__titulo');

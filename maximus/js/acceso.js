@@ -41,7 +41,7 @@ function mostrar(nombre, { enfocar = false } = {}) {
     if (a.getAttribute('href') === `#${opcion}`) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
-  document.title = `Maximus — ${titulos[nombre]}`;
+  document.title = `${titulos[nombre]} | Maximus Gaming Hardware`;
 
   if (nombre === 'recuperar') reiniciarRecuperar();
 

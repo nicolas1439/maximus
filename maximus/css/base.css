@@ -190,6 +190,24 @@ ul {
   height: 14px;
 }
 
+/* Aclaración de datos de muestra que se ve en la página (datos bancarios, nota de Google…): texto chico y suave */
+.muestra {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.muestra .icono {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  color: var(--color-aviso);
+}
+
 /* Selector: select nativo con estilo propio y flecha propia (va después del select, dentro de .selector).
    Donde el navegador lo permite (appearance: base-select, Chrome y Edge), el desplegable también lleva el estilo
    del sitio y entra con un fundido; en el resto queda el desplegable nativo, con los colores del tema.

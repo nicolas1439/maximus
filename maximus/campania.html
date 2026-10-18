@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Maximus — Mes de la Primavera</title>
+  <title>Maximus — Primavera Maximus</title>
   <script>try { if (localStorage.getItem('tema') === 'oscuro') document.documentElement.dataset.tema = 'oscuro'; } catch {}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,19 +18,19 @@
 </head>
 <body>
 
-  <!-- Plantilla de landing de campaña, armada con "Mes de la Primavera" (la abren el hero y "Ver todas" de Ofertas del
+  <!-- Plantilla de landing de campaña, armada con "Primavera Maximus" (la abren el hero y "Ver todas" de Ofertas del
        home y el banner de campaña). Portada con la cuenta regresiva, los beneficios, las ofertas con pestañas por
        categoría (las tarjetas de Ofertas y de Computadoras armadas del home, con sus mismos datos de muestra), el
        banner MSI x AMD y las bases y condiciones. La campaña, su vigencia (hasta el 31/10/2026) y las bases son de
        muestra. Para otra campaña cambian los textos, la fecha (data-fin) y los productos (en el sitio real los da
-       el backend). js/campania.js: cuenta regresiva y pestañas. Página completa: mes-de-la-primavera.html. -->
+       el backend). js/campania.js: cuenta regresiva y pestañas. Página completa: primavera-maximus.html. -->
   <main class="campania">
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
         <li><a href="index.html">Inicio</a></li>
         <li><a href="placas-de-video.html">Ofertas</a></li>
-        <li aria-current="page">Mes de la Primavera</li>
+        <li aria-current="page">Primavera Maximus</li>
       </ol>
     </nav>
 
@@ -39,7 +39,7 @@
       <section class="portada-campania" aria-labelledby="campania-titulo">
         <span class="aurora portada-campania__aurora" aria-hidden="true"></span>
         <div class="portada-campania__texto">
-          <span class="etiqueta etiqueta--secundaria etiqueta--con-icono" data-fuego><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>Mes de la Primavera</span>
+          <span class="etiqueta etiqueta--secundaria etiqueta--con-icono" data-fuego><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>Primavera Maximus</span>
           <h1 class="portada-campania__titulo" id="campania-titulo">Hasta <em>35% off</em> en hardware y setup</h1>
           <p class="portada-campania__bajada">En productos seleccionados, por tiempo limitado. Y pagando por transferencia, 10% off por medio de pago.</p>
           <a class="btn btn--primario" href="#ofertas">Ver las ofertas<svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></a>
@@ -63,7 +63,7 @@
       <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-etiqueta"/></svg></span><span><strong>Hasta 35% off</strong>En productos seleccionados</span></li>
       <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-transferencia"/></svg></span><span><strong>10% off</strong>Pagando por transferencia</span></li>
       <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-cuotas"/></svg></span><span><strong>3 cuotas sin interés</strong>Con Mercado Pago</span></li>
-      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg></span><span><strong>Entrega en 24 hs</strong>Con OCA, en AMBA</span></li>
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-envio"/></svg></span><span><strong>Entrega en 24 hs hábiles</strong>Con OCA, en AMBA</span></li>
     </ul>
 
     <!-- Ofertas, con pestañas por categoría -->
@@ -104,7 +104,7 @@
                 <p class="producto__precio">$1.199.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $470.588 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $444.444 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -126,7 +126,7 @@
                 <p class="producto__precio">$699.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $274.509 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $259.259 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -149,7 +149,7 @@
                 <p class="producto__precio">$1.489.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $584.313 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $551.851 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -171,7 +171,7 @@
                 <p class="producto__precio">$739.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $290.196 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $274.074 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -194,7 +194,7 @@
                 <p class="producto__precio">$389.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $152.941 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $144.444 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -216,7 +216,7 @@
                 <p class="producto__precio">$239.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $94.117 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $88.889 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -239,7 +239,7 @@
                 <p class="producto__precio">$219.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $86.274 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $81.481 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -262,7 +262,7 @@
                 <p class="producto__precio">$184.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $72.549 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $68.518 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -284,7 +284,7 @@
                 <p class="producto__precio">$1.649.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $647.058 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $611.111 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -330,7 +330,7 @@
                 <p class="producto__precio">$1.299.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $509.804 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $481.481 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -352,7 +352,7 @@
                 <p class="producto__precio">$1.049.999</p>
                 <p class="producto__nota">Efectivo o transferencia</p>
               </div>
-              <p class="producto__cuotas">3 × $411.764 <span class="producto__cuotas-nota">sin interés</span></p>
+              <p class="producto__cuotas">3 × $388.889 <span class="producto__cuotas-nota">sin interés</span></p>
               <button class="btn btn--primario producto__agregar" type="button"><svg class="icono icono--s" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
             </div>
           </article>
@@ -377,7 +377,7 @@
       <details class="bases__caja">
         <summary class="bases__cab"><h2 class="bases__titulo" id="bases-titulo">Bases y condiciones</h2><svg class="icono bases__flecha" aria-hidden="true"><use href="recursos/iconos.svg?v=3#i-abajo"/></svg></summary>
         <div class="bases__texto">
-          <p>Promoción “Mes de la Primavera” válida del 1 al 31 de octubre de 2026 o hasta agotar stock, para compras en www.maximus.com.ar y en el local de Florida 537, CABA.</p>
+          <p>Promoción “Primavera Maximus” válida del 1 al 31 de octubre de 2026 o hasta agotar stock, para compras en www.maximus.com.ar y en el local de Florida 537, CABA.</p>
           <p>Los descuentos se aplican sobre el precio de lista de los productos seleccionados y ya están incluidos en el precio publicado. El precio en efectivo o transferencia suma además el 10% por medio de pago. Las cuotas sin interés son con Mercado Pago.</p>
           <p>No acumulable con otras promociones salvo que se indique. Stock limitado por producto. Las imágenes son ilustrativas. Rigen los <a href="terminos-y-condiciones.html">Términos y condiciones</a> del sitio.</p>
         </div>
