@@ -52,6 +52,7 @@
   --color-estante: #e1d0f3;
   --color-estante-2: #ebe1f7;
   --color-estante-brillo: rgb(163 255 102 / 0.6); /* arriba a la derecha */
+  --color-categoria-luz: transparent; /* Categorías destacadas: luz detrás de la foto (solo en oscuro) */
   --color-estante-brillo-2: color-mix(in srgb, var(--color-secundario) 24%, transparent); /* arriba a la izquierda, detrás del título */
   --color-estante-trama: color-mix(in srgb, var(--color-secundario) 28%, transparent);
   --color-estante-logo: color-mix(in srgb, var(--color-secundario) 17%, transparent);
@@ -160,6 +161,7 @@ html.dark {
   --color-estante: #08240f;
   --color-estante-2: #0c1216;
   --color-estante-brillo: rgb(22 224 0 / 0.22);
+  --color-categoria-luz: rgb(255 255 255 / 0.14); /* los productos negros (teclados, sillas) no se perdían en el fondo */
   --color-estante-brillo-2: color-mix(in srgb, var(--color-secundario) 50%, transparent);
   --color-estante-trama: rgb(22 224 0 / 0.22);
   --color-estante-logo: rgb(22 224 0 / 0.16);

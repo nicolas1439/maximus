@@ -20,7 +20,7 @@
   padding: var(--espacio-3) var(--espacio-2);
   border: 1px solid var(--color-borde); /* la tarjeta se distingue del fondo de la página, que es casi del mismo tono */
   border-radius: var(--radio-l);
-  background: var(--color-superficie);
+  background: radial-gradient(circle at 50% 38%, var(--color-categoria-luz), transparent 58%), var(--color-superficie);
   font-size: var(--texto-xs);
   font-weight: var(--peso-medio);
   line-height: var(--interlineado-titulo);
@@ -37,7 +37,13 @@
 
 .categorias__tarjeta:hover {
   border-color: var(--color-acento);
-  background: var(--color-fondo);
+  background: radial-gradient(circle at 50% 38%, var(--color-categoria-luz), transparent 58%), var(--color-fondo);
+}
+
+/* Fotos muy anchas y bajas (teclados): más ancho para que el producto no quede chico */
+.categorias__img--ancha {
+  width: 100%;
+  max-width: 88px;
 }
 
 .categorias__tarjeta:hover .categorias__img {
@@ -63,6 +69,11 @@
   .categorias__img {
     width: 72px;
     height: 72px;
+  }
+
+  .categorias__img--ancha {
+    width: 100%;
+    max-width: 112px;
   }
 }
 
