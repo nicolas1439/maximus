@@ -3,7 +3,8 @@
    Partes: .dialogo__caja (el contenido en columna, con scroll propio donde haga falta), .dialogo__cab con
    .dialogo__titulo, .dialogo__cuerpo, .dialogo__acciones, .dialogo__cerrar y .dialogo__pie (las acciones fijas al pie).
    Variantes: .dialogo--hoja sube desde abajo en celular (Armá tu PC y Tu PC ideal); .dialogo--chico es el
-   centrado, con borde y sombra suave (subir comprobante en Mi cuenta). */
+   centrado, con borde y sombra suave (subir comprobante en Mi cuenta); .dialogo--visor es el visor de fotos a
+   pantalla completa de la ficha. */
 
 .dialogo {
   --dialogo-ancho: 640px;
@@ -126,6 +127,104 @@
 
 .dialogo--chico::backdrop {
   backdrop-filter: none;
+}
+
+/* Visor de fotos a pantalla completa (ficha): la caja es transparente y ocupa toda la pantalla, y la capa es
+   oscura y opaca en ambos modos. Partes: .dialogo__figura con .dialogo__img y .dialogo__contador, .dialogo__flecha
+   (data-sentido="-1" y "1") y .dialogo__cerrar. Entra con el fundido del diálogo; la capa, con un fundido propio. */
+.dialogo--visor {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-sobre-destacado);
+  box-shadow: none;
+}
+
+.dialogo--visor:is([open], .abierto) {
+  display: grid;
+}
+
+.dialogo--visor::backdrop {
+  background: var(--color-fondo-destacado);
+  backdrop-filter: none;
+}
+
+.dialogo--visor:is([open], .abierto)::backdrop {
+  animation: dialogo-fundir var(--transicion) both;
+}
+
+@keyframes dialogo-fundir {
+  from {
+    opacity: 0;
+  }
+}
+
+.dialogo--visor .dialogo__figura {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: zoom-out;
+}
+
+/* La foto conserva su proporción (ancho y alto automáticos con topes): el fondo blanco solo cubre la foto */
+.dialogo--visor .dialogo__img {
+  width: auto;
+  height: auto;
+  max-width: min(100% - 2 * var(--espacio-4), 900px);
+  max-height: calc(100dvh - 2 * var(--alto-control-l) - 2 * var(--espacio-4));
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-imagen);
+  cursor: default;
+}
+
+.dialogo--visor .dialogo__contador {
+  position: absolute;
+  bottom: calc(var(--espacio-4) + env(safe-area-inset-bottom));
+  left: 50%;
+  translate: -50% 0;
+  font-size: var(--texto-s);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Botones sobre un fondo oscuro translúcido: se ven tanto sobre la foto blanca como sobre el fondo */
+.dialogo--visor .boton-icono {
+  position: absolute;
+  border-radius: var(--radio-pill);
+  background: var(--color-capa);
+  color: var(--color-sobre-destacado);
+  transition: background-color var(--transicion);
+}
+
+.dialogo--visor .boton-icono:hover {
+  background: var(--color-barra);
+}
+
+.dialogo--visor .dialogo__cerrar {
+  top: calc(var(--espacio-3) + env(safe-area-inset-top));
+  right: var(--espacio-3);
+}
+
+.dialogo--visor .dialogo__flecha {
+  top: 50%;
+  width: var(--alto-control-l);
+  height: var(--alto-control-l);
+  translate: 0 -50%;
+}
+
+.dialogo--visor .dialogo__flecha[data-sentido="-1"] {
+  left: var(--espacio-3);
+}
+
+.dialogo--visor .dialogo__flecha[data-sentido="1"] {
+  right: var(--espacio-3);
 }
 
 @media (max-width: 767px) {

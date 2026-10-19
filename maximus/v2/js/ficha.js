@@ -48,8 +48,8 @@ if (galeria) {
 
   // Visor a pantalla completa (dialog): flechas, teclado y deslizamiento con el dedo
   if (visor) {
-    const img = visor.querySelector('.visor__img');
-    const contador = visor.querySelector('.visor__contador');
+    const img = visor.querySelector('.dialogo__img');
+    const contador = visor.querySelector('.dialogo__contador');
     let enVisor = 0;
     // Con una sola foto (galeria--una) el visor no cuenta ni pasa a otras
     const cantidad = () => (galeria.classList.contains('galeria--una') ? 1 : fotos.length);
@@ -74,7 +74,7 @@ if (galeria) {
     });
     galeria.querySelector('.galeria__ampliar')?.addEventListener('click', () => abrir(actual));
 
-    visor.querySelectorAll('.visor__flecha').forEach((flecha) =>
+    visor.querySelectorAll('.dialogo__flecha').forEach((flecha) =>
       flecha.addEventListener('click', () => mostrar(enVisor + Number(flecha.dataset.sentido)))
     );
     visor.querySelector('[data-cerrar]').addEventListener('click', () => visor.close());

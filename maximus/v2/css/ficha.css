@@ -803,100 +803,7 @@
   padding-bottom: calc(var(--alto-control) + 2 * var(--espacio-2));
 }
 
-/* ---------- Visor de fotos a pantalla completa ---------- */
-
-.visor {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: var(--color-fondo-destacado);
-  color: var(--color-sobre-destacado);
-}
-
-/* Entra con un fundido (animación: funciona aunque el navegador no transicione display) */
-.visor[open],
-.visor.abierto {
-  display: grid;
-  animation: visor-entrar var(--transicion);
-}
-
-@keyframes visor-entrar {
-  from {
-    opacity: 0;
-  }
-}
-
-.visor::backdrop {
-  background: var(--color-capa);
-}
-
-.visor__cuerpo {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  cursor: zoom-out;
-}
-
-/* La foto conserva su proporción (ancho y alto automáticos con topes): el fondo blanco solo cubre la foto */
-.visor__img {
-  width: auto;
-  height: auto;
-  max-width: min(100% - 2 * var(--espacio-4), 900px);
-  max-height: calc(100dvh - 2 * var(--alto-control-l) - 2 * var(--espacio-4));
-  border-radius: var(--radio-l);
-  background: var(--color-fondo-imagen);
-  cursor: default;
-}
-
-.visor__contador {
-  position: absolute;
-  bottom: calc(var(--espacio-4) + env(safe-area-inset-bottom));
-  left: 50%;
-  translate: -50% 0;
-  font-size: var(--texto-s);
-  font-variant-numeric: tabular-nums;
-}
-
-/* Botones sobre un fondo oscuro translúcido: se ven tanto sobre la foto blanca como sobre el fondo */
-.visor .boton-icono {
-  position: absolute;
-  border-radius: var(--radio-pill);
-  background: var(--color-capa);
-  color: var(--color-sobre-destacado);
-  transition: background-color var(--transicion);
-}
-
-.visor .boton-icono:hover {
-  background: var(--color-barra);
-}
-
-.visor__cerrar {
-  top: calc(var(--espacio-3) + env(safe-area-inset-top));
-  right: var(--espacio-3);
-}
-
-.visor__flecha {
-  top: 50%;
-  width: var(--alto-control-l);
-  height: var(--alto-control-l);
-  translate: 0 -50%;
-}
-
-.visor__flecha[data-sentido="-1"] {
-  left: var(--espacio-3);
-}
-
-.visor__flecha[data-sentido="1"] {
-  right: var(--espacio-3);
-}
+/* El visor de fotos a pantalla completa es la variante .dialogo--visor de dialogo.css */
 
 /* Con la barra de compra a la vista, el aviso sube */
 .mx:has(.ficha__barra--visible) .aviso {
@@ -1157,7 +1064,7 @@
 .galeria--una .galeria__puntos,
 .galeria--una .galeria__miniaturas,
 .galeria--una .carrusel__item ~ .carrusel__item,
-.ficha--una-foto ~ .visor .visor__flecha {
+.ficha--una-foto ~ .dialogo--visor .dialogo__flecha {
   display: none;
 }
 

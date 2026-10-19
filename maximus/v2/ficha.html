@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="css/faq.css">
   <link rel="stylesheet" href="css/resenas.css">
   <link rel="stylesheet" href="css/ficha.css">
-  <link data-demo rel="stylesheet" href="css/dialogo.css">
+  <link rel="stylesheet" href="css/dialogo.css">
   <script type="module" src="js/ficha.js"></script>
   <script type="module" src="js/resenas.js"></script>
 </head>
@@ -868,14 +868,14 @@
   </div>
 
   <!-- Visor de fotos a pantalla completa -->
-  <dialog class="visor" data-visor aria-label="Fotos del producto">
-    <figure class="visor__cuerpo">
-      <img class="visor__img" alt="" width="800" height="800">
-      <figcaption class="visor__contador">1 / 5</figcaption>
+  <dialog class="dialogo dialogo--visor" data-visor aria-label="Fotos del producto">
+    <figure class="dialogo__figura">
+      <img class="dialogo__img" alt="" width="800" height="800">
+      <figcaption class="dialogo__contador">1 / 5</figcaption>
     </figure>
-    <button class="boton-icono visor__flecha" type="button" data-sentido="-1" aria-label="Foto anterior"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
-    <button class="boton-icono visor__flecha" type="button" data-sentido="1" aria-label="Foto siguiente"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
-    <button class="boton-icono visor__cerrar" type="button" aria-label="Cerrar" data-cerrar><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+    <button class="boton-icono dialogo__flecha" type="button" data-sentido="-1" aria-label="Foto anterior"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
+    <button class="boton-icono dialogo__flecha" type="button" data-sentido="1" aria-label="Foto siguiente"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
+    <button class="boton-icono dialogo__cerrar" type="button" aria-label="Cerrar" data-cerrar><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
   </dialog>
 
   <!-- Favorito sin sesión: "Guardá tus favoritos" (tarjeta.js). En las páginas completas lo trae el footer; esta copia
