@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Empresas</title>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/banner.css">
+  <link rel="stylesheet" href="css/empresas.css">
+  <script type="module" src="js/empresas.js"></script>
+</head>
+<body>
+<div class="mx">
+
+  <!-- Plantilla Empresas (venta corporativa): la landing que abre el enlace "Empresas" del header. Contenido relevado
+       de la sección Maximus Empresas de maximus.com.ar (15 y 17/10/2026), en su orden: propuesta, soluciones, cómo trabajan
+       y cotización. Es un embudo: nada lleva a otras páginas, todo termina en la cotización (formulario,
+       WhatsApp o correo). El formulario es de muestra (no se envía nada: js/empresas.js valida y confirma en línea).
+       Página completa con header y footer: maximus-empresas.html. -->
+  <main class="empresas" id="contenido" tabindex="-1">
+
+    <div class="contenedor empresas__cab">
+      <nav class="migas" aria-label="Ubicación">
+        <ol>
+          <li><a href="index.html">Inicio</a></li>
+          <li aria-current="page">Empresas</li>
+        </ol>
+      </nav>
+
+      <!-- Portada: foto de oficina (recursos/empresas/oficina*.webp) y propuesta de valor -->
+      <section class="portada" aria-labelledby="portada-titulo">
+        <div class="portada__foto">
+          <picture>
+            <source media="(max-width: 767px)" srcset="recursos/empresas/oficina-mobile.webp">
+            <img src="recursos/empresas/oficina.webp" alt="Oficina abierta con personas trabajando en computadoras de escritorio" width="1920" height="1280" fetchpriority="high">
+          </picture>
+        </div>
+        <div class="portada__texto">
+          <p class="portada__chip"><svg class="icono" aria-hidden="true"><use href="#i-empresa"/></svg>Maximus Empresas</p>
+          <h1 class="portada__titulo" id="portada-titulo">Equipamiento IT para tu empresa, con asesoramiento real.</h1>
+          <p class="portada__bajada">PCs, notebooks, monitores y periféricos para oficinas, estudios, comercios y equipos de trabajo. Cotización a medida, Factura A y entrega en todo el país, excepto Tierra del Fuego.</p>
+          <div class="portada__acciones">
+            <a class="boton boton--primario" href="#cotizacion">Pedir cotización<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+            <a class="boton boton--secundario" href="https://wa.me/541123609964?text=Hola%20Maximus,%20quiero%20pedir%20una%20cotizaci%C3%B3n%20para%20mi%20empresa." target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp Empresas</a>
+          </div>
+          <ul class="portada__claves" aria-label="Lo esencial">
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Factura A</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Precios por volumen</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Envíos a todo el país</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- Presupuestos pensados para cada necesidad: las 4 soluciones del sitio. No llevan a otras páginas: "Cotizar" baja al
+         formulario con la necesidad ya escrita (js/empresas.js) -->
+    <section class="contenedor" aria-labelledby="soluciones-titulo">
+      <div class="seccion__cab seccion__cab--bajada">
+        <h2 class="seccion__titulo" id="soluciones-titulo">Presupuestos pensados para cada necesidad</h2>
+        <p class="seccion__bajada">No todas las empresas necesitan lo mismo. Analizamos el uso, el presupuesto y el tipo de trabajo para recomendarte la configuración adecuada.</p>
+      </div>
+      <ul class="soluciones">
+        <li class="solucion">
+          <span class="solucion__icono"><svg class="icono" aria-hidden="true"><use href="#i-cat-pc"/></svg></span>
+          <h3 class="solucion__titulo">PCs para oficina</h3>
+          <p class="solucion__texto">Equipos ágiles para tareas administrativas, atención al público, ventas, gestión y uso diario.</p>
+          <a class="seccion__enlace solucion__cotizar" href="#cotizacion" data-necesidad="PCs para oficina">Cotizar<span class="sr-only"> PCs para oficina</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-derecha"/></svg></a>
+        </li>
+        <li class="solucion">
+          <span class="solucion__icono"><svg class="icono" aria-hidden="true"><use href="#i-edicion"/></svg></span>
+          <h3 class="solucion__titulo">Workstations y alto rendimiento</h3>
+          <p class="solucion__texto">Configuraciones para diseño, edición, arquitectura, ingeniería, render, software técnico y multitarea exigente.</p>
+          <a class="seccion__enlace solucion__cotizar" href="#cotizacion" data-necesidad="Workstations y alto rendimiento">Cotizar<span class="sr-only"> workstations y alto rendimiento</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-derecha"/></svg></a>
+        </li>
+        <li class="solucion">
+          <span class="solucion__icono"><svg class="icono" aria-hidden="true"><use href="#i-cat-cpu"/></svg></span>
+          <h3 class="solucion__titulo">Componentes y upgrades</h3>
+          <p class="solucion__texto">Actualización de hardware, almacenamiento, memorias, placas de video, monitores, periféricos y accesorios.</p>
+          <a class="seccion__enlace solucion__cotizar" href="#cotizacion" data-necesidad="Componentes y upgrades">Cotizar<span class="sr-only"> componentes y upgrades</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-derecha"/></svg></a>
+        </li>
+        <li class="solucion">
+          <span class="solucion__icono"><svg class="icono" aria-hidden="true"><use href="#i-empresa"/></svg></span>
+          <h3 class="solucion__titulo">Compras corporativas</h3>
+          <p class="solucion__texto">Atención orientada a empresas, instituciones, estudios, comercios, oficinas y equipos de trabajo.</p>
+          <a class="seccion__enlace solucion__cotizar" href="#cotizacion" data-necesidad="Compras corporativas">Cotizar<span class="sr-only"> compras corporativas</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-derecha"/></svg></a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Banner de Kingston para empresas: el mismo de la sección Empresas de maximus.com.ar (imágenes del repo de Maximus,
+         recursos/banners/kingston-empresas-*.webp), con el enlace de WhatsApp del sitio. Variante entera del banner del home:
+         se ve completo, con su proporción. En táctil, el zoom se aplica mientras está a la vista (data-activo-visible, js/visible.js) -->
+    <div class="banner banner--entero contenedor">
+      <a class="banner__enlace" href="https://wa.me/541123609964?text=Hola%20Maximus,%20quiero%20cotizar%20SSD%20y%20memoria%20Kingston%20para%20mi%20empresa:" target="_blank" rel="noopener" data-activo-visible data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+        <picture>
+          <source media="(min-width: 1024px)" srcset="recursos/banners/kingston-empresas-escritorio.webp" width="1500" height="364">
+          <img class="banner__img" src="recursos/banners/kingston-empresas-mobile.webp" alt="Kingston para empresas: ¿tus PCs están frenando la productividad de tu empresa? Actualizalas con SSD y memoria Kingston. Cotizá con nosotros por WhatsApp." width="750" height="300" loading="lazy">
+        </picture>
+      </a>
+    </div>
+
+    <!-- Cómo funciona: tres pasos y una foto (recursos/empresas/puestos.webp) -->
+    <section class="contenedor" aria-labelledby="proceso-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="proceso-titulo">Cómo funciona</h2>
+      </div>
+      <div class="proceso">
+        <ol class="proceso__pasos">
+          <li class="proceso__paso">
+            <span class="proceso__num" aria-hidden="true">1</span>
+            <div>
+              <h3 class="proceso__titulo">Pedís tu cotización</h3>
+              <p class="proceso__texto">Contanos qué necesitás por el formulario, WhatsApp o mail: cantidad de equipos, para qué se van a usar y el presupuesto.</p>
+            </div>
+          </li>
+          <li class="proceso__paso">
+            <span class="proceso__num" aria-hidden="true">2</span>
+            <div>
+              <h3 class="proceso__titulo">Cotizamos</h3>
+              <p class="proceso__texto">Analizamos el uso y te enviamos una propuesta con opciones, precios y plazos de entrega.</p>
+            </div>
+          </li>
+          <li class="proceso__paso">
+            <span class="proceso__num" aria-hidden="true">3</span>
+            <div>
+              <h3 class="proceso__titulo">Facturamos y entregamos</h3>
+              <p class="proceso__texto">Emitimos la Factura A a nombre de tu empresa y armamos, probamos y enviamos los equipos a donde los necesites.</p>
+            </div>
+          </li>
+        </ol>
+        <img class="proceso__foto" src="recursos/empresas/puestos.webp" alt="Puestos de trabajo con monitores y teclados en una oficina luminosa" width="1200" height="900" loading="lazy">
+      </div>
+    </section>
+
+    <!-- Cotización: formulario (de muestra: valida y confirma en línea, no envía nada) y el canal directo -->
+    <section class="contenedor cotizacion" id="cotizacion" aria-labelledby="cotizacion-titulo">
+      <form class="cotizacion__form" data-cotizacion novalidate>
+        <div class="cotizacion__cab">
+          <h2 class="seccion__titulo" id="cotizacion-titulo">Pedí tu cotización</h2>
+          <p class="cotizacion__bajada">Contanos qué necesitás y te respondemos por correo o WhatsApp, sin compromiso.</p>
+        </div>
+
+        <div class="cotizacion__campos" data-paso="cargar">
+          <label class="campo"><span class="campo__rotulo">Empresa o razón social</span><input class="campo__control" name="empresa" type="text" autocomplete="organization" required></label>
+          <label class="campo"><span class="campo__rotulo">CUIT <span class="campo__opcional">(opcional)</span></span><input class="campo__control" name="cuit" type="text" inputmode="numeric" placeholder="30-12345678-9"><span class="campo__ayuda">Si ya lo tenés a mano, agiliza la Factura A.</span></label>
+          <label class="campo"><span class="campo__rotulo">Nombre y apellido</span><input class="campo__control" name="nombre" type="text" autocomplete="name" required></label>
+          <label class="campo"><span class="campo__rotulo">Correo electrónico</span><input class="campo__control" name="correo" type="email" autocomplete="email" required></label>
+          <label class="campo"><span class="campo__rotulo">Teléfono</span><input class="campo__control" name="telefono" type="tel" autocomplete="tel" placeholder="11 1234-5678" required></label>
+          <label class="campo"><span class="campo__rotulo">Provincia</span>
+            <span class="selector"><select class="selector__campo" name="provincia"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
+          </label>
+          <label class="campo campo--ancho"><span class="campo__rotulo">¿Qué necesita tu empresa?</span><textarea class="campo__control campo__control--area" name="detalle" rows="5" placeholder="Qué querés equipar, cuántos equipos, para qué se van a usar, plazo de entrega, presupuesto estimado…" required></textarea></label>
+          <label class="casilla campo--ancho"><input name="whatsapp" type="checkbox"> Prefiero que me contacten por WhatsApp.</label>
+          <div class="cotizacion__acciones campo--ancho">
+            <button class="boton boton--primario" type="submit">Enviar consulta</button>
+            <p class="cotizacion__estado" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <!-- Envío confirmado (de muestra) -->
+        <div class="cotizacion__listo" data-paso="listo" tabindex="-1" hidden>
+          <span class="cotizacion__check"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <h3 class="cotizacion__listo-titulo">Recibimos tu consulta</h3>
+          <p>Te respondemos a <strong data-correo></strong> en las próximas horas hábiles. Si preferís, escribinos directo por WhatsApp.</p>
+          <a class="boton boton--secundario" href="https://wa.me/541123609964?text=Hola%20Maximus,%20quiero%20pedir%20una%20cotizaci%C3%B3n%20para%20mi%20empresa." target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp Empresas</a>
+        </div>
+      </form>
+
+      <!-- Canal directo: foto (recursos/empresas/equipo.webp), WhatsApp Empresas, correo y horario -->
+      <aside class="canal" aria-labelledby="canal-titulo">
+        <img class="canal__foto" src="recursos/empresas/equipo.webp" alt="Equipo de trabajo en una oficina, frente a sus computadoras" width="1200" height="900" loading="lazy">
+        <div class="canal__cuerpo">
+          <h2 class="canal__titulo" id="canal-titulo">Un canal directo para empresas</h2>
+          <p class="canal__texto">Te atiende una persona que conoce el catálogo y arma la propuesta con vos.</p>
+          <ul class="canal__datos">
+            <li>
+              <svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+              <div><span class="canal__rotulo">WhatsApp Empresas</span><a href="https://wa.me/541123609964?text=Hola%20Maximus,%20quiero%20pedir%20una%20cotizaci%C3%B3n%20para%20mi%20empresa." target="_blank" rel="noopener">+54 11 2360-9964</a></div>
+            </li>
+            <li>
+              <svg class="icono icono--s" aria-hidden="true"><use href="#i-mail"/></svg>
+              <div><span class="canal__rotulo">Correo</span><a href="mailto:empresas@maximus.com.ar">empresas@maximus.com.ar</a></div>
+            </li>
+            <li>
+              <svg class="icono icono--s" aria-hidden="true"><use href="#i-reloj"/></svg>
+              <div><span class="canal__rotulo">Atención</span>Lun a vie de 9 a 17 h</div>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
+  </main>
+
+</div>
+</body>
+</html>

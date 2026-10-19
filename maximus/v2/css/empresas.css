@@ -1,0 +1,620 @@
+/* Plantilla Empresas (vista previa: empresas.html; página completa: maximus-empresas.html).
+   Landing de venta corporativa armada como embudo, en el orden del sitio: portada (foto y propuesta), presupuestos
+   para cada necesidad (4 soluciones), banner de Kingston, cómo funciona y la cotización (formulario y canal directo).
+   Mobile: todo en columna. Tablet: grillas de 2 y 3. Escritorio: grilla de 8 en la portada (texto 4, foto 4),
+   en las soluciones (2 columnas cada una), en cómo funciona (pasos 5, foto 3) y en la cotización (formulario 5, canal 3).
+   Detalles en violeta (el color secundario): el chip "Maximus Empresas" de la portada, los íconos de las soluciones
+   y los números de los pasos. */
+
+.empresas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-seccion);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.empresas__cab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+/* ---------- Portada ---------- */
+
+/* Tarjeta oscura en ambos modos, como los banners: la foto arriba y el texto debajo; la foto se funde con el fondo */
+.portada {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radio-l);
+  background:
+    radial-gradient(circle at 0% 100%, var(--color-brillo-marca), transparent 55%),
+    var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+/* Fundido: la foto se apaga con una máscara (varias paradas, progresiva) y deja ver el fondo del panel, brillo
+   incluido; con un velo de color encima quedaba una línea recta en el borde de la foto */
+.portada__foto {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  mask-image: linear-gradient(to top, transparent 0%, rgb(0 0 0 / 0.15) 14%, rgb(0 0 0 / 0.55) 32%, #000 60%);
+}
+
+.portada__foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portada__texto {
+  position: relative; /* por encima del fundido de la foto */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+  margin-top: calc(var(--espacio-8) * -1); /* sube sobre el fundido de la foto */
+  padding: 0 var(--espacio-4) var(--espacio-6);
+}
+
+/* Chip en lila (el violeta legible sobre fondos oscuros) */
+.portada__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  height: 24px;
+  margin: 0;
+  padding-inline: var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: color-mix(in srgb, var(--color-secundario-sobre-barra) 18%, transparent);
+  color: var(--color-secundario-sobre-barra);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  line-height: 1;
+}
+
+.portada__chip .icono {
+  width: 14px;
+  height: 14px;
+}
+
+.portada__titulo {
+  max-width: 18ch;
+  margin: 0;
+  font-size: var(--texto-display);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.portada__bajada {
+  max-width: 48ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--color-sobre-destacado) 80%, transparent);
+}
+
+.portada__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  width: 100%;
+  margin-top: var(--espacio-1);
+}
+
+.portada__acciones .boton {
+  flex: 1 1 auto;
+  height: var(--alto-control-l);
+}
+
+/* El botón secundario sobre el fondo oscuro: contorno y fondo tenues de la barra */
+.portada .boton--secundario {
+  border-color: var(--color-barra-borde);
+  background: var(--color-barra-hover);
+  color: inherit;
+}
+
+.portada .boton--secundario:hover {
+  border-color: var(--color-marca);
+}
+
+.portada__claves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2) var(--espacio-4);
+  margin-top: var(--espacio-2);
+  color: color-mix(in srgb, var(--color-sobre-destacado) 80%, transparent);
+  font-size: var(--texto-s);
+}
+
+.portada__claves li {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+}
+
+.portada__claves .icono {
+  color: var(--color-marca);
+  stroke-width: 2.5;
+}
+
+/* ---------- Presupuestos pensados para cada necesidad ---------- */
+
+.soluciones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+/* Ícono en violeta tenue (el detalle en violeta de la sección); "Cotizar" queda siempre al pie.
+   En celular el ícono va al costado, así las cuatro tarjetas no se alargan */
+.solucion {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  justify-items: start;
+  gap: var(--espacio-1) var(--espacio-3);
+  height: 100%;
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.solucion__icono {
+  display: grid;
+  place-items: center;
+  grid-row: span 3;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+}
+
+.solucion__titulo {
+  margin: 0;
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.solucion__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.solucion__cotizar {
+  margin-top: auto;
+  padding-top: var(--espacio-2);
+}
+
+/* ---------- Cómo funciona ---------- */
+
+.proceso {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-6);
+}
+
+.proceso__pasos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Número a la izquierda y, entre un paso y el siguiente, una línea vertical que los une */
+.proceso__paso {
+  position: relative;
+  display: grid;
+  align-content: start; /* si un paso es más corto, el espacio libre no separa el número del título */
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+.proceso__paso:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: calc(40px + var(--espacio-2));
+  bottom: calc(var(--espacio-2) - var(--espacio-4));
+  left: 19px;
+  width: 2px;
+  border-radius: var(--radio-pill);
+  background: var(--color-borde);
+}
+
+/* El número va en violeta tenue (el color secundario) */
+.proceso__num {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio-pill);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+}
+
+.proceso__titulo {
+  margin: var(--espacio-2) 0 var(--espacio-1);
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.proceso__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.proceso__foto {
+  width: 100%;
+  height: auto; /* el atributo height del img no manda: la forma la da aspect-ratio */
+  aspect-ratio: 3 / 2;
+  border-radius: var(--radio-l);
+  object-fit: cover;
+}
+
+/* ---------- Cotización ---------- */
+
+.cotizacion {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+  /* En celular y tablet el header no define --alto-fijo: al bajar queda solo su fila principal, de unos 60px */
+  scroll-margin-top: calc(var(--alto-fijo, 64px) + var(--espacio-4));
+}
+
+.cotizacion__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  min-width: 0;
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.cotizacion__cab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.cotizacion__bajada {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.cotizacion__campos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+}
+
+.cotizacion__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3) var(--espacio-4);
+}
+
+.cotizacion__acciones .boton {
+  height: var(--alto-control-l);
+}
+
+.cotizacion__estado {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin: 0;
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.cotizacion__estado--error {
+  color: var(--color-error-texto);
+}
+
+/* Envío confirmado (de muestra) */
+.cotizacion__listo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding-block: var(--espacio-8);
+  text-align: center;
+  outline: none;
+}
+
+.cotizacion__listo p {
+  max-width: 40ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.cotizacion__listo strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.cotizacion__listo-titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.cotizacion__check {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radio-pill);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.cotizacion__check .icono {
+  width: 28px;
+  height: 28px;
+  stroke-width: 3;
+}
+
+/* Canal directo: panel oscuro en ambos modos, como la ayuda de Mi cuenta, con la foto arriba */
+.canal {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+.canal__foto {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+}
+
+.canal__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding: var(--espacio-6) var(--espacio-4);
+}
+
+.canal__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.canal__texto {
+  margin: calc(var(--espacio-2) * -1) 0 0;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-s);
+}
+
+.canal__datos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-barra-borde);
+  font-size: var(--texto-s);
+}
+
+.canal__datos li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+}
+
+.canal__datos .icono {
+  margin-top: 2px;
+  color: var(--color-marca);
+}
+
+.canal__rotulo {
+  display: block;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-xs);
+}
+
+.canal__datos a {
+  font-weight: var(--peso-medio);
+  transition: color var(--transicion);
+}
+
+.canal__datos a:hover {
+  color: var(--color-marca);
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  /* Más apaisada: a este ancho la foto a 4:3 queda demasiado alta */
+  .portada__foto {
+    aspect-ratio: 16 / 9;
+  }
+
+  .portada__texto {
+    margin-top: calc(var(--espacio-seccion) * -1);
+    padding: 0 var(--espacio-8) var(--espacio-8);
+  }
+
+  .portada__acciones {
+    width: auto;
+  }
+
+  .portada__acciones .boton {
+    flex: 0 0 auto;
+  }
+
+  .soluciones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  .solucion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espacio-2);
+    padding: var(--espacio-6);
+  }
+
+  .solucion__icono {
+    width: 48px;
+    height: 48px;
+    margin-bottom: var(--espacio-1);
+  }
+
+  .solucion__titulo {
+    font-size: var(--texto-l);
+  }
+
+  /* Los pasos pasan a una fila, unidos por una línea horizontal a la altura de los números */
+  .proceso__pasos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  .proceso__paso {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .proceso__paso:not(:last-child)::before {
+    top: 19px;
+    bottom: auto;
+    left: calc(40px + var(--espacio-2));
+    right: calc(var(--espacio-2) - var(--separacion-grilla));
+    width: auto;
+    height: 2px;
+  }
+
+  .proceso__titulo {
+    margin-top: var(--espacio-4);
+  }
+
+  .proceso__foto {
+    aspect-ratio: 2 / 1;
+  }
+
+  .cotizacion__form {
+    padding: var(--espacio-6);
+  }
+
+  .cotizacion__campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .canal {
+    flex-direction: row;
+  }
+
+  .canal__foto {
+    width: 40%;
+    aspect-ratio: auto;
+  }
+
+  .canal__cuerpo {
+    flex: 1;
+    min-width: 0;
+    padding: var(--espacio-6);
+  }
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+@media (min-width: 1024px) {
+  /* Portada sobre la grilla de 8: texto en 4 columnas y foto en las otras 4, fundida hacia el texto */
+  .portada {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    min-height: clamp(400px, 36vw, 480px);
+  }
+
+  .portada__texto {
+    grid-column: 1 / span 4;
+    grid-row: 1;
+    justify-content: center;
+    margin-top: 0;
+    padding: var(--espacio-8);
+  }
+
+  /* La foto arranca una columna antes, debajo del texto, así el fundido hacia la izquierda es más largo;
+     abajo lleva un leve oscurecido que la asienta sobre el panel */
+  .portada__foto {
+    grid-column: 4 / -1;
+    grid-row: 1;
+    aspect-ratio: auto;
+    mask-image: linear-gradient(to right, transparent 0%, rgb(0 0 0 / 0.08) 14%, rgb(0 0 0 / 0.4) 30%, rgb(0 0 0 / 0.78) 46%, #000 62%);
+  }
+
+  /* Leve oscurecido abajo, que asienta la foto sobre el panel (queda dentro de la máscara) */
+  .portada__foto::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-fondo-destacado) 55%, transparent), transparent 40%);
+  }
+
+  /* Las cuatro soluciones en una fila: 2 columnas de la grilla de 8 cada una */
+  .soluciones {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* Pasos en 5 columnas y foto en las 3 restantes */
+  .proceso {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: center;
+    column-gap: var(--separacion-grilla);
+  }
+
+  .proceso__pasos {
+    grid-column: span 5;
+  }
+
+  .proceso__foto {
+    grid-column: span 3;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Formulario en 5 columnas y canal en las 3 restantes, fijo bajo el header mientras se completa */
+  .cotizacion {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: start;
+    column-gap: var(--separacion-grilla);
+  }
+
+  .cotizacion__form {
+    grid-column: span 5;
+  }
+
+  .canal {
+    position: sticky;
+    top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+    grid-column: span 3;
+    flex-direction: column;
+    transition: top var(--transicion);
+  }
+
+  .canal__foto {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Página no encontrada</title>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/especiales.css">
+</head>
+<body>
+<div class="mx">
+
+  <!-- Plantilla Página no encontrada (404): el aviso, el buscador y los accesos a las categorías principales, para
+       que nadie quede sin salida. Página completa con header y footer: 404.html. -->
+  <main class="contenedor especial" id="contenido" tabindex="-1">
+    <section class="especial__panel" aria-labelledby="especial-titulo">
+      <span class="aurora" aria-hidden="true"></span>
+      <p class="especial__numero" aria-hidden="true">404</p>
+      <h1 class="especial__titulo" id="especial-titulo">No encontramos esta página</h1>
+      <p class="especial__texto">Puede que el enlace esté mal escrito o que el producto ya no esté publicado. Buscá lo que necesitás o seguí por las categorías.</p>
+      <form class="especial__buscador" role="search" action="buscar.html">
+        <label class="sr-only" for="buscar-404">Buscar productos</label>
+        <input id="buscar-404" name="q" type="search" placeholder="Buscá productos y marcas" autocomplete="off">
+        <button type="submit" aria-label="Buscar"><svg class="icono" aria-hidden="true"><use href="#i-buscar"/></svg></button>
+      </form>
+      <div class="especial__acciones">
+        <a class="boton boton--primario" href="index.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-inicio"/></svg>Ir al inicio</a>
+        <a class="boton boton--secundario especial__acciones-enlace" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp</a>
+      </div>
+    </section>
+
+    <ul class="especial__categorias" aria-label="Categorías">
+      <li><a class="especial__categoria" href="placas-de-video.html"><svg class="icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>PC armadas</a></li>
+      <li><a class="especial__categoria" href="placas-de-video.html"><svg class="icono" aria-hidden="true"><use href="#i-cat-notebook"/></svg>Notebooks</a></li>
+      <li><a class="especial__categoria" href="placas-de-video.html"><svg class="icono" aria-hidden="true"><use href="#i-cat-gpu"/></svg>Placas de video</a></li>
+      <li><a class="especial__categoria" href="primavera-maximus.html"><svg class="icono" aria-hidden="true"><use href="#i-etiqueta"/></svg>Ofertas</a></li>
+    </ul>
+  </main>
+
+</div>
+</body>
+</html>

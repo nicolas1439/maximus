@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Footer</title>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/dialogo.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <style data-demo>
+    /* Solo en esta vista previa: deja espacio arriba, como una página real */
+    .vista-demo { display: flex; flex-direction: column; justify-content: flex-end; gap: var(--espacio-2); min-height: 50vh; padding-block: var(--espacio-8); color: var(--color-texto-suave); }
+    .vista-demo button { align-self: flex-start; }
+  </style>
+</head>
+<body>
+<div class="mx">
+
+  <main class="contenedor vista-demo" data-demo>
+    <p>Vista previa del footer. Cambiá el tema para verlo en claro y oscuro.</p>
+    <button class="boton boton--primario" type="button" onclick="const o = document.documentElement.classList.toggle('dark'); try { localStorage.setItem('darkmode', String(o)); } catch {}">Cambiar tema</button>
+  </main>
+
+  <!-- Footer: misma distribución, textos y orden que el de maximus.com.ar (marca y redes | Empresa | Soporte | Legal | Contacto,
+       y debajo copyright, Términos y condiciones y la firma del ERP). Oscuro en ambos modos, como la barra superior. -->
+  <footer class="pie">
+    <div class="contenedor pie__cuerpo">
+
+      <div class="pie__marca">
+        <a class="pie__logo-enlace" href="index.html" aria-label="Maximus, ir al inicio">
+          <svg class="pie__logo" aria-hidden="true"><use href="#i-logo"/></svg>
+        </a>
+        <p class="pie__lema">La tienda N°1 en Computación y Gaming.</p>
+        <ul class="pie__redes" aria-label="Redes sociales">
+          <li><a href="https://www.facebook.com/Maximusgamingok" aria-label="Facebook" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-facebook"/></svg></a></li>
+          <li><a href="https://www.instagram.com/maximusgamingok" aria-label="Instagram" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-instagram"/></svg></a></li>
+          <li><a href="https://ar.linkedin.com/company/maximus-gaming-hardware" aria-label="LinkedIn" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
+          <li><a href="https://www.tiktok.com/@maximusgamingok" aria-label="TikTok" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-tiktok"/></svg></a></li>
+          <li><a href="https://www.youtube.com/@MAXIMUSGAMINGTV" aria-label="YouTube" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-youtube"/></svg></a></li>
+        </ul>
+      </div>
+
+      <div class="pie__col">
+        <h2 class="pie__titulo">Empresa</h2>
+        <ul>
+          <li><a href="quienes-somos.html">Quiénes somos</a></li>
+          <li><a href="maximus-empresas.html">Ventas a empresas</a></li>
+          <li><a href="mailto:seleccion@maximus.com.ar?subject=Postulaci%C3%B3n%20-%20(puesto)&amp;body=Nombre%20y%20apellido%3A%0APuesto%20al%20que%20me%20postulo%3A%0AEdad%3A%0AZona%20de%20residencia%3A%0ASueldo%20pretendido%3A%0ANivel%20de%20conocimiento%20de%20hardware%20(b%C3%A1sico%2C%20intermedio%2C%20avanzado)%3A%0A%0AAdjunto%20mi%20CV.%0A">Unite al equipo Maximus</a></li>
+        </ul>
+      </div>
+
+      <div class="pie__col">
+        <h2 class="pie__titulo">Soporte</h2>
+        <ul>
+          <li><a href="garantia.html">Garantía</a></li>
+          <li><a href="seguimiento.html">Seguí tu pedido</a></li>
+          <li><a href="centro-de-ayuda.html">Preguntas frecuentes</a></li>
+          <li><a href="boton-de-arrepentimiento.html">Botón de arrepentimiento</a></li>
+        </ul>
+      </div>
+
+      <div class="pie__col">
+        <h2 class="pie__titulo">Legal</h2>
+        <ul>
+          <li><a href="https://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/638/norma.htm" target="_blank" rel="noopener">Ley Nº 24.240</a></li>
+          <li><a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor/conoce-tus-derechos" target="_blank" rel="noopener">Conocé tus derechos</a></li>
+        </ul>
+        <!-- Sellos: las imágenes del sitio (CACE, del CDN de Maximus; Data fiscal, de AFIP) con sus enlaces -->
+        <div class="pie__sellos">
+          <a class="pie__sello" href="https://www.cace.org.ar" target="_blank" rel="noopener"><img src="https://cdn.jsdelivr.net/gh/Maximus-Sistemas/BannersWebMaximus/stickers/cace2025.png" alt="Miembro de la Cámara Argentina de Comercio Electrónico (CACE)" height="48" loading="lazy"></a>
+          <a class="pie__sello" href="https://qr.afip.gob.ar/?qr=Kg_Atqgw-Up-JKjtgjK70w,," target="_blank" rel="noopener"><img src="https://www.afip.gob.ar/images/f960/DATAWEB.jpg" alt="Data fiscal, AFIP" height="48" loading="lazy"></a>
+        </div>
+        <p class="pie__nota">Conocé las normas que aplican cuando comprás online.</p>
+      </div>
+
+      <address class="pie__contacto">
+        <h2 class="pie__titulo">Contacto</h2>
+        <ul>
+          <li class="pie__dato">
+            <svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+            <div><span class="pie__rotulo">WhatsApp</span><a href="https://wa.me/541123575522" target="_blank" rel="noopener">+54 11 2357-5522</a></div>
+          </li>
+          <li class="pie__dato">
+            <svg class="icono icono--s" aria-hidden="true"><use href="#i-mail"/></svg>
+            <div><span class="pie__rotulo">Empresas</span><a href="mailto:empresas@maximus.com.ar">empresas@maximus.com.ar</a></div>
+          </li>
+          <li class="pie__dato">
+            <svg class="icono icono--s" aria-hidden="true"><use href="#i-sucursal"/></svg>
+            <div>
+              <span class="pie__rotulo">Local / Showroom</span>
+              Florida 537 Local 379 (PB), CABA
+              <dl class="pie__horario"><dt>Lun a vie</dt><dd>10 a 19 h</dd><dt>Sáb</dt><dd>10 a 14:30 h</dd></dl>
+            </div>
+          </li>
+          <li class="pie__dato">
+            <svg class="icono icono--s" aria-hidden="true"><use href="#i-pedido"/></svg>
+            <div>
+              <span class="pie__rotulo">Oficinas / Retiro de pedidos</span>
+              R. de Escalada de San Martín 3875, CABA
+              <dl class="pie__horario"><dt>Lun a vie</dt><dd>9 a 17 h</dd><dt>Sáb</dt><dd>10 a 14 h</dd></dl>
+            </div>
+          </li>
+        </ul>
+      </address>
+
+    </div>
+
+    <!-- Medios de pago (el mismo bloque de la ficha y el checkout, en su versión sobre fondo oscuro) -->
+    <div class="contenedor pie__pagos">
+      <div class="medios-pago medios-pago--barra">
+        <p class="medios-pago__titulo">Medios de pago</p>
+        <ul class="medios-pago__lista">
+          <li class="medios-pago__item medios-pago__item--logo"><img src="recursos/pagos/mercadopago-120.webp" alt="Mercado Pago" width="120" height="83" loading="lazy"></li>
+          <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-tarjeta"/></svg>Crédito y débito</li>
+          <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-transferencia"/></svg>Transferencia o depósito</li>
+          <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-efectivo"/></svg>Efectivo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pie__final">
+      <div class="contenedor pie__final-fila">
+        <p>© 2026 Maximus Gaming Hardware.</p>
+        <a class="pie__arriba" href="#" aria-label="Volver arriba"><svg class="icono" aria-hidden="true"><use href="#i-arriba"/></svg></a>
+        <p class="pie__legales"><a class="pie__final-enlace" href="terminos-y-condiciones.html">Términos y condiciones</a><a class="pie__final-enlace" href="politica-de-privacidad.html">Política de privacidad</a></p>
+      </div>
+      <p class="pie__erp">Powered by GlobalBluePoint© ERP</p>
+    </div>
+  </footer>
+
+
+  <!-- Diálogos de la tarjeta de producto, una vez por página (los abre js/tarjeta.js): favorito sin sesión y la
+       explicación de "Obtené tu juego GRATIS" (texto de muestra: lo pone cada promoción) -->
+  <dialog class="dialogo dialogo--chico" aria-labelledby="favorito-titulo" data-dialogo-favorito>
+    <div class="dialogo__caja">
+      <header class="dialogo__cab">
+        <h2 class="dialogo__titulo" id="favorito-titulo">Guardá tus favoritos</h2>
+        <button class="boton-icono" type="button" data-cerrar-dialogo aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+      </header>
+      <div class="dialogo__cuerpo">
+        <p class="dialogo__texto">Ingresá o creá tu cuenta para guardar este producto. Cuando vuelvas, va a estar en Tus favoritos.</p>
+        <div class="dialogo__acciones">
+          <a class="boton boton--secundario" href="crear-cuenta.html" data-favorito-registro>Crear cuenta</a>
+          <a class="boton boton--primario" href="ingresar.html" data-favorito-ingresar>Ingresar</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="dialogo dialogo--chico" aria-labelledby="regalo-titulo" data-dialogo-regalo>
+    <div class="dialogo__caja">
+      <header class="dialogo__cab">
+        <h2 class="dialogo__titulo" id="regalo-titulo"><svg class="icono" aria-hidden="true"><use href="#i-regalo"/></svg>Obtené tu juego GRATIS</h2>
+        <button class="boton-icono" type="button" data-cerrar-dialogo aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+      </header>
+      <div class="dialogo__cuerpo">
+        <p class="dialogo__texto">Comprando este producto te llevás un juego para PC de regalo. Cuando se acredite el pago, te mandamos por correo el código para canjearlo en el sitio de la marca.</p>
+        <ul class="dialogo__lista">
+          <li>Un código por producto, hasta agotar los códigos de la promoción.</li>
+          <li>El canje se hace en el sitio de la marca, con tu cuenta.</li>
+          <li>El código no se cambia por dinero ni por otro producto.</li>
+        </ul>
+        <div class="dialogo__acciones">
+          <a class="boton boton--secundario" href="primavera-maximus.html#bases">Ver bases y condiciones</a>
+          <button class="boton boton--primario" type="button" data-cerrar-dialogo>Entendido</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Flotantes, en todas las páginas: el sticker de la campaña vigente (abajo a la izquierda; se cierra por la
+       sesión; en el sitio puede llevar la pieza de Marketing en un <img> dentro del enlace) y WhatsApp (abajo a la
+       derecha). Suben cuando aparece una barra fija abajo (ficha, carrito, armador) -->
+  <div class="flotantes">
+    <div class="sticker" data-sticker>
+      <a class="sticker__enlace" href="primavera-maximus.html" data-fuego data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+        <span class="sticker__icono"><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>
+        <span class="sticker__texto"><strong>Primavera Maximus</strong>Hasta 35% off</span>
+      </a>
+      <button class="sticker__cerrar" type="button" aria-label="Ocultar la campaña" data-cerrar-sticker><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+    </div>
+    <a class="whatsapp" href="https://wa.me/541123575522" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg class="icono" aria-hidden="true"><use href="#i-whatsapp"/></svg></a>
+  </div>
+
+</div>
+</body>
+</html>

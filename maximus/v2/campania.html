@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Primavera Maximus</title>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/producto.css">
+  <link rel="stylesheet" href="css/banner.css">
+  <link rel="stylesheet" href="css/campania.css">
+  <script type="module" src="js/campania.js"></script>
+</head>
+<body>
+<div class="mx">
+
+  <!-- Plantilla de landing de campaña, armada con "Primavera Maximus" (la abren el hero y "Ver todas" de Ofertas del
+       home y el banner de campaña). Portada con la cuenta regresiva, los beneficios, las ofertas con pestañas por
+       categoría (las tarjetas de Ofertas y de Computadoras armadas del home, con sus mismos datos de muestra), el
+       banner MSI x AMD y las bases y condiciones. La campaña, su vigencia (hasta el 31/10/2026) y las bases son de
+       muestra. Para otra campaña cambian los textos, la fecha (data-fin) y los productos (en el sitio real los da
+       el backend). js/campania.js: cuenta regresiva y pestañas. Página completa: primavera-maximus.html. -->
+  <!-- Estados de la campaña, para la demostración (no van en el sitio real): en curso, próximamente y terminada -->
+  <div class="contenedor variantes" data-demo>
+    <span class="variantes__rotulo">Vista previa</span>
+    <div class="variantes__opciones" role="group" aria-label="Estado de la campaña">
+      <button class="variantes__btn" type="button" data-ver-estado="curso" aria-pressed="true">En curso</button>
+      <button class="variantes__btn" type="button" data-ver-estado="proxima" aria-pressed="false">Próximamente</button>
+      <button class="variantes__btn" type="button" data-ver-estado="terminada" aria-pressed="false">Terminada</button>
+    </div>
+  </div>
+
+  <!-- La campaña tiene inicio (data-inicio) y fin (data-fin): antes del inicio se ve "próximamente" (cuenta regresiva
+       al inicio, el cronograma de días y el aviso), durante, las ofertas, y después, "terminada" (js/campania.js) -->
+  <main class="campania" id="contenido" tabindex="-1" data-inicio="2026-10-01T00:00:00-03:00" data-fin="2026-10-31T23:59:59-03:00">
+
+    <nav class="contenedor migas" aria-label="Ubicación">
+      <ol>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="placas-de-video.html">Ofertas</a></li>
+        <li aria-current="page">Primavera Maximus</li>
+      </ol>
+    </nav>
+
+    <!-- Portada: panel oscuro con la aurora (más violeta: el color de las campañas) y la cuenta regresiva -->
+    <div class="contenedor">
+      <section class="portada-campania" aria-labelledby="campania-titulo">
+        <span class="aurora portada-campania__aurora" aria-hidden="true"></span>
+        <div class="portada-campania__texto">
+          <span class="etiqueta etiqueta--secundaria etiqueta--con-icono" data-fuego><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>Primavera Maximus</span>
+          <h1 class="portada-campania__titulo" id="campania-titulo">Hasta <em>35% off</em> en hardware y setup</h1>
+          <p class="portada-campania__bajada">En productos seleccionados, por tiempo limitado. Y pagando por transferencia, 10% off por medio de pago.</p>
+          <a class="boton boton--primario" href="#ofertas">Ver las ofertas<svg class="icono icono--s" aria-hidden="true"><use href="#i-abajo"/></svg></a>
+        </div>
+
+        <div class="regresiva" role="timer" aria-label="La campaña termina el 31 de octubre a las 23:59">
+          <p class="regresiva__rotulo" data-rotulo>Termina en</p>
+          <ol class="regresiva__lista" aria-hidden="true">
+            <li class="regresiva__parte"><span class="regresiva__num" data-dias>14</span><span class="regresiva__unidad">días</span></li>
+            <li class="regresiva__parte"><span class="regresiva__num" data-horas>09</span><span class="regresiva__unidad">horas</span></li>
+            <li class="regresiva__parte"><span class="regresiva__num" data-minutos>59</span><span class="regresiva__unidad">min</span></li>
+            <li class="regresiva__parte"><span class="regresiva__num" data-segundos>59</span><span class="regresiva__unidad">seg</span></li>
+          </ol>
+          <p class="regresiva__fecha" data-fecha>Hasta el 31 de octubre o hasta agotar stock</p>
+          <!-- Terminada: el aviso en el lugar de la cuenta -->
+          <p class="regresiva__terminada" hidden data-solo="terminada"><svg class="icono" aria-hidden="true"><use href="#i-reloj"/></svg>Esta campaña terminó el 31 de octubre</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Beneficios de la campaña -->
+    <ul class="contenedor beneficios" aria-label="Beneficios">
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-etiqueta"/></svg></span><span><strong>Hasta 35% off</strong>En productos seleccionados</span></li>
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-transferencia"/></svg></span><span><strong>10% off</strong>Pagando por transferencia</span></li>
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-cuotas"/></svg></span><span><strong>3 cuotas sin interés</strong>Con Mercado Pago</span></li>
+      <li class="beneficio"><span class="beneficio__icono"><svg class="icono" aria-hidden="true"><use href="#i-envio"/></svg></span><span><strong>Entrega en 24 hs hábiles</strong>Con OCA, en AMBA</span></li>
+    </ul>
+
+    <!-- Próximamente: el cronograma de días, como en los eventos tipo Hot Sale (de muestra) -->
+    <section class="contenedor cronograma" aria-labelledby="cronograma-titulo" hidden data-solo="proxima">
+      <div class="seccion__cab seccion__cab--bajada">
+        <h2 class="seccion__titulo" id="cronograma-titulo">Cronograma</h2>
+        <p class="seccion__bajada">Cada día, ofertas nuevas en una categoría. Se publican a las 00 h.</p>
+      </div>
+      <ol class="cronograma__lista">
+        <li class="cronograma__dia"><span class="cronograma__fecha"><strong>1</strong>oct</span><span class="cronograma__texto"><strong>Componentes</strong>Placas de video, micros y memorias</span></li>
+        <li class="cronograma__dia"><span class="cronograma__fecha"><strong>2</strong>oct</span><span class="cronograma__texto"><strong>PC armadas</strong>Gamer y de oficina</span></li>
+        <li class="cronograma__dia"><span class="cronograma__fecha"><strong>3</strong>oct</span><span class="cronograma__texto"><strong>Notebooks y monitores</strong>Para jugar y trabajar</span></li>
+        <li class="cronograma__dia"><span class="cronograma__fecha"><strong>4</strong>oct</span><span class="cronograma__texto"><strong>Periféricos y sillas</strong>Teclados, mouse, auriculares y sillas</span></li>
+      </ol>
+      <a class="boton boton--secundario cronograma__catalogo" href="placas-de-video.html">Mientras tanto, mirá el catálogo<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+    </section>
+
+    <!-- Ofertas, con pestañas por categoría -->
+    <section class="contenedor ofertas" id="ofertas" aria-labelledby="ofertas-titulo" data-no-en="proxima">
+      <div class="seccion__cab">
+        <div class="seccion__titulos">
+          <h2 class="seccion__titulo" id="ofertas-titulo">Ofertas de la campaña</h2>
+          <span class="chip-secundario"><span><span data-ofertas-cant>12</span> productos</span></span>
+        </div>
+      </div>
+
+      <div class="pestanias" role="group" aria-label="Filtrar por categoría" data-pestanias>
+        <button class="pestania" type="button" data-cat="todo" aria-pressed="true">Todo</button>
+        <button class="pestania" type="button" data-cat="pc" aria-pressed="false">PC armadas</button>
+        <button class="pestania" type="button" data-cat="componentes" aria-pressed="false">Componentes</button>
+        <button class="pestania" type="button" data-cat="notebooks" aria-pressed="false">Notebooks</button>
+        <button class="pestania" type="button" data-cat="monitores" aria-pressed="false">Monitores</button>
+        <button class="pestania" type="button" data-cat="perifericos" aria-pressed="false">Periféricos</button>
+        <button class="pestania" type="button" data-cat="sillas" aria-pressed="false">Sillas</button>
+      </div>
+
+      <ul class="ofertas__grilla" data-ofertas>
+        <li class="ofertas__item" data-cat="pc">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml12.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $180.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Maximus</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,8</span><span class="producto__opiniones">(19<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Armada AMD Ryzen 5 5500 RTX 3050 16GB 512GB</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.379.999</s>
+                <p class="producto__precio">$1.199.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $444.444 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="pc">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml2.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $80.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Maximus</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Armada AMD Ryzen 5 5600GT 16GB 512GB</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$779.999</s>
+                <p class="producto__precio">$699.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $259.259 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="componentes">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $210.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">MSI</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Placa de Video Msi Nvidia Geforce RTX 5070 TI Ventus 3X 16GB OC GDDR7</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.699.999</s>
+                <p class="producto__precio">$1.489.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $551.851 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="componentes">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/ryzen-7-9800x3d.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $110.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">AMD</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Micro AMD Ryzen 7 9800X3D 5.2 Ghz AM5</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$849.999</s>
+                <p class="producto__precio">$739.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $274.074 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="monitores">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/msi-g242l.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $60.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">MSI</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,7</span><span class="producto__opiniones">(23<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Monitor Gamer IPS MSI 24" G242L E14 144Hz HDMI - DP</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$449.999</s>
+                <p class="producto__precio">$389.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $144.444 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="perifericos">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/redragon-k552.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $40.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Redragon</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Teclado Mecanico Redragon K552 Kumara 2 Rainbow Red Switches - Español</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$279.999</s>
+                <p class="producto__precio">$239.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $88.889 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="perifericos">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/redragon-zeus-x.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $30.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Redragon</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Auricular c/mic Redragon ZEUS X H510 White RGB</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$249.999</s>
+                <p class="producto__precio">$219.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $81.481 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="perifericos">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/logitech-g203.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $35.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Logitech G</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(8<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Mouse Logitech G203 Lightsync Black</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$219.999</s>
+                <p class="producto__precio">$184.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $68.518 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="notebooks">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/lenovo-loq-15.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $250.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Lenovo</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Notebook Lenovo LOQ 15AHP10 15.6" FHD AMD Ryzen 5-220 16GB RAM 512GB SSD Rtx 5050 - W11</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.899.999</s>
+                <p class="producto__precio">$1.649.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $611.111 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="sillas">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/coolermaster-caliber-x2.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $60.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Cooler Master</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,5</span><span class="producto__opiniones">(12<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">Silla Gamer Coolermaster Caliber X2 Gray</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$389.999</s>
+                <p class="producto__precio">$329.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas"></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="pc">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml11.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $120.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Maximus</span>
+                <span class="producto__calificacion"><svg class="producto__estrella" aria-hidden="true"><use href="#i-estrella"/></svg><span class="sr-only">Calificación </span><span class="producto__puntaje">4,9</span><span class="producto__opiniones">(15<span class="sr-only"> opiniones</span>)</span></span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Armada AMD Ryzen 5 4500 RX 7600 16GB 512GB</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.419.999</s>
+                <p class="producto__precio">$1.299.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $481.481 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+        <li class="ofertas__item" data-cat="pc">
+          <article class="producto">
+            <div class="producto__media">
+              <img class="producto__img" loading="lazy" src="recursos/productos/pc-ml13.jpg" alt="" width="600" height="600">
+              <span class="etiqueta producto__etiqueta">Ahorrá $100.000</span>
+              <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
+            </div>
+            <div class="producto__cuerpo">
+              <div class="producto__meta">
+                <span class="producto__marca">Maximus</span>
+              </div>
+              <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Armada AMD Ryzen 7 5700G 32GB 1TB</a></h3>
+              <div class="producto__precios">
+                <s class="producto__antes"><span class="sr-only">Antes: </span>$1.149.999</s>
+                <p class="producto__precio">$1.049.999</p>
+                <p class="producto__nota">Efectivo o transferencia</p>
+              </div>
+              <p class="producto__cuotas">3 × $388.889 <span class="producto__cuotas-nota">sin interés<img class="producto__mp" src="recursos/pagos/mercadopago.webp" alt=" con Mercado Pago" width="48" height="33"></span></p>
+              <button class="boton boton--primario producto__agregar" type="button" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span>Agregar<span class="producto__agregar-resto"> al carrito</span></span></button>
+            </div>
+          </article>
+        </li>
+      </ul>
+
+      <!-- Una campaña puede tener más de 100 productos: de a 8 con "Ver más" y, debajo, las páginas numeradas -->
+      <div class="mas-productos" data-no-en="terminada" data-pie-ofertas>
+        <p class="mas-productos__progreso">Viste <span data-mostrando>8</span> de <span data-total>12</span> productos</p>
+        <div class="mas-productos__barra" aria-hidden="true"><span data-barra></span></div>
+        <button class="boton boton--secundario" type="button" data-ver-mas>Ver más productos</button>
+        <nav class="paginas" aria-label="Páginas de la campaña" data-paginas>
+          <ol>
+            <li><a class="paginas__enlace actual" href="primavera-maximus.html" aria-current="page">1</a></li>
+            <li><a class="paginas__enlace" href="primavera-maximus.html?pagina=2">2</a></li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Terminada: en lugar de las ofertas -->
+      <div class="campania-terminada" hidden data-solo="terminada">
+        <svg class="campania-terminada__icono" aria-hidden="true"><use href="#i-reloj"/></svg>
+        <h3 class="campania-terminada__titulo">La Primavera Maximus terminó</h3>
+        <p>Gracias por acompañarnos. Hay más ofertas vigentes y nuevas campañas todos los meses.</p>
+        <div class="campania-terminada__acciones">
+          <a class="boton boton--primario" href="placas-de-video.html?orden=descuento">Ver las ofertas vigentes</a>
+          <a class="boton boton--secundario" href="placas-de-video.html">Ver el catálogo</a>
+        </div>
+      </div>
+
+      <a class="boton boton--secundario ofertas__mas" href="placas-de-video.html" data-no-en="terminada">Ver todo el catálogo<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+    </section>
+
+    <!-- Otra promo vigente: el banner MSI x AMD del home -->
+    <div class="banner contenedor">
+      <a class="banner__enlace" href="placas-de-video.html" data-activo-visible data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+        <picture>
+          <source media="(min-width: 1024px)" srcset="recursos/banners/msi-amd-escritorio.webp" width="2180" height="364">
+          <img class="banner__img" src="recursos/banners/msi-amd-mobile.webp" alt="MSI x AMD: llevate un cooler MSI MAG CoreFrozr AA13 de regalo comprando una motherboard MSI AM5 y un micro AMD. Válido hasta agotar stock." width="1760" height="440" loading="lazy">
+        </picture>
+      </a>
+    </div>
+
+    <!-- Bases y condiciones (de muestra), plegadas -->
+    <section class="contenedor bases" id="bases" aria-labelledby="bases-titulo">
+      <details class="bases__caja">
+        <summary class="bases__cab"><h2 class="bases__titulo" id="bases-titulo">Bases y condiciones</h2><svg class="icono bases__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
+        <div class="bases__texto">
+          <p>Promoción “Primavera Maximus” válida del 1 al 31 de octubre de 2026 o hasta agotar stock, para compras en www.maximus.com.ar y en el local de Florida 537, CABA.</p>
+          <p>Los descuentos se aplican sobre el precio de lista de los productos seleccionados y ya están incluidos en el precio publicado. El precio en efectivo o transferencia suma además el 10% por medio de pago. Las cuotas sin interés son con Mercado Pago.</p>
+          <p>No acumulable con otras promociones salvo que se indique. Stock limitado por producto. Las imágenes son ilustrativas. Rigen los <a href="terminos-y-condiciones.html">Términos y condiciones</a> del sitio.</p>
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+</div>
+</body>
+</html>

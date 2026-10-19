@@ -1,0 +1,160 @@
+/* Tokens de Maximus. Modo claro por defecto; el oscuro se activa con la clase dark en <html> (la preferencia va en localStorage, clave darkmode: "true" / "false", la que ya usa el sitio). */
+
+:root {
+  color-scheme: light;
+
+  /* Marca */
+  --color-marca: #16e000;
+  --color-marca-hover: #13c400;
+  --color-sobre-marca: #0b0d0c;
+  --color-acento: #0a8500; /* verde legible como texto o indicador sobre el fondo */
+  --color-secundario: #621c87; /* violeta, color secundario de Maximus: etiqueta de descuento de las tarjetas */
+  --color-sobre-secundario: #ffffff;
+  --color-secundario-texto: #621c87; /* violeta legible como texto, rótulo o ícono sobre el fondo (en oscuro, un lila) */
+  --color-secundario-suave: rgb(98 28 135 / 0.1); /* fondo tenue violeta: chips y bloques destacados en violeta */
+  --color-calificacion: #f5a524; /* estrellas de calificación */
+
+  /* Degradado vivo (hover del botón Productos): luz lima en el puntero sobre el verde de marca; hacia los bordes, esmeralda y violeta */
+  --color-lima: #a3ff66;
+  --color-esmeralda: #059907;
+  --color-violeta: var(--color-secundario);
+  --sombra-interior: rgb(0 0 0 / 0.09); /* sombra difusa en el borde, cerca del puntero (más marcada en oscuro) */
+
+  /* Neutros. La página va en --color-fondo-suave; tarjetas, header y paneles en --color-fondo, que contrasta */
+  --color-fondo-suave: #f5f7f4;
+  --color-fondo: #ffffff;
+  --color-superficie: #f3f4f5;
+  --color-texto: #121416;
+  --color-texto-suave: #5d636a;
+  --color-borde: #e2e4e7;
+  --color-barra: #0b0d0e;
+  --color-sobre-barra: #e6e8ea;
+  --color-sobre-barra-suave: #9ba2a9; /* texto secundario sobre la barra y el footer */
+  --color-barra-hover: rgb(255 255 255 / 0.1);
+  --color-barra-borde: rgb(255 255 255 / 0.12); /* líneas y contornos sobre la barra y el footer */
+  --color-secundario-sobre-barra: #c9a6ee; /* violeta legible sobre la barra y el footer (oscuros en ambos modos): el lila */
+  --color-brillo-marca: rgb(22 224 0 / 0.12); /* halo de marca sobre fondos oscuros */
+  --color-fondo-destacado: #0b0d0e; /* banners y bloques destacados: oscuros en ambos modos */
+  --color-sobre-destacado: #f2f4f5;
+  --color-capa: rgb(0 0 0 / 0.5);
+  --sombra: 0 6px 20px rgb(0 0 0 / 0.08);
+  --sombra-recorte: 0 16px 24px rgb(0 0 0 / 0.45); /* fotos recortadas sobre fondos destacados (filter: drop-shadow) */
+
+  /* Accesos destacados del home: fondo y brillo de cada tarjeta (oscuras en ambos modos, como los banners) */
+  --color-acceso-pc: #0a1a3f;
+  --color-acceso-pc-brillo: #3b82f6;
+  --color-acceso-armador: #06240f;
+  --color-acceso-gpu: #2a0f04;
+  --color-acceso-gpu-brillo: #f97316;
+
+  /* Estante "Las más elegidas" de los listados: fondo armado con código (degradado, brillos, trama de puntos y logo).
+     En claro predomina el violeta con un brillo lima; en oscuro, el verde con un brillo violeta */
+  --color-estante: #e1d0f3;
+  --color-estante-2: #ebe1f7;
+  --color-estante-brillo: rgb(163 255 102 / 0.6); /* arriba a la derecha */
+  --color-estante-brillo-2: color-mix(in srgb, var(--color-secundario) 24%, transparent); /* arriba a la izquierda, detrás del título */
+  --color-estante-trama: color-mix(in srgb, var(--color-secundario) 28%, transparent);
+  --color-estante-logo: color-mix(in srgb, var(--color-secundario) 17%, transparent);
+  --color-estante-borde: color-mix(in srgb, var(--color-secundario) 14%, transparent); /* contorno tenue que marca el panel sobre la página */
+
+  /* Fotos de producto: JPG con fondo blanco; su espacio lleva el mismo blanco en ambos modos */
+  --color-fondo-imagen: #ffffff;
+  --color-sobre-imagen: #5d636a; /* íconos sobre la foto (favorito) */
+  --color-favorito: #ff3040; /* corazón al pasar el mouse y marcado: el rojo del "me gusta" de Instagram */
+
+  /* Estados (pedidos, garantías, avisos): se usan en puntos, íconos y fondos tenues; el texto queda en --color-texto,
+     salvo los mensajes de error e informativos (--color-error-texto, --color-info-texto) */
+  --color-exito: var(--color-marca);
+  --color-aviso: #f5a524; /* pendiente: falta una acción del cliente */
+  --color-info: #3b82f6; /* en proceso */
+  --color-error: #e5484d; /* cancelado o rechazado */
+  /* Versiones con contraste (WCAG AA) para usar como color de texto (4,5:1) y de ícono (3:1) sobre fondo, fondo
+     suave y superficie. Los de arriba quedan para puntos, bordes y fondos tenues */
+  --color-error-texto: #c62d33;
+  --color-info-texto: #1d5fd6;
+  --color-aviso-icono: #c47a0a;
+
+  /* WhatsApp: el verde de la marca, un poco más oscuro para que el ícono blanco se lea (3,5:1) */
+  --color-whatsapp: #1b9c4b;
+  --color-sobre-whatsapp: #ffffff;
+
+  /* Tipografía: Roboto, la actual de Maximus (puede cambiar más adelante) */
+  --fuente-base: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --texto-2xs: 0.6875rem;
+  --texto-xs: 0.8125rem;
+  --texto-s: 0.9375rem;
+  --texto-m: 1rem;
+  --texto-l: 1.125rem;
+  --texto-xl: 1.25rem;
+  --texto-2xl: 1.5rem;
+  --texto-3xl: 2rem; /* títulos de página (listados) */
+  --texto-display: clamp(1.75rem, 1.1rem + 2.6vw, 3rem); /* títulos de hero y banners */
+  --interlineado-titulo: 1.1;
+  --espaciado-mayusculas: 0.06em; /* textos cortos en mayúsculas (marcas, rótulos) */
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-fuerte: 700;
+
+  /* Espaciado y forma */
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio-3: 12px;
+  --espacio-4: 16px;
+  --espacio-6: 24px;
+  --espacio-8: 32px;
+  --espacio-seccion: clamp(40px, 5vw, 64px); /* separación entre secciones de una plantilla */
+  --radio-s: 4px;
+  --radio: 8px;
+  --radio-l: 12px;
+  --radio-pill: 999px;
+  --alto-control: 44px; /* mínimo táctil: botones, campos e ítems de menú */
+  --alto-control-s: 40px; /* controles repetidos en tarjetas (ej. agregar al carrito) */
+  --alto-control-xs: 32px; /* controles chicos: etiquetas de filtros aplicados y opciones de filtro en escritorio */
+  --alto-control-l: 48px;
+  --alto-destacado: 220px; /* tarjetas de accesos destacados y banners del home */
+  --alto-destacado-l: 264px; /* ídem, cuando la tarjeta de accesos mide 420px o más de ancho */
+
+  /* Layout */
+  --contenedor: 1440px;
+  --separacion-grilla: var(--espacio-4); /* espacio entre columnas de la grilla compartida */
+  --margen-lateral: clamp(16px, 4vw, 32px);
+  --duracion-rapida: 0.18s; /* cierres y salidas */
+  --duracion: 0.35s; /* hovers y cambios de estado */
+  --duracion-lenta: 0.9s; /* fundidos y zooms de imagen */
+  --duracion-muy-lenta: 1.4s; /* tarjetas de accesos destacados */
+  --transicion-rapida: var(--duracion-rapida) ease;
+  --transicion: var(--duracion) ease;
+  --transicion-lenta: var(--duracion-lenta) ease;
+  --transicion-muy-lenta: var(--duracion-muy-lenta) ease;
+}
+
+html.dark {
+  color-scheme: dark;
+
+  --color-acento: #16e000;
+  --color-secundario-texto: #c9a6ee;
+  --color-secundario-suave: rgb(201 166 238 / 0.14);
+
+  --color-fondo-suave: #10171b;
+  --color-fondo: #0a0e12;
+  --color-superficie: #141b20;
+  --color-texto: #eef0f1;
+  --color-texto-suave: #9ba2a9;
+  --color-borde: #293339;
+  --color-barra: #070808;
+  --color-fondo-destacado: #171a1d;
+  --color-capa: rgb(0 0 0 / 0.65);
+  --color-error-texto: #ef6166;
+  --color-info-texto: #3b82f6;
+  --color-aviso-icono: #f5a524;
+  --sombra: 0 6px 20px rgb(0 0 0 / 0.5);
+  --sombra-interior: rgb(0 0 0 / 0.19);
+
+  --color-estante: #08240f;
+  --color-estante-2: #0c1216;
+  --color-estante-brillo: rgb(22 224 0 / 0.22);
+  --color-estante-brillo-2: color-mix(in srgb, var(--color-secundario) 50%, transparent);
+  --color-estante-trama: rgb(22 224 0 / 0.22);
+  --color-estante-logo: rgb(22 224 0 / 0.16);
+  --color-estante-borde: rgb(22 224 0 / 0.14);
+}

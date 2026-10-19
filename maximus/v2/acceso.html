@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Ingresar o crear cuenta</title>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/acceso.css">
+  <script type="module" src="js/acceso.js"></script>
+</head>
+<body>
+<div class="mx">
+
+  <!-- Plantilla Ingresar y Crear cuenta (la abre el ícono de usuario del header). Campos relevados de maximus.com.ar
+       el 16/10/2026: ingreso con correo y clave, "Olvidé mi clave" (pide el correo) y "Registrarme"; el registro pide
+       correo, contraseña, condición fiscal, DNI o CUIT, nombre, apellido, provincia, localidad, código postal,
+       dirección, teléfono y la casilla de ofertas, con el aviso de que la persona registrada tiene que coincidir con
+       el titular del medio de pago. Acá el registro va en dos pasos y sin "Repetí tu contraseña" (se puede mostrar).
+       Una vista por vez según el enlace: #ingresar (por defecto), #registro y #recuperar. Todo es de muestra:
+       js/acceso.js valida y muestra cada estado, pero no envía nada. Sin JS se ven todas las vistas.
+       Páginas completas con header y footer: ingresar.html y crear-cuenta.html (abre en #registro). -->
+  <main class="ingreso" id="contenido" tabindex="-1" data-acceso>
+
+    <nav class="contenedor migas" aria-label="Ubicación">
+      <ol>
+        <li><a href="index.html">Inicio</a></li>
+        <li aria-current="page"><span data-para="ingresar recuperar">Ingresar</span><span data-para="registro bienvenida">Crear cuenta</span></li>
+      </ol>
+    </nav>
+
+    <div class="contenedor ingreso__cuerpo">
+
+      <!-- Fondo: aurora de marca (manchas verde y violeta que derivan despacio) y trama de puntos -->
+      <span class="aurora aurora--pagina" aria-hidden="true"></span>
+
+      <div class="tarjeta ingreso__tarjeta" data-pausa>
+
+        <!-- Ingresar | Crear cuenta: la marca se desliza a la opción elegida -->
+        <nav class="modo" aria-label="Ingresar o crear cuenta" data-modo>
+          <a class="modo__opcion" href="#ingresar">Ingresar</a>
+          <a class="modo__opcion" href="#registro">Crear cuenta</a>
+          <span class="modo__marca" aria-hidden="true"></span>
+        </nav>
+
+        <!-- ========== Ingresar ========== -->
+        <section class="vista" id="vista-ingresar" data-vista="ingresar" aria-labelledby="ingresar-titulo">
+          <header class="vista__cab">
+            <h1 class="vista__titulo" id="ingresar-titulo">Ingresá a tu cuenta</h1>
+            <p class="vista__bajada">Con tu correo y tu contraseña de Maximus.</p>
+          </header>
+
+          <form class="formulario" action="mi-cuenta.html" method="get" novalidate data-form="ingresar">
+            <div class="campo">
+              <label class="campo__rotulo" for="ingresar-correo">Correo electrónico</label>
+              <input class="campo__control" id="ingresar-correo" name="correo" type="email" inputmode="email" autocomplete="username" spellcheck="false" placeholder="nombre@correo.com" required>
+            </div>
+
+            <div class="campo">
+              <div class="campo__fila-rotulo">
+                <label class="campo__rotulo" for="ingresar-clave">Contraseña</label>
+                <a class="boton-texto" href="#recuperar">¿La olvidaste?</a>
+              </div>
+              <div class="clave">
+                <input class="campo__control" id="ingresar-clave" name="clave" type="password" autocomplete="current-password" required>
+                <button class="boton-icono clave__ver" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg class="icono icono--s" aria-hidden="true"><use href="#i-ojo"/></svg></button>
+              </div>
+              <p class="clave__mayus" hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Bloq Mayús está activado</p>
+            </div>
+
+            <label class="casilla"><input name="recordar" type="checkbox" checked> Mantener la sesión iniciada</label>
+
+            <button class="boton boton--primario enviar" type="submit"><span class="enviar__texto">Ingresar</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
+            <p class="ingreso__estado" role="status" aria-live="polite"></p>
+          </form>
+
+          <p class="separador"><span>¿Primera vez en Maximus?</span></p>
+          <a class="boton boton--secundario ingreso__alterno" href="#registro">Crear una cuenta</a>
+        </section>
+
+        <!-- ========== Recuperar contraseña ========== -->
+        <section class="vista" id="vista-recuperar" data-vista="recuperar" aria-labelledby="recuperar-titulo">
+          <a class="boton-texto boton-texto--suave vista__volver" href="#ingresar"><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Volver a ingresar</a>
+
+          <div data-paso="cargar">
+            <header class="vista__cab">
+              <span class="vista__icono"><svg class="icono" aria-hidden="true"><use href="#i-candado"/></svg></span>
+              <h1 class="vista__titulo" id="recuperar-titulo">Recuperá tu contraseña</h1>
+              <p class="vista__bajada">Escribí el correo de tu cuenta y te mandamos los pasos para crear una nueva.</p>
+            </header>
+            <form class="formulario" novalidate data-form="recuperar">
+              <div class="campo">
+                <label class="campo__rotulo" for="recuperar-correo">Correo electrónico</label>
+                <input class="campo__control" id="recuperar-correo" name="correo" type="email" inputmode="email" autocomplete="username" spellcheck="false" placeholder="nombre@correo.com" required>
+              </div>
+              <button class="boton boton--primario enviar" type="submit"><span class="enviar__texto">Enviar correo</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-mail"/></svg></button>
+              <p class="ingreso__estado" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <div class="listo" data-paso="listo" tabindex="-1" hidden>
+            <span class="listo__icono listo__icono--correo"><svg class="icono" aria-hidden="true"><use href="#i-mail"/></svg></span>
+            <h2 class="vista__titulo">Revisá tu correo</h2>
+            <p class="vista__bajada">Si <strong data-correo></strong> tiene una cuenta en Maximus, en unos minutos te llega un correo para recuperar tu contraseña. Mirá también en spam.</p>
+            <button class="boton-texto" type="button" data-reenviar disabled>Reenviar correo</button>
+          </div>
+        </section>
+
+        <!-- ========== Crear cuenta (dos pasos) ========== -->
+        <section class="vista" id="vista-registro" data-vista="registro" aria-labelledby="registro-titulo">
+          <header class="vista__cab">
+            <h1 class="vista__titulo" id="registro-titulo">Creá tu cuenta</h1>
+            <p class="vista__bajada">Son dos pasos y te lleva un minuto.</p>
+          </header>
+
+          <div class="avance" data-pasos>
+            <p class="avance__texto">Paso <strong data-paso-numero>1</strong> de 2 <span aria-hidden="true">·</span> <span data-paso-nombre>Tus datos de acceso</span></p>
+            <div class="avance__barra" aria-hidden="true"><span class="avance__tramo avance__tramo--hecho"></span><span class="avance__tramo"></span></div>
+          </div>
+
+          <form class="formulario" novalidate data-form="registro">
+
+            <!-- Paso 1: acceso -->
+            <fieldset class="ingreso__paso" data-registro-paso="1">
+              <legend class="sr-only">Tus datos de acceso</legend>
+              <div class="ingreso__fila">
+                <div class="campo">
+                  <label class="campo__rotulo" for="registro-nombre">Nombre</label>
+                  <input class="campo__control" id="registro-nombre" name="nombre" type="text" autocomplete="given-name" maxlength="30" required>
+                </div>
+                <div class="campo">
+                  <label class="campo__rotulo" for="registro-apellido">Apellido</label>
+                  <input class="campo__control" id="registro-apellido" name="apellido" type="text" autocomplete="family-name" maxlength="30" required>
+                </div>
+              </div>
+
+              <div class="campo">
+                <label class="campo__rotulo" for="registro-correo">Correo electrónico</label>
+                <input class="campo__control" id="registro-correo" name="correo" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="80" placeholder="nombre@correo.com" required>
+              </div>
+
+              <div class="campo">
+                <label class="campo__rotulo" for="registro-clave">Contraseña</label>
+                <div class="clave">
+                  <input class="campo__control" id="registro-clave" name="clave" type="password" autocomplete="new-password" maxlength="30" aria-describedby="registro-clave-requisitos" required>
+                  <button class="boton-icono clave__ver" type="button" aria-label="Mostrar contraseña" aria-pressed="false"><svg class="icono icono--s" aria-hidden="true"><use href="#i-ojo"/></svg></button>
+                </div>
+                <p class="clave__mayus" hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Bloq Mayús está activado</p>
+                <!-- Medidor: cuatro tramos que se encienden y cambian de color con la fuerza de la contraseña -->
+                <div class="fuerza" data-fuerza="0">
+                  <div class="fuerza__barra" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                  <span class="fuerza__texto" data-fuerza-texto></span>
+                </div>
+                <ul class="requisitos" id="registro-clave-requisitos">
+                  <li data-requisito="largo"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Al menos 8 caracteres</li>
+                  <li data-requisito="mezcla"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Letras y números</li>
+                </ul>
+              </div>
+
+              <button class="boton boton--primario enviar" type="button" data-siguiente><span class="enviar__texto">Continuar</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
+            </fieldset>
+
+            <!-- Paso 2: facturación y contacto -->
+            <fieldset class="ingreso__paso" data-registro-paso="2">
+              <legend class="sr-only">Facturación y contacto</legend>
+              <p class="leyenda"><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Tus datos tienen que coincidir con los del titular del medio de pago.</p>
+
+              <div class="campo">
+                <label class="campo__rotulo" for="registro-condicion">Condición fiscal</label>
+                <span class="selector"><select class="selector__campo" id="registro-condicion" name="condicion" data-condicion><option selected>Consumidor final</option><option>Monotributista</option><option>Responsable inscripto</option><option>IVA exento</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
+              </div>
+
+              <div class="campo">
+                <div class="campo__fila-rotulo">
+                  <label class="campo__rotulo" for="registro-documento" data-documento-rotulo>Número de DNI</label>
+                  <div class="doc-fiscal" role="radiogroup" aria-label="Tipo de documento">
+                    <label class="doc-fiscal__opcion"><input type="radio" name="tipo_documento" value="DNI" checked data-tipo-documento>DNI</label>
+                    <label class="doc-fiscal__opcion"><input type="radio" name="tipo_documento" value="CUIT" data-tipo-documento>CUIT</label>
+                  </div>
+                </div>
+                <input class="campo__control" id="registro-documento" name="documento" type="text" inputmode="numeric" autocomplete="off" placeholder="Sin puntos" required data-documento>
+              </div>
+
+              <div class="campo">
+                <label class="campo__rotulo" for="registro-telefono">Teléfono</label>
+                <input class="campo__control" id="registro-telefono" name="telefono" type="tel" autocomplete="tel-national" placeholder="11 1234-5678" aria-describedby="registro-telefono-ayuda" required>
+                <p class="campo__ayuda" id="registro-telefono-ayuda">Con código de área, sin 0 ni 15.</p>
+              </div>
+
+              <div class="campo">
+                <label class="campo__rotulo" for="registro-provincia">Provincia</label>
+                <span class="selector"><select class="selector__campo" id="registro-provincia" name="provincia" autocomplete="address-level1" required><option value="" selected disabled>Elegí tu provincia</option><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
+              </div>
+
+              <div class="ingreso__fila ingreso__fila--cp">
+                <div class="campo">
+                  <label class="campo__rotulo" for="registro-localidad">Localidad</label>
+                  <input class="campo__control" id="registro-localidad" name="localidad" type="text" autocomplete="address-level2" maxlength="40" required>
+                </div>
+                <div class="campo">
+                  <label class="campo__rotulo" for="registro-cp">Código postal</label>
+                  <input class="campo__control" id="registro-cp" name="cp" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="4" placeholder="1406" required data-solo-numeros>
+                </div>
+              </div>
+
+              <div class="campo">
+                <label class="campo__rotulo" for="registro-direccion">Dirección</label>
+                <input class="campo__control" id="registro-direccion" name="direccion" type="text" autocomplete="address-line1" maxlength="40" placeholder="Calle y número, piso y depto." required>
+              </div>
+
+              <label class="casilla"><input name="ofertas" type="checkbox"> Quiero recibir ofertas y novedades en mi correo.</label>
+
+              <div class="ingreso__acciones">
+                <button class="boton boton--secundario" type="button" data-anterior><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Volver</button>
+                <button class="boton boton--primario enviar" type="submit"><span class="enviar__texto">Crear cuenta</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg></button>
+              </div>
+              <p class="ingreso__legal">Al crear tu cuenta aceptás los <a href="terminos-y-condiciones.html">Términos y condiciones</a> y la <a href="politica-de-privacidad.html">Política de privacidad</a>.</p>
+            </fieldset>
+
+            <p class="ingreso__estado" role="status" aria-live="polite"></p>
+          </form>
+
+          <p class="separador"><span>¿Ya tenés cuenta?</span></p>
+          <a class="boton boton--secundario ingreso__alterno" href="#ingresar">Ingresar</a>
+        </section>
+
+        <!-- ========== Cuenta creada (de muestra) ========== -->
+        <section class="vista" id="vista-bienvenida" data-vista="bienvenida" aria-labelledby="bienvenida-titulo" tabindex="-1">
+          <div class="listo">
+            <span class="listo__icono"><svg class="icono" aria-hidden="true" viewBox="0 0 24 24"><path class="listo__trazo" d="M5 12.5l4.5 4.5L19 7.5" pathLength="1"/></svg></span>
+            <h1 class="vista__titulo" id="bienvenida-titulo">¡Listo, ya tenés tu cuenta!</h1>
+            <p class="vista__bajada">Hola, <span data-nombre>te damos la bienvenida</span>. Te mandamos un correo a <strong data-correo>tu correo</strong> con todo lo que podés hacer desde tu cuenta.</p>
+            <div class="listo__acciones">
+              <a class="boton boton--primario" href="mi-cuenta.html">Ir a Mi cuenta</a>
+              <a class="boton boton--secundario" href="index.html">Seguir comprando</a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <canvas class="confeti" aria-hidden="true" data-confeti hidden></canvas>
+    <p class="aviso" data-aviso role="status" aria-live="polite"></p>
+  </main>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Seguimiento de pedido</title>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pedido.css">
+  <link rel="stylesheet" href="css/rastreo.css">
+  <script type="module" src="js/rastreo.js"></script>
+</head>
+<body>
+<div class="mx">
+
+  <!-- Plantilla Seguimiento de pedido (la abre "Seguí tu pedido" del header y del footer).
+       Como en maximus.com.ar (relevado el 15/10/2026), se busca por número de pedido o por número de guía de OCA; acá
+       en un solo campo (el largo dice cuál es). El resultado lo arma js/rastreo.js con datos de muestra: en el sitio
+       real los da el backend (pedido → guía, como hoy) y el estado y el historial de la guía, consultados a OCA desde
+       el servidor. El formulario funciona sin JS (?n=numero) y el enlace ?n= abre el resultado directo (Mi cuenta).
+       Página completa con header y footer: seguimiento.html. -->
+  <main class="rastreo" id="contenido" tabindex="-1">
+
+    <nav class="contenedor migas" aria-label="Ubicación">
+      <ol>
+        <li><a href="index.html">Inicio</a></li>
+        <li aria-current="page">Seguimiento de pedido</li>
+      </ol>
+    </nav>
+
+    <div class="contenedor rastreo__cuerpo">
+
+      <div class="rastreo__principal">
+        <!-- Consulta -->
+        <section class="tarjeta consulta" aria-labelledby="consulta-titulo">
+          <div class="consulta__cab">
+            <span class="consulta__icono"><svg class="icono" aria-hidden="true"><use href="#i-envio"/></svg></span>
+            <div>
+              <h1 class="consulta__titulo" id="consulta-titulo">Seguí tu pedido</h1>
+              <p class="consulta__bajada">Mirá en qué etapa está tu compra y por dónde va el envío.</p>
+            </div>
+          </div>
+
+          <form class="consulta__form" action="" method="get" novalidate data-consulta>
+            <div class="campo">
+              <label class="campo__rotulo" for="numero">Número de pedido o de guía</label>
+              <div class="consulta__fila">
+                <input class="campo__control" id="numero" name="n" type="text" autocomplete="off" spellcheck="false" placeholder="Ej.: MAX-422907" aria-describedby="numero-ayuda numero-error">
+                <button class="boton boton--primario consulta__boton" type="submit"><svg class="icono icono--s" aria-hidden="true"><use href="#i-buscar"/></svg><span>Buscar</span></button>
+              </div>
+              <p class="campo__ayuda" id="numero-ayuda">El número de pedido tiene 6 números, con o sin MAX-; el de guía de OCA, 19.</p>
+              <p class="consulta__error" id="numero-error" role="alert" hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg><span data-error></span></p>
+            </div>
+          </form>
+
+          <!-- Solo para la demostración: números de muestra con cada estado (no va en el sitio real) -->
+          <div class="muestras">
+            <p class="muestras__rotulo">Pedidos de muestra</p>
+            <ul class="muestras__lista">
+              <li><button class="muestras__btn" type="button" data-muestra="422907">#MAX-422907<span>En camino</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423640">#MAX-423640<span>Para retirar</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423518">#MAX-423518<span>Esperando el pago</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="418230">#MAX-418230<span>Entregado</span></button></li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Resultado: lo arma js/rastreo.js -->
+        <section class="tarjeta resultado" aria-labelledby="resultado-titulo" hidden data-resultado></section>
+      </div>
+
+      <aside class="rastreo__lateral" aria-label="Ayuda">
+        <section class="tarjeta numeros" aria-labelledby="numeros-titulo">
+          <h2 class="numeros__titulo" id="numeros-titulo">¿Dónde encuentro los números?</h2>
+          <dl class="numeros__lista">
+            <div class="numeros__item">
+              <span class="numeros__icono"><svg class="icono icono--s" aria-hidden="true"><use href="#i-pedido"/></svg></span>
+              <dt>Número de pedido</dt>
+              <dd>Está en el mail de confirmación de tu compra y en Mi cuenta, en Mis compras.</dd>
+            </div>
+            <div class="numeros__item">
+              <span class="numeros__icono"><svg class="icono icono--s" aria-hidden="true"><use href="#i-envio"/></svg></span>
+              <dt>Número de guía</dt>
+              <dd>Es el código de 19 números de la etiqueta de OCA. Te lo mandamos por mail cuando despachamos el pedido.</dd>
+            </div>
+          </dl>
+          <a class="seccion__enlace" href="mi-cuenta.html#pedidos">Ver mis compras<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+        </section>
+
+        <section class="ayuda" aria-labelledby="ayuda-titulo">
+          <svg class="icono ayuda__icono" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+          <div class="ayuda__texto">
+            <p class="ayuda__titulo" id="ayuda-titulo">¿Tenés dudas con tu envío?</p>
+            <p>Escribinos por WhatsApp con tu número de pedido y lo revisamos.</p>
+          </div>
+          <div class="ayuda__acciones">
+            <a class="boton boton--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener" data-whatsapp>WhatsApp</a>
+            <a class="seccion__enlace" href="centro-de-ayuda.html">Centro de ayuda</a>
+          </div>
+        </section>
+      </aside>
+
+    </div>
+
+    <p class="aviso" data-aviso role="status" aria-live="polite"></p>
+  </main>
+
+</div>
+</body>
+</html>

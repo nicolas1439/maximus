@@ -1,0 +1,84 @@
+/* Categorías destacadas: accesos directos con la foto de un producto de la categoría (recorte con fondo transparente).
+   Mobile/tablet: fila deslizable (carrusel a sangre). Escritorio: las 8 en una fila, sin desplazamiento. */
+
+.categorias__lista {
+  gap: var(--espacio-3);
+}
+
+.categorias__lista > .carrusel__item {
+  flex: 0 0 96px; /* deja asomar la siguiente: indica que la fila se desliza */
+}
+
+.categorias__tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  height: 100%;
+  min-height: 96px;
+  padding: var(--espacio-3) var(--espacio-2);
+  border: 1px solid var(--color-borde); /* la tarjeta se distingue del fondo de la página, que es casi del mismo tono */
+  border-radius: var(--radio-l);
+  background: var(--color-superficie);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  line-height: var(--interlineado-titulo);
+  text-align: center;
+  transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+.categorias__img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  transition: transform var(--transicion);
+}
+
+.categorias__tarjeta:hover {
+  border-color: var(--color-acento);
+  background: var(--color-fondo);
+}
+
+.categorias__tarjeta:hover .categorias__img {
+  transform: scale(1.1);
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  .categorias__lista {
+    gap: var(--espacio-4);
+  }
+
+  .categorias__lista > .carrusel__item {
+    flex-basis: 128px;
+  }
+
+  .categorias__tarjeta {
+    min-height: 128px;
+    font-size: var(--texto-s);
+  }
+
+  .categorias__img {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+/* Entran todas: la fila pasa a ser una grilla de 8 columnas, sin desplazamiento ni sangrado */
+@media (min-width: 1024px) {
+  .categorias .carrusel__pista {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+    overflow: visible;
+  }
+
+  .categorias__tarjeta {
+    aspect-ratio: 1;
+    min-height: 0;
+  }
+}

@@ -1,0 +1,69 @@
+/* Banner de campaña: imagen a todo el ancho con el mismo alto que las tarjetas de accesos destacados.
+   La imagen cubre la tarjeta (object-fit: cover): el contenido va en una franja central y los costados
+   son fondo que se recorta según el ancho, así nada importante se corta en ningún tamaño.
+   Escritorio (desde 1024px): imagen de 2180 × 364, contenido en los 1500px centrales.
+   Mobile y tablet: imagen de 1760 × 440, contenido en los 656px centrales. */
+
+.banner {
+  container: banner / inline-size;
+}
+
+.banner__enlace {
+  display: block;
+  height: var(--alto-destacado);
+  overflow: hidden;
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+}
+
+.banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale var(--transicion-lenta);
+}
+
+/* En táctil, el zoom se aplica mientras el banner está a la vista (clase activo, js/visible.js) */
+.banner__enlace:is(:hover, .activo) .banner__img {
+  scale: 1.04;
+}
+
+/* Variante entera (banner de Kingston en Empresas): la imagen se ve completa, con su proporción, en lugar de
+   recortarse al alto de las tarjetas de accesos. Proporciones de las imágenes: mobile y tablet 750 × 300 (2,5:1),
+   escritorio 1500 × 364 (4,12:1) */
+.banner--entero .banner__enlace {
+  height: auto;
+  aspect-ratio: 750 / 300;
+}
+
+@media (min-width: 1024px) {
+  .banner--entero .banner__enlace {
+    aspect-ratio: 1500 / 364;
+  }
+}
+
+/* Alto amplio en los mismos anchos que las tarjetas de accesos: cuando una tarjeta llega a 420px.
+   Mobile: la tarjeta mide el 86% de la fila. Tablet: el 48%. Escritorio: un tercio, menos las dos separaciones. */
+@media (width < 768px) {
+  @container banner (min-width: 488.4px) {
+    .banner__enlace {
+      height: var(--alto-destacado-l);
+    }
+  }
+}
+
+@media (768px <= width < 1024px) {
+  @container banner (min-width: 875px) {
+    .banner__enlace {
+      height: var(--alto-destacado-l);
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  @container banner (min-width: 1292px) {
+    .banner__enlace {
+      height: var(--alto-destacado-l);
+    }
+  }
+}

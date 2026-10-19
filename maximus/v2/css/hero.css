@@ -1,0 +1,279 @@
+/* Hero: grilla tipo bento con un carrusel principal de campañas y cuatro tarjetas secundarias.
+   Mobile: principal arriba y secundarias en 2 × 2. Escritorio: principal al centro y dos secundarias a cada lado.
+   Cada tarjeta acepta una imagen de fondo opcional (.hero__img); sin imagen usa el fondo destacado
+   (o el que defina --hero-fondo / --hero-brillo).
+   Imágenes del carrusel principal (cubren la tarjeta con object-fit: cover; el texto va abajo a la izquierda
+   sobre un velo oscuro, así que el sujeto va arriba a la derecha). Dos versiones por campaña:
+   - Escritorio y tablet (desde 768px): 1920 × 1340, zona segura central 1540 × 1060. La tarjeta va de 16:9 en tablet
+     a 465 × 400 – 680 × 480 en escritorio; lo que queda fuera de la zona segura se recorta según el ancho.
+   - Mobile (hasta 767px): 1400 × 1400 (1:1 fijo, sin recorte).
+   Tarjetas secundarias, si llevan imagen: escritorio y tablet 960 × 630 (zona segura central 730 × 480), mobile 720 × 600. */
+
+.hero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+}
+
+.hero__tarjeta {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 6 / 5;
+  overflow: hidden;
+  border-radius: var(--radio-l);
+  background:
+    radial-gradient(circle at 85% 15%, color-mix(in srgb, var(--hero-brillo, var(--color-marca)) 30%, transparent), transparent 60%),
+    var(--hero-fondo, var(--color-fondo-destacado));
+  color: var(--color-sobre-destacado);
+}
+
+a.hero__tarjeta {
+  color: var(--color-sobre-destacado);
+}
+
+/* Carrusel principal: todo el ancho en mobile; en escritorio, la columna central */
+.hero__principal {
+  grid-column: 1 / -1;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radio-l);
+}
+
+/* En mobile los puntos van arriba a la derecha, para no pisar el botón */
+.hero__principal .carrusel__puntos {
+  position: absolute;
+  top: var(--espacio-3);
+  right: var(--espacio-3);
+  z-index: 1;
+}
+
+.hero__tarjeta--principal {
+  aspect-ratio: 1;
+}
+
+/* Imagen de fondo (banner), con un velo para que el texto se lea */
+.hero__img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transicion-lenta);
+}
+
+.hero__tarjeta:has(.hero__img)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, var(--color-capa), transparent 65%);
+}
+
+/* Ícono decorativo para tarjetas sin imagen */
+.hero__icono {
+  position: absolute;
+  top: 10%;
+  right: -8%;
+  z-index: -1;
+  width: 58%;
+  height: auto;
+  aspect-ratio: 1;
+  fill: none;
+  stroke: var(--hero-brillo, var(--color-marca));
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.4;
+  transition: transform var(--transicion-lenta);
+}
+
+.hero__tarjeta--principal .hero__icono {
+  top: 6%;
+  right: 4%;
+  width: 50%;
+}
+
+.hero__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-1);
+  padding: var(--espacio-4);
+}
+
+.hero__tarjeta--principal .hero__texto {
+  gap: var(--espacio-2);
+  padding: var(--espacio-6);
+}
+
+.hero__titulo {
+  margin: 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.hero__tarjeta--principal .hero__titulo {
+  font-size: var(--texto-display);
+}
+
+.hero__bajada {
+  margin: 0;
+  font-size: var(--texto-s);
+}
+
+.hero__tarjeta--principal .hero__bajada {
+  margin-bottom: var(--espacio-2);
+  font-size: var(--texto-m);
+}
+
+/* En mobile las secundarias son chicas: solo título y enlace */
+.hero__tarjeta:not(.hero__tarjeta--principal) .hero__bajada {
+  display: none;
+}
+
+.hero__cta {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin-top: var(--espacio-1);
+  color: var(--color-marca);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.hero__cta .icono {
+  transition: transform var(--transicion);
+}
+
+/* Interacción */
+.hero__tarjeta:hover .hero__img,
+.hero__tarjeta:hover .hero__icono {
+  transform: scale(1.05);
+}
+
+.hero__tarjeta:hover .hero__cta .icono,
+.hero__tarjeta:hover .boton .icono {
+  transform: translateX(3px);
+}
+
+.hero__tarjeta:hover .boton--primario {
+  background: var(--color-marca-hover);
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  .hero {
+    gap: var(--espacio-4);
+  }
+
+  .hero__tarjeta {
+    aspect-ratio: 2 / 1;
+  }
+
+  /* 16:9 y no más apaisada: así la imagen de escritorio entra en tablet con poco recorte */
+  .hero__tarjeta--principal {
+    aspect-ratio: 16 / 9;
+  }
+
+  .hero__tarjeta:not(.hero__tarjeta--principal) .hero__bajada {
+    display: block;
+  }
+
+  .hero__texto {
+    padding: var(--espacio-6);
+  }
+
+  .hero__tarjeta--principal .hero__texto {
+    padding: var(--espacio-8);
+  }
+
+  .hero__principal .carrusel__puntos {
+    top: auto;
+    right: var(--espacio-8);
+    bottom: var(--espacio-8);
+  }
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+/* Grilla de 8 columnas, la misma de Categorías destacadas y el header: secundarias de 2 columnas
+   (debajo del logo y de las acciones) y principal de 4 (debajo del buscador) */
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+    height: clamp(400px, 36vw, 480px);
+  }
+
+  .hero__tarjeta,
+  .hero__tarjeta--principal {
+    aspect-ratio: auto;
+  }
+
+  .hero__principal {
+    grid-column: 3 / span 4;
+    grid-row: 1 / span 2;
+  }
+
+  .hero > .hero__tarjeta {
+    grid-column: span 2;
+  }
+
+  .hero__principal .carrusel__pista,
+  .hero__principal .carrusel__item,
+  .hero__tarjeta--principal {
+    height: 100%;
+  }
+
+  .hero__titulo {
+    font-size: var(--texto-xl);
+  }
+}
+
+/* Título de la página del home (H1), entre la tira de marcas y las categorías */
+.intro-home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.intro-home__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.intro-home__bajada {
+  max-width: 64ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+/* Tarjeta lateral informativa, sin enlace (ej. "3 cuotas sin interés"): un <div class="hero__tarjeta"> sin
+   flecha ni efecto al pasar el mouse */
+div.hero__tarjeta {
+  cursor: default;
+}
+
+div.hero__tarjeta:hover .hero__img,
+div.hero__tarjeta:hover .hero__icono {
+  transform: none;
+}
+
+div.hero__tarjeta .hero__cta {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .intro-home__titulo {
+    font-size: var(--texto-2xl);
+  }
+}

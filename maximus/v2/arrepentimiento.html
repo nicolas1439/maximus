@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maximus — Botón de arrepentimiento</title>
+  <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
+  <script type="module" src="js/sprite.js"></script>
+  <script type="module" src="js/efectos.js"></script>
+  <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
+  <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/arrepentimiento.css">
+  <script type="module" src="js/arrepentimiento.js"></script>
+</head>
+<body>
+<div class="mx">
+
+  <!-- Plantilla Botón de arrepentimiento (requisito legal, Ley 24.240): el trámite se inicia sin ingresar a la cuenta
+       (la norma no permite exigir registración). Pide nombre, correo, DNI, número de pedido y el motivo (opcional), y
+       confirma con el número de trámite (formato de muestra: lo define el sistema). Con la sesión iniciada, los datos
+       vienen completos. De muestra: js/arrepentimiento.js valida y confirma en el lugar; no se envía nada.
+       La abre "Botón de arrepentimiento" del footer. Página completa: boton-de-arrepentimiento.html. -->
+  <main class="arrepentimiento" id="contenido" tabindex="-1">
+
+    <div class="contenedor">
+      <nav class="migas" aria-label="Ubicación">
+        <ol>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="centro-de-ayuda.html">Centro de ayuda</a></li>
+          <li aria-current="page">Botón de arrepentimiento</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="contenedor arrepentimiento__cuerpo">
+      <section class="tarjeta arrepentimiento__tramite" aria-labelledby="arrepentimiento-titulo">
+        <header class="arrepentimiento__cab">
+          <span class="arrepentimiento__icono"><svg class="icono" aria-hidden="true"><use href="#i-devolver"/></svg></span>
+          <div>
+            <h1 class="arrepentimiento__titulo" id="arrepentimiento-titulo">Botón de arrepentimiento</h1>
+            <p class="arrepentimiento__bajada">Podés revocar una compra online dentro de los 10 días corridos desde que la recibiste, sin dar explicaciones y sin costo (Ley 24.240 de Defensa del Consumidor). No hace falta ingresar a tu cuenta.</p>
+          </div>
+        </header>
+
+        <form class="formulario" novalidate data-arrepentimiento>
+          <div class="formulario__campos" data-paso="cargar">
+            <!-- Con la sesión iniciada, los datos vienen completos (data-dato: lo completa el sistema) -->
+            <label class="campo campo--ancho"><span class="campo__rotulo">Nombre y apellido</span><input class="campo__control" name="nombre" type="text" autocomplete="name" required data-dato="Martín González"></label>
+            <label class="campo"><span class="campo__rotulo">Correo electrónico</span><input class="campo__control" name="correo" type="email" autocomplete="email" required data-dato="martin.gonzalez@correo.com"></label>
+            <label class="campo"><span class="campo__rotulo">DNI</span><input class="campo__control" name="dni" type="text" inputmode="numeric" autocomplete="off" placeholder="Sin puntos" required data-dato="30123456"></label>
+            <label class="campo campo--ancho"><span class="campo__rotulo">Número de pedido</span><input class="campo__control" name="pedido" type="text" autocomplete="off" placeholder="Ej.: MAX-422907" required data-dato="MAX-422907"><span class="campo__ayuda">Está en el correo de confirmación de la compra y en Mis compras.</span></label>
+            <label class="campo campo--ancho"><span class="campo__rotulo">Motivo <span class="campo__opcional">(opcional)</span></span><textarea class="campo__control campo__control--area" name="motivo" rows="4" placeholder="Contanos por qué querés revocar la compra"></textarea></label>
+            <div class="arrepentimiento__acciones campo--ancho">
+              <button class="boton boton--primario" type="submit">Enviar solicitud</button>
+              <p class="arrepentimiento__estado" role="status" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <!-- Solicitud recibida (de muestra): el número de trámite y lo que sigue -->
+          <div class="arrepentimiento__listo" data-paso="listo" tabindex="-1" hidden>
+            <span class="arrepentimiento__check"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span>
+            <p class="arrepentimiento__numero">Trámite <strong data-numero-tramite>Nº 20481</strong></p>
+            <h2 class="arrepentimiento__listo-titulo">Recibimos tu solicitud</h2>
+            <p>Te mandamos la constancia a <strong data-correo></strong>. Guardá el número de trámite para cualquier consulta.</p>
+            <ol class="arrepentimiento__sigue">
+              <li>Revisamos el pedido y te escribimos con los pasos para devolver el producto.</li>
+              <li>El producto vuelve en las mismas condiciones en que lo recibiste, sin costo.</li>
+              <li>Cuando lo recibimos, te devolvemos el dinero por el mismo medio de pago.</li>
+            </ol>
+            <a class="boton boton--secundario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp</a>
+          </div>
+        </form>
+      </section>
+
+      <aside class="arrepentimiento__lateral" aria-label="Antes de empezar">
+        <div class="tarjeta arrepentimiento__info">
+          <h2 class="arrepentimiento__subtitulo">Antes de empezar</h2>
+          <ul>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-reloj"/></svg>Tenés 10 días corridos desde que recibiste el producto.</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-caja"/></svg>Tiene que volver como lo recibiste: sin uso, en su caja y con sus accesorios.</li>
+            <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-candado"/></svg>No necesitás ingresar a tu cuenta para pedirlo.</li>
+          </ul>
+          <a class="seccion__enlace" href="centro-de-ayuda.html#cambios">Ver cambios y devoluciones<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+        </div>
+      </aside>
+    </div>
+
+  </main>
+
+</div>
+</body>
+</html>

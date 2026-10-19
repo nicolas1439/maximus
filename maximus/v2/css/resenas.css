@@ -1,0 +1,479 @@
+/* Componente reseñas de producto (vista previa: resenas.html; se usa en la ficha de producto).
+   Con reseñas: resumen (nota con estrellas, barras por puntaje e invitación a opinar) y lista de reseñas.
+   Mobile y tablet: el resumen arriba y las reseñas debajo. Escritorio: el resumen en las 3 columnas de la izquierda
+   (fijo al hacer scroll bajo el header, --alto-fijo) y las reseñas en las 5 restantes. Las reseñas que siguen a las
+   tres primeras van plegadas (.faq__resto, faq.css) con el "Ver más" al final.
+   Sin reseñas: un recuadro punteado con estrellas apagadas e invitación a escribir la primera. */
+
+.resenas__cuerpo {
+  display: grid;
+  gap: var(--espacio-6);
+}
+
+.resenas__resumen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.resenas__promedio {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+}
+
+.resenas__nota {
+  display: flex;
+  align-items: baseline;
+  gap: var(--espacio-1);
+  margin: 0;
+  font-size: var(--texto-display);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.resenas__nota span {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-normal);
+  letter-spacing: 0;
+}
+
+.resenas__cantidad {
+  margin: var(--espacio-1) 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+/* Estrellas: una fila apagada y, encima, la fila llena recortada al porcentaje de la nota (--valor) */
+.estrellas {
+  position: relative;
+  display: inline-flex;
+}
+
+.estrellas__fila {
+  display: flex;
+  gap: 2px;
+}
+
+.estrellas__llenas {
+  position: absolute;
+  inset: 0;
+  width: var(--valor, 0%);
+  overflow: hidden;
+}
+
+.estrellas__icono {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  fill: color-mix(in srgb, var(--color-texto-suave) 25%, transparent);
+}
+
+.estrellas__llenas .estrellas__icono {
+  fill: var(--color-calificacion);
+}
+
+.estrellas--s .estrellas__icono {
+  width: 16px;
+  height: 16px;
+}
+
+/* Barras por puntaje, de 5 a 1 */
+.resenas__barras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barra {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: var(--espacio-2);
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.barra__puntaje {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: var(--peso-medio);
+}
+
+.barra__estrella {
+  width: 12px;
+  height: 12px;
+  fill: var(--color-calificacion);
+}
+
+.barra__pista {
+  height: 8px;
+  overflow: hidden;
+  border-radius: var(--radio-pill);
+  background: color-mix(in srgb, var(--color-texto-suave) 20%, transparent);
+}
+
+.barra__relleno {
+  display: block;
+  width: var(--parte, 0%);
+  height: 100%;
+  border-radius: var(--radio-pill);
+  background: var(--color-calificacion);
+}
+
+.barra__n {
+  color: var(--color-texto-suave);
+  text-align: right;
+}
+
+/* Invitación a opinar */
+.resenas__escribir {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+}
+
+.resenas__invitacion {
+  margin: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.resenas__condicion {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+}
+
+/* Lista de reseñas: separadas por una línea */
+.resenas__lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.resena {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding-block: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+}
+
+.resenas__lista > .resena:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Cabecera: avatar con iniciales, nombre con fecha y compra verificada, y las estrellas
+   (debajo del nombre en celular; a la derecha desde tablet) */
+.resena__cab {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+}
+
+.resena__avatar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio-pill);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+}
+
+.resena__nombre {
+  margin: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.resena__meta {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+}
+
+.resena__verificada {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+.resena__verificada .icono {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2.5;
+}
+
+.resena__cab .estrellas {
+  grid-column: 2;
+}
+
+.resena__titulo {
+  margin: var(--espacio-1) 0 0;
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+.resena__texto {
+  max-width: 68ch;
+  margin: 0;
+  font-size: var(--texto-s);
+}
+
+/* Reseñas plegadas: mientras están cerradas, una línea las separa de la última a la vista */
+.resenas__resto:not([open]) {
+  border-top: 1px solid var(--color-borde);
+}
+
+/* Sin reseñas: el lugar queda marcado con una línea punteada, estrellas apagadas e invitación a escribir la primera */
+.resenas__vacio {
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-seccion) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  text-align: center;
+}
+
+.resenas__vacio-estrellas .estrellas__icono {
+  width: 28px;
+  height: 28px;
+}
+
+.resenas__vacio-titulo {
+  margin: var(--espacio-2) 0 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+}
+
+.resenas__vacio-texto {
+  max-width: 40ch;
+  margin: 0 0 var(--espacio-3);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.resenas__vacio .resenas__condicion {
+  margin-top: var(--espacio-1);
+}
+
+/* ---------- Tablet: 768px ---------- */
+
+@media (min-width: 768px) {
+  /* Las estrellas pasan a la derecha de la cabecera de cada reseña */
+  .resena__cab {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .resena__cab .estrellas {
+    grid-column: 3;
+  }
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+@media (min-width: 1024px) {
+  /* Grilla de 8: resumen fijo a la izquierda (3 columnas) y reseñas a la derecha (5) */
+  .resenas__cuerpo {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: start;
+    column-gap: var(--separacion-grilla);
+  }
+
+  .resenas__resumen {
+    position: sticky;
+    top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+    grid-column: span 3;
+    padding: var(--espacio-6);
+    transition: top var(--transicion);
+  }
+
+  .resenas__lista {
+    grid-column: span 5;
+  }
+}
+
+/* ---------- Revisión final (tanda 3b): estados del formulario y reacciones ---------- */
+
+.resenas__estado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+}
+
+.resenas__invitacion .icono {
+  margin-right: var(--espacio-1);
+  vertical-align: -0.2em;
+  color: var(--color-texto-suave);
+}
+
+.resenas__form {
+  align-items: stretch;
+  gap: var(--espacio-3);
+}
+
+.resenas__form .boton {
+  align-self: flex-start;
+}
+
+/* Calificación con estrellas: al pasar el mouse o elegir, se pintan hasta la elegida */
+.puntaje {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.puntaje__opciones {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: var(--espacio-1);
+}
+
+.puntaje__opcion {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.puntaje__estrella {
+  width: 26px;
+  height: 26px;
+  fill: var(--color-borde);
+  transition: fill var(--transicion);
+}
+
+.puntaje__opcion:has(input:focus-visible) {
+  outline: 2px solid var(--color-acento);
+}
+
+.puntaje__opcion:hover .puntaje__estrella,
+.puntaje__opcion:hover ~ .puntaje__opcion .puntaje__estrella,
+.puntaje__opcion:has(input:checked) .puntaje__estrella,
+.puntaje__opcion:has(input:checked) ~ .puntaje__opcion .puntaje__estrella {
+  fill: var(--color-calificacion);
+}
+
+.resenas__error {
+  margin: 0;
+  color: var(--color-error-texto);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+/* Avisos: en revisión (información), rechazada (error) y la propia (bien) */
+.resenas__aviso {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-3);
+  padding: var(--espacio-3);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+}
+
+.resenas__aviso > .icono {
+  color: var(--color-info-texto);
+}
+
+.resenas__aviso--error > .icono {
+  color: var(--color-error-texto);
+}
+
+.resenas__aviso--ok > .icono {
+  color: var(--color-acento);
+}
+
+.resenas__aviso .resenas__condicion {
+  margin-top: var(--espacio-1);
+}
+
+.resenas__aviso a {
+  color: var(--color-acento);
+  text-decoration: underline;
+}
+
+/* La propia, en la lista */
+.resena--propia {
+  position: relative;
+}
+
+.resena--propia::before {
+  content: "Tu reseña";
+  display: inline-block;
+  margin-bottom: var(--espacio-2);
+  padding: 2px var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+}
+
+/* Reacciones: útil / no útil */
+.resena__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-3);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.resena__reaccion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  height: 30px;
+  padding-inline: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  font-size: var(--texto-xs);
+  transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+.resena__reaccion .icono {
+  width: 14px;
+  height: 14px;
+}
+
+.resena__reaccion:hover {
+  border-color: var(--color-acento);
+}
+
+.resena__reaccion:is([aria-pressed="true"], .marcado) {
+  border-color: var(--color-marca);
+  background: color-mix(in srgb, var(--color-marca) 10%, var(--color-fondo));
+  color: var(--color-texto);
+}
+
+/* Variantes de muestra: separadas de la sección */
+.variantes--resenas {
+  margin-bottom: var(--espacio-6);
+}

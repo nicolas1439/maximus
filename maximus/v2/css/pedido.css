@@ -1,0 +1,203 @@
+/* Piezas de pedido compartidas por Mi cuenta (cuenta.html) y Seguimiento (rastreo.html): el estado de un pedido
+   o una garantía (punto de color y fondo tenue) y los pasos del pedido (Confirmado → Pago → Preparación → En camino
+   → Entregado), unidos por una línea que se pinta de marca a medida que avanza, y el panel oscuro de ayuda por WhatsApp. */
+
+.estado {
+  --estado: var(--color-texto-suave);
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding-inline: var(--espacio-2) var(--espacio-3);
+  border-radius: var(--radio-pill);
+  background: color-mix(in srgb, var(--estado) 14%, transparent);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  white-space: nowrap;
+}
+
+.estado::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radio-pill);
+  background: var(--estado);
+}
+
+.estado--exito {
+  --estado: var(--color-exito);
+}
+
+.estado--aviso {
+  --estado: var(--color-aviso);
+}
+
+.estado--info {
+  --estado: var(--color-info);
+}
+
+.estado--error {
+  --estado: var(--color-error);
+}
+
+/* Seguimiento: pasos unidos por una línea que se pinta de marca a medida que avanza el pedido */
+.seguimiento {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seguimiento__paso {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  text-align: center;
+}
+
+.seguimiento__paso:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: calc(50% + 16px);
+  right: calc(-50% + 16px);
+  height: 2px;
+  border-radius: var(--radio-pill);
+  background: var(--color-borde);
+}
+
+.seguimiento__paso--hecho:not(:last-child)::after {
+  background: var(--color-marca);
+}
+
+.seguimiento__punto {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+}
+
+.seguimiento__punto .icono {
+  width: 14px;
+  height: 14px;
+  stroke-width: 3;
+}
+
+.seguimiento__paso--hecho .seguimiento__punto {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+/* Paso actual: anillo de marca con un punto que late (con "reducir movimiento" queda quieto) */
+.seguimiento__paso--actual .seguimiento__punto {
+  border-color: var(--color-marca);
+  box-shadow: 0 0 0 4px var(--color-brillo-marca);
+}
+
+.seguimiento__paso--actual .seguimiento__punto::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radio-pill);
+  background: var(--color-marca);
+  animation: latido 1.6s ease-in-out infinite;
+}
+
+@keyframes latido {
+  50% {
+    scale: 0.6;
+    opacity: 0.6;
+  }
+}
+
+.seguimiento__texto {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  line-height: 1.3;
+}
+
+.seguimiento__paso--hecho .seguimiento__texto,
+.seguimiento__paso--actual .seguimiento__texto {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.seguimiento__texto small {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-normal);
+}
+
+/* Ayuda con un pedido: panel oscuro en ambos modos, con WhatsApp */
+.ayuda {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--espacio-3) var(--espacio-4);
+  margin-top: var(--espacio-4);
+  padding: var(--espacio-4);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+.ayuda__icono {
+  width: 40px;
+  height: 40px;
+  padding: var(--espacio-2);
+  border-radius: var(--radio);
+  background: var(--color-brillo-marca);
+  color: var(--color-marca);
+}
+
+.ayuda__texto p {
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-s);
+}
+
+.ayuda__texto .ayuda__titulo {
+  margin-bottom: 2px;
+  color: var(--color-sobre-destacado);
+  font-weight: var(--peso-fuerte);
+}
+
+.ayuda__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-4);
+}
+
+.ayuda .seccion__enlace {
+  color: var(--color-marca);
+}
+
+@media (min-width: 768px) {
+  .ayuda {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .ayuda__acciones {
+    grid-column: auto;
+  }
+
+  .seguimiento__texto,
+  .seguimiento__texto small {
+    font-size: var(--texto-xs);
+  }
+}

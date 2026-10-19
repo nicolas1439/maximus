@@ -1,0 +1,189 @@
+/* Preguntas frecuentes del home: intro (título, bajada y acciones) y acordeón nativo (details/summary).
+   Con name="faq" se abre de a una. La altura de la respuesta se anima con .plegable (base.css)
+   donde el navegador lo soporta; en el resto, abre y cierra al instante.
+   Mobile/tablet: en columna. Escritorio: la intro ocupa las 2 columnas laterales de la grilla de 8 (y queda
+   fija al hacer scroll) y el acordeón (o .faq__cuerpo, cuando hay más contenido además del acordeón) las 6 restantes. */
+
+.faq {
+  display: grid;
+  gap: var(--espacio-6);
+}
+
+.faq__bajada {
+  max-width: 40ch;
+  margin: var(--espacio-2) 0 0;
+  color: var(--color-texto-suave);
+}
+
+.faq__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3) var(--espacio-4);
+  margin-top: var(--espacio-4);
+}
+
+/* Subtítulo dentro del cuerpo (ej. "Preguntas frecuentes" debajo del texto de una categoría) */
+.faq__subtitulo {
+  margin: var(--espacio-8) 0 var(--espacio-2);
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+/* Acordeón */
+.faq__item {
+  border-top: 1px solid var(--color-borde);
+}
+
+.faq__item:last-child {
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.faq__pregunta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-4);
+  min-height: var(--alto-control-l);
+  padding-block: var(--espacio-3);
+  cursor: pointer;
+  font-weight: var(--peso-medio);
+  list-style: none;
+  transition: color var(--transicion);
+}
+
+.faq__pregunta:hover,
+.faq__item[open] .faq__pregunta,
+.faq__item.abierto .faq__pregunta {
+  color: var(--color-acento);
+}
+
+/* Flecha en un círculo: gira y se pinta de marca al abrir */
+.faq__icono {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border-radius: var(--radio-pill);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  transition: transform var(--transicion), background-color var(--transicion), color var(--transicion);
+}
+
+.faq__item[open] .faq__icono,
+.faq__item.abierto .faq__icono {
+  transform: rotate(180deg);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.faq__respuesta {
+  max-width: 68ch;
+  padding-bottom: var(--espacio-4);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.faq__respuesta p {
+  margin: 0;
+}
+
+.faq__respuesta p + p,
+.faq__respuesta ul {
+  margin-top: var(--espacio-2);
+}
+
+.faq__respuesta ul {
+  padding-left: var(--espacio-4);
+  list-style: disc;
+}
+
+.faq__respuesta a {
+  color: var(--color-acento);
+  text-decoration: underline;
+}
+
+/* Resto plegado: lo que sigue (párrafos o preguntas) va en un details cuyo summary ("Leer más", "Ver más
+   preguntas") queda al final, con order; la altura se anima donde el navegador lo soporta, como el acordeón */
+.faq__resto {
+  display: flex;
+  flex-direction: column;
+}
+
+.faq__mas {
+  order: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  width: fit-content;
+  min-height: var(--alto-control);
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__mas .icono {
+  transition: transform var(--transicion);
+}
+
+.faq__resto[open] > .faq__mas .icono,
+.faq__resto.abierto > .faq__mas .icono {
+  transform: rotate(180deg);
+}
+
+.faq__mas-menos,
+.faq__resto[open] > .faq__mas .faq__mas-mas,
+.faq__resto.abierto > .faq__mas .faq__mas-mas {
+  display: none;
+}
+
+.faq__resto[open] > .faq__mas .faq__mas-menos,
+.faq__resto.abierto > .faq__mas .faq__mas-menos {
+  display: inline;
+}
+
+.faq__resto[open] > .faq__mas,
+.faq__resto.abierto > .faq__mas {
+  margin-top: var(--espacio-2);
+}
+
+/* Dentro del acordeón: mientras está plegado, una línea cierra la lista antes del "Ver más" */
+.faq__lista > .faq__resto:not([open]) {
+  border-top: 1px solid var(--color-borde);
+}
+
+/* ---------- Escritorio: 1024px ---------- */
+
+@media (min-width: 1024px) {
+  .faq {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: var(--separacion-grilla);
+    align-items: start;
+  }
+
+  /* La intro queda fija mientras se recorre el acordeón, debajo del header si lo hay (--alto-fijo, header.css) */
+  .faq__intro {
+    position: sticky;
+    top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+    grid-column: span 2;
+    transition: top var(--transicion);
+  }
+
+  .faq__acciones {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: var(--espacio-6);
+  }
+
+  .faq__lista,
+  .faq__cuerpo {
+    grid-column: span 6;
+  }
+
+  .faq__pregunta {
+    padding-block: var(--espacio-4);
+  }
+}

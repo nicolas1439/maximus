@@ -1,0 +1,614 @@
+/* Plantilla Quiénes somos (vista previa: nosotros.html; página completa: quienes-somos.html).
+   Portada (panel oscuro en ambos modos con la aurora de base.css, propuesta, acciones y los números de Maximus) →
+   qué hacemos (texto y rubros) → los cuatro pilares → marcas (marcas.css) → reseñas de Google → los dos locales →
+   blog y búsqueda de personal.
+   Mobile: todo en columna, los números de a 2. Tablet: pilares y locales de a 2. Escritorio, sobre la grilla de 8:
+   portada texto 5 + números 3, qué hacemos e intro de reseñas 3 + 5, pilares de a 4, blog 5 + equipo 3.
+   Detalles en violeta (el color secundario): el chip de la portada (lila) y los íconos de los pilares. */
+
+.nosotros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-seccion);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.nosotros .migas {
+  margin-bottom: calc(var(--espacio-4) - var(--espacio-seccion));
+}
+
+/* ---------- Portada ---------- */
+
+.portada-nos {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-8);
+  overflow: hidden;
+  padding: var(--espacio-8) var(--espacio-4);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+.portada-nos__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+}
+
+.portada-nos__chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding-inline: var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: color-mix(in srgb, var(--color-secundario-sobre-barra) 18%, transparent);
+  color: var(--color-secundario-sobre-barra);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.portada-nos__titulo {
+  margin: 0;
+  font-size: var(--texto-display);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+.portada-nos__titulo em {
+  color: var(--color-marca);
+  font-style: normal;
+}
+
+.portada-nos__bajada {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+  text-wrap: pretty;
+}
+
+.portada-nos__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-3);
+}
+
+.portada-nos__btn {
+  border: 1px solid var(--color-barra-borde);
+  color: var(--color-sobre-destacado);
+  transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+a.portada-nos__btn {
+  color: var(--color-sobre-destacado);
+}
+
+.portada-nos__btn:hover {
+  border-color: var(--color-marca);
+  background: var(--color-barra-hover);
+}
+
+/* Números: tarjetas translúcidas sobre la aurora */
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+  margin: 0;
+}
+
+.cifra {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--espacio-1);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-barra-borde);
+  border-radius: var(--radio-l);
+  background: rgb(255 255 255 / 0.04);
+  backdrop-filter: blur(8px);
+}
+
+.cifra dt {
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-xs);
+  line-height: 1.3;
+}
+
+.cifra dd {
+  display: flex;
+  align-items: baseline;
+  gap: var(--espacio-1);
+  margin: 0;
+  font-size: var(--texto-3xl);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+}
+
+.cifra dd .icono {
+  align-self: center;
+  width: 20px;
+  height: 20px;
+  color: var(--color-calificacion);
+  fill: currentColor;
+}
+
+/* ---------- Qué hacemos ---------- */
+
+.historia {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+}
+
+.historia .seccion__titulo {
+  text-wrap: balance;
+}
+
+.historia__texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.historia__texto p {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-m);
+  line-height: 1.6;
+}
+
+.historia__rubros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+
+.historia__rubros a {
+  display: inline-flex;
+  align-items: center;
+  height: var(--alto-control-xs);
+  padding-inline: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-xs);
+  transition: border-color var(--transicion);
+}
+
+.historia__rubros a:hover {
+  border-color: var(--color-acento);
+}
+
+/* ---------- Pilares ---------- */
+
+.pilares__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--separacion-grilla);
+}
+
+.pilar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-1) var(--espacio-3);
+}
+
+.pilar__icono {
+  display: grid;
+  grid-row: span 2;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+}
+
+.pilar__titulo {
+  margin: 0;
+  font-size: var(--texto-m);
+}
+
+.pilar__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+/* ---------- Reseñas de Google ---------- */
+
+.opiniones {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-6);
+}
+
+.opiniones__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+}
+
+.opiniones__intro .seccion__bajada {
+  margin: 0;
+}
+
+.opiniones__nota {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+
+.opiniones__numero {
+  font-size: var(--texto-3xl);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+}
+
+.opiniones__estrellas {
+  display: flex;
+  gap: 2px;
+  color: var(--color-calificacion);
+}
+
+.opiniones__estrellas .icono {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.opiniones__fuente {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.opiniones__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--separacion-grilla);
+}
+
+.opinion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.opinion__cab {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  margin-bottom: var(--espacio-1);
+}
+
+.opinion__avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio-pill);
+  background: var(--color-superficie);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+}
+
+.opinion__nombre,
+.opinion__fecha,
+.opinion__titulo,
+.opinion__texto {
+  margin: 0;
+}
+
+.opinion__nombre {
+  font-weight: var(--peso-medio);
+}
+
+.opinion__fecha {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.opinion__titulo {
+  font-weight: var(--peso-medio);
+}
+
+.opinion__texto {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  line-height: 1.6;
+}
+
+/* ---------- Visitanos ---------- */
+
+.visitanos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.visitanos .seccion__titulo {
+  margin: 0;
+}
+
+.visitanos__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--separacion-grilla);
+}
+
+.sede {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+.sede__icono {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio);
+  background: var(--color-brillo-marca);
+  color: var(--color-acento);
+}
+
+.sede__datos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.sede__datos p {
+  margin: 0;
+  font-size: var(--texto-s);
+}
+
+.sede__titulo {
+  margin: 0 0 2px;
+  font-size: var(--texto-m);
+}
+
+.sede__horario {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  color: var(--color-texto-suave);
+}
+
+.sede__nota {
+  color: var(--color-texto-suave);
+}
+
+.sede .seccion__enlace {
+  grid-column: 2;
+}
+
+/* ---------- Blog y equipo ---------- */
+
+.mas-nos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--separacion-grilla);
+}
+
+.blog {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+  padding: var(--espacio-6) var(--espacio-4);
+  transition: border-color var(--transicion);
+}
+
+.blog:hover {
+  border-color: var(--color-acento);
+}
+
+.blog__chip {
+  color: var(--color-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.blog__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.blog__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.blog__temas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-2);
+  width: 100%;
+  margin-block: var(--espacio-2);
+}
+
+.blog__temas li {
+  display: flex;
+  flex-direction: column;
+  padding: var(--espacio-3);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.blog__temas strong {
+  color: var(--color-texto);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.blog:hover .seccion__enlace .icono {
+  transform: translateX(3px);
+}
+
+.equipo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+  padding: var(--espacio-6) var(--espacio-4);
+}
+
+.equipo__icono {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio);
+  background: var(--color-brillo-marca);
+  color: var(--color-acento);
+}
+
+.equipo__titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+}
+
+.equipo__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.equipo .boton {
+  max-width: 100%;
+  margin-top: auto;
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 768px) {
+  .portada-nos {
+    padding: var(--espacio-8);
+  }
+
+  .cifras {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .pilares__lista,
+  .visitanos__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pilar {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--espacio-2);
+    padding: var(--espacio-6);
+  }
+
+  .pilar__icono {
+    grid-row: auto;
+    margin-bottom: var(--espacio-2);
+  }
+
+  .opiniones__lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sede {
+    padding: var(--espacio-6);
+  }
+
+  .blog__temas {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .blog,
+  .equipo {
+    padding: var(--espacio-8);
+  }
+}
+
+/* ---------- Escritorio: grilla de 8 ---------- */
+
+@media (min-width: 1024px) {
+  .portada-nos {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--separacion-grilla);
+    padding: var(--espacio-8) calc(var(--espacio-8) * 1.5);
+    min-height: 440px;
+  }
+
+  .portada-nos__texto {
+    grid-column: span 5;
+  }
+
+  .cifras {
+    grid-column: span 3;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .historia,
+  .opiniones {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  .historia__intro,
+  .opiniones__intro {
+    grid-column: span 3;
+    padding-right: var(--espacio-8);
+  }
+
+  .historia__texto,
+  .opiniones__lista {
+    grid-column: span 5;
+  }
+
+  .opiniones__lista {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pilares__lista {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .mas-nos {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .blog {
+    grid-column: span 5;
+  }
+
+  .equipo {
+    grid-column: span 3;
+  }
+}
+
+@media (min-width: 1280px) {
+  .opiniones__lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .opiniones__intro {
+    grid-column: span 2;
+    padding-right: 0;
+  }
+
+  .opiniones__lista {
+    grid-column: span 6;
+  }
+}

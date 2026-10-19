@@ -1,0 +1,216 @@
+/* Botón de arrepentimiento: el trámite en una tarjeta (sin pedir ingresar) y, al costado, lo que hay que saber.
+   Mobile: en columna. Escritorio: sobre la grilla de 8, el trámite en 5 y el lateral en 3, fijo bajo el header.
+   Detalle en violeta: el ícono de la cabecera y los números de lo que sigue. */
+
+.arrepentimiento {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.arrepentimiento__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--separacion-grilla);
+  align-items: start;
+}
+
+.arrepentimiento__tramite {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+}
+
+.arrepentimiento__cab {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+.arrepentimiento__icono {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+}
+
+.arrepentimiento__titulo {
+  margin: 0;
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.arrepentimiento__bajada {
+  max-width: 60ch;
+  margin: var(--espacio-2) 0 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.arrepentimiento__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3) var(--espacio-4);
+}
+
+.arrepentimiento__acciones .boton {
+  height: var(--alto-control-l);
+}
+
+.arrepentimiento__estado {
+  margin: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.arrepentimiento__estado.con-error {
+  color: var(--color-error-texto);
+}
+
+/* Solicitud recibida */
+.arrepentimiento__listo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding-block: var(--espacio-6);
+  text-align: center;
+  outline: none;
+}
+
+.arrepentimiento__listo p {
+  max-width: 44ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.arrepentimiento__listo strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.arrepentimiento__check {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radio-pill);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.arrepentimiento__check .icono {
+  width: 28px;
+  height: 28px;
+  stroke-width: 3;
+}
+
+.arrepentimiento__numero {
+  font-size: var(--texto-m);
+}
+
+.arrepentimiento__listo .arrepentimiento__numero strong {
+  font-weight: var(--peso-fuerte);
+}
+
+.arrepentimiento__listo-titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+/* Lo que sigue: pasos numerados en violeta tenue */
+.arrepentimiento__sigue {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  width: 100%;
+  max-width: 44ch;
+  margin: var(--espacio-2) 0;
+  padding: 0;
+  font-size: var(--texto-s);
+  text-align: left;
+  list-style: none;
+  counter-reset: paso;
+}
+
+.arrepentimiento__sigue li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-2);
+  counter-increment: paso;
+}
+
+.arrepentimiento__sigue li::before {
+  content: counter(paso);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radio-pill);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+}
+
+/* Lateral */
+.arrepentimiento__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.arrepentimiento__subtitulo {
+  margin: 0;
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+}
+
+.arrepentimiento__info ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  font-size: var(--texto-s);
+}
+
+.arrepentimiento__info li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-2);
+}
+
+.arrepentimiento__info .icono {
+  margin-top: 2px;
+  color: var(--color-acento);
+}
+
+@media (min-width: 768px) {
+  .arrepentimiento__tramite {
+    padding: var(--espacio-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .arrepentimiento__cuerpo {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .arrepentimiento__tramite {
+    grid-column: span 5;
+  }
+
+  .arrepentimiento__lateral {
+    position: sticky;
+    top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
+    grid-column: span 3;
+  }
+}

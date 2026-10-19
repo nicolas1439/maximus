@@ -1,0 +1,304 @@
+/* Plantilla de landing de marca: Computadoras Powered by MSI (vista previa: msi.html; página completa:
+   powered-by-msi.html). Banner de la campaña con título y claves → tarjetas de las tres gamas → una sección por gama
+   (banner, título y la fila deslizable de tarjetas del home: carrusel.css, productos.css y producto.css) → ayuda para elegir.
+   Los banners y las tarjetas de gama son imágenes de la marca (recursos/msi/): se ven enteras, con su proporción.
+   Mobile: todo en columna, gamas en una fila deslizable. Tablet: gamas de a 3. Las PC, como en el home: 2 y media en celular, 3 en tablet, 4 en escritorio y 5 a partir de 1280px, con flechas.
+   Elegida una gama (?gama=, js/msi.js), las otras tarjetas se apagan y se ve solo su sección.
+   Violeta (el color secundario): el chip con la cantidad de PC de cada gama. */
+
+.msi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-seccion);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.msi .migas {
+  margin-bottom: calc(var(--espacio-4) - var(--espacio-seccion));
+}
+
+/* ---------- Portada ---------- */
+
+.msi__cab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.msi__banner,
+.estante-msi__banner {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1500 / 364;
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  object-fit: cover;
+}
+
+.msi__titulos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.msi__titulo {
+  margin: 0;
+  font-size: var(--texto-2xl);
+  line-height: var(--interlineado-titulo);
+}
+
+.msi__bajada {
+  margin: var(--espacio-2) 0 0;
+  color: var(--color-texto-suave);
+}
+
+.msi__claves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+}
+
+.msi__claves li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  height: var(--alto-control-xs);
+  padding-inline: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-xs);
+}
+
+.msi__claves .icono {
+  color: var(--color-acento);
+}
+
+/* ---------- Gamas ---------- */
+
+/* En celular, fila deslizable que llega al borde de la pantalla; desde tablet, las tres a la vista */
+.gamas {
+  display: flex;
+  gap: var(--espacio-3);
+  margin-inline: auto;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--margen-lateral);
+  scrollbar-width: none;
+}
+
+.gamas::-webkit-scrollbar {
+  display: none;
+}
+
+.gama {
+  display: flex;
+  flex: 0 0 82%;
+  flex-direction: column;
+  scroll-snap-align: start;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  transition: border-color var(--transicion), box-shadow var(--transicion), opacity var(--transicion);
+}
+
+.gama:hover {
+  border-color: var(--color-acento);
+  box-shadow: var(--sombra);
+}
+
+.gama__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 810 / 300;
+  background: var(--color-fondo-destacado);
+  object-fit: cover;
+  transition: scale var(--transicion-lenta);
+}
+
+.gama:hover .gama__img {
+  scale: 1.03;
+}
+
+.gama__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--espacio-3) var(--espacio-4);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.gama__texto strong {
+  color: var(--color-texto);
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+/* Con una gama elegida, la suya queda marcada y las otras se apagan */
+.gama[aria-current],
+.gama.actual {
+  border-color: var(--color-marca);
+  box-shadow: 0 0 0 1px var(--color-marca);
+}
+
+.gamas--elegida .gama:not([aria-current]) {
+  opacity: 0.55;
+}
+
+.gamas--elegida .gama:not([aria-current]):hover {
+  opacity: 1;
+}
+
+.msi__todas {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin-top: calc(var(--espacio-seccion) * -1 + var(--espacio-4));
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+a.msi__todas {
+  color: var(--color-acento);
+}
+
+.msi__todas[hidden] {
+  display: none;
+}
+
+/* ---------- Secciones por gama ---------- */
+
+.estante-msi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  scroll-margin-top: calc(var(--alto-fijo, 64px) + var(--espacio-4));
+}
+
+.estante-msi .seccion__cab {
+  margin-bottom: var(--espacio-4);
+}
+
+.estante-msi .seccion__bajada {
+  margin: var(--espacio-1) 0 0;
+}
+
+
+/* ---------- Ayuda para elegir ---------- */
+
+.ayuda-msi {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding: var(--espacio-6) var(--espacio-4);
+}
+
+.ayuda-msi__titulo {
+  margin: 0 0 var(--espacio-2);
+  font-size: var(--texto-xl);
+}
+
+.ayuda-msi__texto p {
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+.ayuda-msi__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-3);
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 768px) {
+  .msi__titulos {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .msi__titulo {
+    font-size: var(--texto-3xl);
+  }
+
+  .msi__claves {
+    flex-shrink: 0;
+  }
+
+  .gamas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+    overflow: visible;
+  }
+
+
+  .ayuda-msi {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espacio-8);
+    padding: var(--espacio-8);
+  }
+
+  .ayuda-msi__acciones {
+    flex-shrink: 0;
+  }
+}
+
+/* ---------- Revisión final (tanda 3b): gama cargando o sin productos ---------- */
+
+.estante-msi__cargando {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--separacion-grilla);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.estante-msi__vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-8) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  text-align: center;
+}
+
+.estante-msi__vacio > .icono {
+  width: 40px;
+  height: 40px;
+  color: var(--color-secundario-texto);
+}
+
+.estante-msi__vacio p {
+  max-width: 44ch;
+  margin: 0;
+}
+
+.estante-msi__vacio-titulo {
+  color: var(--color-texto);
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+@media (min-width: 768px) {
+  .estante-msi__cargando {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .estante-msi__cargando {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

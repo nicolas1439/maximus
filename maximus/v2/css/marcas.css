@@ -1,0 +1,137 @@
+/* Marcas: tira de logos que se desliza sola (como en maximus.com.ar), con los bordes fundidos y pausa al pasar el mouse.
+   Detalle propio: los logos van en un solo tono y se encienden con sus colores a medida que se acercan a una luz
+   (js/marcas.js pone --cerca de 0 a 1 en cada logo según la distancia); el que queda bajo la luz se eleva.
+   Con puntero, la luz es el puntero; en táctil queda fija en el centro y los logos se encienden al pasar.
+   Cada logo tiene dos capas del mismo SVG: una máscara pintada con el color del texto (tono único) y el SVG en
+   línea en color (js/marcas.js lo incrusta; sin JS queda la <img>). */
+
+.marcas {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* La pista lleva los logos dos veces; al recorrer la mitad, vuelve al inicio sin salto */
+.marcas__pista {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  min-height: 80px;
+  animation: marcas-deslizar 40s linear infinite;
+}
+
+.marcas:hover .marcas__pista {
+  animation-play-state: paused;
+}
+
+@keyframes marcas-deslizar {
+  to {
+    translate: -50% 0;
+  }
+}
+
+.marca {
+  --cerca: 0;
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  height: 80px;
+  padding: 26px var(--espacio-6);
+  transition: translate var(--transicion);
+  translate: 0 calc(var(--cerca) * -3px);
+}
+
+/* Capa en color: el SVG en línea (js/marcas.js) o, sin JS, la imagen. Los muy anchos se achican por max-width */
+.marca__img,
+.marca__color {
+  display: block;
+  height: 28px;
+  width: auto;
+  max-width: 130px;
+  color: var(--color-texto); /* nombres en currentColor */
+  opacity: var(--cerca);
+  transition: opacity var(--transicion);
+}
+
+/* Ajustes por logo, para que todos pesen parecido: alto propio para los que se ven grandes o chicos,
+   y más ancho para los apaisados, que de otro modo quedan diminutos */
+.marca--baja .marca__img,
+.marca--baja .marca__color {
+  height: 18px;
+}
+
+.marca--menor .marca__img,
+.marca--menor .marca__color {
+  height: 24px;
+}
+
+.marca--alta .marca__img,
+.marca--alta .marca__color {
+  height: 32px;
+}
+
+.marca--ancha .marca__img,
+.marca--ancha .marca__color {
+  max-width: 170px;
+}
+
+/* Tono único: el mismo SVG como máscara, pintado con el color del texto */
+.marca__tono {
+  position: absolute;
+  inset: 26px var(--espacio-6);
+  background: currentColor;
+  color: var(--color-texto-suave);
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  opacity: calc(0.75 - var(--cerca) * 0.75);
+  transition: opacity var(--transicion);
+}
+
+/* La máscara de cada marca (la ruta es relativa a esta hoja, así funciona desde cualquier página o dominio) */
+.marca__tono--amd {
+  mask-image: url(../recursos/marcas/amd.svg);
+}
+
+.marca__tono--asus {
+  mask-image: url(../recursos/marcas/asus.svg);
+}
+
+.marca__tono--corsair {
+  mask-image: url(../recursos/marcas/corsair.svg);
+}
+
+.marca__tono--genesis {
+  mask-image: url(../recursos/marcas/genesis.svg);
+}
+
+.marca__tono--gigabyte {
+  mask-image: url(../recursos/marcas/gigabyte.svg);
+}
+
+.marca__tono--kingston {
+  mask-image: url(../recursos/marcas/kingston.svg);
+}
+
+.marca__tono--logitech {
+  mask-image: url(../recursos/marcas/logitech.svg);
+}
+
+.marca__tono--lovingcool {
+  mask-image: url(../recursos/marcas/lovingcool.svg);
+}
+
+.marca__tono--msi {
+  mask-image: url(../recursos/marcas/msi.svg);
+}
+
+.marca__tono--nvidia {
+  mask-image: url(../recursos/marcas/nvidia.svg);
+}
+
+.marca__tono--redragon {
+  mask-image: url(../recursos/marcas/redragon.svg);
+}
+
+.marca__tono--xigmatek {
+  mask-image: url(../recursos/marcas/xigmatek.svg);
+}

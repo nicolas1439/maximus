@@ -1,0 +1,505 @@
+/* Plantilla de landing de campaña (vista previa: campania.html; página completa: mes-de-la-primavera.html).
+   Portada (panel oscuro en ambos modos con la aurora de base.css, más violeta, y la cuenta regresiva) → beneficios →
+   ofertas con pestañas por categoría y grilla de tarjetas (producto.css) → banner (banner.css) → bases y condiciones.
+   Mobile: todo en columna, beneficios de a 2, pestañas deslizables y grilla de 2. Tablet: grilla de 3 y beneficios
+   de a 4. Escritorio: portada texto 5 + cuenta 3 sobre la grilla de 8, grilla de 4 tarjetas (5 desde 1440px).
+   Violeta (el color secundario, el de las campañas): la etiqueta de la campaña, la aurora, los números de la cuenta
+   regresiva, los íconos de los beneficios y el chip de cantidad. */
+
+.campania {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-seccion);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.campania .migas {
+  margin-bottom: calc(var(--espacio-4) - var(--espacio-seccion));
+}
+
+/* ---------- Portada ---------- */
+
+.portada-campania {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-8);
+  overflow: hidden;
+  padding: var(--espacio-8) var(--espacio-4);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+/* Más violeta que la aurora de base: el verde queda como un brillo chico */
+.portada-campania__aurora::before {
+  opacity: 0.18;
+}
+
+.portada-campania__aurora::after {
+  top: -30%;
+  right: -20%;
+  bottom: auto;
+  width: min(110%, 760px);
+}
+
+.portada-campania__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-4);
+}
+
+.portada-campania__titulo {
+  margin: 0;
+  font-size: var(--texto-display);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+.portada-campania__titulo em {
+  color: var(--color-marca);
+  font-style: normal;
+}
+
+.portada-campania__bajada {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+  text-wrap: pretty;
+}
+
+/* Cuenta regresiva: cuatro casillas translúcidas */
+.regresiva {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.regresiva__rotulo,
+.regresiva__fecha {
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-xs);
+}
+
+.regresiva__rotulo {
+  color: var(--color-secundario-sobre-barra);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.regresiva__lista {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.regresiva__parte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--espacio-3) var(--espacio-1);
+  border: 1px solid var(--color-barra-borde);
+  border-radius: var(--radio-l);
+  background: rgb(255 255 255 / 0.05);
+  backdrop-filter: blur(8px);
+}
+
+.regresiva__num {
+  font-size: var(--texto-3xl);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.regresiva__unidad {
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-2xs);
+}
+
+/* ---------- Beneficios ---------- */
+
+.beneficios {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+}
+
+.beneficio {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  font-size: var(--texto-xs);
+  line-height: 1.3;
+}
+
+.beneficio span:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--color-texto-suave);
+}
+
+.beneficio strong {
+  color: var(--color-texto);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.beneficio__icono {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+}
+
+/* ---------- Ofertas ---------- */
+
+.ofertas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.ofertas .seccion__cab {
+  margin: 0;
+}
+
+/* Pestañas: deslizables en celular, llegan al borde de la pantalla */
+.pestanias {
+  display: flex;
+  gap: var(--espacio-2);
+  margin-inline: calc(var(--margen-lateral) * -1);
+  padding-inline: var(--margen-lateral);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pestanias::-webkit-scrollbar {
+  display: none;
+}
+
+.pestania {
+  flex-shrink: 0;
+  height: var(--alto-control-s);
+  padding-inline: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-s);
+  transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion);
+}
+
+.pestania:hover {
+  border-color: var(--color-acento);
+}
+
+.pestania[aria-pressed="true"],
+.pestania.marcado {
+  border-color: var(--color-texto);
+  background: var(--color-texto);
+  color: var(--color-fondo);
+  font-weight: var(--peso-medio);
+}
+
+.ofertas__grilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+}
+
+/* Las que aparecen al cambiar de pestaña entran con un fundido escalonado (--retraso lo pone campania.js) */
+.ofertas__item--nuevo .producto {
+  animation: oferta-entrar var(--transicion) both;
+  animation-delay: var(--retraso, 0s);
+}
+
+@keyframes oferta-entrar {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+.ofertas__mas {
+  align-self: center;
+  margin-top: var(--espacio-2);
+}
+
+/* ---------- Bases y condiciones ---------- */
+
+.bases__caja {
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.bases__cab {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  min-height: var(--alto-control-l);
+  padding-inline: var(--espacio-4);
+  list-style: none;
+  cursor: pointer;
+}
+
+.bases__cab::-webkit-details-marker {
+  display: none;
+}
+
+.bases__titulo {
+  margin: 0;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.bases__flecha {
+  color: var(--color-texto-suave);
+  transition: rotate var(--transicion);
+}
+
+.bases__caja[open] .bases__flecha,
+.bases__caja.abierto .bases__flecha {
+  rotate: 180deg;
+}
+
+.bases__texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: 0 var(--espacio-4) var(--espacio-4);
+}
+
+.bases__texto p {
+  max-width: 90ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  line-height: 1.6;
+}
+
+.bases__texto a {
+  color: var(--color-texto);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 768px) {
+  .portada-campania {
+    padding: var(--espacio-8);
+  }
+
+  .regresiva {
+    max-width: 420px;
+  }
+
+  .beneficios {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  .beneficio {
+    padding: var(--espacio-4);
+  }
+
+  .pestanias {
+    flex-wrap: wrap;
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
+  .ofertas__grilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+}
+
+/* ---------- Escritorio: grilla de 8 ---------- */
+
+@media (min-width: 1024px) {
+  .portada-campania {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--separacion-grilla);
+    min-height: 400px;
+    padding: var(--espacio-8) calc(var(--espacio-8) * 1.5);
+  }
+
+  .portada-campania__texto {
+    grid-column: span 5;
+  }
+
+  .regresiva {
+    grid-column: span 3;
+  }
+
+  .ofertas__grilla {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  .ofertas__grilla {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Revisión final (tanda 3b): estados de la campaña ---------- */
+
+/* Terminada: el aviso en el lugar de la cuenta regresiva */
+.regresiva__terminada {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-barra-borde);
+  border-radius: var(--radio-l);
+  background: rgb(255 255 255 / 0.05);
+  font-weight: var(--peso-medio);
+}
+
+.regresiva__terminada .icono {
+  color: var(--color-secundario-sobre-barra);
+}
+
+/* Próximamente: cronograma de días */
+.cronograma {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.cronograma .seccion__cab {
+  margin: 0;
+}
+
+.cronograma__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--separacion-grilla);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cronograma__dia {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.cronograma__fecha {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+  padding: var(--espacio-1) var(--espacio-2);
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  text-transform: uppercase;
+}
+
+.cronograma__fecha strong {
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+  line-height: 1.1;
+}
+
+.cronograma__texto {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.cronograma__texto strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-fuerte);
+}
+
+.cronograma__catalogo {
+  align-self: center;
+}
+
+/* Terminada: en lugar de las ofertas */
+.campania-terminada {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-8) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  color: var(--color-texto-suave);
+  text-align: center;
+}
+
+.campania-terminada p {
+  max-width: 44ch;
+  margin: 0;
+}
+
+.campania-terminada__icono {
+  width: 40px;
+  height: 40px;
+  color: var(--color-secundario-texto);
+}
+
+.campania-terminada__titulo {
+  margin: 0;
+  color: var(--color-texto);
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-fuerte);
+}
+
+.campania-terminada__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+}
+
+.campania[data-estado="terminada"] .pestanias,
+.campania[data-estado="terminada"] .ofertas__grilla {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .cronograma__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .cronograma__lista {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,948 @@
+/* Plantilla Tu PC ideal (vista previa: pc-ideal.html; página completa: tu-pc-ideal.html).
+   Portada (panel oscuro en ambos modos con la aurora de base.css, la foto recortada de una PC y las claves) →
+   embudo en una tarjeta (indicador de 3 pasos, lo elegido en chips, opciones como botones grandes y el resultado
+   con tarjetas de producto de producto.css y su nivel) → "De nuestro taller a tu escritorio" → preguntas
+   frecuentes (faq.css) → cierre.
+   Mobile: todo en columna, opciones de a una. Tablet: categorías de a 2, usos de a 2, presupuestos de a 3 y
+   resultado de a 2. Escritorio, sobre la grilla de 8: portada texto 5 + foto 3, embudo en 6 columnas centradas
+   (resultado de a 3), taller intro 3 + lista 5.
+   Violeta (el color secundario): el chip de la portada (lila), los íconos de las opciones y el nivel de cada PC. */
+
+.pc-ideal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-seccion);
+  padding-block: var(--espacio-4) var(--espacio-seccion);
+}
+
+.pc-ideal .migas {
+  margin-bottom: calc(var(--espacio-4) - var(--espacio-seccion));
+}
+
+/* ---------- Portada ---------- */
+
+.portada-pc {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-6);
+  overflow: hidden;
+  padding: var(--espacio-8) var(--espacio-4) var(--espacio-6);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+.portada-pc__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+}
+
+.portada-pc__chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding-inline: var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: color-mix(in srgb, var(--color-secundario-sobre-barra) 18%, transparent);
+  color: var(--color-secundario-sobre-barra);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.portada-pc__titulo {
+  margin: 0;
+  font-size: var(--texto-display);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+.portada-pc__titulo em {
+  color: var(--color-marca);
+  font-style: normal;
+}
+
+.portada-pc__bajada {
+  max-width: 44ch;
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+}
+
+.portada-pc__accion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3) var(--espacio-4);
+  margin-top: var(--espacio-3);
+}
+
+.portada-pc__nota {
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-xs);
+}
+
+/* PC recortada (fondo transparente) sobre la aurora */
+.portada-pc__img {
+  display: none;
+}
+
+.portada-pc__claves {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+  padding-top: var(--espacio-6);
+  border-top: 1px solid var(--color-barra-borde);
+  font-size: var(--texto-xs);
+}
+
+.portada-pc__claves li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  color: var(--color-sobre-barra-suave);
+}
+
+.portada-pc__claves .icono {
+  flex-shrink: 0;
+  color: var(--color-marca);
+}
+
+/* ---------- Embudo ----------
+   Como el del sitio: arriba los tres pasos numerados unidos por una línea (los hechos, en verde con check y para
+   volver), lo elegido en chips, los textos centrados, las opciones y, al pie, "Elegís el uso…" y la ayuda. */
+
+.elegir {
+  scroll-margin-top: calc(var(--alto-fijo, 64px) + var(--espacio-4));
+}
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  padding: var(--espacio-6) var(--espacio-4) var(--espacio-4);
+}
+
+.quiz__cab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-4);
+}
+
+/* Indicador: .pasos--embudo de base.css */
+.quiz .pasos {
+  width: min(100%, 520px);
+}
+
+.quiz__elegido {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+}
+
+.chip-pc {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-height: var(--alto-control-xs);
+  padding: 4px var(--espacio-2) 4px var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-superficie);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  text-align: left;
+  transition: border-color var(--transicion);
+}
+
+.chip-pc:hover {
+  border-color: var(--color-acento);
+}
+
+.chip-pc .icono {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: var(--color-texto-suave);
+}
+
+.quiz__vista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+  animation: quiz-entrar var(--transicion) both;
+}
+
+@keyframes quiz-entrar {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+.quiz__textos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  text-align: center;
+}
+
+.quiz__rotulo {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin: 0;
+  color: var(--color-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.quiz__titulo {
+  margin: 0;
+  font-size: var(--texto-2xl);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+  outline: none;
+}
+
+.quiz__bajada {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--color-texto-suave);
+  text-wrap: pretty;
+}
+
+.quiz__disponibles {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  margin: 0 0 var(--espacio-2);
+  padding: 4px var(--espacio-3);
+  border-radius: var(--radio-pill);
+  background: var(--color-brillo-marca);
+  color: var(--color-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.quiz__pensadas {
+  max-width: 52ch;
+  margin: 0;
+  padding: var(--espacio-2) var(--espacio-3);
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  font-size: var(--texto-s);
+}
+
+.quiz__pensadas strong {
+  color: var(--color-secundario-texto);
+  font-weight: var(--peso-medio);
+}
+
+/* Volver un paso, centrado bajo las opciones */
+.quiz__volver {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: var(--espacio-1);
+  min-height: var(--alto-control-s);
+  padding-inline: var(--espacio-3);
+  border-radius: var(--radio-pill);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  transition: color var(--transicion), background-color var(--transicion);
+}
+
+.quiz__volver:hover {
+  background: var(--color-superficie);
+  color: var(--color-texto);
+}
+
+/* Pie del embudo */
+.quiz__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2) var(--espacio-4);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--color-borde);
+  font-size: var(--texto-xs);
+}
+
+.quiz__pie p {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  color: var(--color-texto-suave);
+}
+
+.quiz__pie .icono {
+  color: var(--color-acento);
+}
+
+.quiz__pie a {
+  text-decoration: underline;
+  text-decoration-color: var(--color-acento);
+  text-underline-offset: 3px;
+}
+
+/* Opciones: botones grandes con ícono, texto y flecha */
+.opciones-pc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+.opcion-pc {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: 72px;
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+  text-align: left;
+  transition: border-color var(--transicion), background-color var(--transicion), box-shadow var(--transicion);
+}
+
+.opcion-pc:hover {
+  border-color: var(--color-acento);
+  box-shadow: var(--sombra);
+}
+
+.opcion-pc__icono {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radio);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  transition: background-color var(--transicion), color var(--transicion);
+}
+
+.opcion-pc:hover .opcion-pc__icono {
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.opcion-pc__texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.opcion-pc__titulo {
+  font-weight: var(--peso-medio);
+}
+
+.opcion-pc__bajada {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+.opcion-pc__flecha {
+  flex-shrink: 0;
+  color: var(--color-texto-suave);
+  transition: transform var(--transicion), color var(--transicion);
+}
+
+.opcion-pc:hover .opcion-pc__flecha {
+  color: var(--color-acento);
+  transform: translateX(3px);
+}
+
+.opciones-pc--categorias .opcion-pc__titulo {
+  font-size: var(--texto-l);
+}
+
+/* Presupuestos: rótulo, monto, niveles y, separado por una línea, cuántas PC hay */
+.opcion-pc--presupuesto {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+}
+
+.opcion-pc--presupuesto .opcion-pc__titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.opcion-pc__rotulo {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+}
+
+.opcion-pc__monto {
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.opcion-pc__pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--espacio-3);
+  border-top: 1px solid var(--color-borde);
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-fuerte);
+}
+
+.opcion-pc__pie .icono {
+  transition: transform var(--transicion);
+}
+
+.opcion-pc--presupuesto:hover .opcion-pc__pie .icono {
+  transform: translateX(3px);
+}
+
+/* Resultado */
+.quiz__rotulo--listo .icono {
+  width: 14px;
+  height: 14px;
+}
+
+.resultado-pc {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+}
+
+/* Nivel: suave en Entrada a Avanzada; lleno en Superior y Tope (violeta) */
+.nivel-pc {
+  padding: 2px var(--espacio-2);
+  border-radius: var(--radio-pill);
+  background: var(--color-secundario-suave);
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.nivel-pc--3,
+.nivel-pc--4 {
+  background: var(--color-secundario);
+  color: var(--color-sobre-secundario);
+}
+
+.resultado-pc__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+}
+
+.resultado-pc__specs li {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-width: 0;
+}
+
+.resultado-pc__specs .icono {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+}
+
+.resultado-pc__specs span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resultado-pc__ver {
+  align-self: flex-start;
+  gap: var(--espacio-1);
+  font-size: var(--texto-2xs);
+  white-space: nowrap;
+}
+
+.quiz__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-3) var(--espacio-4);
+}
+
+.asesor {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+}
+
+.asesor__icono {
+  width: 40px;
+  height: 40px;
+  padding: var(--espacio-2);
+  border-radius: var(--radio);
+  background: var(--color-brillo-marca);
+  color: var(--color-marca);
+}
+
+.asesor p {
+  margin: 0;
+  color: var(--color-sobre-barra-suave);
+  font-size: var(--texto-s);
+}
+
+.asesor strong {
+  color: var(--color-sobre-destacado);
+  font-weight: var(--peso-medio);
+}
+
+.asesor .boton {
+  grid-column: 1 / -1;
+}
+
+/* Especificaciones de una PC: el diálogo de dialogo.css (hoja desde abajo en celular), más angosto */
+.specs-pc {
+  --dialogo-ancho: 560px;
+  --dialogo-alto: 720px;
+}
+
+.specs-pc__cab {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr) auto;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.specs-pc__media {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo-imagen);
+}
+
+.specs-pc__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.specs-pc__datos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  min-width: 0;
+}
+
+.specs-pc__nivel {
+  margin: 0;
+  color: var(--color-secundario-texto);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.specs-pc__nombre {
+  margin: 0;
+  font-size: var(--texto-s);
+  line-height: 1.35;
+}
+
+.specs-pc__precio {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.specs-pc__precio strong {
+  color: var(--color-texto);
+  font-size: var(--texto-l);
+  font-weight: var(--peso-fuerte);
+}
+
+.specs-pc__lista {
+  margin: 0;
+  padding: var(--espacio-2) var(--espacio-4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  font-size: var(--texto-s);
+}
+
+.specs-pc__lista div {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--espacio-3);
+  padding-block: var(--espacio-2);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.specs-pc__lista div:last-child {
+  border-bottom: 0;
+}
+
+.specs-pc__lista dt {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  color: var(--color-texto-suave);
+}
+
+.specs-pc__lista dt .icono {
+  flex-shrink: 0;
+  color: var(--color-acento);
+}
+
+.specs-pc__lista dd {
+  margin: 0;
+  font-weight: var(--peso-medio);
+}
+
+.specs-pc__nota {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: var(--espacio-3) var(--espacio-4);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+}
+
+.specs-pc__nota .icono {
+  flex-shrink: 0;
+  color: var(--color-acento);
+}
+
+/* ---------- De nuestro taller a tu escritorio ---------- */
+
+.taller {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-6);
+}
+
+.taller__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+}
+
+.taller__intro .seccion__bajada {
+  margin: 0;
+}
+
+.taller__rotulo {
+  margin: 0;
+  color: var(--color-acento);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.taller__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--separacion-grilla);
+}
+
+.taller__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 2px var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo);
+}
+
+.taller__icono {
+  display: grid;
+  grid-row: span 2;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radio);
+  background: var(--color-brillo-marca);
+  color: var(--color-acento);
+}
+
+.taller__item h3 {
+  margin: 0;
+  font-size: var(--texto-m);
+}
+
+.taller__item p {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+}
+
+/* ---------- Cierre ---------- */
+
+.cierre-pc {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+  overflow: hidden;
+  padding: var(--espacio-8) var(--espacio-4);
+  border-radius: var(--radio-l);
+  background: var(--color-fondo-destacado);
+  color: var(--color-sobre-destacado);
+  text-align: center;
+}
+
+.cierre-pc__rotulo {
+  margin: 0;
+  color: var(--color-secundario-sobre-barra);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: var(--espaciado-mayusculas);
+  text-transform: uppercase;
+}
+
+.cierre-pc__titulo {
+  max-width: 22ch;
+  margin: 0;
+  font-size: var(--texto-2xl);
+  line-height: var(--interlineado-titulo);
+  text-wrap: balance;
+}
+
+.cierre-pc__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-3);
+}
+
+.cierre-pc__btn {
+  border: 1px solid var(--color-barra-borde);
+  color: var(--color-sobre-destacado);
+  transition: border-color var(--transicion), background-color var(--transicion);
+}
+
+a.cierre-pc__btn {
+  color: var(--color-sobre-destacado);
+}
+
+.cierre-pc__btn:hover {
+  border-color: var(--color-marca);
+  background: var(--color-barra-hover);
+}
+
+/* ---------- Tablet ---------- */
+
+@media (min-width: 768px) {
+  .portada-pc {
+    padding: var(--espacio-8);
+  }
+
+  .portada-pc__claves {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .taller__lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .taller__item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--espacio-2);
+    padding: var(--espacio-6);
+  }
+
+  .taller__icono {
+    grid-row: auto;
+    margin-bottom: var(--espacio-2);
+  }
+
+  .cierre-pc {
+    padding: calc(var(--espacio-8) * 1.5) var(--espacio-8);
+  }
+
+  .cierre-pc__titulo {
+    font-size: var(--texto-3xl);
+  }
+}
+
+/* ---------- Escritorio: grilla de 8 ---------- */
+
+@media (min-width: 1024px) {
+  .portada-pc {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    align-items: center;
+    gap: var(--espacio-6) var(--separacion-grilla);
+    padding: var(--espacio-8) calc(var(--espacio-8) * 1.5);
+  }
+
+  .portada-pc__texto {
+    grid-column: span 5;
+  }
+
+  .portada-pc__img {
+    display: block;
+    grid-column: span 3;
+    justify-self: center;
+    width: min(100%, 256px);
+    height: auto;
+    filter: drop-shadow(var(--sombra-recorte));
+  }
+
+  .portada-pc__claves {
+    grid-column: 1 / -1;
+  }
+
+  .taller {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  .taller__intro {
+    grid-column: span 3;
+    padding-right: var(--espacio-8);
+  }
+
+  .taller__lista {
+    grid-column: span 5;
+  }
+}
+
+/* ---------- Embudo: tablet y escritorio ---------- */
+
+@media (min-width: 768px) {
+  .resultado-pc__ver {
+    font-size: var(--texto-xs);
+  }
+
+  .quiz {
+    padding: var(--espacio-8) var(--espacio-8) var(--espacio-6);
+  }
+
+  .quiz__titulo {
+    font-size: var(--texto-3xl);
+  }
+
+  .opciones-pc--categorias,
+  .opciones-pc--usos,
+  .resultado-pc {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  .opciones-pc--presupuestos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
+
+  /* Categorías como tarjetas: ícono arriba y flecha abajo a la derecha */
+  .opciones-pc--categorias .opcion-pc {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 168px;
+    padding: var(--espacio-6);
+  }
+
+  .opciones-pc--categorias .opcion-pc__flecha {
+    position: absolute;
+    right: var(--espacio-6);
+    bottom: var(--espacio-6);
+  }
+
+  .opciones-pc--categorias .opcion-pc__icono {
+    margin-bottom: var(--espacio-3);
+  }
+
+  .opcion-pc--presupuesto {
+    padding: var(--espacio-6);
+  }
+
+  .opcion-pc--presupuesto .opcion-pc__pie {
+    margin-top: auto;
+  }
+
+  .asesor {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: var(--espacio-4) var(--espacio-6);
+  }
+
+  .asesor .boton {
+    grid-column: auto;
+  }
+
+  .specs-pc__cab {
+    grid-template-columns: 112px minmax(0, 1fr) auto;
+    padding: var(--espacio-6);
+  }
+
+  .specs-pc__media {
+    width: 112px;
+    height: 112px;
+  }
+
+  .specs-pc__nombre {
+    font-size: var(--texto-m);
+  }
+
+  .specs-pc__lista {
+    padding-inline: var(--espacio-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .elegir {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: var(--separacion-grilla);
+  }
+
+  .quiz {
+    grid-column: 2 / span 6;
+  }
+
+  .opciones-pc--categorias {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .opciones-pc--usos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .resultado-pc {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
