@@ -357,6 +357,8 @@ const VARIANTES = {
     ficha.classList.toggle('ficha--texto-libre', v === 'libre');
     document.querySelector('[data-texto-libre]').hidden = v !== 'libre';
   },
+  // Video, rendimiento en juegos y combo: opcionales (la mayoría de los productos no los tiene)
+  extras: (v) => ficha.classList.toggle('ficha--sin-extras', v === 'sin'),
   producto: (v) => {
     ficha.classList.toggle('ficha--pc', v === 'pc');
     ficha.classList.toggle('ficha--grande', v === 'grande');

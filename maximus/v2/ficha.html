@@ -69,6 +69,11 @@
         <button class="variantes__btn" type="button" data-variante="detalle:secciones" aria-pressed="true">Por secciones</button>
         <button class="variantes__btn" type="button" data-variante="detalle:libre" aria-pressed="false">Texto libre</button>
       </div>
+      <span class="variantes__rotulo">Extras</span>
+      <div class="variantes__opciones" role="group" aria-label="Extras">
+        <button class="variantes__btn" type="button" data-variante="extras:con" aria-pressed="true">Con extras</button>
+        <button class="variantes__btn" type="button" data-variante="extras:sin" aria-pressed="false">Sin extras</button>
+      </div>
       <span class="variantes__rotulo">Producto</span>
       <div class="variantes__opciones" role="group" aria-label="Producto">
         <button class="variantes__btn" type="button" data-variante="producto:placa" aria-pressed="true">Placa de video</button>
@@ -397,7 +402,8 @@
           </ul>
         </section>
 
-        <!-- Video del producto (YouTube): la miniatura y, al tocarla, el video (data-video: el id del video; de muestra, vacío) -->
+        <!-- Opcional: el sitio real lo muestra solo si el producto tiene video.
+             Video del producto (YouTube): la miniatura y, al tocarla, el video (data-video: el id del video; de muestra, vacío) -->
         <section class="video" aria-labelledby="video-titulo">
           <h2 class="ficha__subtitulo" id="video-titulo">Video</h2>
           <button class="video__poster" type="button" data-video="" aria-label="Ver el video de la MSI RTX 5070 Ti Ventus 3X">
@@ -406,7 +412,8 @@
           </button>
         </section>
 
-        <!-- Rendimiento en juegos: FPS promedio por juego y resolución (de muestra) -->
+        <!-- Opcional: el sitio real lo muestra solo si el producto tiene datos de FPS.
+             Rendimiento en juegos: FPS promedio por juego y resolución (de muestra) -->
         <section class="fps" aria-labelledby="fps-titulo">
           <h2 class="ficha__subtitulo" id="fps-titulo">Rendimiento en juegos</h2>
           <p class="fps__bajada">FPS promedio, con calidad alta. Datos de referencia: varían según el resto de la PC.</p>
@@ -432,20 +439,6 @@
             <li><svg class="icono compat__check" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Salidas de video:</strong> 3 × DisplayPort 2.1 y 1 × HDMI 2.1.</span></li>
           </ul>
           <a class="boton boton--secundario compat__whatsapp" href="https://wa.me/541123575522"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp</a>
-        </section>
-
-        <!-- Combo: el producto con otros que lo complementan, con su precio de combo (de muestra) -->
-        <section class="combo" aria-labelledby="combo-titulo">
-          <h2 class="ficha__subtitulo" id="combo-titulo">Armá el combo</h2>
-          <ul class="combo__lista">
-            <li class="combo__item"><img src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600" loading="lazy"><span>Esta placa: MSI RTX 5070 Ti Ventus 3X 16GB</span></li>
-            <li class="combo__mas" aria-hidden="true"><svg class="icono icono--s" aria-hidden="true"><use href="#i-mas"/></svg></li>
-            <li class="combo__item"><img src="recursos/productos/msi-mag-a650gn.jpg" alt="" width="600" height="600" loading="lazy"><span>Fuente MSI MAG A650GN II 80 PLUS Gold</span></li>
-          </ul>
-          <div class="combo__pie">
-            <p class="combo__precio"><span>Precio del combo, efectivo o transferencia</span><strong>$2.469.900</strong><s>Por separado $2.536.919</s></p>
-            <button class="boton boton--primario" type="button" data-agregar-combo data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar el combo</button>
-          </div>
         </section>
 
         <!-- Detalle como texto libre: hoy el sistema manda la descripción en un solo bloque con formato (viñetas,
@@ -511,6 +504,26 @@
 
       </div>
     </div>
+
+    <!-- Opcional: el sitio real lo muestra solo si el producto tiene un combo armado.
+         Combo: el producto con otros que lo complementan, con su precio de combo (de muestra). Sección a todo el ancho,
+         entre el cuerpo de la ficha y las reseñas -->
+    <section class="combo ficha__seccion contenedor" aria-labelledby="combo-titulo">
+      <div class="seccion__cab">
+        <h2 class="seccion__titulo" id="combo-titulo">Armá el combo</h2>
+      </div>
+      <div class="combo__cuerpo">
+        <ul class="combo__lista">
+          <li class="combo__item"><img src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600" loading="lazy"><span>Esta placa: MSI RTX 5070 Ti Ventus 3X 16GB</span></li>
+          <li class="combo__mas" aria-hidden="true"><svg class="icono icono--s" aria-hidden="true"><use href="#i-mas"/></svg></li>
+          <li class="combo__item"><img src="recursos/productos/msi-mag-a650gn.jpg" alt="" width="600" height="600" loading="lazy"><span>Fuente MSI MAG A650GN II 80 PLUS Gold</span></li>
+        </ul>
+        <div class="combo__pie">
+          <p class="combo__precio"><span>Precio del combo, efectivo o transferencia</span><strong>$2.469.900</strong><s>Por separado $2.536.919</s></p>
+          <button class="boton boton--primario" type="button" data-agregar-combo data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar el combo</button>
+        </div>
+      </div>
+    </section>
 
     <!-- Reseñas: componente aparte (resenas.html, css/resenas.css; ahí también se ve el estado sin reseñas).
          Calificaciones, distribución y reseñas son de muestra; en el sitio real este producto todavía no tiene. -->

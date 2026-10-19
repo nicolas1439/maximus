@@ -1434,7 +1434,14 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Combo */
+/* Combo: sección a todo el ancho entre el cuerpo y las reseñas. En celular, los productos en fila con el "+" y el
+   precio debajo; desde escritorio, los productos en 5 columnas y el precio con el botón en las 3 de la derecha */
+.combo__cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-4);
+}
+
 .combo__lista {
   display: flex;
   align-items: center;
@@ -1451,6 +1458,7 @@
   padding: var(--espacio-3);
   border: 1px solid var(--color-borde);
   border-radius: var(--radio-l);
+  background: var(--color-fondo);
   font-size: var(--texto-xs);
   text-align: center;
 }
@@ -1473,7 +1481,6 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--espacio-3);
-  margin-top: var(--espacio-3);
 }
 
 .combo__precio {
@@ -1488,6 +1495,62 @@
   color: var(--color-texto);
   font-size: var(--texto-xl);
   font-weight: var(--peso-fuerte);
+}
+
+/* Tablet: cada producto con la foto al costado del nombre */
+@media (min-width: 768px) {
+  .combo__item {
+    flex-direction: row;
+    gap: var(--espacio-4);
+    padding: var(--espacio-4);
+    font-size: var(--texto-s);
+    text-align: left;
+  }
+
+  .combo__lista {
+    gap: var(--espacio-4);
+  }
+}
+
+/* Escritorio: productos en 5 columnas de la grilla de 8; precio y botón en un recuadro en las 3 restantes */
+@media (min-width: 1024px) {
+  .combo__cuerpo {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: var(--separacion-grilla);
+    align-items: stretch;
+  }
+
+  .combo__lista {
+    grid-column: span 5;
+  }
+
+  .combo__item {
+    align-self: stretch;
+  }
+
+  .combo__item img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .combo__pie {
+    grid-column: span 3;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: var(--espacio-4);
+    padding: var(--espacio-4);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-l);
+    background: var(--color-fondo);
+  }
+}
+
+/* Extras opcionales (video, rendimiento en juegos y combo): la mayoría de los productos no los tiene; sin ellos, la
+   separación del detalle y la de las secciones al pie quedan iguales */
+.ficha--sin-extras :is(.video, .fps, .combo) {
+  display: none;
 }
 
 /* Detalle como texto libre: en lugar de las secciones */
