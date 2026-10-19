@@ -92,7 +92,21 @@ a.portada-nos__btn {
   background: var(--color-barra-hover);
 }
 
-/* Números: tarjetas translúcidas sobre la aurora */
+/* Números: tarjetas translúcidas sobre la aurora, con la aclaración de muestra (la nota de Google) debajo */
+.portada-nos__cifras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.portada-nos .muestra {
+  color: var(--color-sobre-barra-suave);
+}
+
+.portada-nos .muestra .icono {
+  color: var(--color-aviso);
+}
+
 .cifras {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -555,8 +569,11 @@ a.portada-nos__btn {
     grid-column: span 5;
   }
 
-  .cifras {
+  .portada-nos__cifras {
     grid-column: span 3;
+  }
+
+  .cifras {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

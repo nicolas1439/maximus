@@ -79,14 +79,14 @@
         </div>
         <span class="variantes__rotulo">Estado del pedido</span>
         <div class="variantes__opciones" role="group" aria-label="Estado del pedido">
-          <button class="variantes__btn" type="button" data-ver-pedido="pendiente" aria-pressed="true">Pendiente de pago</button>
           <button class="variantes__btn" type="button" data-ver-pedido="ingreso" aria-pressed="false">Ingreso del pedido</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="pendiente" aria-pressed="true">Pendiente de pago</button>
           <button class="variantes__btn" type="button" data-ver-pedido="revision" aria-pressed="false">Pedido en revisión</button>
           <button class="variantes__btn" type="button" data-ver-pedido="pago" aria-pressed="false">Pago confirmado</button>
+          <button class="variantes__btn" type="button" data-ver-pedido="facturado" aria-pressed="false">Facturado</button>
           <button class="variantes__btn" type="button" data-ver-pedido="despachar" aria-pressed="false">Listo para despachar</button>
           <button class="variantes__btn" type="button" data-ver-pedido="despachado" aria-pressed="false">Despachado</button>
           <button class="variantes__btn" type="button" data-ver-pedido="retirar" aria-pressed="false">Listo para retirar</button>
-          <button class="variantes__btn" type="button" data-ver-pedido="facturado" aria-pressed="false">Facturado</button>
           <button class="variantes__btn" type="button" data-ver-pedido="entregado" aria-pressed="false">Entregado</button>
           <button class="variantes__btn" type="button" data-ver-pedido="cancelado" aria-pressed="false">Cancelado</button>
         </div>
@@ -275,8 +275,9 @@
                   <p class="pedido__total" data-entrega="total"><span>Total</span>$2.401.920</p>
                 </div>
                 <!-- Comprobante: su estado y su acción -->
-                <div class="comprobante-estado" data-comprobante-estado>
-                  <p class="comprobante-estado__texto" data-comprobante-texto><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg><span>Subí el comprobante de la transferencia dentro de las 24 hs: sin él, el pedido no pasa a preparación y se libera el stock.</span></p>
+                <div class="alerta alerta--aviso alerta--compacta" data-comprobante-estado>
+                  <svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta" data-comprobante-icono/></svg>
+                  <div class="alerta__cuerpo"><p data-comprobante-texto>Subí el comprobante de la transferencia dentro de las 24 hs: sin él, el pedido no pasa a preparación y se libera el stock.</p></div>
                 </div>
                 <div class="alerta alerta--exito" role="status" data-cancelado-ok hidden>
                   <svg class="icono" aria-hidden="true"><use href="#i-check"/></svg>
@@ -693,13 +694,19 @@
 
             <fieldset class="tarjeta formulario__grupo">
               <legend class="formulario__titulo">Datos de facturación</legend>
+              <!-- Domicilio por partes, como en Mis direcciones y el checkout; cada campo con su error -->
               <div class="formulario__campos">
-                <label class="campo"><span class="campo__rotulo">Provincia</span>
-                  <span class="selector"><select class="selector__campo" id="dato-provincia"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span>
-                </label>
-                <label class="campo"><span class="campo__rotulo">Localidad</span><input class="campo__control" id="dato-localidad" type="text" value="Caballito" autocomplete="address-level2" required></label>
-                <label class="campo campo--ancho"><span class="campo__rotulo">Dirección</span><input class="campo__control" id="dato-direccion" type="text" value="Av. Rivadavia 5420, piso 3, depto. B" autocomplete="street-address" required></label>
-                <label class="campo"><span class="campo__rotulo">Código postal</span><input class="campo__control" id="dato-cp" type="text" value="1406" autocomplete="postal-code" required></label>
+                <label class="campo campo--ancho"><span class="campo__rotulo">Calle</span><input class="campo__control" id="dato-calle" type="text" value="Av. Rivadavia" autocomplete="billing address-line1" data-requerido="datos" data-campo="calle"></label>
+                <div class="campo">
+                  <label class="campo__rotulo" for="dato-numero">Número</label>
+                  <input class="campo__control" id="dato-numero" type="text" inputmode="numeric" value="5420" data-requerido="datos" data-campo="numero">
+                  <label class="casilla casilla--chica"><input type="checkbox" data-sin-numero> Sin número</label>
+                </div>
+                <label class="campo"><span class="campo__rotulo">Piso <span class="campo__opcional">(opcional)</span></span><input class="campo__control" id="dato-piso" type="text" value="3"></label>
+                <label class="campo"><span class="campo__rotulo">Departamento <span class="campo__opcional">(opcional)</span></span><input class="campo__control" id="dato-depto" type="text" value="B"></label>
+                <label class="campo"><span class="campo__rotulo">Código postal</span><input class="campo__control" id="dato-cp" type="text" inputmode="numeric" maxlength="8" value="1406" autocomplete="billing postal-code" data-requerido="datos" data-campo="cp"></label>
+                <label class="campo"><span class="campo__rotulo">Provincia</span><span class="selector"><select class="selector__campo" id="dato-provincia" autocomplete="billing address-level1"><option>Buenos Aires</option><option>Catamarca</option><option>Chaco</option><option>Chubut</option><option selected>Ciudad Autónoma de Buenos Aires</option><option>Córdoba</option><option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option><option>Jujuy</option><option>La Pampa</option><option>La Rioja</option><option>Mendoza</option><option>Misiones</option><option>Neuquén</option><option>Río Negro</option><option>Salta</option><option>San Juan</option><option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option><option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span></label>
+                <label class="campo"><span class="campo__rotulo">Localidad</span><input class="campo__control" id="dato-localidad" type="text" value="Caballito" autocomplete="billing address-level2" data-requerido="datos" data-campo="localidad"></label>
               </div>
             </fieldset>
 
@@ -820,7 +827,8 @@
       </header>
       <div class="dialogo__cuerpo" data-paso="cargar">
         <p class="comprobante__pedido">Pedido <strong data-comprobante-pedido>#MAX-423518</strong> · Total <strong data-comprobante-total>$2.401.920</strong></p>
-        <!-- Hasta 5 archivos por pedido, de a uno: PDF, JPG, PNG, HEIC o WEBP de hasta 20 MB cada uno -->
+        <!-- Hasta 5 archivos por pedido (de a uno o varios juntos): PDF, JPG, PNG, HEIC o WEBP de hasta 20 MB cada uno
+             y hasta 25 MB entre todos los de un envío -->
         <ul class="archivos" data-archivos></ul>
         <label class="archivo" data-archivo-caja>
           <input class="archivo__campo" id="comprobante-archivo" type="file" accept=".pdf,.jpg,.jpeg,.png,.heic,.webp" multiple>

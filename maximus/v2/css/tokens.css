@@ -62,6 +62,13 @@
   --color-sobre-imagen: #5d636a; /* íconos sobre la foto (favorito) */
   --color-favorito: #ff3040; /* corazón al pasar el mouse y marcado: el rojo del "me gusta" de Instagram */
 
+  /* Papel: documentos que se descargan o se imprimen (presupuesto en PDF de Favoritos); iguales en ambos modos */
+  --color-papel: #ffffff;
+  --color-papel-texto: #1a1f1c;
+  --color-papel-texto-suave: #5a625d;
+  --color-papel-borde: #d9ded9; /* líneas de la tabla */
+  --color-papel-superficie: #f2f5f2; /* encabezado de la tabla */
+
   /* Estados (pedidos, garantías, avisos): se usan en puntos, íconos y fondos tenues; el texto queda en --color-texto,
      salvo los mensajes de error e informativos (--color-error-texto, --color-info-texto) */
   --color-exito: var(--color-marca);

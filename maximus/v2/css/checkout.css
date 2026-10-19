@@ -1006,8 +1006,14 @@
   align-self: flex-start;
 }
 
-.ingreso-checkout__form .boton {
+.ingreso-checkout__form .boton,
+.ingreso-checkout__alta > .boton {
   align-self: stretch;
+}
+
+/* Crear cuenta dentro del checkout: ocupa el lugar de las dos tarjetas */
+.ingreso-checkout__volver {
+  align-self: center;
 }
 
 @media (min-width: 768px) {
@@ -1016,8 +1022,13 @@
     align-items: start;
   }
 
-  .ingreso-checkout__intro {
+  .ingreso-checkout__intro,
+  .ingreso-checkout__alta {
     grid-column: 1 / -1;
+  }
+
+  .ingreso-checkout__alta > .boton {
+    align-self: flex-start;
   }
 }
 
@@ -1142,38 +1153,7 @@
   color: var(--color-acento);
 }
 
-/* Totales: impuestos plegados con el detalle por alícuota, interés y total financiado */
-.totales .totales__plegable {
-  display: block;
-}
-
-.totales__plegable summary {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--espacio-3);
-  color: var(--color-texto-suave);
-}
-
-.totales__plegable summary span:first-child {
-  text-decoration: underline dotted;
-  text-underline-offset: 3px;
-}
-
-.totales__plegable summary span:last-child {
-  color: var(--color-texto);
-  font-variant-numeric: tabular-nums;
-}
-
-.totales__detalle {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: var(--espacio-1) 0 0;
-  padding-left: var(--espacio-3);
-  border-left: 2px solid var(--color-borde);
-  font-size: var(--texto-xs);
-}
-
+/* Totales: total financiado (los impuestos plegados están en base.css) */
 .totales__financiado dd {
   font-weight: var(--peso-fuerte);
 }

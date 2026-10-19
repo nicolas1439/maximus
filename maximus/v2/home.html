@@ -29,6 +29,17 @@
   <!-- Cuerpo del home: acá se suman sus componentes -->
   <main class="home" id="contenido" tabindex="-1">
 
+    <!-- Solo para la demostración (no va en la página completa): con sesión se ven "Lo último que viste" y
+         "Tus favoritos" (data-con-sesion). Guarda o borra la sesión de muestra (localStorage 'sesion'), como header.html -->
+    <div class="contenedor variantes" data-demo>
+      <span class="variantes__rotulo">Sesión</span>
+      <div class="variantes__opciones" role="group" aria-label="Sesión">
+        <button class="variantes__btn" type="button" aria-pressed="false" data-demo-sesion="con" onclick="try { localStorage.setItem('sesion', '1'); } catch {} location.reload()">Con sesión</button>
+        <button class="variantes__btn" type="button" aria-pressed="false" data-demo-sesion="sin" onclick="try { localStorage.removeItem('sesion'); } catch {} location.reload()">Sin sesión</button>
+      </div>
+      <script>try { const con = Boolean(localStorage.getItem('sesion')); document.querySelectorAll('[data-demo-sesion]').forEach((b) => b.setAttribute('aria-pressed', (b.dataset.demoSesion === 'con') === con)); } catch {}</script>
+    </div>
+
     <!-- Hero: carrusel principal de campañas + 4 tarjetas secundarias (textos de ejemplo).
          Para usar un banner: <img class="hero__img" src="recursos/..." alt=""> dentro de la tarjeta
          (o <picture> con versión mobile y escritorio). Si el banner ya trae el texto, se quita .hero__texto
@@ -621,7 +632,7 @@
         <div class="seccion__cab">
           <h2 class="seccion__titulo" id="computadoras-titulo">Computadoras armadas</h2>
           <div class="seccion__acciones">
-            <a class="seccion__enlace" href="#">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+            <a class="seccion__enlace" href="tu-pc-ideal.html">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
             <div class="carrusel__flechas">
               <button class="boton-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
               <button class="boton-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
@@ -825,7 +836,7 @@
         <div class="seccion__cab">
           <h2 class="seccion__titulo" id="notebooks-titulo">Notebooks</h2>
           <div class="seccion__acciones">
-            <a class="seccion__enlace" href="#">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+            <a class="seccion__enlace" href="placas-de-video.html">Ver todas <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
             <div class="carrusel__flechas">
               <button class="boton-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
               <button class="boton-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
@@ -1023,7 +1034,7 @@
         <div class="seccion__cab">
           <h2 class="seccion__titulo" id="favoritos-titulo">Tus favoritos</h2>
           <div class="seccion__acciones">
-            <a class="seccion__enlace" href="#">Ver todos <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+            <a class="seccion__enlace" href="mi-cuenta.html#favoritos">Ver todos <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></a>
             <div class="carrusel__flechas">
               <button class="boton-icono carrusel__flecha" type="button" data-sentido="-1" aria-label="Ver anteriores"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
               <button class="boton-icono carrusel__flecha" type="button" data-sentido="1" aria-label="Ver siguientes"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
@@ -1433,7 +1444,11 @@
         <details class="faq__item plegable" name="faq">
           <summary class="faq__pregunta">¿Puedo cambiar o devolver un producto?<svg class="icono faq__icono" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
           <div class="faq__respuesta">
-            <p>Cambio o devolución hasta 10 días corridos desde la recepción, siempre sin uso, sin abrir y con el empaque y los accesorios originales.</p>
+            <p>Son dos trámites distintos:</p>
+            <ul>
+              <li><strong>Cambio:</strong> dentro de los 10 días desde que recibís el producto, por uno de igual valor o por uno de mayor valor abonando la diferencia.</li>
+              <li><strong>Devolución por arrepentimiento:</strong> dentro de los 10 días corridos desde que recibís la compra, sin dar explicaciones (Ley 24.240). Se inicia con el <a href="boton-de-arrepentimiento.html">botón de arrepentimiento</a>.</li>
+            </ul>
             <p>No tienen cambio ni devolución los productos OUTLET y los marcados “sin cambio” al momento de la compra, las licencias activadas y los productos con uso.</p>
           </div>
         </details>

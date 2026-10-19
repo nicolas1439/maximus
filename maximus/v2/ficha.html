@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/faq.css">
   <link rel="stylesheet" href="css/resenas.css">
   <link rel="stylesheet" href="css/ficha.css">
+  <link data-demo rel="stylesheet" href="css/dialogo.css">
   <script type="module" src="js/ficha.js"></script>
   <script type="module" src="js/resenas.js"></script>
 </head>
@@ -73,12 +74,19 @@
         <button class="variantes__btn" type="button" data-variante="producto:placa" aria-pressed="true">Placa de video</button>
         <button class="variantes__btn" type="button" data-variante="producto:pc" aria-pressed="false">PC armada</button>
         <button class="variantes__btn" type="button" data-variante="producto:grande" aria-pressed="false">Producto grande</button>
+        <button class="variantes__btn" type="button" data-variante="producto:notebook" aria-pressed="false">Notebook o monitor</button>
+      </div>
+      <span class="variantes__rotulo">Sesión</span>
+      <div class="variantes__opciones" role="group" aria-label="Sesión">
+        <button class="variantes__btn" type="button" aria-pressed="false" data-demo-sesion="con" onclick="try { localStorage.setItem('sesion', '1'); } catch {} location.reload()">Con sesión</button>
+        <button class="variantes__btn" type="button" aria-pressed="false" data-demo-sesion="sin" onclick="try { localStorage.removeItem('sesion'); } catch {} location.reload()">Sin sesión</button>
       </div>
       <span class="variantes__rotulo">Errores al agregar</span>
       <div class="variantes__opciones" role="group" aria-label="Errores al agregar">
         <button class="variantes__btn" type="button" data-error-agregar="agotado">Se agotó</button>
         <button class="variantes__btn" type="button" data-error-agregar="caido">Sitio no disponible</button>
       </div>
+      <script>try { const con = Boolean(localStorage.getItem('sesion')); document.querySelectorAll('[data-demo-sesion]').forEach((b) => b.setAttribute('aria-pressed', (b.dataset.demoSesion === 'con') === con)); } catch {}</script>
     </div>
 
     <nav class="contenedor migas" aria-label="Ubicación">
@@ -304,7 +312,8 @@
             </div>
           </li>
           <!-- Garantía según el producto: PC armadas, 12 meses; hardware, periféricos, conectividad y accesorios, 6 meses con Maximus;
-               notebooks, monitores, impresoras, Logitech y Seagate, "10 días de prueba con Maximus y después con el fabricante". -->
+               notebooks, monitores, impresoras, Logitech y Seagate, 10 días de prueba con Maximus y después con el servicio oficial
+               del fabricante (en la vista previa, la variante "Notebook o monitor"). -->
           <li class="condicion">
             <svg class="icono" aria-hidden="true"><use href="#i-garantia"/></svg>
             <div><strong data-garantia-texto>6 meses de garantía con Maximus</strong><span><a href="centro-de-ayuda.html#garantias">Ver condiciones de la garantía</a></span></div>
@@ -325,7 +334,8 @@
         <div class="resumen-fijo__precios">
           <p class="resumen-fijo__precio">$2.401.920</p>
           <p class="resumen-fijo__nota">Efectivo, transferencia o depósito</p>
-          <p class="resumen-fijo__cuotas">3 cuotas sin interés de $889.600</p>
+          <p class="resumen-fijo__cuotas" data-cuotas="con">3 cuotas sin interés de $889.600</p>
+          <p class="resumen-fijo__cuotas resumen-fijo__cuotas--sin" hidden data-cuotas="sin">Hasta 24 cuotas con Mercado Pago</p>
         </div>
         <div class="resumen-fijo__accion">
           <div class="cantidad" data-cantidad>
@@ -552,7 +562,7 @@
             </form>
             <div class="resenas__estado resenas__aviso resenas__aviso--info" hidden data-resena-estado="revision">
               <svg class="icono" aria-hidden="true"><use href="#i-reloj"/></svg>
-              <div><p class="resenas__invitacion">Tu reseña está en revisión</p><p class="resenas__condicion">La publicamos en las próximas 48 hs hábiles, si cumple con las normas de publicación.</p></div>
+              <div><p class="resenas__invitacion">Tu reseña está en revisión</p><p class="resenas__condicion">La publicamos después de revisarla, si cumple con las normas de publicación.</p></div>
             </div>
             <div class="resenas__estado resenas__aviso resenas__aviso--error" hidden data-resena-estado="rechazada">
               <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
@@ -852,7 +862,7 @@
   <div class="ficha__barra" data-barra>
     <div>
       <span class="ficha__barra-precio">$2.401.920</span>
-      <span class="ficha__barra-nota">Efectivo o transferencia · 3 cuotas sin interés</span>
+      <span class="ficha__barra-nota">Efectivo o transferencia · <span data-cuotas="con">3 cuotas sin interés</span><span hidden data-cuotas="sin">Hasta 24 cuotas</span></span>
     </div>
     <button class="boton boton--primario" type="button" data-agregar data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar</button>
   </div>
@@ -866,6 +876,24 @@
     <button class="boton-icono visor__flecha" type="button" data-sentido="-1" aria-label="Foto anterior"><svg class="icono" aria-hidden="true"><use href="#i-izquierda"/></svg></button>
     <button class="boton-icono visor__flecha" type="button" data-sentido="1" aria-label="Foto siguiente"><svg class="icono" aria-hidden="true"><use href="#i-derecha"/></svg></button>
     <button class="boton-icono visor__cerrar" type="button" aria-label="Cerrar" data-cerrar><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+  </dialog>
+
+  <!-- Favorito sin sesión: "Guardá tus favoritos" (tarjeta.js). En las páginas completas lo trae el footer; esta copia
+       es solo para la vista previa (data-demo) -->
+  <dialog class="dialogo dialogo--chico" aria-labelledby="favorito-titulo" data-dialogo-favorito data-demo>
+    <div class="dialogo__caja">
+      <header class="dialogo__cab">
+        <h2 class="dialogo__titulo" id="favorito-titulo">Guardá tus favoritos</h2>
+        <button class="boton-icono" type="button" data-cerrar-dialogo aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+      </header>
+      <div class="dialogo__cuerpo">
+        <p class="dialogo__texto">Ingresá o creá tu cuenta para guardar este producto. Cuando vuelvas, va a estar en Tus favoritos.</p>
+        <div class="dialogo__acciones">
+          <a class="boton boton--secundario" href="crear-cuenta.html" data-favorito-registro>Crear cuenta</a>
+          <a class="boton boton--primario" href="ingresar.html" data-favorito-ingresar>Ingresar</a>
+        </div>
+      </div>
+    </div>
   </dialog>
 
   <!-- Aviso breve: enlace copiado, agregado al carrito, favorito -->

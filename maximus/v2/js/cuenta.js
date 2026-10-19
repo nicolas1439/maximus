@@ -53,13 +53,16 @@ if (cuenta && paneles.length) {
 }
 
 // ---------- Subir comprobante ----------
-// Hasta 5 archivos por pedido, de a uno: PDF, JPG, PNG, HEIC o WEBP de hasta 20 MB cada uno. Errores: formato no
-// admitido, archivo muy grande, varios a la vez ("Subilos de a uno"), el máximo de 5 y no se pudo subir (WhatsApp)
+// Hasta 5 archivos por pedido, elegidos de a uno o varios juntos: PDF, JPG, PNG, HEIC o WEBP de hasta 20 MB cada uno
+// y hasta 25 MB entre todos los de un envío (a confirmar con el backend: el límite de IIS por pedido es de unos
+// 28 MB). Errores: formato no admitido, archivo muy grande, el máximo de 5, la suma por encima del tope del envío
+// ("Subilos de a uno": se envían los que entran y el resto con "Agregar otro comprobante") y no se pudo subir (WhatsApp)
 
 const dialogo = document.querySelector('[data-dialogo-comprobante]');
 const FORMATOS = ['pdf', 'jpg', 'jpeg', 'png', 'heic', 'webp'];
 const MAXIMO = 5;
 const TOPE = 20 * 1024 * 1024;
+const TOPE_ENVIO = 25 * 1024 * 1024;
 
 if (dialogo) {
   const form = dialogo.querySelector('[data-comprobante-form]');
@@ -116,14 +119,21 @@ if (dialogo) {
     const nuevos = [...archivo.files];
     archivo.value = '';
     if (!nuevos.length) return;
-    if (nuevos.length > 1) return mostrarError('Subilos de a uno.');
-    const [f] = nuevos;
-    const extension = f.name.split('.').pop().toLowerCase();
-    if (!FORMATOS.includes(extension)) return mostrarError('Este formato no se admite: subí un PDF, JPG, PNG, HEIC o WEBP.');
-    if (f.size > TOPE) return mostrarError(`El archivo pesa ${peso(f.size)}: el máximo es 20 MB.`);
+    // Con varios, el error nombra el archivo
+    const cual = (f) => (nuevos.length > 1 ? `“${f.name.replace(/[<>&]/g, '')}”` : 'El archivo');
+    const malFormato = nuevos.find((f) => !FORMATOS.includes(f.name.split('.').pop().toLowerCase()));
+    if (malFormato) return mostrarError(`${nuevos.length > 1 ? `${cual(malFormato)}: este` : 'Este'} formato no se admite. Subí un PDF, JPG, PNG, HEIC o WEBP.`);
+    const pesado = nuevos.find((f) => f.size > TOPE);
+    if (pesado) return mostrarError(`${cual(pesado)} pesa ${peso(pesado.size)}: el máximo es 20 MB por archivo.`);
     if (elegidos.length >= MAXIMO) return mostrarError('Ya cargaste 5 archivos, el máximo por pedido.');
+    if (elegidos.length + nuevos.length > MAXIMO) {
+      const quedan = MAXIMO - elegidos.length;
+      return mostrarError(`Podés agregar ${quedan === 1 ? '1 archivo más' : `${quedan} archivos más`}: el máximo es 5 por pedido.`);
+    }
+    const total = [...elegidos, ...nuevos].reduce((suma, f) => suma + f.size, 0);
+    if (total > TOPE_ENVIO) return mostrarError(`Entre todos pesan ${peso(total)} y en un envío entran hasta 25 MB. Subilos de a uno.`);
     mostrarError('');
-    elegidos.push(f);
+    elegidos.push(...nuevos);
     pintar();
   });
 
@@ -187,13 +197,16 @@ document.querySelectorAll('[data-cerrar-sesion]').forEach((enlace) =>
 
 // ---------- Formularios (de muestra) ----------
 
-document.querySelectorAll('[data-formulario]').forEach((form) =>
+// Mis datos: el domicilio de facturación va por partes (data-requerido="datos"), cada campo con su error y "Sin número"
+document.querySelectorAll('[data-formulario]').forEach((form) => {
+  iniciarCampos(form);
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const estado = form.querySelector('.formulario__estado');
     const claves = [...form.querySelectorAll('input[type="password"], input[autocomplete="new-password"]')];
 
     let error = '';
+    const domicilioOk = validarCampos(form, 'datos');
     const vacio = [...form.querySelectorAll('[required]')].find((c) => !c.value.trim());
     const documento = form.querySelector('[data-documento]:not(:disabled)');
     const tipoDoc = form.querySelector('#dato-doc-tipo')?.value;
@@ -202,29 +215,34 @@ document.querySelectorAll('[data-formulario]').forEach((form) =>
     if (documento) marcarError(documento, docMal ? 'El CUIT o DNI no es válido.' : '');
     if (vacio) error = 'Completá todos los campos.';
     else if (docMal) error = 'Revisá el documento.';
+    else if (!domicilioOk) error = 'Revisá el domicilio de facturación.';
     else if (claves.length === 2 && claves[0].value.length < 8) error = 'La contraseña tiene que tener al menos 8 caracteres.';
     else if (claves.length === 2 && claves[0].value !== claves[1].value) error = 'Las contraseñas no coinciden.';
 
     estado.classList.toggle('formulario__estado--error', Boolean(error));
     estado.textContent = error || `${form.dataset.formulario}.`;
-    if (error) (vacio || (docMal && documento) || claves[0]).focus();
+    // El foco va al primer dato con error (los del domicilio ya lo recibieron de validarCampos)
+    if (error) (vacio || (docMal && documento) || claves[0])?.focus();
     else if (claves.length) form.reset();
-  })
-);
+  });
+});
 
 // ---------- Estados del pedido ----------
 // Cada estado real del sitio con su color y su lugar en los 5 pasos (Confirmado, Pago, Preparación, En camino o
-// Para retirar, Entregado o Retirado). "Cancelar pedido" solo antes de que se confirme el pago.
+// Para retirar, Entregado o Retirado), en el orden del pedido: ingreso → pendiente → revisión → pago confirmado →
+// facturado → listo para despachar (envío) o para retirar (retiro) → despachado → entregado. Los que comparten el
+// paso Preparación se distinguen por la etapa que se lee debajo del paso actual (pago confirmado: sin etapa).
+// [tono, texto, paso actual, retiro (por defecto sí), etapa]. "Cancelar pedido" solo antes de que se confirme el pago.
 
 const ESTADOS_PEDIDO = {
-  pendiente: ['aviso', 'Pendiente de pago', 1],
   ingreso: ['info', 'Ingreso del pedido', 0],
+  pendiente: ['aviso', 'Pendiente de pago', 1],
   revision: ['info', 'Pedido en revisión', 1],
   pago: ['exito', 'Pago confirmado', 2],
-  despachar: ['info', 'Listo para despachar', 2, false],
+  facturado: ['info', 'Facturado', 2, true, 'Facturado'],
+  despachar: ['info', 'Listo para despachar', 2, false, 'Listo'],
   despachado: ['info', 'Despachado', 3, false],
   retirar: ['exito', 'Listo para retirar', 3],
-  facturado: ['info', 'Facturado', 3],
   entregado: ['exito', 'Entregado', 5],
   cancelado: ['error', 'Cancelado', -1],
 };
@@ -235,17 +253,18 @@ const ENTREGA = {
   envio: { pago: 'Transferencia bancaria · Envío a domicilio', dt: 'Envío OCA 24 hs hábiles', dd: '$8.367', total: '$2.410.287' },
 };
 
-// El comprobante que corresponde a cada estado del pedido (en el sitio real vienen juntos)
+// El comprobante que corresponde a cada estado del pedido (en el sitio real vienen juntos): desde Facturado, la
+// factura queda para descargar en los estados que siguen
 const COMPROBANTE_DE = {
-  pendiente: 'subir', ingreso: 'subir', revision: 'revision', pago: 'confirmado', despachar: 'confirmado',
-  despachado: 'confirmado', retirar: 'confirmado', facturado: 'factura', entregado: 'factura',
+  ingreso: 'subir', pendiente: 'subir', revision: 'revision', pago: 'confirmado', facturado: 'factura',
+  despachar: 'factura', despachado: 'factura', retirar: 'factura', entregado: 'factura',
 };
 
 const tarjetaDemo = document.querySelector('[data-pedido-demo]');
 
 function verPedido(estado, conComprobante = true) {
   if (!tarjetaDemo) return;
-  const [tono, texto, actual, retiro = true] = ESTADOS_PEDIDO[estado];
+  const [tono, texto, actual, retiro = true, etapa] = ESTADOS_PEDIDO[estado];
   const entrega = ENTREGA[retiro ? 'retiro' : 'envio'];
   tarjetaDemo.querySelector('[data-entrega="pago"]').textContent = entrega.pago;
   tarjetaDemo.querySelector('[data-entrega="dt"]').textContent = entrega.dt;
@@ -265,7 +284,8 @@ function verPedido(estado, conComprobante = true) {
     if (i === actual) paso.setAttribute('aria-current', 'step');
     else paso.removeAttribute('aria-current');
     paso.querySelector('.seguimiento__punto').innerHTML = hecho ? '<svg class="icono" aria-hidden="true"><use href="#i-check"/></svg>' : '';
-    paso.querySelector('.seguimiento__texto').innerHTML = nombres[i] + (hecho ? '<small>12/10</small>' : '');
+    const debajo = hecho ? '12/10' : i === actual && etapa;
+    paso.querySelector('.seguimiento__texto').innerHTML = nombres[i] + (debajo ? `<small>${debajo}</small>` : '');
   });
   tarjetaDemo.querySelector('[data-pasos-pedido]').classList.toggle('seguimiento--cancelado', estado === 'cancelado');
   const cancelable = ['pendiente', 'ingreso', 'revision'].includes(estado);
@@ -295,7 +315,7 @@ const ESTADOS_COMPROBANTE = {
   subir: ['aviso', 'i-alerta', 'Subí el comprobante de la transferencia dentro de las 24 hs: sin él, el pedido no pasa a preparación y se libera el stock.', 'Subir comprobante'],
   subidos: ['info', 'i-comprobante', 'Comprobantes subidos ({n}): los revisamos y te avisamos por correo cuando se acredite el pago.', 'Agregar otro comprobante'],
   revision: ['info', 'i-reloj', 'Comprobante en revisión: te avisamos por correo cuando se acredite el pago.'],
-  verificacion: ['info', 'i-reloj', 'En verificación de datos: Mercado Pago está validando el pago. Puede tardar hasta 48 hs hábiles.'],
+  verificacion: ['info', 'i-reloj', 'En verificación de datos: Mercado Pago está validando el pago. Te avisamos por correo cuando se acredite.'],
   confirmado: ['exito', 'i-check', 'Pago confirmado el 12/10/2026.'],
   retirar: ['neutro', 'i-efectivo', 'Pago al retirar: pagás en efectivo cuando pasás a buscarlo por el local.'],
   factura: ['exito', 'i-comprobante', 'Tu factura ya está disponible.', null, true],
@@ -306,8 +326,10 @@ function verComprobante(estado, cantidad = 2) {
   const [tono, icono, texto, accion, factura] = ESTADOS_COMPROBANTE[estado];
   const caja = tarjetaDemo.querySelector('[data-comprobante-estado]');
   caja.hidden = false;
-  caja.className = `comprobante-estado comprobante-estado--${tono}`;
-  caja.querySelector('[data-comprobante-texto]').innerHTML = `<svg class="icono icono--s" aria-hidden="true"><use href="#${icono}"/></svg><span>${texto.replace('{n}', cantidad)}</span>`;
+  // La alerta de base.css, en su versión compacta de la tarjeta del pedido (cuenta.css)
+  caja.className = `alerta alerta--${tono} alerta--compacta`;
+  caja.querySelector('[data-comprobante-icono]').setAttribute('href', `#${icono}`);
+  caja.querySelector('[data-comprobante-texto]').textContent = texto.replace('{n}', cantidad);
   const boton = tarjetaDemo.querySelector('[data-accion-comprobante]');
   boton.hidden = !accion;
   if (accion) boton.querySelector('[data-accion-texto]').textContent = accion;

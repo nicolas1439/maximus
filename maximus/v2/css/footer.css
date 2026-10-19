@@ -370,9 +370,12 @@ a.pie__arriba {
   pointer-events: auto;
 }
 
-/* Con una barra fija abajo (ficha, carrito, armador), suben por encima */
-.mx:has(.ficha__barra--visible, .checkout__barra--visible, .barra-arm--visible) .flotantes {
-  translate: 0 calc(-1 * var(--alto-control-l) - var(--espacio-4));
+/* Con una barra fija abajo (ficha, carrito, armador), suben por encima. Solo en celular y tablet: desde 1024px esas
+   barras no se muestran (en escritorio subían igual: corregido, 19/10/2026) */
+@media (max-width: 1023px) {
+  .mx:has(.ficha__barra--visible, .checkout__barra--visible, .barra-arm--visible) .flotantes {
+    translate: 0 calc(-1 * var(--alto-control-l) - var(--espacio-4));
+  }
 }
 
 .whatsapp {

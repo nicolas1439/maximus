@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/banner.css">
   <link rel="stylesheet" href="css/faq.css">
   <link rel="stylesheet" href="css/listado.css">
+  <link data-demo rel="stylesheet" href="css/dialogo.css">
   <script type="module" src="js/listado.js"></script>
 </head>
 <body>
@@ -30,6 +31,28 @@
        Arriba de la grilla, el estante "Las más elegidas"; al pie, la guía de la categoría (texto y preguntas, por SEO).
        Fotos: por ahora se toman del CDN del sitio; pendiente bajarlas a recursos/productos/. -->
   <main class="listado" id="contenido" tabindex="-1">
+
+    <!-- Estados de muestra (solo la vista previa; no van en el sitio real): los tres avisos de la búsqueda (?q=, la usa
+         buscar.html; en la página completa se ven escribiendo lo mismo en el buscador del header) y la sesión, para el
+         favorito sin sesión ("Guardá tus favoritos") y con sesión -->
+    <div class="contenedor variantes variantes--listado" data-demo>
+      <span class="variantes__rotulo">Búsqueda</span>
+      <div class="variantes__opciones" role="group" aria-label="Búsqueda">
+        <a class="variantes__btn" href="listado.html" data-demo-busqueda="">Sin búsqueda</a>
+        <a class="variantes__btn" href="listado.html?q=rxt%205060" data-demo-busqueda="rxt 5060">Corregida</a>
+        <a class="variantes__btn" href="listado.html?q=rtx%20rosa" data-demo-busqueda="rtx rosa">Parecidos</a>
+        <a class="variantes__btn" href="listado.html?q=heladera" data-demo-busqueda="heladera">Sin resultados</a>
+      </div>
+      <span class="variantes__rotulo">Sesión</span>
+      <div class="variantes__opciones" role="group" aria-label="Sesión">
+        <button class="variantes__btn" type="button" aria-pressed="false" data-demo-sesion="con" onclick="try { localStorage.setItem('sesion', '1'); } catch {} location.reload()">Con sesión</button>
+        <button class="variantes__btn" type="button" aria-pressed="false" data-demo-sesion="sin" onclick="try { localStorage.removeItem('sesion'); } catch {} location.reload()">Sin sesión</button>
+      </div>
+      <script>
+        try { const con = Boolean(localStorage.getItem('sesion')); document.querySelectorAll('[data-demo-sesion]').forEach((b) => b.setAttribute('aria-pressed', (b.dataset.demoSesion === 'con') === con)); } catch {}
+        { const q = (new URLSearchParams(location.search).get('q') || '').trim(); document.querySelectorAll('[data-demo-busqueda]').forEach((a) => { if (a.dataset.demoBusqueda === q) a.setAttribute('aria-current', 'page'); }); }
+      </script>
+    </div>
 
     <nav class="contenedor migas" aria-label="Ubicación">
       <ol>
@@ -193,7 +216,7 @@
       </div>
 
       <!-- Las más elegidas: estante de destacados de la categoría, como el de maximus.com.ar. Las 8 más vendidas de la
-           grilla en tarjeta compacta (producto--compacto: foto, marca, nombre, precio y cuotas; en el sitio real las elige
+           grilla en tarjeta compacta (producto--compacto: foto, favorito, marca, nombre, precio y cuotas; en el sitio real las elige
            el backend). Se esconde mientras hay filtros aplicados (listado.js). Fondo armado con código, sin imagen:
            degradado, brillos, trama de puntos y el logo como marca de agua; violeta en claro y verde en oscuro
            (tokens.css, --color-estante-*). -->
@@ -214,6 +237,7 @@
               <article class="producto producto--compacto">
                 <div class="producto__media">
                   <img class="producto__img" src="recursos/productos/msi-rtx-5060-shadow.jpg" alt="" width="600" height="600">
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -232,6 +256,7 @@
                 <div class="producto__media">
                   <img class="producto__img" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/90YV0NS0-M0AA00_600.jpg" alt="" width="600" height="600">
                   <span class="etiqueta producto__etiqueta">Ahorrá $305.829</span>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -250,6 +275,7 @@
                 <div class="producto__media">
                   <img class="producto__img" src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600">
                   <span class="etiqueta producto__etiqueta">Ahorrá $266.880</span>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -267,6 +293,7 @@
               <article class="producto producto--compacto">
                 <div class="producto__media">
                   <img class="producto__img" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V537-017_600.jpg" alt="" width="600" height="600">
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -285,6 +312,7 @@
                 <div class="producto__media">
                   <img class="producto__img" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/9VN5050WO-00-G10_600.jpg" alt="" width="600" height="600">
                   <span class="etiqueta producto__etiqueta">Ahorrá $142.830</span>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -302,6 +330,7 @@
               <article class="producto producto--compacto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N5070WIND-OC-12GD_600.jpg" alt="" width="600" height="600">
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -319,6 +348,7 @@
               <article class="producto producto--compacto">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/GV-N3050WF2OCV2-6GD_600.jpg" alt="" width="600" height="600">
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -337,6 +367,7 @@
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/9VN5060EOI-00-G10_600.jpg" alt="" width="600" height="600">
                   <span class="etiqueta producto__etiqueta">Ahorrá $132.210</span>
+                  <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
                 </div>
                 <div class="producto__cuerpo">
                   <div class="producto__meta">
@@ -1309,7 +1340,7 @@
       <div class="faq__cuerpo">
         <div class="guia__texto">
           <p>Si sos un verdadero gamer, sabés que la <strong>placa de video</strong> es el componente clave para que la experiencia de juego sea épica. Y si sos un verdadero gamer, seguro ya sabés que en <a href="index.html">Maximus</a> tenemos <strong>la mayor selección de GPU gamer del mercado</strong>, para que encuentres la opción ideal para tu setup.</p>
-          <p>¿Querés <a href="#">armar una PC gamer</a> desde cero? ¿Estás actualizando tu <a href="#">compu gamer</a> para correr juegos más potentes? Para cualquier caso, te ofrecemos <strong>tarjetas gráficas de última generación</strong> de las marcas líderes: <a href="placas-de-video.html?sub=nvidia">Nvidia</a> y <a href="placas-de-video.html?sub=amd">AMD</a>.</p>
+          <p>¿Querés <a href="arma-tu-pc.html">armar una PC gamer</a> desde cero? ¿Estás actualizando tu <a href="#">compu gamer</a> para correr juegos más potentes? Para cualquier caso, te ofrecemos <strong>tarjetas gráficas de última generación</strong> de las marcas líderes: <a href="placas-de-video.html?sub=nvidia">Nvidia</a> y <a href="placas-de-video.html?sub=amd">AMD</a>.</p>
           <details class="faq__resto plegable">
             <summary class="faq__mas"><span class="faq__mas-mas">Leer más</span><span class="faq__mas-menos">Leer menos</span><svg class="icono icono--s" aria-hidden="true"><use href="#i-abajo"/></svg></summary>
             <p>Tenemos opciones para todos los bolsillos y niveles de exigencia. Desde <strong>placas de video con la mejor calidad precio</strong>, como las AMD Radeon RX y GeForce GT, para juegos tranqui; hasta las mejores placas de video del mercado, como las <a href="#">Nvidia GeForce RTX 4080</a> y <a href="#">Nvidia GeForce RTX 4090</a>, que se bancan los títulos más demandantes con todos los gráficos al máximo.</p>
@@ -1395,6 +1426,24 @@
     </section>
 
   </main>
+
+  <!-- Favorito sin sesión: "Guardá tus favoritos" (tarjeta.js). En las páginas completas lo trae el footer; esta copia
+       es solo para la vista previa (data-demo) -->
+  <dialog class="dialogo dialogo--chico" aria-labelledby="favorito-titulo" data-dialogo-favorito data-demo>
+    <div class="dialogo__caja">
+      <header class="dialogo__cab">
+        <h2 class="dialogo__titulo" id="favorito-titulo">Guardá tus favoritos</h2>
+        <button class="boton-icono" type="button" data-cerrar-dialogo aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+      </header>
+      <div class="dialogo__cuerpo">
+        <p class="dialogo__texto">Ingresá o creá tu cuenta para guardar este producto. Cuando vuelvas, va a estar en Tus favoritos.</p>
+        <div class="dialogo__acciones">
+          <a class="boton boton--secundario" href="crear-cuenta.html" data-favorito-registro>Crear cuenta</a>
+          <a class="boton boton--primario" href="ingresar.html" data-favorito-ingresar>Ingresar</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
 
 </div>
 </body>

@@ -497,7 +497,7 @@ function iniciar() {
         <div class="paso-arm__resultados"><p class="paso-arm__cuenta" data-cuenta-paso></p>${p.buscar ? `<label class="orden-arm"><span class="sr-only">Ordenar</span><span class="selector"><select class="selector__campo" data-orden><option value="menor">Menor a mayor</option><option value="mayor">Mayor a menor</option></select>${icono('i-abajo', 'icono icono--s selector__flecha')}</span></label>` : ''}</div>
         <ul class="piezas" data-piezas></ul>
         <div class="paso-arm__pie">
-          ${p.total > p.piezas.length ? `<button class="boton boton--secundario paso-arm__mas-productos" type="button" data-mas-productos>${icono('i-abajo')}Ver más productos (<span data-restantes></span> restantes)</button>` : ''}
+          ${p.total > p.piezas.length ? `<button class="boton boton--secundario paso-arm__mas-productos" type="button" data-mas-productos>${icono('i-abajo')}<span>Ver más <span class="paso-arm__mas-palabra">productos </span>(<span data-restantes></span> restantes)</span></button>` : ''}
           ${p.max > 1 ? `<button class="boton boton--primario paso-arm__listo" type="button" data-listo>Listo, seguir${icono('i-flecha')}</button>` : ''}
           ${p.opcional ? '' : `<button class="boton-texto boton-texto--suave paso-arm__omitir" type="button" data-saltar="omitido" aria-pressed="false">${icono('i-reloj')}Omitir este componente por ahora</button>`}
         </div>
@@ -886,7 +886,9 @@ function iniciar() {
     for (const b of [agregar, agregarBarra]) {
       b.classList.remove('cargando', 'con-error');
       b.classList.add(clase);
-      b.setAttribute('aria-disabled', 'true');
+      // Agregando no se puede tocar; con error, sí ("Reintentar")
+      if (clase === 'cargando') b.setAttribute('aria-disabled', 'true');
+      else b.removeAttribute('aria-disabled');
       $('use', b).setAttribute('href', `#${iconoId}`);
     }
     $('[data-agregar-texto]', agregar).textContent = textoResumen;
@@ -901,8 +903,11 @@ function iniciar() {
     textosAgregar();
   }
 
+  // Mientras agrega no se puede volver a tocar. Con el error a la vista ya no está agregando: "Reintentar" (barra)
+  // y "Volver a intentar" (alerta) cortan la espera del error y vuelven a agregar
   function agregarArmado({ fallar = false, espera = 900 } = {}) {
     if (agregando || !totalEfectivo()) return;
+    clearTimeout(esperaAgregar);
     agregando = true;
     errorAgregar.hidden = true;
     estadoAgregar('cargando', 'i-recargar', 'Agregando…', 'Agregando…');
@@ -912,6 +917,7 @@ function iniciar() {
         avisar(`Vista previa: se agregarían ${cobrables().reduce((s, l) => s + l.cant, 0)} productos al carrito`);
         return;
       }
+      agregando = false;
       estadoAgregar('con-error', 'i-alerta', 'No se pudo agregar', 'Reintentar');
       errorAgregar.hidden = false;
       // En celular y tablet el resumen queda lejos: el aviso breve lo dice junto a la barra

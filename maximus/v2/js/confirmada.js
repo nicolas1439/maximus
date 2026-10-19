@@ -34,22 +34,25 @@ function iniciar() {
     else lineas.push(extra('i-envio', c.entrega.split(' · ')[0], pesos(t.envio)), extra('i-garantia', 'Seguro de envío', pesos(t.seguro)));
     $('[data-lineas]').innerHTML = lineas.join('');
 
+    // Factura A, como en el checkout: el subtotal pasa a ser sin IVA, la campaña y el 10% van sin IVA y se suman los
+    // impuestos (con el detalle por alícuota) y las percepciones; las filas suman el total
+    const conA = Boolean(c.facturaA);
     $('[data-cantidad]').textContent = t.cantidad;
     $('[data-t-lista]').textContent = pesos(t.lista);
+    $('[data-f-lista]').hidden = conA;
+    $$('[data-f-a]').forEach((fila) => (fila.hidden = !conA));
     $('[data-f-campania]').hidden = !t.campania;
     $('[data-t-campania-nombre]').textContent = c.campania || 'Campaña';
-    $('[data-t-campania]').textContent = `−${pesos(t.campania)}`;
+    $('[data-t-campania]').textContent = `−${pesos(conA ? t.netoCampania : t.campania)}`;
     $('[data-f-descuento]').hidden = !t.descuento;
-    $('[data-t-descuento]').textContent = `−${pesos(t.descuento)}`;
+    $('[data-t-descuento]').textContent = `−${pesos(conA ? t.netoDescuento : t.descuento)}`;
     $('[data-t-total]').textContent = pesos(t.final);
-    // Factura A: neto, IVA por alícuota y percepciones en lugar de lista, campaña y descuento
-    $$('[data-f-a]').forEach((fila) => (fila.hidden = !c.facturaA));
-    if (c.facturaA) {
-      [$('[data-t-lista]').parentElement, $('[data-f-campania]'), $('[data-f-descuento]')].forEach((fila) => (fila.hidden = true));
-      $('[data-t-neto]').textContent = pesos(t.neto);
-      $('[data-t-iva]').outerHTML = Object.entries(t.iva || {})
-        .sort(([a], [b]) => a - b)
-        .map(([alicuota, monto]) => `<div data-f-a><dt>IVA ${String(alicuota).replace('.', ',')}%</dt><dd>${pesos(monto)}</dd></div>`)
+    if (conA) {
+      const iva = Object.entries(t.iva || {}).sort(([a], [b]) => a - b);
+      $('[data-t-neto]').textContent = pesos(t.netoLista);
+      $('[data-t-impuestos]').textContent = pesos(iva.reduce((suma, [, monto]) => suma + monto, 0));
+      $('[data-t-iva]').innerHTML = iva
+        .map(([alicuota, monto]) => `<div><dt>IVA ${String(alicuota).replace('.', ',')}%</dt><dd>${pesos(monto)}</dd></div>`)
         .join('');
       $('[data-t-percepciones]').textContent = pesos(t.percepciones);
     }
@@ -85,7 +88,7 @@ function iniciar() {
         ['Hacé la transferencia', 'Por el total exacto, con los datos de arriba.'],
         ['Subí el comprobante dentro de las 24 hs', `Pasado ese tiempo se libera el stock. Subilo desde Mi cuenta o envialo a ${mail('pagos@maximus.com.ar')} con el número de pedido.`, true]
       );
-    if (pago === 'pendiente') lista.push(['Esperá la acreditación', 'Mercado Pago puede tardar hasta 48 hs hábiles. Te avisamos por correo cuando se acredite.']);
+    if (pago === 'pendiente') lista.push(['Esperá la acreditación', 'Mercado Pago está verificando los datos del pago. Te avisamos por correo cuando se acredite.']);
     if (lugar === 'oca24') lista.push(['Lo despachamos con OCA 24 hs', `Llega el siguiente día hábil${acreditado}. Te mandamos el número de guía para que lo sigas.`]);
     if (lugar === 'oca')
       lista.push(
@@ -103,10 +106,11 @@ function iniciar() {
     return lista;
   }
 
+  // Los nombres de los estados son los de Mi cuenta
   const ESTADOS = {
-    transferencia: ['estado--aviso', 'Esperando el pago', 'Reservamos tus productos. Para completar la compra, transferí el total y subí el comprobante dentro de las 24 hs.'],
-    tarjeta: ['estado--exito', 'Pago aprobado', 'Tu pago está aprobado y ya estamos con tu pedido.'],
-    pendiente: ['estado--info', 'Pago en proceso', 'Mercado Pago está procesando tu pago. Apenas se acredite, preparamos tu pedido.'],
+    transferencia: ['estado--aviso', 'Pendiente de pago','Reservamos tus productos. Para completar la compra, transferí el total y subí el comprobante dentro de las 24 hs.'],
+    tarjeta: ['estado--exito', 'Pago confirmado', 'Tu pago está aprobado y ya estamos con tu pedido.'],
+    pendiente: ['estado--info', 'En verificación de datos','Mercado Pago está procesando tu pago. Apenas se acredite, preparamos tu pedido.'],
   };
 
   function ver(pago = pagoActual, lugar = entrega) {

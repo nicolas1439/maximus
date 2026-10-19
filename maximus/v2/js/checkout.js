@@ -424,19 +424,38 @@ function iniciar() {
     const bruto = total.productos + total.envio + total.seguro; // el 10% va sobre todo el pedido, envío y seguro incluidos
     total.descuento = transferencia ? Math.round(bruto * DESCUENTO_TRANSFERENCIA) : 0;
     total.final = bruto - total.descuento;
-    // Factura A (de muestra): el mismo total separado en neto e IVA por alícuota, más la percepción de IIBB
+    // Factura A (de muestra): el mismo total separado en neto e IVA por alícuota, más la percepción de IIBB. Todo lo
+    // que va antes de Impuestos se muestra sin IVA, así las filas suman el total: subtotal de lista sin IVA (con el
+    // envío y el seguro) − campaña sin IVA − 10% por transferencia sin IVA + impuestos + percepciones
     total.iva = {};
     total.neto = 0;
+    total.netoLista = 0;
+    total.netoCampania = 0;
+    total.netoDescuento = 0;
     total.percepciones = 0;
     if (facturaA()) {
       const factor = total.final / (bruto || 1); // el descuento por transferencia se reparte en todo
-      const sumar = (monto, alicuota) => {
-        const neto = (monto * factor) / (1 + alicuota / 100);
-        total.neto += neto;
-        total.iva[alicuota] = (total.iva[alicuota] || 0) + monto * factor - neto;
+      let netoLista = 0;
+      let netoCampania = 0;
+      const sumar = (lista, monto, alicuota) => {
+        const divisor = 1 + alicuota / 100;
+        netoLista += lista / divisor;
+        netoCampania += (lista - monto) / divisor;
+        total.iva[alicuota] = (total.iva[alicuota] || 0) + monto * factor - (monto * factor) / divisor;
       };
-      items().forEach((item) => sumar(Number(item.dataset.precio) * (Number($('input', item).value) || 1), Number(item.dataset.iva) || 21));
-      sumar(total.envio + total.seguro, 21);
+      items().forEach((item) => {
+        const n = Number($('input', item).value) || 1;
+        const precio = Number(item.dataset.precio);
+        sumar((Number(item.dataset.lista) || precio) * n, precio * n, Number(item.dataset.iva) || 21);
+      });
+      sumar(total.envio + total.seguro, total.envio + total.seguro, 21);
+      Object.keys(total.iva).forEach((alicuota) => (total.iva[alicuota] = Math.round(total.iva[alicuota])));
+      const impuestos = Object.values(total.iva).reduce((a, b) => a + b, 0);
+      total.neto = total.final - impuestos; // neto del pedido, con la campaña y el descuento aplicados
+      total.netoCampania = Math.round(netoCampania);
+      total.netoDescuento = Math.round((netoLista - netoCampania) * (1 - factor));
+      // El subtotal absorbe el redondeo de las otras filas, así la suma da exacta
+      total.netoLista = total.neto + total.netoCampania + total.netoDescuento;
       total.percepciones = Math.round(total.neto * PERCEPCION);
       total.final += total.percepciones;
     }
@@ -467,30 +486,30 @@ function iniciar() {
         })
         .join('') + extras;
 
+    // Factura A: el subtotal pasa a ser sin IVA, la campaña y el 10% van sin IVA y se suman los impuestos (con el
+    // detalle por alícuota) y las percepciones
+    const conA = facturaA();
     $('[data-total-cantidad]').textContent = total.cantidad;
     $('[data-total-lista]').textContent = pesos(total.lista);
+    $('[data-fila-lista]').hidden = conA;
+    $$('[data-fila-a]').forEach((fila) => (fila.hidden = !conA));
     $('[data-fila-campania]').hidden = !total.campania;
     $('[data-campania-nombre]').textContent = items().find((i) => i.dataset.campania)?.dataset.campania || 'Campaña';
-    $('[data-total-campania]').textContent = `−${pesos(total.campania)}`;
+    $('[data-total-campania]').textContent = `−${pesos(conA ? total.netoCampania : total.campania)}`;
     $('[data-fila-descuento]').hidden = !total.descuento;
-    $('[data-total-descuento]').textContent = `−${pesos(total.descuento)}`;
+    $('[data-total-descuento]').textContent = `−${pesos(conA ? total.netoDescuento : total.descuento)}`;
     // Varias campañas o promos a la vez: una sola línea con lo que descuentan entre todas
     if (new Set(items().filter((i) => i.dataset.campania || i.dataset.lista).map((i) => i.dataset.campania || 'promo')).size > 1) $('[data-campania-nombre]').textContent = 'Campañas y promociones';
-    // Factura A: neto, impuestos (con el detalle por alícuota) y percepciones
-    const conA = facturaA();
-    $$('[data-fila-a]').forEach((fila) => (fila.hidden = !conA));
     if (conA) {
-      [$('[data-total-lista]').parentElement, $('[data-fila-campania]')].forEach((fila) => (fila.hidden = true));
-      $('[data-fila-descuento]').hidden = true;
       const impuestos = Object.values(total.iva).reduce((a, b) => a + b, 0);
-      $('[data-total-neto]').textContent = pesos(total.neto);
+      $('[data-total-neto]').textContent = pesos(total.netoLista);
       $('[data-total-impuestos]').textContent = pesos(impuestos);
       $('[data-detalle-impuestos]').innerHTML = Object.entries(total.iva)
         .sort(([a], [b]) => a - b)
         .map(([alicuota, monto]) => `<div><dt>IVA ${String(alicuota).replace('.', ',')}%</dt><dd>${pesos(monto)}</dd></div>`)
         .join('');
       $('[data-total-percepciones]').textContent = pesos(total.percepciones);
-    } else $('[data-total-lista]').parentElement.hidden = false;
+    }
     $$('[data-total]').forEach((n) => (n.textContent = pesos(total.final)));
     $$('[data-ahorro]').forEach((n) => (n.textContent = n.matches('.opcion__precio') ? `Ahorrás ${pesos(ahorro)}` : pesos(ahorro)));
 
@@ -651,6 +670,120 @@ function iniciar() {
     avisar('¡Hola de nuevo, Martín!');
   });
 
+  // ---------- Sesión: crear la cuenta dentro del checkout ----------
+  // "Crear cuenta" abre el alta en el mismo paso, en lugar de las dos tarjetas: los datos del paso 1 del alta del
+  // sitio (la condición fiscal decide qué se pide) y el teléfono. De muestra, al crearla queda la sesión de muestra y
+  // la compra sigue en Facturación con el carrito
+
+  const formAlta = $('[data-alta-checkout]');
+  const btnAlta = $('[data-abrir-alta]');
+  const condicionAlta = $('[data-alta-condicion]');
+  const razonAlta = $('[data-alta-razon]');
+  const cuitAlta = $('[data-alta-campo="cuit"]');
+  const soloNumeros = (v) => v.replace(/\D/g, '');
+  const conCuitAlta = () => condicionAlta.value !== 'Consumidor final';
+  // CUIT de muestra que encuentra el padrón (en el sitio real lo consulta el backend)
+  const CUITS_MUESTRA = { 30712345671: 'Distribuidora Andina SRL', 20345678906: 'Martín González' };
+
+  function verAlta(abrir, { foco = true } = {}) {
+    formAlta.hidden = !abrir;
+    formIngreso.hidden = abrir;
+    $('[data-nuevo-checkout]').hidden = abrir;
+    btnAlta.setAttribute('aria-expanded', String(abrir));
+    if (foco) (abrir ? condicionAlta : formIngreso.elements.correo).focus();
+  }
+  btnAlta?.addEventListener('click', () => verAlta(true));
+  $('[data-cerrar-alta]')?.addEventListener('click', () => verAlta(false));
+
+  // Con Consumidor final: nombre, apellido y DNI o CUIT. Con otra condición: el CUIT, que completa la razón social
+  condicionAlta?.addEventListener('change', () => {
+    const tipo = conCuitAlta() ? 'otra' : 'final';
+    $$('[data-alta-fiscal]', formAlta).forEach((n) => (n.hidden = n.dataset.altaFiscal !== tipo));
+    $$('[data-alta-campo]', formAlta).forEach((c) => marcarError(c, ''));
+  });
+
+  const REGLAS_ALTA = {
+    nombre: (v) => (v ? '' : 'Ingresá tu nombre.'),
+    apellido: (v) => (v ? '' : 'Ingresá tu apellido.'),
+    documento: (v) => {
+      const n = soloNumeros(v);
+      if (!n) return 'Ingresá tu DNI o tu CUIT.';
+      if (n.length === 11) return cuitValido(n) ? '' : 'El CUIT no es válido: revisá los 11 números.';
+      return /^\d{7,8}$/.test(n) ? '' : 'Revisá el DNI (7 u 8 números) o el CUIT (11 números).';
+    },
+    cuit: (v) => {
+      const n = soloNumeros(v);
+      if (!cuitValido(n)) return n ? 'El CUIT no es válido: revisá los 11 números.' : 'Ingresá tu CUIT.';
+      return razonAlta.value ? '' : 'No encontramos este CUIT: revisá los 11 números o escribinos por WhatsApp.';
+    },
+    correo: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Ingresá un correo válido.'),
+    clave: (v) => (v.length >= 8 && /[a-z]/i.test(v) && /\d/.test(v) ? '' : 'Usá al menos 8 caracteres, con letras y números.'),
+    telefono: (v) => (soloNumeros(v).length === 10 ? '' : 'Ingresá los 10 números, con el código de área.'),
+  };
+
+  function validarAlta(control) {
+    const texto = REGLAS_ALTA[control.dataset.altaCampo](control.value.trim());
+    marcarError(control, texto);
+    return !texto;
+  }
+
+  // Verificar el CUIT: con uno válido, el sistema completa la razón social (bloqueada)
+  async function verificarCuitAlta() {
+    const boton = $('[data-alta-verificar]');
+    const n = soloNumeros(cuitAlta.value);
+    razonAlta.value = '';
+    if (!cuitValido(n)) {
+      validarAlta(cuitAlta);
+      cuitAlta.focus();
+      return;
+    }
+    marcarError(cuitAlta, '');
+    cuitAlta.value = formatoCuit(n);
+    boton.classList.add('cargando');
+    boton.disabled = true;
+    razonAlta.placeholder = 'Buscando el CUIT…';
+    await new Promise((listo) => setTimeout(listo, 600));
+    boton.classList.remove('cargando');
+    boton.disabled = false;
+    razonAlta.placeholder = 'Se completa con el CUIT';
+    razonAlta.value = CUITS_MUESTRA[n] || '';
+    if (!razonAlta.value) validarAlta(cuitAlta);
+  }
+  $('[data-alta-verificar]')?.addEventListener('click', verificarCuitAlta);
+
+  formAlta?.addEventListener('input', (e) => {
+    if (e.target === cuitAlta) {
+      razonAlta.value = '';
+      // Con los 11 números completos y válidos, busca solo
+      if (cuitValido(soloNumeros(cuitAlta.value))) verificarCuitAlta();
+    }
+    if (e.target.matches('[data-alta-campo][aria-invalid="true"]') && e.target !== cuitAlta) validarAlta(e.target);
+  });
+
+  formAlta?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (conCuitAlta() && cuitValido(soloNumeros(cuitAlta.value)) && !razonAlta.value) await verificarCuitAlta();
+    const campos = $$('[data-alta-campo]', formAlta).filter((c) => !c.closest('[hidden]'));
+    const conError = campos.filter((c) => !validarAlta(c));
+    if (conError.length) {
+      conError[0].focus();
+      return;
+    }
+    try { localStorage.setItem('sesion', 'muestra'); } catch {}
+    demo.sesion = true;
+    // De muestra: un responsable inscripto factura con Factura A a su nombre
+    const fiscal = condicionAlta.value === 'Responsable inscripto' ? 'ri' : 'cf';
+    VARIANTES.fiscal(fiscal);
+    $$('[data-variante^="fiscal:"]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.variante === `fiscal:${fiscal}`)));
+    $$('[data-variante^="sesion:"]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.variante === 'sesion:con')));
+    verAlta(false, { foco: false });
+    verSesion();
+    actualizarTotales();
+    $('[data-error]', pasos[actual]).hidden = true;
+    const nombre = conCuitAlta() ? razonAlta.value : formAlta.elements.nombre.value.trim();
+    avisar(`¡Listo, ya tenés tu cuenta${nombre ? `, ${nombre}` : ''}!`);
+  });
+
   // Mostrar la contraseña
   $$('[data-ver-clave]').forEach((boton) =>
     boton.addEventListener('click', () => {
@@ -808,9 +941,18 @@ function iniciar() {
       sincronizarTodo();
     },
     carrito: (v) => promo(v === 'promo'),
+    // Cada estado del envío se ve en el paso Entrega, con el envío por OCA elegido; "Sin sucursales" abre el envío
+    // a sucursal, donde aparece su aviso
     envio: (v) => {
+      const sucursal = $('input[name="modalidad"][value="ocasucursal"]');
+      // Al dejar "Sin sucursales", vuelve a la modalidad de siempre (la elige llegarA)
+      if (demo.envio === 'sin-sucursales' && v !== demo.envio) sucursal.checked = false;
       demo.envio = v;
+      $('input[name="entrega"][value="envio"]').checked = true;
+      if (v === 'sin-sucursales') sucursal.checked = true;
       verEnvio();
+      llegarA('entrega');
+      if (v === 'sin-sucursales') $('[data-sin-sucursales]').scrollIntoView({ block: 'center', behavior: movimientoReducido ? 'auto' : 'smooth' });
     },
   };
 

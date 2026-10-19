@@ -541,13 +541,14 @@
   font-weight: var(--peso-medio);
 }
 
+/* La marca puede bajar de renglón ("HP (notebooks y monitores)"): la tabla entra en 320px */
 .fabricantes tbody th {
   color: var(--color-texto);
   font-weight: var(--peso-medio);
-  white-space: nowrap;
 }
 
-.fabricantes a {
+/* Los teléfonos no se parten; el resto del contacto baja de renglón */
+.fabricantes a[href^="tel:"] {
   white-space: nowrap;
 }
 

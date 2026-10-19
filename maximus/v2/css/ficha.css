@@ -1102,6 +1102,10 @@
     display: none;
   }
 
+  .mx:has(.ficha__barra--visible) {
+    padding-bottom: 0;
+  }
+
   .cierre {
     grid-template-columns: repeat(8, minmax(0, 1fr));
     column-gap: var(--separacion-grilla);
@@ -1233,8 +1237,9 @@
   height: var(--alto-control-l);
 }
 
-/* Cuotas sin plan sin interés */
-.compra__cuotas--sin {
+/* Cuotas sin plan sin interés (bloque de compra y resumen fijo; en la barra fija de abajo cambia solo el texto) */
+.compra__cuotas--sin,
+.resumen-fijo__precios .resumen-fijo__cuotas--sin {
   color: var(--color-texto-suave);
 }
 

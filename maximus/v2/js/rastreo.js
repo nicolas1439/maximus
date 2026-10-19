@@ -175,7 +175,7 @@ const PEDIDOS = {
     alerta: {
       tono: 'aviso',
       titulo: 'Visita 1 de 3: no había nadie en el domicilio',
-      texto: 'OCA vuelve a intentarlo el siguiente día hábil y solo entrega a alguien que esté en esa dirección. Si no puede entregarlo en 3 visitas, el paquete pasa a la sucursal de OCA más cercana.',
+      texto: 'OCA vuelve a intentarlo el siguiente día hábil: hace hasta 3 visitas. Si no puede entregarlo, el paquete pasa a la sucursal de OCA más cercana.',
     },
     pasos: PASOS_ENVIO,
     paso: 3,
@@ -282,7 +282,7 @@ const PEDIDOS = {
     alerta: {
       tono: 'error',
       titulo: 'Cancelaste este pedido el martes 13 de octubre',
-      texto: 'Si ya habías pagado, pedí la devolución desde el <a href="centro-de-ayuda.html#contacto">Centro de ayuda</a> o escribinos por WhatsApp.',
+      texto: 'Si ya habías pagado, pedí la devolución desde el <a href="centro-de-ayuda.html?motivo=Consulta%20sobre%20un%20pedido&pedido=423571#contacto">Centro de ayuda</a> o escribinos por WhatsApp.',
     },
     pasos: PASOS_ENVIO,
     paso: 1,
@@ -423,7 +423,7 @@ if (form) {
     let texto = '';
     if (!n) texto = 'Ingresá el número de pedido o el de guía.';
     else if (!/^\d+$/.test(n) || !(n.length === 19 || (n.length >= 4 && n.length <= 7))) {
-      texto = 'Revisá el número: el de pedido tiene 6 números (con o sin MAX-) y el de guía, 19.';
+      texto = 'Revisá el número: el de pedido lo encontrás en el correo de la compra (ej.: MAX-423518) y el de guía de OCA tiene 19 números.';
     }
     if (texto) {
       mostrarError(texto);

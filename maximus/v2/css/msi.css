@@ -3,7 +3,8 @@
    (banner, título y la fila deslizable de tarjetas del home: carrusel.css, productos.css y producto.css) → ayuda para elegir.
    Los banners y las tarjetas de gama son imágenes de la marca (recursos/msi/): se ven enteras, con su proporción.
    Mobile: todo en columna, gamas en una fila deslizable. Tablet: gamas de a 3. Las PC, como en el home: 2 y media en celular, 3 en tablet, 4 en escritorio y 5 a partir de 1280px, con flechas.
-   Elegida una gama (?gama=, js/msi.js), las otras tarjetas se apagan y se ve solo su sección.
+   Elegida una gama (?gama=, js/msi.js), las otras tarjetas se apagan y se ve solo su sección, con todas sus PC en
+   grilla y "Ver más".
    Violeta (el color secundario): el chip con la cantidad de PC de cada gama. */
 
 .msi {
@@ -191,6 +192,31 @@ a.msi__todas {
   margin: var(--espacio-1) 0 0;
 }
 
+/* Gama elegida (?gama=, .estante-msi--grilla, la pone js/msi.js): todas sus PC en una grilla, como las ofertas de la
+   campaña (2 columnas en celular, 3 en tablet, 4 en escritorio y 5 desde 1440px), de a 2 filas con "Ver más"
+   (.mas-productos de base.css) y las páginas debajo. En la vista general queda la fila deslizable y el pie no se ve */
+.estante-msi--grilla .productos__lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espacio-3);
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  scroll-snap-type: none;
+}
+
+.estante-msi--grilla .carrusel__flechas {
+  display: none;
+}
+
+.estante-msi__mas {
+  display: none;
+}
+
+.estante-msi--grilla > .carrusel:not([hidden]) ~ .estante-msi__mas {
+  display: flex;
+}
+
 
 /* ---------- Ayuda para elegir ---------- */
 
@@ -300,10 +326,22 @@ a.msi__todas {
   .estante-msi__cargando {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .estante-msi--grilla .productos__lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--separacion-grilla);
+  }
 }
 
 @media (min-width: 1024px) {
-  .estante-msi__cargando {
+  .estante-msi__cargando,
+  .estante-msi--grilla .productos__lista {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  .estante-msi--grilla .productos__lista {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }

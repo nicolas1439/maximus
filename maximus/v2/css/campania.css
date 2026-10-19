@@ -487,6 +487,7 @@
   gap: var(--espacio-2);
 }
 
+.campania[data-estado="terminada"] .ofertas > .seccion__cab,
 .campania[data-estado="terminada"] .pestanias,
 .campania[data-estado="terminada"] .ofertas__grilla {
   display: none;

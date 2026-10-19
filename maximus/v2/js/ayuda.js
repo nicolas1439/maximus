@@ -397,8 +397,12 @@ if (form) {
   );
 
   // Desde otra página, ?motivo= elige el motivo (ej.: la Política de privacidad, para pedir el borrado de los datos)
-  const motivoInicial = new URLSearchParams(location.search).get('motivo');
+  // y ?pedido= completa el número (ej.: Seguimiento, para pedir la devolución del pago de un pedido cancelado)
+  const parametros = new URLSearchParams(location.search);
+  const motivoInicial = parametros.get('motivo');
   if (motivoInicial) elegirMotivo(motivoInicial);
+  const pedidoInicial = parametros.get('pedido');
+  if (pedidoInicial) pedido.value = pedidoInicial.replace(/\D/g, '');
 }
 
 // ---------- Al llegar con un enlace a una pregunta o tema ----------

@@ -955,3 +955,16 @@
   justify-self: stretch;
   text-align: left;
 }
+
+/* Estados de muestra de la vista previa (data-demo): los de la búsqueda son enlaces a ?q=, con el aspecto de los
+   botones de la barra (el enlace lleva su etiqueta para que el reset de enlaces no le pise el color) */
+a.variantes__btn {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-texto-suave);
+}
+
+a.variantes__btn[aria-current="page"] {
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}

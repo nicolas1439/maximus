@@ -22,7 +22,36 @@ function mostrarEstado(nuevo) {
   document.querySelectorAll('[data-solo]').forEach((el) => (el.hidden = el.dataset.solo !== estado));
   document.querySelectorAll('[data-no-en]').forEach((el) => (el.hidden = el.dataset.noEn === estado));
   document.querySelectorAll('[data-ver-estado]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.verEstado === estado));
+  escribirInicio(estado === 'proxima' ? inicioMostrado() : inicio);
   iniciarCuenta();
+}
+
+// ---------- Fechas (hora de Argentina) ----------
+
+const ZONA = 'America/Argentina/Buenos_Aires';
+const DIA = 86400000;
+const diaYMes = (t) => new Intl.DateTimeFormat('es-AR', { day: 'numeric', month: 'long', timeZone: ZONA }).format(t);
+const partesFecha = (t) => {
+  const f = (o) => new Intl.DateTimeFormat('es-AR', { ...o, timeZone: ZONA }).format(t);
+  return { dia: f({ day: 'numeric' }), mes: f({ month: 'short' }).replace('.', '') };
+};
+
+// El inicio que se muestra: el real si todavía no llegó. En la vista previa, cuando el real ya pasó, "próximamente"
+// arranca dentro de 3 días a las 00 h (Argentina, UTC−3), así la cuenta regresiva, la fecha, el cronograma y las
+// bases dicen lo mismo
+function inicioMostrado() {
+  if (inicio > Date.now()) return inicio;
+  const hoy = new Date(Date.now() - 3 * 3600000);
+  return Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth(), hoy.getUTCDate() + 3, 3);
+}
+
+// Escribe la fecha de inicio en los textos (data-texto-inicio) y los días del cronograma, uno por día desde el inicio
+function escribirInicio(t) {
+  document.querySelectorAll('[data-texto-inicio]').forEach((el) => (el.textContent = diaYMes(t)));
+  document.querySelectorAll('.cronograma__fecha').forEach((el, i) => {
+    const { dia, mes } = partesFecha(t + i * DIA);
+    el.innerHTML = `<strong>${dia}</strong>${mes}`;
+  });
 }
 
 // ---------- Cuenta regresiva: al inicio (próximamente) o al fin (en curso); terminada, el aviso ----------
@@ -39,11 +68,13 @@ function iniciarCuenta() {
   fecha.hidden = terminada;
   if (terminada) return;
 
-  // En la vista previa, "próximamente" cuenta hasta una fecha cercana si la real ya pasó
-  const objetivo = estado === 'proxima' ? Math.max(inicio, Date.now() + 3 * 86400000 + 5 * 3600000) : fin;
-  rotulo.textContent = estado === 'proxima' ? 'Empieza en' : 'Termina en';
-  fecha.textContent = estado === 'proxima' ? 'Desde el 1 de octubre a las 00 h' : 'Hasta el 31 de octubre o hasta agotar stock';
-  cuenta.setAttribute('aria-label', estado === 'proxima' ? 'La campaña empieza el 1 de octubre a las 00 h' : 'La campaña termina el 31 de octubre a las 23:59');
+  const proxima = estado === 'proxima';
+  const objetivo = proxima ? inicioMostrado() : fin;
+  const dia = diaYMes(objetivo);
+  rotulo.textContent = proxima ? 'Empieza en' : 'Termina en';
+  fecha.textContent = proxima ? `Desde el ${dia} a las 00 h` : `Hasta el ${dia} o hasta agotar stock`;
+  cuenta.setAttribute('aria-label', proxima ? `La campaña empieza el ${dia} a las 00 h` : `La campaña termina el ${dia} a las 23:59`);
+  if (proxima) escribirInicio(objetivo);
   const partes = ['dias', 'horas', 'minutos', 'segundos'].map((p) => cuenta.querySelector(`[data-${p}]`));
   const dos = (n) => String(n).padStart(2, '0');
 

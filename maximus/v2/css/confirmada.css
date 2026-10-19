@@ -316,8 +316,18 @@
   font-size: var(--texto-s);
 }
 
+/* En celular, a todo el ancho de su columna (a 320px el botón con su padding no entraba) */
 .sigue__btn {
+  width: 100%;
   margin-top: var(--espacio-3);
+  padding-inline: var(--espacio-4);
+}
+
+@media (min-width: 768px) {
+  .sigue__btn {
+    width: auto;
+    padding-inline: var(--espacio-6);
+  }
 }
 
 /* ---------- Detalle del pedido ---------- */
@@ -384,7 +394,6 @@
   font-weight: var(--peso-medio);
   font-variant-numeric: tabular-nums;
 }
-
 
 .datos {
   display: flex;

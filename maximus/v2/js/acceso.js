@@ -1,8 +1,8 @@
 // Ingresar y Crear cuenta: una vista por vez según el enlace (#ingresar, #registro, #recuperar), validación en
 // línea, mostrar la contraseña, aviso de Bloq Mayús, sugerencia de correo mal escrito, fuerza de la contraseña,
 // registro en dos pasos (con Consumidor final, nombre y apellido; con otra condición fiscal, el CUIT completa la
-// razón social), Continuar con Google o Facebook, errores de cada formulario, degradado vivo de los botones y confeti al crear la cuenta. Todo es de
-// muestra: no se envía nada. Sin JS se ven todas las vistas.
+// razón social), errores de cada formulario, degradado vivo de los botones y confeti al crear la cuenta. Todo es de muestra:
+// no se envía nada. Sin JS se ven todas las vistas.
 
 import { confeti } from './confeti.js';
 import { iniciarLuz } from './luz.js';
@@ -362,31 +362,6 @@ if (formIngresar) {
     formIngresar.requestSubmit();
   };
 }
-
-// Continuar con Google o con Facebook (en Ingresar y en el paso 1 de Crear cuenta). De muestra, ingresa con la cuenta
-// de muestra como "Ingresar" y vuelve a la página que lo pidió (?volver=). En el sitio real abre el ingreso de cada
-// servicio y, si el correo no tiene cuenta, la crea
-document.querySelectorAll('[data-social]').forEach((boton) =>
-  boton.addEventListener('click', async () => {
-    if (boton.classList.contains('cargando')) return;
-    boton.classList.add('cargando');
-    boton.setAttribute('aria-busy', 'true');
-    boton.textContent = `Conectando con ${boton.dataset.social}…`;
-    await esperar(1100);
-    iniciarSesion();
-    location.href = destinoIngreso();
-  })
-);
-
-// Al volver con "atrás" (la página sale de la caché del navegador), los botones quedan como al principio
-addEventListener('pageshow', (e) => {
-  if (!e.persisted) return;
-  document.querySelectorAll('[data-social].cargando').forEach((boton) => {
-    boton.classList.remove('cargando');
-    boton.removeAttribute('aria-busy');
-    boton.textContent = `Continuar con ${boton.dataset.social}`;
-  });
-});
 
 // ---------- Recuperar contraseña ----------
 

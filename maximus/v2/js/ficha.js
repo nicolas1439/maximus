@@ -368,9 +368,15 @@ const VARIANTES = {
         pc: 'Excepto Tierra del Fuego. Las PC armadas no tienen envío en 24 hs',
       }[v] || 'Excepto Tierra del Fuego. En AMBA llega en 24 hs hábiles';
     }
-    // Garantía según el producto: PC armadas, 12 meses; el resto de la muestra (hardware), 6 meses con Maximus
+    // Garantía según el producto: PC armadas, 12 meses; notebooks y monitores, la prueba con Maximus y después el
+    // fabricante; el resto de la muestra (hardware), 6 meses con Maximus
     const garantia = document.querySelector('[data-garantia-texto]');
-    if (garantia) garantia.textContent = v === 'pc' ? '12 meses de garantía en tu PC armada' : '6 meses de garantía con Maximus';
+    if (garantia) {
+      garantia.textContent = {
+        pc: '12 meses de garantía en tu PC armada',
+        notebook: '10 días de prueba con Maximus y después con el servicio oficial del fabricante',
+      }[v] || '6 meses de garantía con Maximus';
+    }
   },
 };
 document.querySelectorAll('[data-variante]').forEach((boton) =>

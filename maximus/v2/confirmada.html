@@ -53,8 +53,8 @@
           <span class="gracias__icono" data-gracias-icono><svg class="icono" aria-hidden="true" viewBox="0 0 24 24"><path class="gracias__trazo" d="M5 12.5l4.5 4.5L19 7.5" pathLength="1"/></svg></span>
           <p class="gracias__pedido">Pedido <strong>#MAX-424105</strong> · 17 de octubre de 2026</p>
           <h1 class="gracias__titulo" id="gracias-titulo">¡Gracias por tu compra, Martín!</h1>
-          <p class="gracias__bajada" data-bajada>Reservamos tus productos. Para completar la compra, transferí el total y subí el comprobante. Te mandamos todo a <strong>martin.gonzalez@correo.com</strong>.</p>
-          <span class="estado estado--aviso" data-estado>Esperando el pago</span>
+          <p class="gracias__bajada" data-bajada>Reservamos tus productos. Para completar la compra, transferí el total y subí el comprobante dentro de las 24 hs. Te mandamos todo a <strong>martin.gonzalez@correo.com</strong>.</p>
+          <span class="estado estado--aviso" data-estado>Pendiente de pago</span>
           <ol class="seguimiento gracias__pasos" aria-label="Seguimiento del pedido #MAX-424105" data-pasos>
             <li class="seguimiento__paso seguimiento__paso--hecho"><span class="seguimiento__punto"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="seguimiento__texto">Confirmado<small>17/10</small></span></li>
             <li class="seguimiento__paso seguimiento__paso--actual" aria-current="step"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Pago</span></li>
@@ -105,7 +105,6 @@
           <div class="monto monto--pendiente">
             <p class="monto__rotulo">Total</p>
             <p class="monto__valor" data-monto-pendiente>$2.966.607</p>
-            <p class="monto__nota">Puede tardar hasta 48 hs hábiles</p>
           </div>
           <p class="nota nota--info"><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg><span>No hace falta que vuelvas a pagar: te avisamos por correo cuando se acredite. Si el pago se rechaza, te escribimos para que lo hagas de nuevo.</span></p>
         </section>
@@ -137,14 +136,14 @@
             <li class="sigue__paso">
               <span class="sigue__num">2</span>
               <div>
-                <p class="sigue__titulo">Subí el comprobante</p>
-                <p class="sigue__texto">Sin el comprobante no podemos validar el pago y el pedido no entra en preparación.</p>
+                <p class="sigue__titulo">Subí el comprobante dentro de las 24 hs</p>
+                <p class="sigue__texto">Pasado ese tiempo se libera el stock. Subilo desde Mi cuenta o envialo a <a href="mailto:pagos@maximus.com.ar?subject=Comprobante%20del%20pedido%20%23MAX-424105">pagos@maximus.com.ar</a> con el número de pedido.</p>
                 <a class="boton boton--primario sigue__btn" href="mi-cuenta.html#pedidos"><svg class="icono icono--s" aria-hidden="true"><use href="#i-subir"/></svg>Subir comprobante</a>
               </div>
             </li>
             <li class="sigue__paso">
               <span class="sigue__num">3</span>
-              <div><p class="sigue__titulo">Preparamos tu pedido</p><p class="sigue__texto">En 24 a 48 hs hábiles desde que se acredita el pago. Te avisamos por correo cuando sale.</p></div>
+              <div><p class="sigue__titulo">Lo despachamos con OCA 24 hs</p><p class="sigue__texto">Llega el siguiente día hábil desde que se acredita el pago. Te mandamos el número de guía para que lo sigas.</p></div>
             </li>
           </ol>
         </section>
@@ -165,12 +164,18 @@
           </ul>
 
           <dl class="totales">
-            <div><dt>Subtotal de lista</dt><dd data-t-lista>$3.419.763</dd></div>
+            <div data-f-lista><dt>Subtotal de lista</dt><dd data-t-lista>$3.419.763</dd></div>
+            <!-- Factura A, como en el checkout: todo lo que va antes de Impuestos es sin IVA (el subtotal de lista con el
+                 envío y el seguro, la campaña y el 10% por transferencia) y las filas suman el total -->
+            <div data-f-a hidden><dt>Subtotal sin IVA</dt><dd data-t-neto></dd></div>
             <div class="totales__campania" data-f-campania><dt data-t-campania-nombre>Primavera Maximus</dt><dd data-t-campania>−$470.965</dd></div>
             <div class="totales__descuento" data-f-descuento><dt>Transferencia −10%</dt><dd data-t-descuento>−$296.661</dd></div>
-            <!-- Factura A: el total separado en neto, IVA por alícuota y percepciones, como en el checkout -->
-            <div data-f-a hidden><dt>Subtotal sin IVA</dt><dd data-t-neto></dd></div>
-            <div data-f-a hidden data-t-iva></div>
+            <div class="totales__plegable" data-f-a hidden>
+              <details class="plegable">
+                <summary class="plegable__cab"><span>Impuestos</span><span data-t-impuestos></span></summary>
+                <dl class="totales__detalle" data-t-iva></dl>
+              </details>
+            </div>
             <div data-f-a hidden><dt>Percepciones</dt><dd data-t-percepciones></dd></div>
             <div class="totales__total"><dt>Total</dt><dd data-t-total>$2.669.946</dd></div>
           </dl>

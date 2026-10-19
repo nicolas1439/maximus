@@ -787,6 +787,38 @@ a.pasos__enlace {
   line-height: var(--interlineado-titulo);
 }
 
+/* Factura A: impuestos plegados con el detalle por alícuota (checkout y compra confirmada) */
+.totales .totales__plegable {
+  display: block;
+}
+
+.totales__plegable summary {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  color: var(--color-texto-suave);
+}
+
+.totales__plegable summary span:first-child {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.totales__plegable summary span:last-child {
+  color: var(--color-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.totales__detalle {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: var(--espacio-1) 0 0;
+  padding-left: var(--espacio-3);
+  border-left: 2px solid var(--color-borde);
+  font-size: var(--texto-xs);
+}
+
 /* Formulario: los campos en columna; desde tablet, de a dos (.campo--ancho ocupa la fila entera y
    .formulario__campos--uno deja una sola columna angosta) */
 .formulario {
@@ -1709,6 +1741,13 @@ a.saltar {
 .alerta--error {
   --alerta: var(--color-error);
   --alerta-icono: var(--color-error-texto);
+}
+
+/* Neutro: un estado sin tono (ej.: "Pago al retirar" en Mi cuenta) */
+.alerta--neutro {
+  --alerta-icono: var(--color-texto-suave);
+  border-color: var(--color-borde);
+  background: var(--color-superficie);
 }
 
 .alerta--exito {

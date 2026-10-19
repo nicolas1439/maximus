@@ -756,8 +756,31 @@ a.armador__alternativa {
   display: none;
 }
 
+/* Ver más productos: nunca más ancho que el paso. En pantallas angostas dice "Ver más (n restantes)" ("productos"
+   queda para el lector de pantalla) y, si aun así no entra, baja de renglón */
+.paso-arm__mas-productos {
+  position: relative;
+  max-width: 100%;
+  height: auto;
+  min-height: var(--alto-control);
+  padding-block: var(--espacio-2);
+  white-space: normal;
+  text-align: center;
+}
+
 .paso-arm__mas-productos[hidden] {
   display: none;
+}
+
+@media (max-width: 479px) {
+  .paso-arm__mas-palabra {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
 .paso-arm__listo {
@@ -1660,8 +1683,9 @@ a.armador__alternativa {
   color: var(--color-texto-suave);
 }
 
-/* Agregar al carrito (resumen y barra): agregando, con la ruedita, y no se pudo agregar, en rojo */
-:is(.resumen-arm__agregar, .barra-arm__agregar):is(.cargando, .con-error) {
+/* Agregar al carrito (resumen y barra): agregando, con la ruedita, y no se pudo agregar, en rojo (sigue
+   tocable: "Reintentar" vuelve a agregar) */
+:is(.resumen-arm__agregar, .barra-arm__agregar).cargando {
   pointer-events: none;
 }
 

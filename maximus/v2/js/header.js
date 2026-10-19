@@ -11,11 +11,11 @@ const raiz = document.documentElement;
 // muestra el nombre del cliente (de muestra; en el sitio real lo pone el servidor); sin sesión, a Ingresar
 try {
   if (localStorage.getItem('sesion')) {
-    document.querySelectorAll('[data-cuenta]').forEach((a) => {
+    document.querySelectorAll('[data-usuario]').forEach((a) => {
       a.href = 'mi-cuenta.html';
       a.setAttribute('aria-label', 'Mi cuenta de Martín');
       a.classList.add('cabecera__usuario--sesion');
-      const nombre = a.querySelector('[data-cuenta-nombre]');
+      const nombre = a.querySelector('[data-usuario-nombre]');
       if (nombre) nombre.hidden = false;
     });
   }
@@ -23,7 +23,7 @@ try {
 
 // ---------- Tema ----------
 
-const botonesTema = document.querySelectorAll('[data-tema-toggle]');
+const botonesTema = document.querySelectorAll('[data-darkmode-toggle]');
 
 // El oscuro es la clase dark en <html>, y la preferencia va en localStorage con la clave darkmode ("true" / "false"),
 // las mismas del sitio actual: así se conserva lo que ya eligió cada cliente

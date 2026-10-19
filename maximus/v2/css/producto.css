@@ -61,11 +61,13 @@
 }
 
 /* Etiqueta de descuento ("Ahorrá $monto"): en el violeta secundario, discreta sobre la foto; en tarjetas amplias,
-   un punto más grande */
+   un punto más grande. Deja libre el favorito (como .producto__sellos): si no entra, baja a dos renglones */
 .producto__etiqueta {
   position: absolute;
   top: var(--espacio-3);
   left: var(--espacio-3);
+  right: calc(var(--espacio-1) + 40px); /* el favorito: su botón de 40px, desde el borde */
+  width: fit-content;
   background: var(--color-secundario);
   color: var(--color-sobre-secundario);
   font-size: var(--texto-2xs);
@@ -208,8 +210,9 @@
   font-size: var(--texto-s);
 }
 
-/* Variante compacta (estante "Las más elegidas" de los listados): foto, marca, nombre, precio y cuotas; el HTML no lleva
-   favorito, calificación, precio anterior, nota ni botón (la tarjeta entera lleva al producto).
+/* Variante compacta (estante "Las más elegidas" de los listados): foto, favorito, marca, nombre, precio y cuotas; el HTML
+   no lleva calificación, precio anterior, nota ni botón (la tarjeta entera lleva al producto; el favorito, en el
+   mismo lugar que en la tarjeta normal).
    Más chica y con menos aire, en cualquier ancho; el nombre en tres renglones */
 .producto--compacto .producto__img {
   padding: var(--espacio-3);
@@ -237,6 +240,16 @@
 
 .producto--compacto .producto__cuotas {
   margin-bottom: 0;
+}
+
+/* Compacta muy angosta (estante en celulares de 320px): arriba no entra junto al favorito y pasa al pie de la foto */
+@container producto (max-width: 119px) {
+  .producto--compacto .producto__etiqueta {
+    top: auto;
+    bottom: var(--espacio-2);
+    left: var(--espacio-2);
+    right: var(--espacio-2);
+  }
 }
 
 /* Tarjeta angosta: la calificación muestra solo la nota y el botón dice solo "Agregar"

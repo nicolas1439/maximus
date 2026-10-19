@@ -91,16 +91,8 @@
         <section class="vista" id="vista-ingresar" data-vista="ingresar" aria-labelledby="ingresar-titulo">
           <header class="vista__cab">
             <h1 class="vista__titulo" id="ingresar-titulo">Ingresá a tu cuenta</h1>
-            <p class="vista__bajada">Con Google, Facebook o tu correo de Maximus.</p>
+            <p class="vista__bajada">Con tu correo y tu contraseña de Maximus.</p>
           </header>
-
-          <!-- Ingreso con Google y Facebook (los ofrece el sitio). Van con texto: los logos oficiales se suman al
-               integrar, con las pautas de cada marca. De muestra, ingresan con la cuenta de muestra -->
-          <div class="ingreso__sociales">
-            <button class="boton boton--secundario ingreso__social" type="button" data-social="Google">Continuar con Google</button>
-            <button class="boton boton--secundario ingreso__social" type="button" data-social="Facebook">Continuar con Facebook</button>
-          </div>
-          <p class="separador"><span>o con tu correo</span></p>
 
           <form class="formulario" action="mi-cuenta.html" method="get" novalidate data-form="ingresar">
             <div class="alerta alerta--error" id="ingresar-error" role="alert" data-alerta="ingresar" hidden>
@@ -199,11 +191,6 @@
                  (no se piden nombre ni apellido). Al continuar se revisa que el correo y el documento no tengan cuenta. -->
             <fieldset class="ingreso__paso" data-registro-paso="1">
               <legend class="sr-only">Tus datos</legend>
-              <div class="ingreso__sociales">
-                <button class="boton boton--secundario ingreso__social" type="button" data-social="Google">Continuar con Google</button>
-                <button class="boton boton--secundario ingreso__social" type="button" data-social="Facebook">Continuar con Facebook</button>
-              </div>
-              <p class="separador"><span>o con tu correo</span></p>
               <p class="leyenda"><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Tus datos tienen que coincidir con los del titular del medio de pago.</p>
 
               <div class="campo">

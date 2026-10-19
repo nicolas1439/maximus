@@ -366,33 +366,6 @@ a.modo__opcion {
   height: var(--alto-control-l);
 }
 
-/* Continuar con Google y con Facebook: botones secundarios a todo el ancho, uno debajo del otro (los logos
-   oficiales se suman al integrar). Mientras conecta (de muestra), la ruedita al lado del texto */
-.ingreso__sociales {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--espacio-3);
-}
-
-.ingreso__social {
-  width: 100%;
-  height: var(--alto-control-l);
-}
-
-.ingreso__social.cargando {
-  cursor: progress;
-}
-
-.ingreso__social.cargando::after {
-  content: "";
-  width: 18px;
-  height: 18px;
-  border: 2px solid currentColor;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: girar 0.7s linear infinite;
-}
-
 /* Estados de muestra (vista previa): cada rótulo con sus botones en una fila */
 .variantes--acceso {
   display: grid;

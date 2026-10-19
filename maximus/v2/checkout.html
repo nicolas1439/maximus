@@ -352,11 +352,53 @@
               <p class="campo__error" role="alert" data-ingreso-error hidden></p>
               <button class="boton boton--primario" type="submit">Ingresar y continuar</button>
             </form>
-            <div class="tarjeta subpanel ingreso-checkout__nuevo">
+            <div class="tarjeta subpanel ingreso-checkout__nuevo" data-nuevo-checkout>
               <p class="subpanel__titulo">Es mi primera compra</p>
-              <p class="ingreso-checkout__texto">Creá tu cuenta en un minuto y volvés acá para terminar la compra.</p>
-              <a class="boton boton--secundario" href="crear-cuenta.html?volver=carrito.html%23facturacion">Crear cuenta</a>
+              <p class="ingreso-checkout__texto">Creá tu cuenta en un minuto, acá mismo, y seguís con la compra.</p>
+              <button class="boton boton--secundario" type="button" aria-expanded="false" aria-controls="alta-checkout" data-abrir-alta>Crear cuenta</button>
             </div>
+
+            <!-- Crear cuenta dentro del checkout: los datos del paso 1 del alta del sitio (condición fiscal primero; con
+                 Consumidor final, nombre, apellido y DNI o CUIT; con otra condición, el CUIT, que completa la razón
+                 social) y el teléfono de contacto para la entrega. De muestra, al crearla queda la sesión de muestra y
+                 la compra sigue en este paso con el carrito. -->
+            <form class="tarjeta subpanel ingreso-checkout__alta" id="alta-checkout" novalidate data-alta-checkout hidden>
+              <p class="subpanel__titulo">Creá tu cuenta</p>
+              <p class="subpanel__nota"><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Tus datos tienen que coincidir con los del titular del medio de pago.</p>
+              <div class="formulario__campos">
+                <label class="campo campo--ancho"><span class="campo__rotulo">Condición fiscal</span><span class="selector"><select class="selector__campo" name="condicion" data-alta-condicion><option selected>Consumidor final</option><option>Monotributista</option><option>Responsable inscripto</option><option>IVA exento</option></select><svg class="icono icono--s selector__flecha" aria-hidden="true"><use href="#i-abajo"/></svg></span></label>
+                <label class="campo" data-alta-fiscal="final"><span class="campo__rotulo">Nombre</span><input class="campo__control" name="nombre" type="text" autocomplete="given-name" maxlength="30" data-alta-campo="nombre"></label>
+                <label class="campo" data-alta-fiscal="final"><span class="campo__rotulo">Apellido</span><input class="campo__control" name="apellido" type="text" autocomplete="family-name" maxlength="30" data-alta-campo="apellido"></label>
+                <label class="campo campo--ancho" data-alta-fiscal="final"><span class="campo__rotulo">DNI o CUIT</span><input class="campo__control" name="documento" type="text" inputmode="numeric" autocomplete="off" maxlength="13" placeholder="Sin puntos" data-alta-campo="documento"></label>
+                <div class="campo campo--ancho" data-alta-fiscal="otra" hidden>
+                  <label class="campo__rotulo" for="alta-cuit">CUIT</label>
+                  <div class="cuit">
+                    <input class="campo__control" id="alta-cuit" name="cuit" type="text" inputmode="numeric" maxlength="13" placeholder="20-12345678-9" data-alta-campo="cuit">
+                    <button class="boton boton--secundario" type="button" data-alta-verificar>Verificar</button>
+                  </div>
+                  <p class="campo__ayuda" data-demo>De muestra: 30-71234567-1 es Distribuidora Andina SRL y 20-34567890-6, Martín González.</p>
+                </div>
+                <label class="campo campo--ancho" data-alta-fiscal="otra" hidden><span class="campo__rotulo">Razón social</span><input class="campo__control" name="razon_social" type="text" readonly placeholder="Se completa con el CUIT" data-alta-razon></label>
+                <label class="campo campo--ancho"><span class="campo__rotulo">Correo electrónico</span><input class="campo__control" name="correo" type="email" inputmode="email" autocomplete="email" spellcheck="false" maxlength="80" placeholder="nombre@correo.com" data-alta-campo="correo"></label>
+                <div class="campo">
+                  <label class="campo__rotulo" for="alta-clave">Contraseña</label>
+                  <div class="clave">
+                    <input class="campo__control" id="alta-clave" name="clave" type="password" autocomplete="new-password" maxlength="30" aria-describedby="alta-clave-ayuda" data-alta-campo="clave">
+                    <button class="boton-icono clave__ver" type="button" aria-label="Mostrar contraseña" aria-pressed="false" data-ver-clave><svg class="icono icono--s" aria-hidden="true"><use href="#i-ojo"/></svg></button>
+                  </div>
+                  <p class="campo__ayuda" id="alta-clave-ayuda">Al menos 8 caracteres, con letras y números.</p>
+                </div>
+                <div class="campo">
+                  <label class="campo__rotulo" for="alta-telefono">Teléfono</label>
+                  <input class="campo__control" id="alta-telefono" name="telefono" type="tel" autocomplete="tel-national" placeholder="11 1234-5678" aria-describedby="alta-telefono-ayuda" data-alta-campo="telefono">
+                  <p class="campo__ayuda" id="alta-telefono-ayuda">Con código de área, sin 0 ni 15.</p>
+                </div>
+              </div>
+              <label class="casilla"><input name="ofertas" type="checkbox" checked> Quiero recibir ofertas y novedades en mi correo.</label>
+              <button class="boton boton--primario" type="submit">Crear cuenta y continuar</button>
+              <p class="ingreso-checkout__texto">Al crear tu cuenta aceptás los <a href="terminos-y-condiciones.html">Términos y condiciones</a> y la <a href="politica-de-privacidad.html">Política de privacidad</a>.</p>
+              <button class="boton-texto ingreso-checkout__volver" type="button" data-cerrar-alta>Ya tengo cuenta: ingresar</button>
+            </form>
           </div>
 
           <div class="facturacion" data-con-sesion-checkout>
@@ -811,10 +853,12 @@
           </div>
           <ul class="resumen__items" data-resumen-items></ul>
           <dl class="totales">
-            <div><dt>Subtotal de lista</dt><dd data-total-lista>$3.419.763</dd></div>
+            <div data-fila-lista><dt>Subtotal de lista</dt><dd data-total-lista>$3.419.763</dd></div>
+            <!-- Factura A: todo lo que va antes de Impuestos es sin IVA (el subtotal de lista con el envío y el seguro,
+                 la campaña y el 10% por transferencia); las filas suman el total -->
+            <div data-fila-a hidden><dt>Subtotal sin IVA</dt><dd data-total-neto></dd></div>
             <div class="totales__campania" data-fila-campania hidden><dt data-campania-nombre>Primavera Maximus</dt><dd data-total-campania></dd></div>
             <div class="totales__descuento" data-fila-descuento hidden><dt>Transferencia −10%</dt><dd data-total-descuento></dd></div>
-            <div data-fila-a hidden><dt>Subtotal sin IVA</dt><dd data-total-neto></dd></div>
             <div class="totales__plegable" data-fila-a hidden>
               <details class="plegable">
                 <summary class="plegable__cab"><span>Impuestos</span><span data-total-impuestos></span></summary>
@@ -838,7 +882,6 @@
               <li class="medios-pago__item medios-pago__item--logo medios-pago__item--tarjetas"><img src="recursos/pagos/visa.png" alt="Visa" width="67" height="48" loading="lazy"><img src="recursos/pagos/mastercard.png" alt="Mastercard" width="80" height="48" loading="lazy"><img src="recursos/pagos/cabal.png" alt="Cabal" width="144" height="48" loading="lazy"></li>
               <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-tarjeta"/></svg>Crédito y débito</li>
               <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-transferencia"/></svg>Transferencia o depósito</li>
-              <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-efectivo"/></svg>Efectivo</li>
             </ul>
           </div>
         </div>
