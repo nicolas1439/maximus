@@ -67,9 +67,10 @@ export function iniciarTarjetas(raiz = document) {
   try {
     const pendiente = sessionStorage.getItem(PENDIENTE);
     if (pendiente && conSesion()) {
-      sessionStorage.removeItem(PENDIENTE);
       raiz.querySelectorAll('.producto').forEach((t) => {
-        if (t.querySelector('.producto__enlace')?.textContent.trim() === pendiente) marcar(t.querySelector('.producto__favorito'), true);
+        if (t.querySelector('.producto__enlace')?.textContent.trim() !== pendiente) return;
+        marcar(t.querySelector('.producto__favorito'), true);
+        sessionStorage.removeItem(PENDIENTE);
       });
     }
   } catch {}

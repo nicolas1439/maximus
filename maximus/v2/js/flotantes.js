@@ -5,7 +5,8 @@ const CLAVE = 'sticker-oculto';
 
 export function iniciarFlotantes(raiz = document) {
   const sticker = raiz.querySelector('[data-sticker]');
-  if (!sticker) return;
+  if (!sticker || sticker.dataset.flotanteListo !== undefined) return;
+  sticker.dataset.flotanteListo = ''; // una vez por sticker
   try {
     if (sessionStorage.getItem(CLAVE)) sticker.hidden = true;
   } catch {}

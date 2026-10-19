@@ -42,6 +42,17 @@ function iniciar() {
     $('[data-f-descuento]').hidden = !t.descuento;
     $('[data-t-descuento]').textContent = `−${pesos(t.descuento)}`;
     $('[data-t-total]').textContent = pesos(t.final);
+    // Factura A: neto, IVA por alícuota y percepciones en lugar de lista, campaña y descuento
+    $$('[data-f-a]').forEach((fila) => (fila.hidden = !c.facturaA));
+    if (c.facturaA) {
+      [$('[data-t-lista]').parentElement, $('[data-f-campania]'), $('[data-f-descuento]')].forEach((fila) => (fila.hidden = true));
+      $('[data-t-neto]').textContent = pesos(t.neto);
+      $('[data-t-iva]').outerHTML = Object.entries(t.iva || {})
+        .sort(([a], [b]) => a - b)
+        .map(([alicuota, monto]) => `<div data-f-a><dt>IVA ${String(alicuota).replace('.', ',')}%</dt><dd>${pesos(monto)}</dd></div>`)
+        .join('');
+      $('[data-t-percepciones]').textContent = pesos(t.percepciones);
+    }
 
     $('[data-d-entrega]').textContent = c.entrega;
     $('[data-d-entrega-meta]').textContent = c.entregaMeta;

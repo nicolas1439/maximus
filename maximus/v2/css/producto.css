@@ -379,12 +379,6 @@
   color: var(--color-fondo);
 }
 
-@keyframes girar {
-  to {
-    rotate: 1turn;
-  }
-}
-
 /* Sin stock: la foto apagada y, en lugar de "Agregar", "Avisame cuando vuelva" */
 .producto--sin-stock .producto__img {
   opacity: 0.55;
@@ -402,10 +396,20 @@
 
 /* PC armadas: los nombres largos solo difieren al final ("…8GB…" contra "…16GB…"), así que van en tres renglones
    (y el nombre completo queda en el title del enlace, al pasar el mouse) */
+/* PC armadas: nombres largos que difieren en la memoria o el disco (después de "PC Gamer Powered by MSI …"). Los
+   renglones alcanzan para leer el nombre entero: 4 en las tarjetas anchas y 5 en las angostas (celular) */
 .producto--pc .producto__nombre {
-  min-height: 3lh;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  min-height: 4lh;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+}
+
+@container producto (max-width: 219px) {
+  .producto--pc .producto__nombre {
+    min-height: 5lh;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+  }
 }
 
 /* Cargando: la tarjeta con el alto de siempre y un esqueleto en el lugar de cada dato */

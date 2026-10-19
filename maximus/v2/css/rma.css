@@ -398,49 +398,6 @@
   gap: var(--espacio-2);
 }
 
-/* Tipo de falla en pastillas: la elegida en verde */
-.falla {
-  position: relative;
-  cursor: pointer;
-}
-
-.falla input {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.falla span {
-  display: inline-flex;
-  align-items: center;
-  height: var(--alto-control-s);
-  padding-inline: var(--espacio-4);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-pill);
-  background: var(--color-fondo);
-  font-size: var(--texto-s);
-  transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion);
-}
-
-.falla:hover span {
-  border-color: var(--color-acento);
-}
-
-.falla input:checked + span,
-.falla.elegida span {
-  border-color: var(--color-marca);
-  background: var(--color-marca);
-  color: var(--color-sobre-marca);
-  font-weight: var(--peso-medio);
-}
-
-.falla input:focus-visible + span {
-  outline: 2px solid var(--color-acento);
-  outline-offset: 2px;
-}
-
 /* Zona para adjuntar (fotos y factura): punteada; se marca al arrastrar archivos encima */
 .adjuntos {
   position: relative;

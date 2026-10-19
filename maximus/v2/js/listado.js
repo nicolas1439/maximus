@@ -10,13 +10,23 @@ const listado = document.querySelector('.listado');
 const grilla = listado.querySelector('[data-grilla]');
 const form = listado.querySelector('[data-filtros]');
 const filtros = listado.querySelector('.filtros');
+const consulta = (new URLSearchParams(location.search).get('q') || '').trim().slice(0, 80);
+// Listado de varias categorías (búsqueda, campañas, Más vendidos, Outlet): con ?q=, data-general en el listado o
+// data-listado="general" en el <html> de la página (mas-vendidos.html). En un listado de una categoría se quitan
+// los productos de otras categorías (data-solo-general, de muestra)
+const general = Boolean(consulta) || listado.hasAttribute('data-general') || document.documentElement.dataset.listado === 'general';
+if (!general) grilla.querySelectorAll(':scope > [data-solo-general]').forEach((el) => el.remove());
 const items = [...grilla.children].map((el) => ({ el, datos: leer(el) }));
 
 const FILAS_POR_PAGINA = 4; // filas que se ven de entrada; cada "Ver más" suma otras tantas
 const PASO_PRECIO = 10000;
-const SUBCATEGORIAS = { nvidia: 'NVIDIA GeForce', amd: 'AMD Radeon' };
+const SUBCATEGORIAS = {
+  nvidia: 'NVIDIA GeForce', amd: 'AMD Radeon', ssd: 'Discos SSD', ryzen: 'AMD Ryzen', teclados: 'Teclados',
+  mouses: 'Mouses', auriculares: 'Auriculares', gamer: 'Monitores gamer', certificadas: 'Fuentes certificadas',
+};
 
-const porLista = (lista) => (a, b) => lista.indexOf(a) - lista.indexOf(b);
+// Las que no están en la lista van al final, por orden alfabético
+const porLista = (lista) => (a, b) => (lista.indexOf(a) + 1 || 99) - (lista.indexOf(b) + 1 || 99) || a.localeCompare(b);
 const numerico = (a, b) => parseFloat(a) - parseFloat(b);
 
 // Grupos de filtro (la clave es el data-* de la tarjeta y el data-grupo del <details>): cómo se ordenan
@@ -64,7 +74,7 @@ function leer(el) {
   d.vendidos = Number(d.vendidos);
   d.local = d.local === '1';
   // Texto en el que busca ?q=: nombre, marca y datos clave, sin tildes ni mayúsculas
-  d.texto = normalizar([el.querySelector('.producto__nombre')?.textContent, d.marca, d.modelo, d.vram, d.memoria, d.sub === 'amd' ? 'amd radeon' : 'nvidia geforce'].join(' '));
+  d.texto = normalizar([el.querySelector('.producto__nombre')?.textContent, d.marca, d.modelo, d.vram, d.memoria, d.sub === 'amd' ? 'amd radeon' : d.sub === 'nvidia' ? 'nvidia geforce' : '', d.categoria].join(' '));
   return d;
 }
 
@@ -85,7 +95,6 @@ function normalizar(texto) {
     .replace(/(\d)\s+(gb|w|mm)\b/g, '$1$2'); // "16 GB" y "16GB" son lo mismo
 }
 
-const consulta = (new URLSearchParams(location.search).get('q') || '').trim().slice(0, 80);
 const escritas = normalizar(consulta).split(/\s+/).filter(Boolean);
 
 // Tres casos además del exacto (en el sitio real los resuelve el buscador del backend):
@@ -133,10 +142,8 @@ if (consulta && !items.some((i) => todas(escritas, i.datos))) {
 const coincide = (d) => (tipoBusqueda === 'parecida' ? alguna(palabras, d) : todas(palabras, d));
 const hallados = items.filter((i) => coincide(i.datos));
 
-// Listado de varias categorías (búsqueda, campañas, "Ver todo" de Más vendidos, Outlet): filtros de categoría y
-// subcategoría y atributos generales; los propios de una categoría se esconden. En la plantilla se activa con la
-// búsqueda o con data-general en el listado
-const general = Boolean(consulta) || listado.hasAttribute('data-general');
+// Listado de varias categorías: filtros de categoría y subcategoría y atributos generales; los propios de una
+// categoría se esconden
 const GENERALES = ['categoria', 'sub', 'marca'];
 form.querySelectorAll('details[data-grupo]').forEach((d) => {
   const g = d.dataset.grupo;
@@ -145,6 +152,18 @@ form.querySelectorAll('details[data-grupo]').forEach((d) => {
 if (general) {
   const titulo = listado.querySelector('[data-vacio] .resultados__vacio-titulo');
   if (titulo) titulo.textContent = 'No encontramos productos con esos filtros';
+}
+
+// Página de varias categorías con nombre propio (data-titulo en el <html>, ej. "Más vendidos"): su título y sus migas,
+// sin el estante ni la guía de la categoría
+function modoGeneral() {
+  const nombre = document.documentElement.dataset.titulo;
+  if (consulta || !nombre) return;
+  listado.querySelector('.listado__titulo').textContent = nombre;
+  const migas = listado.querySelector('.migas ol');
+  if (migas) migas.innerHTML = `<li><a href="index.html">Inicio</a></li><li aria-current="page">${escapar(nombre)}</li>`;
+  destacados?.remove();
+  document.querySelector('.guia')?.remove();
 }
 
 function modoBusqueda() {
@@ -555,6 +574,7 @@ addEventListener("resize", () => {
 
 // ---------- Arranque ----------
 
+modoGeneral();
 modoBusqueda();
 armarGrupos();
 leerUrl();

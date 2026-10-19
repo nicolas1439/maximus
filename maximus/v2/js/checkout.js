@@ -1,7 +1,7 @@
 // Carrito y checkout: un paso a la vista por vez (Carrito, Facturación, Entrega, Pago y Resumen), los ítems del
 // carrito (cantidad, quitar), las opciones de cada paso con sus subpaneles, los totales (detalle de la compra,
-// barra fija y carrito del header) y la revisión final. Todo de muestra: no se envía nada y "Confirmar compra"
-// solo avisa. Sin JS se ven todos los pasos uno debajo del otro.
+// barra fija y carrito del header) y la revisión final. Todo de muestra: no se envía nada; "Confirmar compra"
+// abre Compra confirmada (con tarjeta, después del paso por Mercado Pago). Sin JS se ven todos los pasos uno debajo del otro.
 // Revisión final (tanda 3c): ingreso dentro del checkout, Factura A con alta de la empresa, domicilio por partes con
 // errores por campo, estados del envío (cotizando, sin sucursales, falla, Tierra del Fuego, PC o producto grande,
 // excede el tamaño), débito, interés de las cuotas, paso por Mercado Pago, pago no completado, error al grabar el
@@ -127,6 +127,7 @@ function iniciar() {
         else if (nueva && demo.errorGuardar) {
           $('[data-error-guardar]').hidden = false;
           mensaje = 'No se pudo guardar el domicilio.';
+          demo.errorGuardar = false; // de muestra, el siguiente intento sale bien
         } else if (demo.envio === 'cotizando') mensaje = 'Esperá a que termine la cotización del envío.';
         else if (demo.envio === 'falla') mensaje = 'No pudimos cotizar el envío: elegí otro código postal o retirá en tienda.';
         else if (demo.envio === 'tdf') mensaje = 'No hacemos envíos a Tierra del Fuego: elegí otra dirección o retirá en tienda.';
@@ -202,6 +203,7 @@ function iniciar() {
       financiado,
       total: { ...total },
       campania: items().find((i) => i.dataset.campania)?.dataset.campania || '',
+      facturaA: facturaA(),
     };
     try {
       sessionStorage.setItem('compra', JSON.stringify(compra));
@@ -855,7 +857,13 @@ function iniciar() {
   sincronizarTodo();
   actualizarTotales();
   const inicial = nombres.indexOf(location.hash.slice(1));
-  // Sin recorrido previo, el único paso alcanzable es el primero
-  if (inicial > 0) history.replaceState(null, '', '#carrito');
-  mostrar(0, { desplazar: false });
+  // Al volver de ingresar o de crear la cuenta, y desde "Comprar" de la ficha (#facturacion), sigue en Facturación con
+  // el carrito. Fuera de eso, sin recorrido previo el único paso alcanzable es el primero
+  if (inicial === 1 && demo.sesion) {
+    alcanzado = 1;
+    mostrar(1, { desplazar: false });
+  } else {
+    if (inicial > 0) history.replaceState(null, '', '#carrito');
+    mostrar(0, { desplazar: false });
+  }
 }

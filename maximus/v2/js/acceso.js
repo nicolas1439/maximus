@@ -201,7 +201,7 @@ function distancia(a, b) {
 
 document.querySelectorAll('[data-form] input[type="email"]').forEach((campo) => {
   const sugerencia = document.createElement('p');
-  sugerencia.className = 'sugerencia';
+  sugerencia.className = 'sugerencia-correo';
   sugerencia.hidden = true;
   sugerencia.innerHTML = '¿Quisiste decir <button type="button"></button>?';
   campo.after(sugerencia);
@@ -351,6 +351,13 @@ if (formRegistro) {
     const bienvenida = document.querySelector('[data-vista="bienvenida"]');
     bienvenida.querySelector('[data-nombre]').textContent = formRegistro.elements.nombre.value.trim();
     bienvenida.querySelector('[data-correo]').textContent = formRegistro.elements.correo.value.trim();
+    // Si el registro lo pidió otra página (?volver=: el checkout, un favorito), el botón principal vuelve ahí
+    const volver = new URLSearchParams(location.search).get('volver');
+    if (volver && destinoIngreso() === volver) {
+      const principal = bienvenida.querySelector('.listo__acciones .boton--primario');
+      principal.href = volver;
+      principal.textContent = volver.startsWith('carrito.html') ? 'Volver a tu compra' : 'Continuar';
+    }
     cuentaCreada = true;
     iniciarSesion();
     mostrar('bienvenida', { enfocar: true });

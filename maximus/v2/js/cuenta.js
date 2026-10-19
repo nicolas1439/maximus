@@ -153,7 +153,7 @@ if (dialogo) {
     document.querySelectorAll('[data-pendiente]').forEach((n) => (n.hidden = true));
     document.querySelectorAll('[data-pendiente-nav]').forEach((n) => (n.hidden = true));
     verComprobante('subidos', elegidos.length);
-    verPedido('revision');
+    verPedido('revision', false);
   });
 
   dialogo.querySelectorAll('[data-cerrar]').forEach((b) => b.addEventListener('click', () => dialogo.close()));
@@ -221,19 +221,38 @@ const ESTADOS_PEDIDO = {
   ingreso: ['info', 'Ingreso del pedido', 0],
   revision: ['info', 'Pedido en revisión', 1],
   pago: ['exito', 'Pago confirmado', 2],
-  despachar: ['info', 'Listo para despachar', 3],
-  despachado: ['info', 'Despachado', 3],
-  retirar: ['exito', 'Listo para retirar', 3, true],
+  despachar: ['info', 'Listo para despachar', 2, false],
+  despachado: ['info', 'Despachado', 3, false],
+  retirar: ['exito', 'Listo para retirar', 3],
   facturado: ['info', 'Facturado', 3],
   entregado: ['exito', 'Entregado', 5],
   cancelado: ['error', 'Cancelado', -1],
 };
 
+// El pedido de muestra es un retiro en Floresta; los estados de despacho lo muestran como envío por OCA
+const ENTREGA = {
+  retiro: { pago: 'Transferencia bancaria · Retiro en Floresta', dt: 'Retiro en Floresta', dd: 'Gratis', total: '$2.401.920' },
+  envio: { pago: 'Transferencia bancaria · Envío a domicilio', dt: 'Envío OCA 24 hs hábiles', dd: '$8.367', total: '$2.410.287' },
+};
+
+// El comprobante que corresponde a cada estado del pedido (en el sitio real vienen juntos)
+const COMPROBANTE_DE = {
+  pendiente: 'subir', ingreso: 'subir', revision: 'revision', pago: 'confirmado', despachar: 'confirmado',
+  despachado: 'confirmado', retirar: 'confirmado', facturado: 'factura', entregado: 'factura',
+};
+
 const tarjetaDemo = document.querySelector('[data-pedido-demo]');
 
-function verPedido(estado) {
+function verPedido(estado, conComprobante = true) {
   if (!tarjetaDemo) return;
-  const [tono, texto, actual, retiro] = ESTADOS_PEDIDO[estado];
+  const [tono, texto, actual, retiro = true] = ESTADOS_PEDIDO[estado];
+  const entrega = ENTREGA[retiro ? 'retiro' : 'envio'];
+  tarjetaDemo.querySelector('[data-entrega="pago"]').textContent = entrega.pago;
+  tarjetaDemo.querySelector('[data-entrega="dt"]').textContent = entrega.dt;
+  tarjetaDemo.querySelector('[data-entrega="dd"]').textContent = entrega.dd;
+  tarjetaDemo.querySelector('[data-entrega="total"]').lastChild.textContent = entrega.total;
+  tarjetaDemo.querySelector('[data-entrega="total-detalle"]').textContent = entrega.total;
+  tarjetaDemo.querySelector('[data-accion-comprobante]').dataset.total = entrega.total;
   const pill = tarjetaDemo.querySelector('[data-estado-pedido]');
   pill.className = `estado estado--${tono}`;
   pill.textContent = texto;
@@ -253,6 +272,15 @@ function verPedido(estado) {
   tarjetaDemo.querySelector('[data-cancelar-pedido]').hidden = !cancelable;
   if (estado !== 'cancelado') tarjetaDemo.querySelector('[data-cancelado-ok]').hidden = true;
   document.querySelectorAll('[data-ver-pedido]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.verPedido === estado)));
+  if (estado === 'cancelado') {
+    // Cancelado: sin comprobante ni acciones de pago, y fuera de "Comprobantes pendientes"
+    tarjetaDemo.querySelector('[data-comprobante-estado]').hidden = true;
+    tarjetaDemo.querySelector('[data-accion-comprobante]').hidden = true;
+    tarjetaDemo.querySelector('[data-accion-factura]').hidden = true;
+    tarjetaDemo.removeAttribute('data-espera-comprobante');
+    document.querySelectorAll('[data-ver-comprobante]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    contarPendientes();
+  } else if (conComprobante) verComprobante(COMPROBANTE_DE[estado]);
   // El pedido del resumen y de últimas compras muestra el mismo estado
   document.querySelectorAll('[data-pendiente-estado]').forEach((n) => {
     if (n === pill) return;
@@ -277,6 +305,7 @@ function verComprobante(estado, cantidad = 2) {
   if (!tarjetaDemo) return;
   const [tono, icono, texto, accion, factura] = ESTADOS_COMPROBANTE[estado];
   const caja = tarjetaDemo.querySelector('[data-comprobante-estado]');
+  caja.hidden = false;
   caja.className = `comprobante-estado comprobante-estado--${tono}`;
   caja.querySelector('[data-comprobante-texto]').innerHTML = `<svg class="icono icono--s" aria-hidden="true"><use href="#${icono}"/></svg><span>${texto.replace('{n}', cantidad)}</span>`;
   const boton = tarjetaDemo.querySelector('[data-accion-comprobante]');
@@ -348,11 +377,6 @@ if (dialogoCancelar) {
     error.hidden = !demo.errorCancelar;
     if (demo.errorCancelar) return;
     verPedido('cancelado');
-    verComprobante('retirar');
-    tarjetaDemo.querySelector('[data-comprobante-estado]').hidden = true;
-    tarjetaDemo.querySelector('[data-accion-comprobante]').hidden = true;
-    tarjetaDemo.removeAttribute('data-espera-comprobante');
-    contarPendientes();
     tarjetaDemo.querySelector('[data-cancelado-ok]').hidden = false;
   });
   dialogoCancelar.querySelectorAll('[data-cerrar]').forEach((b) => b.addEventListener('click', () => dialogoCancelar.close()));
@@ -447,8 +471,8 @@ function verCuenta(estado) {
   document.querySelector('[data-cargando-pedidos]').hidden = !cargando;
   verVacio('favoritos', nueva);
   verVacio('direcciones', nueva);
-  // Sin garantías, la sección no aparece
-  document.querySelectorAll('[data-con-garantias]').forEach((n) => (n.hidden = nueva));
+  // Sin garantías, la sección no aparece: se quita su enlace (qué panel se ve lo decide la navegación)
+  document.querySelectorAll('[data-con-garantias]:not([data-panel])').forEach((n) => (n.hidden = nueva));
   document.querySelectorAll('.cuenta__cant').forEach((n) => (n.hidden = nueva));
   if (nueva) {
     document.querySelectorAll('[data-pendiente], [data-pendiente-nav]').forEach((n) => (n.hidden = true));

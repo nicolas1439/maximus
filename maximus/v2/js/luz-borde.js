@@ -6,7 +6,8 @@
 const conMouse = matchMedia('(hover: hover) and (pointer: fine)');
 
 export function iniciarLuzBorde(tarjeta, claseConPuntero) {
-  if (!tarjeta || !conMouse.matches) return;
+  if (!tarjeta || !conMouse.matches || tarjeta.dataset.luzBordeLista !== undefined) return;
+  tarjeta.dataset.luzBordeLista = ''; // una vez por tarjeta
   const RADIO = 260; // radio de la luz con el puntero sobre el borde
   const LEJOS = 180; // desde esta distancia a la tarjeta empieza a aparecer
   const luz = { x: 0, y: 0, alcance: 0 };

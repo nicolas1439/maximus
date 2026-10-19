@@ -151,7 +151,7 @@
 }
 
 /* Dentro del acordeón: mientras está plegado, una línea cierra la lista antes del "Ver más" */
-.faq__lista > .faq__resto:not([open]) {
+.faq__lista > .faq__resto:not([open], .abierto) {
   border-top: 1px solid var(--color-borde);
 }
 

@@ -14,7 +14,7 @@ if (form) {
     nombre: (v) => (v.length >= 3 ? '' : 'Escribí tu nombre y apellido.'),
     correo: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Revisá el correo: falta algo (ej.: nombre@correo.com).'),
     dni: (v) => (/^\d{7,8}$/.test(v.replace(/\./g, '')) ? '' : 'El DNI tiene 7 u 8 números, sin puntos.'),
-    pedido: (v) => (/^(#?\s*max[\s-]*)?\d{4,7}$/i.test(v) ? '' : 'Revisá el número de pedido: tiene 6 números (con o sin MAX-).'),
+    pedido: (v) => (/^(#?\s*max[\s-]*)?\d{4,7}$/i.test(v) ? '' : 'Revisá el número de pedido: lo encontrás en el correo de la compra (ej.: MAX-423518).'),
   };
 
   function marcar(campo, mensaje) {

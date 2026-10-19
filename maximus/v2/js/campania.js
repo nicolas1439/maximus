@@ -101,7 +101,11 @@ if (pestanias && grilla) {
     nav.hidden = paginas < 2;
     nav.querySelector('ol').innerHTML = Array.from({ length: paginas }, (_, i) => {
       const actual = i + 1 === tandas;
-      const href = `primavera-maximus.html${i ? `?pagina=${i + 1}` : ''}`;
+      // Cada página conserva la pestaña elegida (?cat=)
+      const params = new URLSearchParams();
+      if (cat !== 'todo') params.set('cat', cat);
+      if (i) params.set('pagina', i + 1);
+      const href = `primavera-maximus.html${params.size ? `?${params}` : ''}`;
       return `<li><a class="paginas__enlace${actual ? ' actual' : ''}" href="${href}"${actual ? ' aria-current="page"' : ''}>${i + 1}</a></li>`;
     }).join('');
   }

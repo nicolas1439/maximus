@@ -146,15 +146,15 @@ function iniciar() {
   }
 
   function tarjeta(p) {
-    const cuota = pesos(p.precio / 0.9 / 3); // 3 cuotas sin interés sobre el precio con tarjeta (10% más)
-    return `<li><article class="producto">
+    const cuota = pesos(p.precio / 0.9 / 3); // 3 cuotas sin interés sobre el precio con tarjeta (efectivo ÷ 0,9)
+    return `<li><article class="producto producto--pc">
       <div class="producto__media">
         <img class="producto__img" loading="lazy" src="recursos/productos/${p.foto}.jpg" alt="" width="600" height="600">
         ${p.antes ? `<span class="etiqueta producto__etiqueta">Ahorrá ${pesos(p.antes - p.precio)}</span>` : ''}
       </div>
       <div class="producto__cuerpo">
         <div class="producto__meta"><span class="nivel-pc nivel-pc--${NIVELES.indexOf(p.nivel)}">${p.nivel}</span></div>
-        <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">${p.nombre}</a></h3>
+        <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="${p.nombre}">${p.nombre}</a></h3>
         <ul class="resultado-pc__specs">
           <li>${icono('i-cat-cpu', 'icono icono--s')}<span>${p.cpu}</span></li>
           <li>${icono('i-cat-gpu', 'icono icono--s')}<span>${p.gpu}</span></li>

@@ -7,7 +7,8 @@
 const conMouse = matchMedia('(hover: hover) and (pointer: fine)');
 
 export function iniciarLuz(boton, { tramo, saltar = false } = {}) {
-  if (!boton || !conMouse.matches) return;
+  if (!boton || !conMouse.matches || boton.dataset.luzLista !== undefined) return;
+  boton.dataset.luzLista = ''; // una vez por botón
   let actual = null;
   let destino = null;
   let dentro = false;

@@ -161,6 +161,11 @@
   font-weight: var(--peso-medio);
 }
 
+/* Aviso de muestra de los subtítulos, pegado debajo de las gamas */
+.msi__nota {
+  margin-top: calc(var(--espacio-seccion) * -1 + var(--espacio-3));
+}
+
 a.msi__todas {
   color: var(--color-acento);
 }

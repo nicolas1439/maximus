@@ -36,8 +36,9 @@
   grid-area: galeria;
 }
 
-.compra {
+.ficha__lateral {
   grid-area: compra;
+  min-width: 0;
 }
 
 .ficha__detalle {
@@ -170,9 +171,10 @@
   object-fit: contain;
 }
 
-/* Un clic en la foto abre el visor a pantalla completa */
+/* Un clic en la foto abre el visor a pantalla completa (con el cursor de siempre, sin lupa: pedido del usuario,
+   19/10/2026) */
 .galeria .carrusel__pista img {
-  cursor: zoom-in;
+  cursor: default;
 }
 
 /* Puntos sobre la foto blanca (celular; desde tablet los reemplazan las miniaturas) */
@@ -950,6 +952,71 @@
 
 }
 
+/* ---------- Resumen fijo (solo escritorio; en celular y tablet está la barra de compra) ---------- */
+
+.resumen-fijo {
+  display: none;
+}
+
+.resumen-fijo__producto {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.resumen-fijo__img {
+  width: 56px;
+  height: 56px;
+  padding: var(--espacio-1);
+  border-radius: var(--radio);
+  background: var(--color-fondo-imagen);
+  object-fit: contain;
+}
+
+.resumen-fijo__nombre {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.resumen-fijo__precios p {
+  margin: 0;
+}
+
+.resumen-fijo__precio {
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
+}
+
+.resumen-fijo__nota {
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.resumen-fijo__precios .resumen-fijo__cuotas {
+  margin-top: var(--espacio-1);
+  color: var(--color-acento);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+}
+
+.resumen-fijo__accion {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--espacio-2);
+}
+
+.resumen-fijo .boton {
+  width: 100%;
+}
+
 /* ---------- Escritorio: 1024px ---------- */
 
 @media (min-width: 1024px) {
@@ -984,11 +1051,47 @@
     overflow: visible;
   }
 
-  /* El bloque de compra queda fijo bajo la cabecera (--alto-fijo, header.css) mientras se lee el detalle */
-  .compra {
+  /* El bloque de compra va con el scroll (no queda fijo: es más alto que muchas pantallas y se cortaba, 19/10/2026).
+     Cuando sale de la pantalla aparece el resumen fijo bajo la cabecera (--alto-fijo, header.css) mientras se lee el
+     detalle: foto, nombre, precio, cuotas, cantidad, Agregar y Comprar */
+  .ficha__lateral {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch; /* ocupa todo el alto del detalle: ahí se mueve el resumen fijo */
+    gap: var(--espacio-6);
+  }
+
+  .resumen-fijo {
     position: sticky;
     top: calc(var(--alto-fijo, 0px) + var(--espacio-4));
-    transition: top var(--transicion);
+    display: flex;
+    flex-direction: column;
+    gap: var(--espacio-4);
+    padding: var(--espacio-4);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-l);
+    background: var(--color-fondo);
+    box-shadow: var(--sombra);
+    opacity: 0;
+    visibility: hidden;
+    translate: 0 var(--espacio-2);
+    transition: opacity var(--transicion), translate var(--transicion), visibility var(--transicion), top var(--transicion);
+  }
+
+  .resumen-fijo--visible {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+  }
+
+  .ficha--sin-stock .resumen-fijo {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .resumen-fijo {
+      translate: none;
+    }
   }
 
   .ficha__detalle {
@@ -1011,13 +1114,6 @@
 
   .cierre__texto {
     grid-column: span 5;
-  }
-}
-
-/* Pantallas bajas: el bloque de compra no entra fijo, va con el scroll */
-@media (min-width: 1024px) and (max-height: 800px) {
-  .compra {
-    position: static;
   }
 }
 
@@ -1190,7 +1286,7 @@
   gap: var(--espacio-2);
 }
 
-.sin-stock__form .boton:disabled {
+.sin-stock__form .boton:is(:disabled, .deshabilitado) {
   opacity: 0.45;
   cursor: default;
 }
@@ -1323,12 +1419,6 @@
 .cotizador__sin a {
   color: var(--color-acento);
   text-decoration: underline;
-}
-
-@keyframes girar {
-  to {
-    rotate: 1turn;
-  }
 }
 
 @media (min-width: 768px) {

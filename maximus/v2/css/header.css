@@ -1174,6 +1174,21 @@ html.dark .tema__sol {
   display: none;
 }
 
+/* Celular: sin lugar para el nombre, un punto verde sobre el ícono dice que la sesión está iniciada */
+@media (max-width: 767px) {
+  .cabecera__usuario--sesion::after {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--color-fondo);
+    border-radius: 50%;
+    background: var(--color-marca);
+    content: "";
+  }
+}
+
 @media (min-width: 768px) {
   .cabecera__usuario--sesion {
     display: flex;

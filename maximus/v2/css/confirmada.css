@@ -385,46 +385,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.totales div {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--espacio-3);
-}
-
-.totales dt {
-  color: var(--color-texto-suave);
-}
-
-.totales dd {
-  margin: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.totales__descuento dd {
-  color: var(--color-acento);
-  font-weight: var(--peso-medio);
-}
-
-.totales__campania dt,
-.totales__campania dd {
-  color: var(--color-secundario-texto);
-}
-
-.totales__campania dd {
-  font-weight: var(--peso-medio);
-}
-
-.totales__total dt {
-  color: var(--color-texto);
-  font-weight: var(--peso-fuerte);
-}
-
-.totales__total dd {
-  font-size: var(--texto-2xl);
-  font-weight: var(--peso-fuerte);
-  line-height: var(--interlineado-titulo);
-}
 
 .datos {
   display: flex;

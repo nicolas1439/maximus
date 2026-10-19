@@ -483,48 +483,6 @@
   padding-top: var(--espacio-3);
 }
 
-.chip {
-  position: relative;
-  cursor: pointer;
-}
-
-.chip input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.chip span {
-  display: inline-flex;
-  align-items: center;
-  height: var(--alto-control-s);
-  padding-inline: var(--espacio-4);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-pill);
-  background: var(--color-fondo);
-  font-size: var(--texto-s);
-  font-weight: var(--peso-medio);
-  transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion);
-}
-
-.chip:hover span {
-  border-color: var(--color-acento);
-}
-
-.chip:is(:has(input:checked), .elegida) span {
-  border-color: var(--color-marca);
-  background: var(--color-marca);
-  color: var(--color-sobre-marca);
-}
-
-.chip:has(input:focus-visible) span {
-  outline: 2px solid var(--color-acento);
-  outline-offset: 2px;
-}
-
 /* Cuotas: casillas en grilla; las sin interés resaltadas en verde */
 .cuotas__grilla {
   clear: both;
@@ -563,7 +521,8 @@
   font-size: var(--texto-2xs);
 }
 
-.cuota:has([data-factor="1"]) .cuota__nota {
+.cuota:has([data-factor="1"]) .cuota__nota,
+.cuota--sin-interes .cuota__nota {
   color: var(--color-acento);
   font-weight: var(--peso-medio);
 }
@@ -778,47 +737,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-.totales div {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--espacio-3);
-}
-
-.totales dt {
-  color: var(--color-texto-suave);
-}
-
-.totales dd {
-  margin: 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.totales__descuento dd {
-  color: var(--color-acento);
-  font-weight: var(--peso-medio);
-}
-
-/* Descuento de campaña, en violeta como su etiqueta */
-.totales__campania dt,
-.totales__campania dd {
-  color: var(--color-secundario-texto);
-}
-
-.totales__campania dd {
-  font-weight: var(--peso-medio);
-}
-
-.totales__total dt {
-  color: var(--color-texto);
-  font-weight: var(--peso-fuerte);
-}
-
-.totales__total dd {
-  font-size: var(--texto-2xl);
-  font-weight: var(--peso-fuerte);
-  line-height: var(--interlineado-titulo);
-}
 
 .resumen__nota {
   margin: calc(var(--espacio-2) * -1) 0 0;
@@ -1163,7 +1081,7 @@
 
 .cotizando__texto .icono,
 .redireccion__estado .icono {
-  animation: girar-boton 0.9s linear infinite;
+  animation: girar 0.9s linear infinite;
 }
 
 .cotizando__fila {

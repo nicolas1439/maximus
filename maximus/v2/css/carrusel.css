@@ -127,32 +127,15 @@
   cursor: default;
 }
 
-/* Arrastre con el mouse (solo si hay algo para desplazar): cursor de mano;
-   al arrastrar se suelta el ajuste (snap) para que siga al cursor */
-@media (hover: hover) and (pointer: fine) {
-  .carrusel--desplazable .carrusel__pista,
-  .carrusel--desplazable .carrusel__pista * {
-    cursor: grab;
-  }
-
-  .carrusel--desplazable .carrusel__pista :is(.boton, button),
-  .carrusel--desplazable .carrusel__pista :is(.boton, button) * {
-    cursor: pointer;
-  }
-}
-
 @media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
   .carrusel--desplazable .carrusel__flechas {
     display: flex;
   }
 }
 
+/* Arrastre con el mouse: se suelta el ajuste (snap) para que siga al puntero. El cursor queda el de siempre
+   (sin mano), pedido del usuario, 19/10/2026 */
 .carrusel--arrastrando .carrusel__pista {
   scroll-snap-type: none;
   user-select: none;
-}
-
-.carrusel--arrastrando .carrusel__pista,
-.carrusel--arrastrando .carrusel__pista * {
-  cursor: grabbing;
 }

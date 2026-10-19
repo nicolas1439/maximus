@@ -24,7 +24,7 @@
   <div class="barra-sup">
     <div class="contenedor barra-sup__fila">
       <ul class="barra-sup__beneficios">
-        <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-envio"/></svg>Envíos a todo el país</li>
+        <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-envio"/></svg>Envíos a todo el país, excepto Tierra del Fuego</li>
         <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-cuotas"/></svg>3 cuotas sin interés</li>
         <li><svg class="icono icono--s" aria-hidden="true"><use href="#i-sucursal"/></svg>Retiro gratis</li>
         <li class="barra-sup__alterno"><svg class="icono icono--s" aria-hidden="true"><use href="#i-efectivo"/></svg>Precio especial de contado</li>
@@ -570,11 +570,18 @@
   <!-- Contenido de prueba para ver el comportamiento al hacer scroll (data-demo: no se incluye en la página completa) -->
   <main class="contenedor" data-demo style="padding-block: 32px; display: grid; gap: 24px;">
     <!-- Estados de muestra del header: con o sin sesión (el nombre del cliente junto al ícono) y el carrito vacío -->
-    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-      <button class="boton boton--secundario" type="button" onclick="try { localStorage.setItem('sesion', '1'); } catch {} location.reload()">Con sesión</button>
-      <button class="boton boton--secundario" type="button" onclick="try { localStorage.removeItem('sesion'); } catch {} location.reload()">Sin sesión</button>
-      <button class="boton boton--secundario" type="button" onclick="const c = document.querySelector('.carrito'); const v = c.classList.toggle('carrito--vacio'); c.querySelector('.carrito__cant').textContent = v ? '0' : '3'; c.setAttribute('aria-label', v ? 'Carrito vacío' : 'Carrito: 3 productos, $2.948.798')">Carrito vacío / con productos</button>
+    <div class="variantes">
+      <span class="variantes__rotulo">Sesión</span>
+      <div class="variantes__opciones" role="group" aria-label="Sesión">
+        <button class="variantes__btn" type="button" aria-pressed="false" data-demo-sesion="con" onclick="try { localStorage.setItem('sesion', '1'); } catch {} location.reload()">Con sesión</button>
+        <button class="variantes__btn" type="button" aria-pressed="false" data-demo-sesion="sin" onclick="try { localStorage.removeItem('sesion'); } catch {} location.reload()">Sin sesión</button>
+      </div>
+      <span class="variantes__rotulo">Carrito</span>
+      <div class="variantes__opciones" role="group" aria-label="Carrito">
+        <button class="variantes__btn" type="button" aria-pressed="false" onclick="const c = document.querySelector('.carrito'); const v = c.classList.toggle('carrito--vacio'); this.setAttribute('aria-pressed', v); c.querySelector('.carrito__cant').textContent = v ? '0' : '3'; c.setAttribute('aria-label', v ? 'Carrito vacío' : 'Carrito: 3 productos, $2.948.798')">Vacío</button>
+      </div>
     </div>
+    <script>try { const con = Boolean(localStorage.getItem('sesion')); document.querySelectorAll('[data-demo-sesion]').forEach((b) => b.setAttribute('aria-pressed', (b.dataset.demoSesion === 'con') === con)); } catch {}</script>
     <div style="height: 360px; border-radius: 8px; background: var(--color-superficie);"></div>
     <div style="height: 900px; border-radius: 8px; background: var(--color-superficie);"></div>
   </main>

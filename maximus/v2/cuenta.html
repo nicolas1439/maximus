@@ -138,7 +138,7 @@
               <div>
                 <p class="en-curso__rotulo">Pedido en camino</p>
                 <h2 class="en-curso__titulo">Pedido #MAX-422907</h2>
-                <p class="en-curso__meta">Llega el siguiente día hábil, jueves 15 de octubre · Envío a domicilio con OCA</p>
+                <p class="en-curso__meta">Llega el jueves 15 de octubre · Envío a domicilio con OCA</p>
               </div>
               <span class="estado estado--info">Despachado</span>
             </header>
@@ -270,9 +270,9 @@
                   <ul class="miniaturas"><li><img src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600"></li></ul>
                   <div class="pedido__datos">
                     <p class="pedido__items">Placa de Video MSI GeForce RTX 5070 Ti Ventus 3X 16GB</p>
-                    <p class="pedido__pago">Transferencia bancaria · Retiro en Floresta</p>
+                    <p class="pedido__pago" data-entrega="pago">Transferencia bancaria · Retiro en Floresta</p>
                   </div>
-                  <p class="pedido__total"><span>Total</span>$2.401.920</p>
+                  <p class="pedido__total" data-entrega="total"><span>Total</span>$2.401.920</p>
                 </div>
                 <!-- Comprobante: su estado y su acción -->
                 <div class="comprobante-estado" data-comprobante-estado>
@@ -300,8 +300,8 @@
                     </ul>
                     <dl class="detalle__totales">
                       <div><dt>Subtotal</dt><dd>$2.401.920</dd></div>
-                      <div><dt>Retiro en Floresta</dt><dd>Gratis</dd></div>
-                      <div class="detalle__total"><dt>Total</dt><dd>$2.401.920</dd></div>
+                      <div><dt data-entrega="dt">Retiro en Floresta</dt><dd data-entrega="dd">Gratis</dd></div>
+                      <div class="detalle__total"><dt>Total</dt><dd data-entrega="total-detalle">$2.401.920</dd></div>
                     </dl>
                   </div>
                 </details>
@@ -395,7 +395,7 @@
             <li>
               <article class="tarjeta pedido">
                 <header class="pedido__cab">
-                  <div><h3 class="pedido__numero">Pedido #MAX-401962</h3><p class="pedido__fecha">20 de marzo de 2026</p></div>
+                  <div><h3 class="pedido__numero">Pedido #MAX-401962</h3><p class="pedido__fecha">20 de mayo de 2026</p></div>
                   <span class="estado estado--exito">Entregado</span>
                 </header>
                 <div class="pedido__resumen">
@@ -438,7 +438,7 @@
           <header class="panel__cab panel__cab--accion">
             <div>
               <h2 class="panel__titulo" id="garantias-titulo">Garantías</h2>
-              <p class="panel__bajada">Tus órdenes de RMA. Si un producto falla, iniciá el trámite con la factura y fotos del producto. Garantía con Maximus: 12 meses las PC armadas; 6 meses hardware, periféricos, conectividad y accesorios; notebooks, monitores, impresoras, Logitech y Seagate, 10 días y después con el fabricante.</p>
+              <p class="panel__bajada">Tus órdenes de RMA. Si un producto falla, iniciá el trámite con la factura y fotos del producto. Garantía con Maximus: 12 meses las PC armadas; 6 meses hardware, periféricos, conectividad y accesorios; notebooks, monitores, impresoras, Logitech y Seagate, 10 días de prueba con Maximus y después con el servicio oficial del fabricante.</p>
             </div>
             <a class="boton boton--primario" href="garantia.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-mas"/></svg>Iniciar una garantía</a>
           </header>
@@ -462,7 +462,7 @@
             <li>
               <article class="tarjeta rma">
                 <header class="pedido__cab">
-                  <div><h3 class="pedido__numero">RMA #14533</h3><p class="pedido__fecha">Ingresó el 24 de agosto de 2026 · Pedido #MAX-418230</p></div>
+                  <div><h3 class="pedido__numero">RMA #14533</h3><p class="pedido__fecha">Ingresó el 16 de julio de 2026 · Pedido #MAX-418230</p></div>
                   <span class="estado estado--exito">Finalizado</span>
                 </header>
                 <div class="rma__cuerpo">
@@ -486,7 +486,7 @@
               <p class="panel__bajada">Los productos que guardaste con el corazón.</p>
             </div>
             <div class="panel__acciones" data-con-favoritos>
-              <button class="boton boton--primario" type="button" data-agregar-todos><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar todos al carrito</button>
+              <button class="boton boton--primario" type="button" data-agregar-todos data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar todos al carrito</button>
               <button class="boton boton--secundario" type="button" data-abrir-presupuesto><svg class="icono icono--s" aria-hidden="true"><use href="#i-descarga"/></svg>Descargar presupuesto en PDF</button>
             </div>
           </header>
@@ -687,7 +687,7 @@
                     <input class="campo__control" id="dato-doc-numero" type="text" inputmode="numeric" value="34567890" aria-labelledby="dato-doc-rotulo" required disabled data-fijo data-documento>
                   </div>
                 </div>
-                <p class="campo--ancho datos__fijos" data-nota-fijos><svg class="icono icono--s" aria-hidden="true"><use href="#i-candado"/></svg><span>La condición fiscal y el documento no se cambian una vez activada la cuenta. Si hay un error, <a href="https://wa.me/541123575522?text=Hola%2C%20necesito%20corregir%20mis%20datos%20fiscales">escribinos por WhatsApp</a>.</span></p>
+                <p class="campo--ancho fijos-nota" data-nota-fijos><svg class="icono icono--s" aria-hidden="true"><use href="#i-candado"/></svg><span>La condición fiscal y el documento no se cambian una vez activada la cuenta. Si hay un error, <a href="https://wa.me/541123575522?text=Hola%2C%20necesito%20corregir%20mis%20datos%20fiscales">escribinos por WhatsApp</a>.</span></p>
               </div>
             </fieldset>
 

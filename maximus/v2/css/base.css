@@ -147,7 +147,8 @@ body:has(> .mx) {
 
 :where(.mx) button,
 :where(.mx) input,
-:where(.mx) select {
+:where(.mx) select,
+:where(.mx) textarea {
   margin: 0;
   font: inherit;
   color: inherit;
@@ -379,7 +380,8 @@ a.boton--primario {
   transition: rotate var(--transicion);
 }
 
-.selector:has(.selector__campo:open) .selector__flecha {
+.selector:has(.selector__campo:open) .selector__flecha,
+.selector.abierto .selector__flecha {
   rotate: 180deg;
 }
 
@@ -740,6 +742,49 @@ a.pasos__enlace {
   margin-top: var(--espacio-1);
   padding-top: var(--espacio-3);
   border-top: 1px dashed var(--color-borde);
+}
+
+/* Filas de los totales (checkout y compra confirmada) */
+.totales div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.totales dt {
+  color: var(--color-texto-suave);
+}
+
+.totales dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.totales__descuento dd {
+  color: var(--color-acento);
+  font-weight: var(--peso-medio);
+}
+
+/* Descuento de campaña, en violeta como su etiqueta */
+.totales__campania dt,
+.totales__campania dd {
+  color: var(--color-secundario-texto);
+}
+
+.totales__campania dd {
+  font-weight: var(--peso-medio);
+}
+
+.totales__total dt {
+  color: var(--color-texto);
+  font-weight: var(--peso-fuerte);
+}
+
+.totales__total dd {
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--interlineado-titulo);
 }
 
 /* Formulario: los campos en columna; desde tablet, de a dos (.campo--ancho ocupa la fila entera y
@@ -1254,6 +1299,50 @@ html.dark .aurora--pagina::after {
   }
 }
 
+/* Pastilla: opción con radio en forma de pastilla, la elegida en verde (tipo de tarjeta en el checkout, tipo de falla
+   en Garantía y RMA). El radio queda invisible pero accesible */
+.pastilla {
+  position: relative;
+  cursor: pointer;
+}
+
+.pastilla input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pastilla span {
+  display: inline-flex;
+  align-items: center;
+  height: var(--alto-control-s);
+  padding-inline: var(--espacio-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pill);
+  background: var(--color-fondo);
+  font-size: var(--texto-s);
+  font-weight: var(--peso-medio);
+  transition: border-color var(--transicion), background-color var(--transicion), color var(--transicion);
+}
+
+.pastilla:hover span {
+  border-color: var(--color-acento);
+}
+
+.pastilla:is(:has(input:checked), .elegida) span {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  color: var(--color-sobre-marca);
+}
+
+.pastilla:has(input:focus-visible) span {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
 /* Medios de pago (footer, ficha y checkout): el logo de Mercado Pago y los medios en pastillas.
    .medios-pago--barra: sobre la barra y el footer (oscuros en ambos modos) */
 .medios-pago {
@@ -1297,6 +1386,15 @@ html.dark .aurora--pagina::after {
 .medios-pago__item--logo img {
   width: auto;
   height: 22px;
+}
+
+/* Logos de las tarjetas (Visa, Mastercard, Cabal: los del sitio), juntos en una pastilla */
+.medios-pago__item--tarjetas {
+  gap: var(--espacio-2);
+}
+
+.medios-pago__item--tarjetas img {
+  height: 18px;
 }
 
 .medios-pago--barra .medios-pago__titulo,
@@ -1672,20 +1770,21 @@ a.saltar {
   margin-top: 1px;
 }
 
-.campo__control:disabled {
+.campo__control:is(:disabled, .deshabilitado) {
   background: var(--color-superficie);
   color: var(--color-texto-suave);
   cursor: not-allowed;
 }
 
-/* Ruedita de carga en "Verificar" (.cargando): el texto se oculta y el botón no se puede tocar */
-.cuit .boton.cargando {
+/* Ruedita de carga en los botones que esperan una respuesta (.cargando): "Verificar" del CUIT y los botones de los
+   diálogos. El texto se oculta y el botón no se puede tocar */
+:is(.cuit, .dialogo) .boton.cargando {
   position: relative;
   color: transparent;
   pointer-events: none;
 }
 
-.cuit .boton.cargando::after {
+:is(.cuit, .dialogo) .boton.cargando::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1695,15 +1794,16 @@ a.saltar {
   border: 2px solid var(--color-texto);
   border-right-color: transparent;
   border-radius: 50%;
-  animation: girar-boton 0.7s linear infinite;
+  animation: girar 0.7s linear infinite;
 }
 
-.cuit .boton--primario.cargando::after {
+:is(.cuit, .dialogo) .boton--primario.cargando::after {
   border-color: var(--color-sobre-marca);
   border-right-color: transparent;
 }
 
-@keyframes girar-boton {
+/* Giro de los indicadores de carga (botones, tarjetas, ficha, ingreso, seguimiento): uno solo para todo el sitio */
+@keyframes girar {
   to {
     rotate: 1turn;
   }

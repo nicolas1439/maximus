@@ -152,6 +152,9 @@
         </ul>
       </section>
 
+      <!-- Columna derecha: el bloque de compra completo y, en escritorio, el resumen fijo que aparece cuando el bloque
+           sale de la pantalla (así el bloque nunca queda cortado) -->
+      <div class="ficha__lateral">
       <!-- Compra: precio en efectivo (el principal), con tarjeta y cuotas, cantidad, agregar y disponibilidad -->
       <section class="compra" aria-label="Precio y compra">
         <!-- PC armadas: el sello de garantía -->
@@ -209,6 +212,7 @@
             <p class="medios-pago__titulo">Medios de pago</p>
             <ul class="medios-pago__lista">
               <li class="medios-pago__item medios-pago__item--logo"><img src="recursos/pagos/mercadopago-120.webp" alt="Mercado Pago" width="120" height="83" loading="lazy"></li>
+              <li class="medios-pago__item medios-pago__item--logo medios-pago__item--tarjetas"><img src="recursos/pagos/visa.png" alt="Visa" width="67" height="48" loading="lazy"><img src="recursos/pagos/mastercard.png" alt="Mastercard" width="80" height="48" loading="lazy"><img src="recursos/pagos/cabal.png" alt="Cabal" width="144" height="48" loading="lazy"></li>
               <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-tarjeta"/></svg>Crédito y débito</li>
               <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-transferencia"/></svg>Transferencia o depósito</li>
               <li class="medios-pago__item"><svg class="icono icono--s" aria-hidden="true"><use href="#i-efectivo"/></svg>Efectivo</li>
@@ -227,7 +231,7 @@
           </div>
           <button class="boton boton--primario compra__agregar" type="button" data-agregar data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar al carrito</button>
           <!-- Comprar: agrega el producto y va directo al checkout -->
-          <a class="boton boton--secundario compra__comprar" href="carrito.html#entrega" data-comprar data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">Comprar</a>
+          <a class="boton boton--secundario compra__comprar" href="carrito.html#facturacion" data-comprar data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">Comprar</a>
         </div>
 
         <!-- Sin stock (estado propio): en lugar de comprar, "Avisame cuando vuelva" -->
@@ -303,12 +307,37 @@
                notebooks, monitores, impresoras, Logitech y Seagate, "10 días de prueba con Maximus y después con el fabricante". -->
           <li class="condicion">
             <svg class="icono" aria-hidden="true"><use href="#i-garantia"/></svg>
-            <div><strong>6 meses de garantía con Maximus</strong><span><a href="centro-de-ayuda.html#garantias">Ver condiciones de la garantía</a></span></div>
+            <div><strong data-garantia-texto>6 meses de garantía con Maximus</strong><span><a href="centro-de-ayuda.html#garantias">Ver condiciones de la garantía</a></span></div>
           </li>
         </ul>
 
         <p class="compra__consulta">¿Dudas con tu gabinete, tu fuente o tu procesador? <a href="https://wa.me/541123575522">Consultanos por WhatsApp</a> y te asesoramos.</p>
+
       </section>
+
+      <!-- Resumen fijo (escritorio): foto, nombre, precio, cuotas, cantidad, Agregar y Comprar. Aparece cuando el bloque
+           de compra sale de la pantalla y queda fijo bajo el header mientras se lee el detalle -->
+      <aside class="resumen-fijo" aria-label="Comprar este producto" data-resumen-fijo>
+        <div class="resumen-fijo__producto">
+          <img class="resumen-fijo__img" src="https://www.maximus.com.ar/Temp/App_WebSite/App_PictureFiles/Items/912-V531-461_800.jpg" alt="" width="800" height="800" loading="lazy">
+          <p class="resumen-fijo__nombre">Placa de Video MSI Nvidia GeForce RTX 5070 Ti Ventus 3X 16GB OC GDDR7</p>
+        </div>
+        <div class="resumen-fijo__precios">
+          <p class="resumen-fijo__precio">$2.401.920</p>
+          <p class="resumen-fijo__nota">Efectivo, transferencia o depósito</p>
+          <p class="resumen-fijo__cuotas">3 cuotas sin interés de $889.600</p>
+        </div>
+        <div class="resumen-fijo__accion">
+          <div class="cantidad" data-cantidad>
+            <button class="cantidad__btn" type="button" aria-label="Una unidad menos" data-paso="-1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-menos"/></svg></button>
+            <input class="cantidad__campo" type="number" value="1" min="1" max="1" inputmode="numeric" aria-label="Cantidad">
+            <button class="cantidad__btn" type="button" aria-label="Una unidad más" data-paso="1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-mas"/></svg></button>
+          </div>
+          <button class="boton boton--primario" type="button" data-agregar data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar al carrito</button>
+        </div>
+        <a class="boton boton--secundario resumen-fijo__comprar" href="carrito.html#facturacion" data-comprar data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">Comprar</a>
+      </aside>
+      </div>
 
       <!-- Detalle: lo esencial, descripción, usos, compatibilidad y especificaciones -->
       <div class="ficha__detalle">
@@ -405,7 +434,7 @@
           </ul>
           <div class="combo__pie">
             <p class="combo__precio"><span>Precio del combo, efectivo o transferencia</span><strong>$2.469.900</strong><s>Por separado $2.536.919</s></p>
-            <button class="boton boton--primario" type="button" data-agregar-combo><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar el combo</button>
+            <button class="boton boton--primario" type="button" data-agregar-combo data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar el combo</button>
           </div>
         </section>
 
@@ -550,7 +579,7 @@
               </div>
             </header>
             <h3 class="resena__titulo">Rinde de más en 1440p</h3>
-            <p class="resena__texto">La venía siguiendo hace meses y aproveché la Primavera Maximus. En 1440p con todo al máximo no baja de 144 fps en los juegos que uso, y con DLSS 4 se va mucho más arriba. Los tres ventiladores casi no se escuchan. Llegó en 24 hs a Caballito, muy bien embalada.</p>
+            <p class="resena__texto">La venía siguiendo hace meses y aproveché la Primavera Maximus. En 1440p con todo al máximo no baja de 144 fps en los juegos que uso, y con DLSS 4 se va mucho más arriba. Los tres ventiladores casi no se escuchan. Llegó al día siguiente a Caballito, muy bien embalada.</p>
             <footer class="resena__pie">
               <span>¿Te resultó útil?</span>
               <button class="resena__reaccion" type="button" aria-pressed="false" data-reaccion="si"><svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg>Sí <span data-cuenta>12</span></button>

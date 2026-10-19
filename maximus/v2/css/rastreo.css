@@ -96,13 +96,7 @@
 
 .consulta__boton[aria-busy="true"] .icono,
 .consulta__boton.cargando .icono {
-  animation: buscando 0.8s linear infinite;
-}
-
-@keyframes buscando {
-  to {
-    rotate: 360deg;
-  }
+  animation: girar 0.8s linear infinite;
 }
 
 .consulta__error {

@@ -51,13 +51,16 @@ if (galeria) {
     const img = visor.querySelector('.visor__img');
     const contador = visor.querySelector('.visor__contador');
     let enVisor = 0;
+    // Con una sola foto (galeria--una) el visor no cuenta ni pasa a otras
+    const cantidad = () => (galeria.classList.contains('galeria--una') ? 1 : fotos.length);
 
     function mostrar(i) {
-      enVisor = (i + fotos.length) % fotos.length;
+      enVisor = (i + cantidad()) % cantidad();
       const foto = fotos[enVisor].querySelector('img');
       img.src = foto.currentSrc || foto.src;
       img.alt = foto.alt;
-      contador.textContent = `${enVisor + 1} / ${fotos.length}`;
+      contador.textContent = `${enVisor + 1} / ${cantidad()}`;
+      contador.hidden = cantidad() === 1;
     }
 
     function abrir(i) {
@@ -116,6 +119,13 @@ document.querySelectorAll('[data-cantidad]').forEach((caja) => {
     campo.value = n;
     menos.disabled = n <= minimo;
     mas.disabled = n >= maximo;
+    // La cantidad del bloque de compra y la del resumen fijo son la misma
+    document.querySelectorAll('[data-cantidad] input').forEach((otro) => {
+      if (otro !== campo && Number(otro.value) !== n) {
+        otro.value = n;
+        otro.dispatchEvent(new Event('change'));
+      }
+    });
   }
 
   menos.addEventListener('click', () => fijar(Number(campo.value) - 1));
@@ -166,6 +176,20 @@ document.querySelectorAll('.ficha__favorito').forEach((boton) =>
   })
 );
 
+// Al volver de ingresar o de crear la cuenta, el producto que se quería guardar queda marcado
+try {
+  const pendiente = sessionStorage.getItem('favorito-pendiente');
+  const nombre = document.querySelector('.ficha__nombre, h1')?.textContent.trim();
+  if (pendiente && pendiente === nombre && localStorage.getItem('sesion')) {
+    sessionStorage.removeItem('favorito-pendiente');
+    document.querySelectorAll('.ficha__favorito').forEach((boton) => {
+      boton.setAttribute('aria-pressed', 'true');
+      boton.classList.add('marcado');
+    });
+    avisar('Guardado en favoritos');
+  }
+} catch {}
+
 // Sin carrito todavía: solo el aviso. "Comprar" agrega y va directo al checkout
 document.querySelectorAll('[data-agregar], [data-agregar-combo]').forEach((boton) =>
   boton.addEventListener('click', () => avisar(boton.matches('[data-agregar-combo]') ? 'Combo agregado al carrito' : 'Agregado al carrito'))
@@ -183,6 +207,18 @@ if (barra && agregar) {
       barra.classList.toggle('ficha__barra--visible', !entrada.isIntersecting && entrada.boundingClientRect.top < 0),
     { threshold: 0 }
   ).observe(agregar);
+}
+
+// Escritorio: el resumen fijo aparece cuando el bloque de compra entero quedó arriba, debajo del header
+const resumenFijo = document.querySelector('[data-resumen-fijo]');
+const bloqueCompra = document.querySelector('.compra');
+
+if (resumenFijo && bloqueCompra) {
+  new IntersectionObserver(
+    ([entrada]) =>
+      resumenFijo.classList.toggle('resumen-fijo--visible', !entrada.isIntersecting && entrada.boundingClientRect.top < 0),
+    { rootMargin: '-160px 0px 0px 0px' }
+  ).observe(bloqueCompra);
 }
 
 // ---------- Cotizador de envío (de muestra: en el sitio real cotiza el sistema con el código postal) ----------
@@ -223,7 +259,10 @@ if (cotizador) {
       sin.hidden = false;
       return;
     }
-    const grande = document.querySelector('.ficha')?.classList.contains('ficha--grande');
+    // Las PC armadas y los productos grandes no tienen envío en 24 hs
+    const pc = document.querySelector('.ficha')?.classList.contains('ficha--pc');
+    const grande = pc || document.querySelector('.ficha')?.classList.contains('ficha--grande');
+    resultado.querySelector('[data-cot-grande]').lastChild.textContent = pc ? 'Las PC armadas no tienen envío en 24 hs.' : 'Por su tamaño, este producto no tiene envío en 24 hs.';
     const lista = amba
       ? [['OCA 24 hs a domicilio', 'Llega el siguiente día hábil', '$4.892', true], ['OCA Normal a domicilio', 'Llega en 4 días hábiles desde el despacho', '$8.367'], ['OCA Normal a sucursal', 'Disponible en 4 días hábiles desde el despacho', '$6.694']]
       : [['OCA Normal a domicilio', 'Llega en 6 días hábiles desde el despacho', '$12.480'], ['OCA Normal a sucursal', 'Disponible en 6 días hábiles desde el despacho', '$9.950']];
@@ -323,7 +362,15 @@ const VARIANTES = {
     ficha.classList.toggle('ficha--grande', v === 'grande');
     document.querySelectorAll('[data-solo-producto]').forEach((el) => (el.hidden = el.dataset.soloProducto !== v));
     const envio = document.querySelector('[data-envio-texto]');
-    if (envio) envio.textContent = v === 'grande' ? 'Excepto Tierra del Fuego. Por su tamaño, sin envío en 24 hs' : 'Excepto Tierra del Fuego. En AMBA llega en 24 hs hábiles';
+    if (envio) {
+      envio.textContent = {
+        grande: 'Excepto Tierra del Fuego. Por su tamaño, sin envío en 24 hs',
+        pc: 'Excepto Tierra del Fuego. Las PC armadas no tienen envío en 24 hs',
+      }[v] || 'Excepto Tierra del Fuego. En AMBA llega en 24 hs hábiles';
+    }
+    // Garantía según el producto: PC armadas, 12 meses; el resto de la muestra (hardware), 6 meses con Maximus
+    const garantia = document.querySelector('[data-garantia-texto]');
+    if (garantia) garantia.textContent = v === 'pc' ? '12 meses de garantía en tu PC armada' : '6 meses de garantía con Maximus';
   },
 };
 document.querySelectorAll('[data-variante]').forEach((boton) =>
@@ -333,6 +380,13 @@ document.querySelectorAll('[data-variante]').forEach((boton) =>
     VARIANTES[grupo]?.(valor);
   })
 );
+// "Avisame cuando vuelva" de una tarjeta sin stock (#avisame): la ficha abre en su estado sin stock, en el formulario
+if (location.hash === '#avisame') {
+  VARIANTES.web('sin');
+  document.querySelectorAll('[data-variante^="web:"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.variante === 'web:sin'));
+  requestAnimationFrame(() => document.querySelector('#avisame')?.scrollIntoView({ block: 'center' }));
+}
+
 document.querySelectorAll('[data-error-agregar]').forEach((boton) =>
   boton.addEventListener('click', () =>
     avisar(boton.dataset.errorAgregar === 'agotado' ? 'Artículo sin stock: se agotó recién.' : 'Tu pedido no fue procesado, intentá de nuevo más tarde.', { error: true })

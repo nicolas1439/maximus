@@ -1029,7 +1029,7 @@ a.armador__alternativa {
   font-weight: var(--peso-fuerte);
 }
 
-.resumen-arm__agregar:not(:disabled):hover {
+.resumen-arm__agregar:not(:disabled, .deshabilitado):hover {
   background: var(--color-marca);
 }
 
@@ -1044,8 +1044,8 @@ a.armador__alternativa {
   transition: opacity var(--transicion-lenta);
 }
 
-.resumen-arm__agregar:not(:disabled):hover::before,
-.resumen-arm__agregar:not(:disabled):hover::after {
+.resumen-arm__agregar:not(:disabled, .deshabilitado):hover::before,
+.resumen-arm__agregar:not(:disabled, .deshabilitado):hover::after {
   opacity: 1;
 }
 

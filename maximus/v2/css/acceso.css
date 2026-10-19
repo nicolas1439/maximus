@@ -345,12 +345,6 @@ a.modo__opcion {
   animation: girar 0.7s linear infinite;
 }
 
-@keyframes girar {
-  to {
-    rotate: 1turn;
-  }
-}
-
 .ingreso__alterno {
   width: 100%;
   height: var(--alto-control-l);
@@ -392,14 +386,14 @@ a.modo__opcion {
 }
 
 /* Sugerencia de correo ("¿Quisiste decir …@gmail.com?") */
-.sugerencia {
+.sugerencia-correo {
   align-self: flex-start;
   margin: 0;
   color: var(--color-texto-suave);
   font-size: var(--texto-xs);
 }
 
-.sugerencia button {
+.sugerencia-correo button {
   color: var(--color-acento);
   font-size: inherit;
   font-weight: var(--peso-medio);
@@ -407,7 +401,7 @@ a.modo__opcion {
   overflow-wrap: anywhere;
 }
 
-.sugerencia button:hover {
+.sugerencia-correo button:hover {
   text-decoration: underline;
 }
 

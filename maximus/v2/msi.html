@@ -24,7 +24,7 @@
   <!-- Plantilla de landing de marca, armada con Computadoras Powered by MSI (/POWEREDBYMSI en maximus.com.ar,
        relevado el 17/10/2026): las tres gamas (Essential, Advanced, Ultimate) con sus banners y tarjetas (las
        imágenes del repo de Maximus, en recursos/msi/) y las PC de cada gama, todas las que mostraba el sitio ese día
-       con sus nombres y precios en efectivo (cuotas con el 10% del precio con tarjeta), en la fila deslizable del home
+       con sus nombres y precios en efectivo (cuota = precio con tarjeta ÷ 3, y el precio con tarjeta = efectivo ÷ 0,9), en la fila deslizable del home
        (carrusel.js). En el sitio las PC las trae el backend por grupo de artículos. Elegir una gama muestra solo esa (?gama=essential), como en el
        sitio; "Ver todas las gamas" vuelve a la vista general (js/msi.js). Página completa: powered-by-msi.html.
        Los subtítulos de las gamas ("Para arrancar a jugar…", "El equilibrio justo…", "Máximo rendimiento…") son de
@@ -51,7 +51,7 @@
 
     <!-- Portada: el banner de la campaña y el título -->
     <header class="contenedor msi__cab">
-      <img class="msi__banner" src="recursos/msi/powered-by-msi.webp" alt="Potenciá tu PC con MSI" width="1500" height="364">
+      <img class="msi__banner" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="" src="recursos/msi/powered-by-msi.webp" alt="Potenciá tu PC con MSI" width="1500" height="364">
       <div class="msi__titulos">
         <div>
           <h1 class="msi__titulo">Computadoras Powered by MSI</h1>
@@ -80,12 +80,13 @@
         <span class="gama__texto"><strong>Ultimate</strong>Máximo rendimiento MSI, sin límites.</span>
       </a>
     </nav>
+    <div class="contenedor msi__nota"><p class="muestra"><svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>Los subtítulos de las gamas son de muestra, provisorios hasta tener los definitivos.</p></div>
 
     <a class="contenedor msi__todas" href="?" data-todas hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Ver todas las gamas</a>
 
     <!-- Una sección por gama: banner, título y sus PC -->
     <section class="contenedor estante-msi" id="essential" aria-labelledby="essential-titulo" data-estante="essential">
-      <img class="estante-msi__banner" src="recursos/msi/essential.webp" alt="" width="1500" height="364" loading="lazy">
+      <img class="estante-msi__banner" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="" src="recursos/msi/essential.webp" alt="" width="1500" height="364" loading="lazy">
       <div class="carrusel carrusel--a-sangre" data-carrusel data-estado-gama="con">
         <div class="seccion__cab">
           <div>
@@ -104,7 +105,7 @@
         </div>
         <ul class="carrusel__pista productos__lista">
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-05.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -113,7 +114,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Athlon 3000G A520 8GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Essential AMD Athlon 3000G A520 8GB RAM 256GB NVMe 550W Bronze WiFi">PC Gamer Powered by MSI Essential AMD Athlon 3000G A520 8GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$564.319</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -124,7 +125,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-21.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -133,7 +134,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 3 3200G A520 8GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Essential AMD Ryzen 3 3200G A520 8GB RAM 256GB NVMe 550W Bronze WiFi">PC Gamer Powered by MSI Essential AMD Ryzen 3 3200G A520 8GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$596.899</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -144,7 +145,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-02.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -153,7 +154,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 3 3200G A520 16GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Essential AMD Ryzen 3 3200G A520 16GB RAM 256GB NVMe 550W Bronze WiFi">PC Gamer Powered by MSI Essential AMD Ryzen 3 3200G A520 16GB RAM 256GB NVMe 550W Bronze WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$712.189</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -164,7 +165,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-01.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -173,7 +174,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 5 5600GT A520 16GB RAM 512GB NVMe 550W Bronze WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Essential AMD Ryzen 5 5600GT A520 16GB RAM 512GB NVMe 550W Bronze WiFi">PC Gamer Powered by MSI Essential AMD Ryzen 5 5600GT A520 16GB RAM 512GB NVMe 550W Bronze WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$1.006.758</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -184,7 +185,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-04.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -193,7 +194,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 5 8600G B650 16GB RAM 512GB NVMe 650W Bronze WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Essential AMD Ryzen 5 8600G B650 16GB RAM 512GB NVMe 650W Bronze WiFi">PC Gamer Powered by MSI Essential AMD Ryzen 5 8600G B650 16GB RAM 512GB NVMe 650W Bronze WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$1.366.218</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -204,7 +205,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-03.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -213,7 +214,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Essential AMD Ryzen 5 8500G A620 16GB RAM 1TB NVMe 550W Bronze WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Essential AMD Ryzen 5 8500G A620 16GB RAM 1TB NVMe 550W Bronze WiFi">PC Gamer Powered by MSI Essential AMD Ryzen 5 8500G A620 16GB RAM 1TB NVMe 550W Bronze WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$1.390.608</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -242,7 +243,7 @@
     </section>
 
     <section class="contenedor estante-msi" id="advanced" aria-labelledby="advanced-titulo" data-estante="advanced">
-      <img class="estante-msi__banner" src="recursos/msi/advanced.webp" alt="" width="1500" height="364" loading="lazy">
+      <img class="estante-msi__banner" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="" src="recursos/msi/advanced.webp" alt="" width="1500" height="364" loading="lazy">
       <div class="carrusel carrusel--a-sangre" data-carrusel data-estado-gama="con">
         <div class="seccion__cab">
           <div>
@@ -261,7 +262,7 @@
         </div>
         <ul class="carrusel__pista productos__lista">
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-06.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -270,7 +271,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced Intel i5 12400 H610M 16GB RAM 512GB NVMe 650W Gold + CPU Cooler WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Advanced Intel i5 12400 H610M 16GB RAM 512GB NVMe 650W Gold + CPU Cooler WiFi">PC Gamer Powered by MSI Advanced Intel i5 12400 H610M 16GB RAM 512GB NVMe 650W Gold + CPU Cooler WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$1.103.328</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -281,7 +282,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-07.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -290,7 +291,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced Ultra 5 225 B860 16GB RAM 1TB NVMe 850W Gold + CPU Cooler WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Advanced Ultra 5 225 B860 16GB RAM 1TB NVMe 850W Gold + CPU Cooler WiFi">PC Gamer Powered by MSI Advanced Ultra 5 225 B860 16GB RAM 1TB NVMe 850W Gold + CPU Cooler WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$1.681.856</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -301,7 +302,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-08.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -310,7 +311,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced AMD Ryzen 7 8700G B850 16GB RAM 1TB NVMe 850W Gold + CPU Cooler WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Advanced AMD Ryzen 7 8700G B850 16GB RAM 1TB NVMe 850W Gold + CPU Cooler WiFi">PC Gamer Powered by MSI Advanced AMD Ryzen 7 8700G B850 16GB RAM 1TB NVMe 850W Gold + CPU Cooler WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$1.762.856</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -321,7 +322,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-09.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -330,7 +331,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced AMD Ryzen 7 8700G B850 32GB RAM 1TB NVMe 850W Gold + Water 240 WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Advanced AMD Ryzen 7 8700G B850 32GB RAM 1TB NVMe 850W Gold + Water 240 WiFi">PC Gamer Powered by MSI Advanced AMD Ryzen 7 8700G B850 32GB RAM 1TB NVMe 850W Gold + Water 240 WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$2.527.406</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -341,7 +342,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-10.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -350,7 +351,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Gamer Powered by MSI Advanced Intel i7 14700 B760 32GB RAM 1TB NVMe 850W Gold + Water 240 mm WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Gamer Powered by MSI Advanced Intel i7 14700 B760 32GB RAM 1TB NVMe 850W Gold + Water 240 mm WiFi">PC Gamer Powered by MSI Advanced Intel i7 14700 B760 32GB RAM 1TB NVMe 850W Gold + Water 240 mm WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$2.827.556</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -379,7 +380,7 @@
     </section>
 
     <section class="contenedor estante-msi" id="ultimate" aria-labelledby="ultimate-titulo" data-estante="ultimate">
-      <img class="estante-msi__banner" src="recursos/msi/ultimate.webp" alt="" width="1500" height="364" loading="lazy">
+      <img class="estante-msi__banner" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="" src="recursos/msi/ultimate.webp" alt="" width="1500" height="364" loading="lazy">
       <div class="carrusel carrusel--a-sangre" data-carrusel data-estado-gama="con">
         <div class="seccion__cab">
           <div>
@@ -398,7 +399,7 @@
         </div>
         <ul class="carrusel__pista productos__lista">
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-18.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -407,7 +408,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate AMD Ryzen 5 5500 A520 16GB RAM 512GB RTX 3050 650W Gold CPU Cooler WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Powered by MSI Ultimate AMD Ryzen 5 5500 A520 16GB RAM 512GB RTX 3050 650W Gold CPU Cooler WiFi">PC Powered by MSI Ultimate AMD Ryzen 5 5500 A520 16GB RAM 512GB RTX 3050 650W Gold CPU Cooler WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$1.464.053</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -418,7 +419,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-17.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -427,7 +428,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate AMD Ryzen 5 5500 B550 16GB RAM 1TB NVMe RTX 5050 850W Gold CPU Cooler WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Powered by MSI Ultimate AMD Ryzen 5 5500 B550 16GB RAM 1TB NVMe RTX 5050 850W Gold CPU Cooler WiFi">PC Powered by MSI Ultimate AMD Ryzen 5 5500 B550 16GB RAM 1TB NVMe RTX 5050 850W Gold CPU Cooler WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$1.924.853</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -438,7 +439,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-11.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -447,7 +448,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate AMD Ryzen 5 9600X B850 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Powered by MSI Ultimate AMD Ryzen 5 9600X B850 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler WiFi">PC Powered by MSI Ultimate AMD Ryzen 5 9600X B850 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$3.447.386</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -458,7 +459,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-14.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -467,7 +468,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate Intel i5 14600KF B760 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Powered by MSI Ultimate Intel i5 14600KF B760 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler WiFi">PC Powered by MSI Ultimate Intel i5 14600KF B760 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$3.476.966</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -478,7 +479,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-12.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -487,7 +488,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate Intel Ultra 5 245KF B860 WiFi 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Powered by MSI Ultimate Intel Ultra 5 245KF B860 WiFi 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler">PC Powered by MSI Ultimate Intel Ultra 5 245KF B860 WiFi 32GB RAM 1TB RTX 5060 850W Gold + CPU Cooler</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$3.544.762</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -498,7 +499,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-16.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -507,7 +508,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate Intel Ultra 7 270K Plus B860 32GB RAM 1TB RTX 5070 Ti 850W Water 360 WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Powered by MSI Ultimate Intel Ultra 7 270K Plus B860 32GB RAM 1TB RTX 5070 Ti 850W Water 360 WiFi">PC Powered by MSI Ultimate Intel Ultra 7 270K Plus B860 32GB RAM 1TB RTX 5070 Ti 850W Water 360 WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$5.494.880</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -518,7 +519,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-15.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -527,7 +528,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate AMD Ryzen 7 9800X3D B850 32GB RAM 1TB RTX 5070 Ti 850W Gold Water 360 WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Powered by MSI Ultimate AMD Ryzen 7 9800X3D B850 32GB RAM 1TB RTX 5070 Ti 850W Gold Water 360 WiFi">PC Powered by MSI Ultimate AMD Ryzen 7 9800X3D B850 32GB RAM 1TB RTX 5070 Ti 850W Gold Water 360 WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$5.510.000</p>
                     <p class="producto__nota">Efectivo o transferencia</p>
@@ -538,7 +539,7 @@
               </article>
             </li>
             <li class="carrusel__item">
-              <article class="producto">
+              <article class="producto producto--pc">
                 <div class="producto__media">
                   <img class="producto__img" loading="lazy" src="recursos/productos/pc-msi-19.jpg" alt="" width="600" height="600">
                   <button class="boton-icono producto__favorito" type="button" aria-label="Favorito" aria-pressed="false"><svg class="icono" aria-hidden="true"><use href="#i-favorito"/></svg></button>
@@ -547,7 +548,7 @@
                   <div class="producto__meta">
                     <span class="producto__marca">MSI</span>
                   </div>
-                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html">PC Powered by MSI Ultimate Intel Ultra 9 285K B860 32GB RAM 2TB RTX 5080 850W Gold + Water 360 WiFi</a></h3>
+                  <h3 class="producto__nombre"><a class="producto__enlace" href="rtx-5070-ti-ventus.html" title="PC Powered by MSI Ultimate Intel Ultra 9 285K B860 32GB RAM 2TB RTX 5080 850W Gold + Water 360 WiFi">PC Powered by MSI Ultimate Intel Ultra 9 285K B860 32GB RAM 2TB RTX 5080 850W Gold + Water 360 WiFi</a></h3>
                   <div class="producto__precios">
                     <p class="producto__precio">$7.405.938</p>
                     <p class="producto__nota">Efectivo o transferencia</p>

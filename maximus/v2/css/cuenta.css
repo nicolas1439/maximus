@@ -1105,7 +1105,7 @@
 }
 
 .pedidos-cargando__texto .icono {
-  animation: girar-boton 0.9s linear infinite;
+  animation: girar 0.9s linear infinite;
 }
 
 .pedidos-cargando__tarjeta {
@@ -1260,26 +1260,6 @@
   text-decoration: underline;
 }
 
-/* Ruedita en los botones de los diálogos mientras se envía */
-.dialogo .boton.cargando {
-  position: relative;
-  color: transparent;
-  pointer-events: none;
-}
-
-.dialogo .boton.cargando::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  width: 18px;
-  height: 18px;
-  margin: auto;
-  border: 2px solid var(--color-sobre-marca);
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: girar-boton 0.7s linear infinite;
-}
-
 /* Direcciones: formulario por partes */
 .formulario-direccion[hidden] {
   display: none;
@@ -1300,13 +1280,13 @@
   display: none;
 }
 
-.selector__campo:disabled {
+.selector__campo:is(:disabled, .deshabilitado) {
   background: var(--color-superficie);
   color: var(--color-texto-suave);
   cursor: not-allowed;
 }
 
-.datos__fijos {
+.fijos-nota {
   display: flex;
   gap: var(--espacio-2);
   margin: 0;
@@ -1314,15 +1294,15 @@
   font-size: var(--texto-xs);
 }
 
-.datos__fijos[hidden] {
+.fijos-nota[hidden] {
   display: none;
 }
 
-.datos__fijos .icono {
+.fijos-nota .icono {
   flex-shrink: 0;
 }
 
-.datos__fijos a {
+.fijos-nota a {
   color: var(--color-acento);
   text-decoration: underline;
 }

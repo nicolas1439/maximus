@@ -242,7 +242,7 @@
 }
 
 /* Reseñas plegadas: mientras están cerradas, una línea las separa de la última a la vista */
-.resenas__resto:not([open]) {
+.resenas__resto:not([open], .abierto) {
   border-top: 1px solid var(--color-borde);
 }
 
@@ -376,7 +376,9 @@
 .puntaje__opcion:hover .puntaje__estrella,
 .puntaje__opcion:hover ~ .puntaje__opcion .puntaje__estrella,
 .puntaje__opcion:has(input:checked) .puntaje__estrella,
-.puntaje__opcion:has(input:checked) ~ .puntaje__opcion .puntaje__estrella {
+.puntaje__opcion:has(input:checked) ~ .puntaje__opcion .puntaje__estrella,
+.puntaje__opcion.elegida .puntaje__estrella,
+.puntaje__opcion.elegida ~ .puntaje__opcion .puntaje__estrella {
   fill: var(--color-calificacion);
 }
 

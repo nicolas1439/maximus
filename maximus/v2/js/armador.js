@@ -23,6 +23,8 @@ function iniciar() {
   const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)');
   const conMouse = matchMedia('(hover: hover) and (pointer: fine)');
   const tiene = (...palabras) => (n) => palabras.some((p) => n.toUpperCase().includes(p));
+  // El armador no muestra watts (regla del sitio): la ficha de la fuente los saca del nombre
+  const sinWatts = (n) => n.replace('Fuente ', '').replace(/\b\d{3,4}\s*W\b\s*/i, '');
   const normalizar = (t) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
   // Precio con tarjeta (el de lista): el efectivo tiene 10% menos. Cuotas con los coeficientes del sitio
@@ -128,7 +130,7 @@ function iniciar() {
     {
       clave: 'fuente', titulo: 'Fuente', saltar: 'No agregar fuente', total: 73, buscar: 'Buscar fuente…',
       ayuda: 'La fuente le da <b>energía a todos los componentes</b>. Una buena fuente protege tu inversión: acá no conviene ahorrar de más, sobre todo si llevás una placa de video potente.',
-      chips: [['80 PLUS', tiene('80 PLUS')], ['650W+', (n) => (parseInt(n.match(/(\d{3})\s*W/i)?.[1], 10) || 0) >= 650]],
+      chips: [['80 PLUS', tiene('80 PLUS')], ['Certificación Gold', tiene('GOLD')]],
       piezas: [
         { id: 20312, n: 'Fuente 650W LNZ SX650-TS ATX', p: 46170, img: cdn('SX650-TS'), w: 650 },
         { id: 20313, n: 'Fuente 700W LNZ SX700-TS ATX', p: 48240, img: cdn('SX700-TS'), w: 700 },
@@ -259,10 +261,10 @@ function iniciar() {
     },
     fuente: {
       que: '¿Qué es esta fuente?',
-      texto: (p) => `La ${p.n.replace('Fuente ', '')} alimenta a todos los componentes de tu PC. Una fuente confiable protege tu inversión.`,
+      texto: (p) => `La ${sinWatts(p.n)} alimenta a todos los componentes de tu PC. Una fuente confiable protege tu inversión.`,
       usos: [['Gaming', 'Alimenta la placa de video sin cortes.'], ['Uso continuo', 'Trabaja estable durante horas.'], ['Eficiencia', 'Las certificadas 80 PLUS desperdician menos energía.'], ['Ampliación', 'Margen de potencia para sumar componentes.']],
       compat: () => 'Formato ATX, para gabinetes estándar. En el resumen te avisamos si queda justa para tu placa de video.',
-      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace('Fuente ', '')], ['Certificación', busca(p.n, /(80 PLUS \w+)/i, 'Sin certificación')], ['Formato', 'ATX']],
+      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', sinWatts(p.n)], ['Certificación', busca(p.n, /(80 PLUS \w+)/i, 'Sin certificación')], ['Formato', 'ATX']],
     },
     armado: {
       que: '¿Qué incluye?',

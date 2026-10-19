@@ -23,10 +23,12 @@ async function incrustar(enlace) {
   } catch {}
 }
 
-// Arma la tira de marcas que hay dentro de raiz
+// Arma cada tira de marcas que hay dentro de raiz (una vez por tira)
 export async function iniciarMarcas(raiz = document) {
-  const tira = raiz.querySelector('.marcas:not(.marcas--lista)');
-  if (!tira) return;
+  await Promise.all([...raiz.querySelectorAll('.marcas:not(.marcas--lista)')].map(armarTira));
+}
+
+async function armarTira(tira) {
   tira.classList.add('marcas--lista');
   const pista = tira.querySelector('.marcas__pista');
   const originales = [...pista.children];
