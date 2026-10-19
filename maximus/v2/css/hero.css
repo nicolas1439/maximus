@@ -1,7 +1,9 @@
 /* Hero: grilla tipo bento con un carrusel principal de campañas, dos tarjetas secundarias y una lateral vertical con
    su propio carrusel (pedido del usuario, 19/10/2026).
    Mobile y tablet: principal arriba, las dos secundarias lado a lado y la lateral a todo el ancho debajo.
-   Escritorio: secundarias a la izquierda (una sobre otra), principal al centro y lateral a la derecha, de alto completo.
+   Escritorio, de izquierda a derecha: principal, las dos secundarias (una sobre otra) y la lateral de alto completo.
+   El principal va plano sobre el fondo de la página (sin recuadro ni color propio), con fotos de productos recortadas
+   (.hero__productos) arriba y el texto abajo a la izquierda (pedido del usuario, 19/10/2026).
    Cada tarjeta acepta una imagen de fondo opcional (.hero__img); sin imagen usa el fondo destacado
    (o el que defina --hero-fondo / --hero-brillo).
    Imágenes del carrusel principal (cubren la tarjeta con object-fit: cover; el texto va abajo a la izquierda
@@ -254,12 +256,12 @@ a.hero__tarjeta {
   }
 
   .hero__principal {
-    grid-column: 3 / span 4;
+    grid-column: 1 / span 4;
     grid-row: 1 / span 2;
   }
 
   .hero > .hero__tarjeta {
-    grid-column: 1 / span 2;
+    grid-column: 5 / span 2;
   }
 
   .hero__lateral {
@@ -338,5 +340,256 @@ div.hero__tarjeta .hero__cta {
 @media (min-width: 1024px) {
   .intro-home__titulo {
     font-size: var(--texto-2xl);
+  }
+}
+
+/* Celular (variante a comparar): las dos secundarias a la izquierda, una sobre otra, y la lateral vertical a la
+   derecha con el alto de las dos */
+@media (max-width: 767px) {
+  .hero > .hero__tarjeta {
+    grid-column: 1;
+  }
+
+  .hero__lateral {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+  }
+
+  .hero__lateral .carrusel__pista,
+  .hero__lateral .carrusel__item,
+  .hero__tarjeta--vertical {
+    height: 100%;
+  }
+
+  .hero__tarjeta--vertical {
+    aspect-ratio: auto;
+  }
+
+  .hero__tarjeta--vertical .hero__icono {
+    top: 12%;
+    right: 50%;
+    width: 70%;
+    translate: 50% 0;
+  }
+
+  .hero__lateral .hero__tarjeta--vertical .hero__bajada {
+    display: none;
+  }
+}
+
+/* ---------- Principal plano: sin recuadro, sobre el fondo de la página, con fotos recortadas ---------- */
+
+.hero__tarjeta--principal {
+  overflow: visible; /* plana: la sombra de los productos no se corta en el borde */
+  background: none;
+  color: var(--color-texto);
+}
+
+a.hero__tarjeta--principal {
+  color: var(--color-texto);
+}
+
+.hero__principal {
+  border-radius: 0;
+  clip-path: inset(0 2px 0 0); /* sin recuadro, el borde del slide siguiente asomaba 1px */
+}
+
+/* Puntos sobre el fondo de la página (no sobre un panel oscuro) */
+.hero__principal .carrusel__punto::before {
+  background: color-mix(in srgb, var(--color-texto) 25%, transparent);
+}
+
+.hero__principal .carrusel__punto:is([aria-current="true"], .actual)::before {
+  background: var(--color-marca);
+}
+
+/* Composición de productos: ocupa la parte de arriba; cada foto en su lugar según la campaña */
+.hero__productos {
+  position: absolute;
+  inset: 0 0 34% 0;
+  z-index: -1;
+  pointer-events: none;
+  transition: transform var(--transicion-lenta);
+}
+
+.hero__producto {
+  position: absolute;
+  height: auto;
+  filter: drop-shadow(0 10px 10px rgb(0 0 0 / 0.22));
+}
+
+.hero__producto--pc { left: 7%; bottom: 0; width: 34%; }
+.hero__producto--monitor { right: 8%; bottom: 8%; width: 52%; }
+.hero__producto--teclado { left: 30%; bottom: 4%; width: 38%; }
+.hero__producto--placa { right: 7%; bottom: 4%; width: 52%; }
+.hero__producto--monitor-solo { left: 50%; bottom: 0; width: 62%; translate: -50% 0; }
+.hero__producto--teclado-solo { right: 7%; bottom: -8%; width: 46%; }
+.hero__producto--mother { left: 8%; bottom: 0; width: 40%; }
+.hero__producto--memoria { right: 6%; bottom: 14%; width: 46%; }
+
+.hero__tarjeta--principal:hover .hero__productos {
+  transform: scale(1.03);
+}
+
+.hero__tarjeta--principal .hero__texto {
+  padding-inline: 0;
+}
+
+@media (min-width: 1024px) {
+  .hero__productos {
+    inset: 0 0 30% 0;
+  }
+
+  .hero__tarjeta--principal .hero__texto {
+    padding-bottom: var(--espacio-4);
+  }
+
+  .hero__principal .carrusel__puntos {
+    right: 0;
+    bottom: var(--espacio-4);
+  }
+}
+
+/* Celular y tablet: los productos en su franja de arriba y el texto debajo, sin pisarse */
+@media (max-width: 1023px) {
+  .hero__tarjeta--principal {
+    aspect-ratio: 4 / 5;
+  }
+
+  .hero__productos {
+    inset: var(--espacio-8) 0 auto 0;
+    height: 46%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero__tarjeta--principal {
+    aspect-ratio: 16 / 10;
+  }
+
+  .hero__productos {
+    inset: var(--espacio-4) 0 auto 36%;
+    height: 62%;
+  }
+}
+
+/* Sombras de los productos sin cortar: el carrusel es un contenedor con scroll (recorta siempre), así que se le da
+   aire arriba y abajo (padding + margen negativo, --sombra-hero) y el principal deja ver ese aire; a los costados
+   sigue recortando para que no asomen los slides vecinos */
+.hero__principal {
+  --sombra-hero: var(--espacio-8);
+  overflow: visible;
+  clip-path: inset(calc(var(--sombra-hero) * -1) 2px calc(var(--sombra-hero) * -1) 0);
+}
+
+.hero__principal .carrusel__pista {
+  margin-block: calc(var(--sombra-hero) * -1);
+  padding-block: var(--sombra-hero);
+}
+
+@media (min-width: 1024px) {
+  .hero__principal .carrusel__pista {
+    height: calc(100% + 2 * var(--sombra-hero));
+  }
+}
+
+/* ---------- Fondo de la sección: el tono de la campaña a la vista, a todo el ancho ---------- */
+/* Una capa detrás del hero, de borde a borde de la pantalla: arranca debajo del header con el tono de la campaña
+   (data-tono en .hero, lo pone js/hero.js), suma un brillo arriba a la derecha y se funde con el fondo de la página
+   por debajo del hero, sin corte. Al cambiar de slide el tono cambia con un fundido (--hero-tono registrado) */
+@property --hero-tono {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+.home:has(> .hero) {
+  overflow: clip; /* la capa mide el ancho de la pantalla y sube hasta el header: el home la recorta en sus bordes */
+}
+
+.hero {
+  --hero-tono: var(--color-hero-primavera);
+  position: relative;
+  isolation: isolate;
+  transition: --hero-tono 0.9s ease;
+}
+
+.hero[data-tono="pc"] {
+  --hero-tono: var(--color-hero-pc);
+}
+
+.hero[data-tono="monitores"] {
+  --hero-tono: var(--color-hero-monitores);
+}
+
+.hero[data-tono="combos"] {
+  --hero-tono: var(--color-hero-combos);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -240px; /* sube de más: el home la recorta justo en el borde del header, sea cual sea su margen */
+  bottom: calc(var(--espacio-seccion) * -2);
+  left: 50%;
+  width: 100vw;
+  translate: -50% 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 85% 0%, color-mix(in oklab, var(--hero-tono), var(--color-fondo) 45%), transparent 70%),
+    linear-gradient(to bottom, var(--hero-tono) 0%, var(--hero-tono) 45%, var(--color-fondo-suave) 100%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    transition: none;
+  }
+}
+
+/* ---------- Cambio de campaña con fundido (principal plano) ---------- */
+/* El carrusel sigue deslizándose (dedo, puntos, avance automático), pero cada tarjeta se corre al revés de la pista
+   y queda quieta en su lugar: la que sale se desvanece y la que entra aparece, sin el corte en el borde que se veía
+   al no tener recuadro. Va atado al desplazamiento (animation-timeline), sin JS; donde no hay soporte, se desliza
+   como antes */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__principal .carrusel__item {
+      view-timeline: --hero-slide inline;
+    }
+
+    .hero__principal .hero__tarjeta--principal {
+      animation: hero-fundido linear both;
+      animation-timeline: --hero-slide;
+    }
+
+    .hero__principal {
+      clip-path: none;
+    }
+  }
+}
+
+@keyframes hero-fundido {
+  0% {
+    translate: -100% 0;
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  50% {
+    translate: 0 0;
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    translate: 100% 0;
+    opacity: 0;
   }
 }

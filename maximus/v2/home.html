@@ -7,6 +7,7 @@
   <script>try { if (localStorage.getItem('darkmode') === 'true') document.documentElement.classList.add('dark'); } catch {}</script>
   <script type="module" src="js/sprite.js"></script>
   <script type="module" src="js/efectos.js"></script>
+  <script type="module" src="js/hero.js"></script>
   <link data-demo rel="preconnect" href="https://fonts.googleapis.com">
   <link data-demo rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link data-demo rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
@@ -46,13 +47,14 @@
          y se describe en el alt. Rendimiento: el <img> del primer slide lleva fetchpriority="high" (es lo primero
          que se ve) y los demás loading="lazy". -->
     <section class="hero contenedor" aria-label="Destacados">
-      <!-- Carrusel de campañas. Los colores (--hero-fondo / --hero-brillo) son de ejemplo para distinguirlas:
-           en producción cada campaña lleva su banner. -->
+      <!-- Carrusel de campañas, plano sobre el fondo de la página: fotos de productos recortadas (PNG o WebP con fondo
+           transparente, en .hero__productos) y el texto abajo a la izquierda. En producción cada campaña trae sus
+           recortes; las de acá son fotos de muestra del proyecto. -->
       <div class="hero__principal carrusel" data-carrusel data-bucle data-autoplay="6000" role="region" aria-roledescription="carrusel" aria-label="Campañas">
         <div class="carrusel__pista">
-          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="1 de 4">
+          <div class="carrusel__item" data-tono="primavera" role="group" aria-roledescription="diapositiva" aria-label="1 de 4">
             <a class="hero__tarjeta hero__tarjeta--principal" href="primavera-maximus.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
-              <svg class="hero__icono" aria-hidden="true"><use href="#i-cat-outlet"/></svg>
+              <div class="hero__productos" aria-hidden="true"><img class="hero__producto hero__producto--pc" src="recursos/accesos/pc-ideal.webp" alt="" width="374" height="480" fetchpriority="high"><img class="hero__producto hero__producto--monitor" src="recursos/categorias/monitores.webp" alt="" width="256" height="199" loading="lazy"><img class="hero__producto hero__producto--teclado" src="recursos/categorias/teclados.webp" alt="" width="256" height="101" loading="lazy"></div>
               <div class="hero__texto">
                 <span class="etiqueta etiqueta--secundaria etiqueta--con-icono" data-fuego><svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>Primavera Maximus</span>
                 <h2 class="hero__titulo">Hasta 35% off</h2>
@@ -61,9 +63,9 @@
               </div>
             </a>
           </div>
-          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="2 de 4">
-            <a class="hero__tarjeta hero__tarjeta--principal" href="#" style="--hero-fondo: #2a1258; --hero-brillo: #a855f7" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
-              <svg class="hero__icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
+          <div class="carrusel__item" data-tono="pc" role="group" aria-roledescription="diapositiva" aria-label="2 de 4">
+            <a class="hero__tarjeta hero__tarjeta--principal" href="#" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+              <div class="hero__productos" aria-hidden="true"><img class="hero__producto hero__producto--pc" src="recursos/accesos/pc-ideal.webp" alt="" width="374" height="480" loading="lazy"><img class="hero__producto hero__producto--placa" src="recursos/accesos/placa-de-video.webp" alt="" width="480" height="315" loading="lazy"></div>
               <div class="hero__texto">
                 <span class="etiqueta">PC armadas</span>
                 <h2 class="hero__titulo">Listas para encender y jugar</h2>
@@ -72,9 +74,9 @@
               </div>
             </a>
           </div>
-          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="3 de 4">
-            <a class="hero__tarjeta hero__tarjeta--principal" href="#" style="--hero-fondo: #0b2550; --hero-brillo: #3b82f6" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
-              <svg class="hero__icono" aria-hidden="true"><use href="#i-cat-monitor"/></svg>
+          <div class="carrusel__item" data-tono="monitores" role="group" aria-roledescription="diapositiva" aria-label="3 de 4">
+            <a class="hero__tarjeta hero__tarjeta--principal" href="#" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+              <div class="hero__productos" aria-hidden="true"><img class="hero__producto hero__producto--monitor-solo" src="recursos/categorias/monitores.webp" alt="" width="256" height="199" loading="lazy"><img class="hero__producto hero__producto--teclado-solo" src="recursos/categorias/teclados.webp" alt="" width="256" height="101" loading="lazy"></div>
               <div class="hero__texto">
                 <span class="etiqueta">Monitores</span>
                 <h2 class="hero__titulo">Jugá a otra velocidad</h2>
@@ -83,9 +85,9 @@
               </div>
             </a>
           </div>
-          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="4 de 4">
-            <a class="hero__tarjeta hero__tarjeta--principal" href="#" style="--hero-fondo: #4a1608; --hero-brillo: #f97316" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
-              <svg class="hero__icono" aria-hidden="true"><use href="#i-cat-combo"/></svg>
+          <div class="carrusel__item" data-tono="combos" role="group" aria-roledescription="diapositiva" aria-label="4 de 4">
+            <a class="hero__tarjeta hero__tarjeta--principal" href="#" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+              <div class="hero__productos" aria-hidden="true"><img class="hero__producto hero__producto--mother" src="recursos/accesos/armador-motherboard.webp" alt="" width="424" height="480" loading="lazy"><img class="hero__producto hero__producto--memoria" src="recursos/accesos/armador-memoria.webp" alt="" width="480" height="159" loading="lazy"></div>
               <div class="hero__texto">
                 <span class="etiqueta">Combos</span>
                 <h2 class="hero__titulo">Actualizá tu PC</h2>
@@ -177,7 +179,7 @@
     <!-- Título de la página (H1), visible: quiénes somos en una línea -->
     <div class="contenedor intro-home">
       <h1 class="intro-home__titulo">Especialistas en PC Gamer</h1>
-      <p class="intro-home__bajada">Componentes, PC armadas y notebooks, con asesoramiento real, envíos a todo el país (excepto Tierra del Fuego) y retiro gratis en CABA.</p>
+      <p class="intro-home__bajada">Componentes, PC armadas y notebooks, con asesoramiento real, envíos a todo el país y retiro gratis en CABA.</p>
     </div>
 
     <section class="categorias contenedor" aria-labelledby="categorias-titulo">

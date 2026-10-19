@@ -53,6 +53,11 @@
   --color-estante-2: #ebe1f7;
   --color-estante-brillo: rgb(163 255 102 / 0.6); /* arriba a la derecha */
   --color-categoria-luz: transparent; /* Categorías destacadas: luz detrás de la foto (solo en oscuro) */
+  /* Hero del home: el fondo de la sección toma el tono de la campaña a la vista y se funde con la página */
+  --color-hero-primavera: #dcf2cc;
+  --color-hero-pc: #e7ddf8;
+  --color-hero-monitores: #d8e6fa;
+  --color-hero-combos: #fbe1cf;
   --color-estante-brillo-2: color-mix(in srgb, var(--color-secundario) 24%, transparent); /* arriba a la izquierda, detrás del título */
   --color-estante-trama: color-mix(in srgb, var(--color-secundario) 28%, transparent);
   --color-estante-logo: color-mix(in srgb, var(--color-secundario) 17%, transparent);
@@ -162,6 +167,10 @@ html.dark {
   --color-estante-2: #0c1216;
   --color-estante-brillo: rgb(22 224 0 / 0.22);
   --color-categoria-luz: rgb(255 255 255 / 0.14); /* los productos negros (teclados, sillas) no se perdían en el fondo */
+  --color-hero-primavera: #0f3418;
+  --color-hero-pc: #261645;
+  --color-hero-monitores: #0f2545;
+  --color-hero-combos: #3a1c0c;
   --color-estante-brillo-2: color-mix(in srgb, var(--color-secundario) 50%, transparent);
   --color-estante-trama: rgb(22 224 0 / 0.22);
   --color-estante-logo: rgb(22 224 0 / 0.16);
