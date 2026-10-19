@@ -1497,6 +1497,52 @@ html.dark .aurora--pagina::after {
   border-color: var(--color-barra-borde);
 }
 
+/* .medios-pago--compacto (ficha, dentro del bloque de compra): el título arriba y todos los medios en una fila,
+   sin pastillas ni íconos; los logos de las tarjetas ya dicen "crédito y débito" y los medios sin logo van en
+   texto corto. Lo que se acorta queda para lectores de pantalla (.sr-only en el HTML). Entra en una fila desde
+   375px; a 320px "Efectivo" baja a una segunda */
+.medios-pago--compacto {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+}
+
+.medios-pago--compacto .medios-pago__lista {
+  align-items: center;
+  gap: var(--espacio-2) var(--espacio-3);
+}
+
+.medios-pago--compacto .medios-pago__item {
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+}
+
+.medios-pago--compacto .medios-pago__item .icono {
+  display: none;
+}
+
+.medios-pago--compacto .medios-pago__item--logo img {
+  height: 20px;
+}
+
+.medios-pago--compacto .medios-pago__item--tarjetas {
+  gap: var(--espacio-1);
+}
+
+.medios-pago--compacto .medios-pago__item--tarjetas img {
+  height: 18px;
+}
+
+@media (min-width: 1280px) {
+  .medios-pago--compacto .medios-pago__item {
+    font-size: var(--texto-xs);
+  }
+}
+
 /* Esqueleto de carga: ocupa el mismo lugar que el contenido que va a llegar (así la página no salta) y lo anuncia
    con un brillo que recorre. Se usa en bloques sueltos (.esqueleto con su alto) o en una pieza entera con su
    modificador --cargando (ej. producto--cargando) */
