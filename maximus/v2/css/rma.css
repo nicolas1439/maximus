@@ -200,6 +200,12 @@
   display: none;
 }
 
+/* Mientras se envía, "Volver" queda apagado */
+.tramite .boton:is(:disabled, .deshabilitado) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ---------- 1. Producto ---------- */
 
 .compras,

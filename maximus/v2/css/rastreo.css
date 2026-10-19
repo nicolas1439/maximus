@@ -3,6 +3,7 @@
    datos de la entrega, historial del envío y acciones) y, al costado, la ayuda: dónde están los números y WhatsApp.
    Mobile y tablet: todo en columna. Escritorio: grilla de 8, consulta y resultado en 5 columnas y la ayuda en las 3
    restantes, fija bajo el header (--alto-fijo).
+   Estados del resultado: alerta (.alerta de base.css), pasos cancelados o detenidos y eventos que todavía no llegaron.
    Detalle en violeta (el color secundario): los íconos de "¿Dónde encuentro los números?" sobre violeta tenue. */
 
 .rastreo {
@@ -207,34 +208,27 @@
   outline: none;
 }
 
-/* Falta una acción del cliente: fondo tenue del color de aviso, como la alerta de Mi cuenta */
-.resultado__alerta {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--espacio-3);
-  padding: var(--espacio-4);
-  border: 1px solid color-mix(in srgb, var(--color-aviso) 45%, transparent);
-  border-radius: var(--radio-l);
-  background: color-mix(in srgb, var(--color-aviso) 10%, var(--color-fondo));
-  font-size: var(--texto-s);
-}
-
-.resultado__alerta p {
-  margin: 0;
-}
-
-.resultado__alerta p + p {
-  color: var(--color-texto-suave);
-}
-
-.resultado__alerta-icono {
-  color: var(--color-aviso-icono);
+/* Alerta del resultado: la .alerta de base.css (tono según el caso: aviso si falta algo del cliente, info, error)
+   con las acciones debajo, a todo el ancho; con una sola acción, desde tablet va a la derecha (--lado) */
+.resultado__alerta > .alerta__acciones {
+  grid-column: 1 / -1;
+  margin-top: 0;
 }
 
 .resultado__alerta .boton {
-  grid-column: 1 / -1;
+  flex: 1 1 auto;
   height: var(--alto-control-s);
   font-size: var(--texto-s);
+}
+
+/* Volver a intentar: el ícono gira mientras se vuelve a consultar */
+.resultado__alerta .boton.cargando {
+  cursor: progress;
+  opacity: 0.8;
+}
+
+.resultado__alerta .boton.cargando .icono {
+  animation: girar 0.8s linear infinite;
 }
 
 /* Datos de la entrega: rótulo y valor en dos columnas */
@@ -358,6 +352,36 @@
   margin-right: var(--espacio-2);
 }
 
+.historial__meta span:first-child::before {
+  content: none;
+}
+
+/* Evento que todavía no llegó (guía sin movimientos, OCA no responde): arriba, con el punto punteado y sin hora;
+   el último evento real queda marcado debajo */
+.historial__evento--pendiente::before,
+.historial__evento--pendiente:first-child::before {
+  border-style: dashed;
+  border-color: var(--color-texto-suave);
+  background: var(--color-fondo);
+  box-shadow: none;
+}
+
+.historial__evento--pendiente:first-child .historial__texto {
+  color: var(--color-texto-suave);
+  font-weight: var(--peso-normal);
+}
+
+.historial__evento--pendiente + .historial__evento::before {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+  box-shadow: 0 0 0 4px var(--color-brillo-marca);
+}
+
+.historial__evento--pendiente + .historial__evento .historial__texto {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
 .resultado__pie {
   display: flex;
   flex-direction: column;
@@ -459,13 +483,17 @@
     font-size: var(--texto-2xl);
   }
 
-  .resultado__alerta {
+  .resultado__alerta--lado {
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
   }
 
-  .resultado__alerta .boton {
+  .resultado__alerta--lado > .alerta__acciones {
     grid-column: auto;
+  }
+
+  .resultado__alerta .boton {
+    flex: 0 0 auto;
   }
 
   .resultado__datos > div {

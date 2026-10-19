@@ -664,6 +664,15 @@
   display: none;
 }
 
+/* Barra de estados de la vista previa (data-demo) y error de envío, separados de lo que tienen arriba */
+.contacto__variantes {
+  margin-bottom: var(--espacio-6);
+}
+
+.contacto__error {
+  margin-top: var(--espacio-6);
+}
+
 .contacto__listo {
   display: flex;
   flex-direction: column;

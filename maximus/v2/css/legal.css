@@ -1,4 +1,5 @@
-/* Plantilla de página legal: Términos y condiciones (terminos.html) y Política de privacidad (privacidad.html).
+/* Plantilla de página legal: Términos y condiciones (terminos.html), Política de privacidad (privacidad.html) y
+   Bases y condiciones de promociones y sorteos (bases.html).
    Cabecera (chip "Legal", título, bajada y fecha), índice de secciones y el documento en una tarjeta, con el texto a
    un ancho cómodo de lectura. Mobile y tablet: el índice plegado arriba ("En esta página"). Escritorio: grilla de 8,
    el índice fijo al costado en 2 columnas (marca la sección que se lee, js/legal.js) y el documento en 5.

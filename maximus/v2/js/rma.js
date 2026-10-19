@@ -1,7 +1,10 @@
 // Garantía y RMA: trámite en 3 etapas (producto, falla, tus datos) con la verificación de la garantía según el
 // tipo de producto y la fecha de compra (plazos del centro de ayuda), fotos con vista previa y la confirmación.
 // Con la sesión de muestra (la guarda acceso.js) se elige el producto de las compras de Mi cuenta y los datos ya
-// vienen cargados; sin sesión, se carga a mano con la factura. De muestra: no se envía nada.
+// vienen cargados; sin sesión, se carga a mano con la factura. De muestra: no se envía nada. Al enviar, "Enviando…"
+// y después la solicitud enviada o el error de envío (con la barra de la vista previa o con "error" en el correo;
+// el intento siguiente sale bien). La barra "Estados de muestra" (data-demo) también cambia la sesión y carga un
+// caso de cada verificación.
 
 const tramite = document.querySelector('[data-tramite]');
 const form = document.querySelector('[data-form-rma]');
@@ -87,6 +90,7 @@ function marcar(control, mensaje) {
   const ancla = control.closest('.adjuntos, .selector, .fallas__lista, .casilla') || control;
   let nota = ancla.nextElementSibling?.classList.contains('campo__error') ? ancla.nextElementSibling : null;
   const marcado = control.closest('.adjuntos') || control;
+  marcado.classList.toggle('con-error', Boolean(mensaje));
   if (!mensaje) {
     marcado.removeAttribute('aria-invalid');
     nota?.remove();
@@ -138,6 +142,10 @@ if (tramite && form) {
   const bloqueCompras = form.querySelector('[data-con-sesion]');
   const bloqueManual = form.querySelector('[data-manual]');
   const enviada = tramite.querySelector('[data-enviada]');
+  const errorEnvio = form.querySelector('[data-error-envio]');
+  const botonEnviar = form.querySelector('[data-enviar]');
+  const demo = { error: false };
+  let enviando = false;
   let etapa = 1;
   let alcanzada = 1;
   let modo = conSesion ? 'compras' : 'manual';
@@ -216,6 +224,7 @@ if (tramite && form) {
   // ---------- Etapas ----------
 
   function irA(n) {
+    errorEnvio.hidden = true;
     etapa = n;
     alcanzada = Math.max(alcanzada, n);
     etapas.forEach((f) => (f.hidden = Number(f.dataset.etapa) !== n));
@@ -350,10 +359,48 @@ if (tramite && form) {
 
   // ---------- Enviar (de muestra) ----------
 
+  // Botón esperando la respuesta: ruedita en lugar del ícono, "Enviando…" y sin poder tocarlo
+  function cargando(boton, si) {
+    const texto = [...boton.childNodes].find((n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+    if (si) boton.dataset.texto = texto.textContent;
+    texto.textContent = si ? 'Enviando…' : boton.dataset.texto;
+    boton.classList.toggle('cargando', si);
+    boton.disabled = si;
+    if (si) boton.setAttribute('aria-busy', 'true');
+    else boton.removeAttribute('aria-busy');
+    // Mientras se envía no se puede volver a otra etapa
+    form.querySelectorAll('[data-etapa="3"] [data-anterior]').forEach((b) => {
+      b.disabled = si;
+      b.classList.toggle('deshabilitado', si);
+    });
+    pasos.forEach((p, i) => (p.querySelector('button').disabled = si || i + 1 > alcanzada || i + 1 === etapa));
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!etapaValida(3)) return;
+    if (enviando || !etapaValida(3)) return;
 
+    // Con Enter, el submitter puede ser el botón de la alerta escondida
+    const boton = e.submitter && !e.submitter.closest('[hidden]') ? e.submitter : botonEnviar;
+    const conError = demo.error || form.elements.correo.value.toLowerCase().includes('error');
+    enviando = true;
+    cargando(boton, true);
+
+    // De muestra: la respuesta tarda un momento; con error, los datos y las fotos quedan como estaban
+    setTimeout(() => {
+      enviando = false;
+      cargando(boton, false);
+      if (conError && errorEnvio.hidden) {
+        errorEnvio.hidden = false;
+        errorEnvio.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+      errorEnvio.hidden = true;
+      mostrarEnviada();
+    }, 1200);
+  });
+
+  function mostrarEnviada() {
     const datos = datosProducto();
     const falla = form.querySelector('[name="tipo_falla"]:checked').value;
     const llenar = (clave, texto) => (enviada.querySelector(`[data-dato="${clave}"]`).textContent = texto);
@@ -372,7 +419,7 @@ if (tramite && form) {
     enviada.hidden = false;
     if (tramite.getBoundingClientRect().top < 0) tramite.scrollIntoView({ behavior: 'smooth', block: 'start' });
     enviada.focus({ preventScroll: true });
-  });
+  }
 
   tramite.querySelector('[data-otra]').addEventListener('click', () => {
     form.reset();
@@ -381,7 +428,10 @@ if (tramite && form) {
     pintarFotos();
     inputFactura.dispatchEvent(new Event('change'));
     form.querySelectorAll('.campo__error').forEach((n) => n.remove());
-    form.querySelectorAll('[aria-invalid]').forEach((n) => n.removeAttribute('aria-invalid'));
+    form.querySelectorAll('[aria-invalid]').forEach((n) => {
+      n.removeAttribute('aria-invalid');
+      n.classList.remove('con-error');
+    });
     if (conSesion) {
       form.elements.nombre.value = 'Martín González';
       form.elements.correo.value = 'martin.gonzalez@correo.com';
@@ -395,6 +445,77 @@ if (tramite && form) {
     aplicarModo();
     irA(1);
   });
+
+  // ---------- Estados de muestra (vista previa: data-demo) ----------
+
+  // Sesión: se guarda como la de Ingresar y la página se vuelve a abrir
+  document.querySelectorAll('[data-ver-sesion]').forEach((b) => {
+    b.setAttribute('aria-pressed', String((b.dataset.verSesion === 'con') === conSesion));
+    b.addEventListener('click', () => {
+      try {
+        if (b.dataset.verSesion === 'con') localStorage.setItem('sesion', '1');
+        else localStorage.removeItem('sesion');
+      } catch {}
+      location.reload();
+    });
+  });
+
+  // Un caso de cada verificación: con sesión, la compra de Mi cuenta que lo muestra; sin sesión (o si ninguna compra
+  // lo muestra, como el fuera de plazo), la carga a mano con un producto y una fecha que lo dan
+  const fechaHace = (meses) => {
+    const d = hoy();
+    d.setMonth(d.getMonth() - meses);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
+  const casos = {
+    ok: { compra: 'kingston', categoria: 'hardware', producto: 'Memoria RAM Kingston Fury Beast 16GB RGB 6000 Mhz DDR5', meses: 1 },
+    fabricante: { compra: 'monitor', categoria: 'monitor', producto: 'Monitor Gamer IPS MSI 24" G242L E14 144Hz', meses: 3 },
+    vencida: { categoria: 'hardware', producto: 'Procesador AMD Ryzen 5 5500', meses: 8 },
+    rma: { compra: 'teclado' },
+  };
+
+  const botonesCaso = [...document.querySelectorAll('[data-ver-caso]')];
+  // El RMA en curso sale de las compras de Mi cuenta: sin sesión no hay
+  botonesCaso.forEach((b) => (b.hidden = b.dataset.verCaso === 'rma' && !conSesion));
+
+  function verCaso(nombre) {
+    const caso = casos[nombre];
+    if (!enviada.hidden) tramite.querySelector('[data-otra]').click();
+    form.querySelectorAll('.campo__error').forEach((n) => n.remove());
+    form.querySelectorAll('[aria-invalid]').forEach((n) => {
+      n.removeAttribute('aria-invalid');
+      n.classList.remove('con-error');
+    });
+    if (conSesion && caso.compra) {
+      modo = 'compras';
+      form.querySelector(`.compra-rma .opcion__radio[value="${caso.compra}"]`).checked = true;
+    } else {
+      modo = 'manual';
+      form.elements.categoria.value = caso.categoria;
+      form.elements.producto.value = caso.producto;
+      form.elements.fecha.value = fechaHace(caso.meses);
+    }
+    alcanzada = 1;
+    aplicarModo();
+    irA(1);
+    veredicto.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  botonesCaso.forEach((b) =>
+    b.addEventListener('click', () => {
+      botonesCaso.forEach((otro) => otro.setAttribute('aria-pressed', String(otro === b)));
+      verCaso(b.dataset.verCaso);
+    })
+  );
+
+  // Envío: cómo sale el próximo
+  document.querySelectorAll('[data-ver-envio]').forEach((b) =>
+    b.addEventListener('click', () => {
+      demo.error = b.dataset.verEnvio === 'error';
+      document.querySelectorAll('[data-ver-envio]').forEach((otro) => otro.setAttribute('aria-pressed', String(otro === b)));
+      errorEnvio.hidden = true;
+    })
+  );
 
   aplicarModo();
 }

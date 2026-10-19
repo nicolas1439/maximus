@@ -22,7 +22,9 @@
   <!-- Plantilla Empresas (venta corporativa): la landing que abre el enlace "Empresas" del header. Contenido relevado
        de la sección Maximus Empresas de maximus.com.ar (15 y 17/10/2026), en su orden: propuesta, soluciones, cómo trabajan
        y cotización. Es un embudo: nada lleva a otras páginas, todo termina en la cotización (formulario,
-       WhatsApp o correo). El formulario es de muestra (no se envía nada: js/empresas.js valida y confirma en línea).
+       WhatsApp o correo). El formulario es de muestra (no se envía nada: js/empresas.js valida cada campo, muestra
+       "Enviando…" y después la confirmación o el error de envío; el error se ve con la barra de muestra de la vista
+       previa o, en la página completa, con "error" en el correo). "Copiar" del canal copia el correo de Empresas.
        Página completa con header y footer: maximus-empresas.html. -->
   <main class="empresas" id="contenido" tabindex="-1">
 
@@ -139,7 +141,7 @@
       </div>
     </section>
 
-    <!-- Cotización: formulario (de muestra: valida y confirma en línea, no envía nada) y el canal directo -->
+    <!-- Cotización: formulario (de muestra: valida y confirma o muestra el error en línea, no envía nada) y el canal directo -->
     <section class="contenedor cotizacion" id="cotizacion" aria-labelledby="cotizacion-titulo">
       <form class="cotizacion__form" data-cotizacion novalidate>
         <div class="cotizacion__cab">
@@ -147,9 +149,18 @@
           <p class="cotizacion__bajada">Contanos qué necesitás y te respondemos por correo o WhatsApp, sin compromiso.</p>
         </div>
 
+        <!-- Solo en la vista previa: cómo sale el envío (no va en el sitio real) -->
+        <div class="variantes" data-demo>
+          <span class="variantes__rotulo">Envío</span>
+          <div class="variantes__opciones" role="group" aria-label="Envío">
+            <button class="variantes__btn" type="button" data-ver-envio="ok" aria-pressed="true">Sale bien</button>
+            <button class="variantes__btn" type="button" data-ver-envio="error" aria-pressed="false">Con error</button>
+          </div>
+        </div>
+
         <div class="cotizacion__campos" data-paso="cargar">
           <label class="campo"><span class="campo__rotulo">Empresa o razón social</span><input class="campo__control" name="empresa" type="text" autocomplete="organization" required></label>
-          <label class="campo"><span class="campo__rotulo">CUIT <span class="campo__opcional">(opcional)</span></span><input class="campo__control" name="cuit" type="text" inputmode="numeric" placeholder="30-12345678-9"><span class="campo__ayuda">Si ya lo tenés a mano, agiliza la Factura A.</span></label>
+          <label class="campo"><span class="campo__rotulo">CUIT <span class="campo__opcional">(opcional)</span></span><input class="campo__control" name="cuit" type="text" inputmode="numeric" placeholder="30-71234567-1"><span class="campo__ayuda">Si ya lo tenés a mano, agiliza la Factura A.</span></label>
           <label class="campo"><span class="campo__rotulo">Nombre y apellido</span><input class="campo__control" name="nombre" type="text" autocomplete="name" required></label>
           <label class="campo"><span class="campo__rotulo">Correo electrónico</span><input class="campo__control" name="correo" type="email" autocomplete="email" required></label>
           <label class="campo"><span class="campo__rotulo">Teléfono</span><input class="campo__control" name="telefono" type="tel" autocomplete="tel" placeholder="11 1234-5678" required></label>
@@ -158,8 +169,19 @@
           </label>
           <label class="campo campo--ancho"><span class="campo__rotulo">¿Qué necesita tu empresa?</span><textarea class="campo__control campo__control--area" name="detalle" rows="5" placeholder="Qué querés equipar, cuántos equipos, para qué se van a usar, plazo de entrega, presupuesto estimado…" required></textarea></label>
           <label class="casilla campo--ancho"><input name="whatsapp" type="checkbox"> Prefiero que me contacten por WhatsApp.</label>
+          <!-- Error al enviar (de muestra): los datos quedan cargados -->
+          <div class="alerta alerta--error campo--ancho" role="alert" data-error-envio hidden>
+            <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+            <div class="alerta__cuerpo">
+              <p class="alerta__titulo">No pudimos enviar tu consulta</p>
+              <p>Tus datos siguen cargados: probá de nuevo en unos minutos. Si sigue sin salir, escribinos por WhatsApp o a <a href="mailto:empresas@maximus.com.ar">empresas@maximus.com.ar</a>.</p>
+              <div class="alerta__acciones">
+                <a class="boton boton--secundario" href="https://wa.me/541123609964?text=Hola%20Maximus,%20quiero%20pedir%20una%20cotizaci%C3%B3n%20para%20mi%20empresa." target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp Empresas</a>
+              </div>
+            </div>
+          </div>
           <div class="cotizacion__acciones campo--ancho">
-            <button class="boton boton--primario" type="submit">Enviar consulta</button>
+            <button class="boton boton--primario" type="submit" data-enviar>Enviar consulta</button>
             <p class="cotizacion__estado" role="status" aria-live="polite"></p>
           </div>
         </div>
@@ -170,6 +192,7 @@
           <h3 class="cotizacion__listo-titulo">Recibimos tu consulta</h3>
           <p>Te respondemos a <strong data-correo></strong> en las próximas horas hábiles. Si preferís, escribinos directo por WhatsApp.</p>
           <a class="boton boton--secundario" href="https://wa.me/541123609964?text=Hola%20Maximus,%20quiero%20pedir%20una%20cotizaci%C3%B3n%20para%20mi%20empresa." target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp Empresas</a>
+          <button class="boton-texto" type="button" data-otra>Enviar otra consulta</button>
         </div>
       </form>
 
@@ -186,7 +209,7 @@
             </li>
             <li>
               <svg class="icono icono--s" aria-hidden="true"><use href="#i-mail"/></svg>
-              <div><span class="canal__rotulo">Correo</span><a href="mailto:empresas@maximus.com.ar">empresas@maximus.com.ar</a></div>
+              <div><span class="canal__rotulo">Correo</span><span class="canal__correo"><a href="mailto:empresas@maximus.com.ar">empresas@maximus.com.ar</a><button class="boton-texto canal__copiar" type="button" data-copiar="empresas@maximus.com.ar"><svg class="icono icono--s" aria-hidden="true"><use href="#i-copiar"/></svg>Copiar<span class="sr-only"> correo</span></button></span></div>
             </li>
             <li>
               <svg class="icono icono--s" aria-hidden="true"><use href="#i-reloj"/></svg>
@@ -196,6 +219,9 @@
         </div>
       </aside>
     </section>
+
+    <!-- Aviso breve: correo copiado -->
+    <p class="aviso" data-aviso role="status" aria-live="polite"></p>
 
   </main>
 

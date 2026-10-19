@@ -8,7 +8,10 @@
    Mobile: todo en columna, piezas de a 2 y una barra fija abajo con el total, "Resumen" y "Agregar". Tablet: piezas
    de a 3. Escritorio, sobre la grilla de 8: pasos en 5 columnas y "Tu armado" en 3, fijo bajo el header
    (--alto-fijo) con su lista desplazable si no entra.
-   Violeta (el color secundario): el chip de componentes, las "Ahorrá" y la etiqueta "Opcional". */
+   Violeta (el color secundario): el chip de componentes, las "Ahorrá" y la etiqueta "Opcional".
+   Revisión final (tanda 3d), al final de la hoja: marca fija en la cabecera del paso, avisos del paso apilados,
+   slots de memoria, paso sin productos, "Omitir este componente por ahora", servicios en "Tu armado" (BIOS que se
+   suma sola, en pausa), estados de "Agregar al carrito" y el aviso de armado retomado o abierto desde un link. */
 
 .armador {
   display: flex;
@@ -1029,7 +1032,7 @@ a.armador__alternativa {
   font-weight: var(--peso-fuerte);
 }
 
-.resumen-arm__agregar:not(:disabled, .deshabilitado):hover {
+.resumen-arm__agregar:not(:disabled, .deshabilitado, .cargando, .con-error):hover {
   background: var(--color-marca);
 }
 
@@ -1044,8 +1047,8 @@ a.armador__alternativa {
   transition: opacity var(--transicion-lenta);
 }
 
-.resumen-arm__agregar:not(:disabled, .deshabilitado):hover::before,
-.resumen-arm__agregar:not(:disabled, .deshabilitado):hover::after {
+.resumen-arm__agregar:not(:disabled, .deshabilitado, .cargando, .con-error):hover::before,
+.resumen-arm__agregar:not(:disabled, .deshabilitado, .cargando, .con-error):hover::after {
   opacity: 1;
 }
 
@@ -1202,7 +1205,8 @@ a.armador__alternativa {
   overscroll-behavior: contain;
 }
 
-.ficha-arm__bloque h3 {
+/* Solo los títulos y párrafos propios del bloque: los del texto libre llevan los suyos (.texto-libre) */
+.ficha-arm__bloque > h3 {
   margin: 0 0 var(--espacio-2);
   color: var(--color-texto-suave);
   font-size: var(--texto-xs);
@@ -1211,7 +1215,7 @@ a.armador__alternativa {
   text-transform: uppercase;
 }
 
-.ficha-arm__bloque p {
+.ficha-arm__bloque > p {
   margin: 0;
   font-size: var(--texto-s);
   line-height: 1.6;
@@ -1451,6 +1455,236 @@ a.armador__alternativa {
 
 .mx:has(.barra-arm--visible) .aviso {
   bottom: calc(var(--alto-control) + 3 * var(--espacio-3) + env(safe-area-inset-bottom));
+}
+
+/* ---------- Revisión final (tanda 3d) ---------- */
+
+/* Marca fija en la cabecera del paso: pieza quitada (en tono de aviso, con el nombre de la que estaba tachado),
+   paso omitido (neutra), servicio en pausa o que suma otro (información). Queda hasta que se decide el paso */
+.paso-arm__estado {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: flex-start;
+  gap: var(--espacio-1);
+  max-width: 100%;
+  margin-top: 2px;
+  padding: 2px var(--espacio-2);
+  border-radius: var(--radio-s);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  font-size: var(--texto-2xs);
+  font-weight: var(--peso-medio);
+  line-height: 1.4;
+}
+
+.paso-arm__estado[hidden] {
+  display: none;
+}
+
+.paso-arm__estado .icono {
+  width: 12px;
+  height: 12px;
+  margin-top: 1px;
+  color: var(--color-texto-suave);
+}
+
+.paso-arm__estado--aviso {
+  background: color-mix(in srgb, var(--color-aviso) 14%, transparent);
+}
+
+.paso-arm__estado--aviso .icono {
+  color: var(--color-aviso-icono);
+}
+
+.paso-arm__estado--info {
+  background: color-mix(in srgb, var(--color-info) 12%, transparent);
+}
+
+.paso-arm__estado--info .icono {
+  color: var(--color-info-texto);
+}
+
+.paso-arm--quitado .paso-arm__elegido {
+  color: var(--color-texto-suave);
+  text-decoration: line-through;
+}
+
+.paso-arm--quitado .paso-arm__n {
+  border-color: var(--color-aviso);
+}
+
+.paso-arm--omitido .paso-arm__n {
+  border-style: dashed;
+}
+
+/* Avisos del paso: pueden ser varios (memoria: slots y modelos combinados) */
+.paso-arm__avisos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.paso-arm__avisos[hidden] {
+  display: none;
+}
+
+/* Slots de memoria: cuántos ocupan los módulos elegidos sobre los de la motherboard (sin motherboard, punteados) */
+.slots-arm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  padding: var(--espacio-2) var(--espacio-3);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  transition: border-color var(--transicion);
+}
+
+.slots-arm--completo {
+  border-color: var(--color-marca);
+}
+
+.slots-arm__texto {
+  margin: 0;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-xs);
+}
+
+.slots-arm__texto strong {
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+}
+
+.slots-arm__slots {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--espacio-1);
+}
+
+.slots-arm__slot {
+  width: 8px;
+  height: 24px;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-s);
+  background: var(--color-superficie);
+  transition: background-color var(--transicion), border-color var(--transicion);
+}
+
+.slots-arm__slot.marcado {
+  border-color: var(--color-marca);
+  background: var(--color-marca);
+}
+
+.slots-arm__slots--sin-mother .slots-arm__slot:not(.marcado) {
+  border-style: dashed;
+  background: transparent;
+}
+
+/* Paso sin productos (sin compatibles, con un botón por pieza en conflicto, o la sección vacía): sin buscador,
+   filtros, cantidad ni "Ver más productos" */
+.piezas__vacio-titulo {
+  color: var(--color-texto);
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+.piezas__vacio-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+
+.piezas__vacio-acciones .boton {
+  color: var(--color-texto);
+}
+
+.paso-arm--vacio :is(.herramientas-arm, .paso-arm__resultados, .paso-arm__mas-productos) {
+  display: none;
+}
+
+/* "Omitir este componente por ahora": al pie del paso, en su propia fila */
+.paso-arm__omitir {
+  flex-basis: 100%;
+  justify-content: center;
+  font-size: var(--texto-xs);
+}
+
+.paso-arm__omitir:is([aria-pressed="true"], .marcado) {
+  color: var(--color-texto);
+}
+
+/* "Tu armado": la marca del paso en su fila, la actualización de BIOS (ícono en el lugar de la foto, sin quitar)
+   y los servicios en pausa (apagados: no se suman al total) */
+.resumen-arm__nota {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-1);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-2xs);
+  line-height: 1.4;
+}
+
+.resumen-arm__nota .icono {
+  width: 12px;
+  height: 12px;
+  margin-top: 1px;
+}
+
+.resumen-arm__nota--aviso .icono {
+  color: var(--color-aviso-icono);
+}
+
+.resumen-arm__nota--info .icono {
+  color: var(--color-info-texto);
+}
+
+.resumen-arm__foto--icono {
+  display: grid;
+  place-items: center;
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+}
+
+.resumen-arm__foto--icono .icono {
+  width: 16px;
+  height: 16px;
+}
+
+.resumen-arm__fila--pausada .resumen-arm__foto {
+  opacity: 0.5;
+}
+
+.resumen-arm__fila--pausada :is(.resumen-arm__nombre, .resumen-arm__precio) {
+  color: var(--color-texto-suave);
+}
+
+/* Agregar al carrito (resumen y barra): agregando, con la ruedita, y no se pudo agregar, en rojo */
+:is(.resumen-arm__agregar, .barra-arm__agregar):is(.cargando, .con-error) {
+  pointer-events: none;
+}
+
+:is(.resumen-arm__agregar, .barra-arm__agregar).cargando .icono {
+  animation: girar 0.8s linear infinite;
+}
+
+:is(.resumen-arm__agregar, .barra-arm__agregar).con-error {
+  background: var(--color-error-texto);
+  color: var(--color-fondo);
+}
+
+/* Armado retomado o abierto desde un link: alerta sobre los pasos, con la cruz para cerrarla */
+.retomado-arm {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  margin-bottom: var(--espacio-3);
+}
+
+.retomado-arm__cerrar {
+  width: var(--alto-control-xs);
+  height: var(--alto-control-xs);
+  margin: calc(-1 * var(--espacio-2)) calc(-1 * var(--espacio-2)) 0 0;
+  color: var(--color-texto-suave);
 }
 
 /* ---------- Celular: los diálogos como hoja desde abajo ---------- */

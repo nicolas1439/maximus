@@ -1159,10 +1159,6 @@
   padding-block: var(--espacio-2);
 }
 
-.seguimiento--cancelado {
-  opacity: 0.45;
-}
-
 /* Comprobante: su estado (aviso, en proceso, confirmado o neutro) */
 .comprobante-estado {
   --tono: var(--color-aviso);

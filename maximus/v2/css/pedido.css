@@ -140,6 +140,22 @@
   font-weight: var(--peso-normal);
 }
 
+/* Pasos del pedido cancelado: apagados, sin paso actual (Mi cuenta y Seguimiento) */
+.seguimiento--cancelado {
+  opacity: 0.45;
+}
+
+/* Envío detenido (devuelto a Maximus): el paso actual queda quieto y en ámbar */
+.seguimiento--detenido .seguimiento__paso--actual .seguimiento__punto {
+  border-color: var(--color-aviso);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-aviso) 20%, transparent);
+}
+
+.seguimiento--detenido .seguimiento__paso--actual .seguimiento__punto::after {
+  background: var(--color-aviso);
+  animation: none;
+}
+
 /* Ayuda con un pedido: panel oscuro en ambos modos, con WhatsApp */
 .ayuda {
   display: grid;

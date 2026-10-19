@@ -1190,6 +1190,17 @@ a.boton-texto--suave {
   transition: opacity var(--transicion), translate var(--transicion), visibility 0s var(--duracion);
 }
 
+/* Pantallas angostas: un aviso largo baja de renglón en lugar de salirse de la pantalla */
+@media (max-width: 479px) {
+  .aviso {
+    width: max-content;
+    max-width: calc(100% - 2 * var(--margen-lateral));
+    border-radius: var(--radio-l);
+    text-align: center;
+    white-space: normal;
+  }
+}
+
 .aviso--visible {
   translate: -50% 0;
   opacity: 1;
@@ -1800,6 +1811,27 @@ a.saltar {
 :is(.cuit, .dialogo) .boton--primario.cargando::after {
   border-color: var(--color-sobre-marca);
   border-right-color: transparent;
+}
+
+/* Enviando un formulario (Empresas, Centro de ayuda, Garantía y RMA): la ruedita reemplaza al ícono del botón, el
+   texto queda ("Enviando…") y el botón no se puede tocar */
+:is(.cotizacion__form, .contacto__campos, .tramite) .boton.cargando {
+  cursor: progress;
+  opacity: 0.8;
+}
+
+:is(.cotizacion__form, .contacto__campos, .tramite) .boton.cargando .icono {
+  display: none;
+}
+
+:is(.cotizacion__form, .contacto__campos, .tramite) .boton.cargando::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
 }
 
 /* Giro de los indicadores de carga (botones, tarjetas, ficha, ingreso, seguimiento): uno solo para todo el sitio */

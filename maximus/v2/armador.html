@@ -23,7 +23,12 @@
        armador de maximus.com.ar (/ARMADORPC, relevado el 17/10/2026) con sus textos y filtros, en el orden que se
        quiera; cada paso muestra solo lo compatible con lo ya elegido. Al costado (abajo en celular), "Tu armado" con
        el total, las cuotas, los avisos y las acciones. Productos y precios: una selección de los del sitio ese día.
-       Todo lo arma js/armador.js. Página completa con header y footer: arma-tu-pc.html. -->
+       Todo lo arma js/armador.js. Página completa con header y footer: arma-tu-pc.html.
+       Revisión final (tanda 3d): avisos del paso en sus tres tonos, marca fija en la cabecera (pieza quitada, paso
+       omitido, servicio en pausa), paso sin productos, servicio que se suma solo (BIOS), memoria con varios modelos
+       y slots, estados de "Agregar al carrito", "Empezar de nuevo" con confirmación, armado retomado o abierto desde
+       un link y "+ info" en texto libre; se ven con "Estados de muestra". Las reglas y los textos los pone el
+       armador del sitio. -->
   <main class="armador" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
@@ -33,6 +38,56 @@
         <li aria-current="page">Armá tu PC</li>
       </ol>
     </nav>
+
+    <!-- Estados del armador, para la demostración (no van en el sitio real): cada botón arma un caso de muestra -->
+    <details class="contenedor variantes-plegable" data-demo>
+      <summary class="variantes-plegable__cab">Estados de muestra</summary>
+      <div class="variantes">
+        <span class="variantes__rotulo">Aviso del paso</span>
+        <div class="variantes__opciones" role="group" aria-label="Aviso del paso">
+          <button class="variantes__btn" type="button" data-estado-arm="fuente" aria-pressed="false">Gabinete con fuente</button>
+          <button class="variantes__btn" type="button" data-estado-arm="wifi" aria-pressed="false">WiFi según la motherboard</button>
+          <button class="variantes__btn" type="button" data-estado-arm="bios" aria-pressed="false">BIOS requerida</button>
+          <button class="variantes__btn" type="button" data-estado-arm="slots" aria-pressed="false">Memoria según los slots</button>
+        </div>
+        <span class="variantes__rotulo">Cabecera del paso</span>
+        <div class="variantes__opciones" role="group" aria-label="Cabecera del paso">
+          <button class="variantes__btn" type="button" data-estado-arm="quitada" aria-pressed="false">Pieza quitada: no compatible</button>
+          <button class="variantes__btn" type="button" data-estado-arm="corta" aria-pressed="false">Pieza quitada: quedó corta</button>
+          <button class="variantes__btn" type="button" data-estado-arm="omitido" aria-pressed="false">Paso omitido</button>
+        </div>
+        <span class="variantes__rotulo">Paso sin productos</span>
+        <div class="variantes__opciones" role="group" aria-label="Paso sin productos">
+          <button class="variantes__btn" type="button" data-estado-arm="sin-compatibles" aria-pressed="false">Sin compatibles</button>
+          <button class="variantes__btn" type="button" data-estado-arm="sin-productos" aria-pressed="false">Sin productos en la sección</button>
+        </div>
+        <span class="variantes__rotulo">Servicios</span>
+        <div class="variantes__opciones" role="group" aria-label="Servicios">
+          <button class="variantes__btn" type="button" data-estado-arm="servicio-bios" aria-pressed="false">BIOS sumada sola</button>
+          <button class="variantes__btn" type="button" data-estado-arm="pausados" aria-pressed="false">Armado e instalación en pausa</button>
+        </div>
+        <span class="variantes__rotulo">Memoria</span>
+        <div class="variantes__opciones" role="group" aria-label="Memoria">
+          <button class="variantes__btn" type="button" data-estado-arm="memoria" aria-pressed="false">Varios modelos y slots</button>
+        </div>
+        <span class="variantes__rotulo">Agregar al carrito</span>
+        <div class="variantes__opciones" role="group" aria-label="Agregar al carrito">
+          <button class="variantes__btn" type="button" data-estado-arm="agregando" aria-pressed="false">Agregando</button>
+          <button class="variantes__btn" type="button" data-estado-arm="error-agregar" aria-pressed="false">No se pudo agregar</button>
+          <button class="variantes__btn" type="button" data-estado-arm="reinicio" aria-pressed="false">Empezar de nuevo</button>
+        </div>
+        <span class="variantes__rotulo">Armado guardado</span>
+        <div class="variantes__opciones" role="group" aria-label="Armado guardado">
+          <button class="variantes__btn" type="button" data-estado-arm="retomado" aria-pressed="false">Retomado</button>
+          <button class="variantes__btn" type="button" data-estado-arm="link" aria-pressed="false">Desde un link</button>
+          <button class="variantes__btn" type="button" data-estado-arm="faltantes" aria-pressed="false">Con piezas que ya no están</button>
+        </div>
+        <span class="variantes__rotulo">+ info</span>
+        <div class="variantes__opciones" role="group" aria-label="Ficha + info">
+          <button class="variantes__btn" type="button" data-estado-arm="libre" aria-pressed="false">En texto libre</button>
+        </div>
+      </div>
+    </details>
 
     <header class="contenedor armador__cab">
       <div>
@@ -45,6 +100,17 @@
     <div class="contenedor armador__cuerpo">
       <div class="armador__pasos" data-armador>
         <noscript><p class="tarjeta">Para armar tu PC necesitás tener JavaScript activado.</p></noscript>
+        <!-- Armado retomado o abierto desde un link (?armado=…). Con piezas que ya no están: tono de aviso y un botón
+             por paso para elegir otra. Textos y botones los pone js/armador.js -->
+        <div class="alerta retomado-arm" role="status" data-retomado hidden>
+          <svg class="icono" aria-hidden="true" data-retomado-icono><use href="#i-compartir"/></svg>
+          <div class="alerta__cuerpo">
+            <p class="alerta__titulo" data-retomado-titulo>Armado abierto desde un link</p>
+            <p data-retomado-texto>Podés cambiar lo que quieras: el link se actualiza con cada cambio.</p>
+            <div class="alerta__acciones" data-retomado-acciones></div>
+          </div>
+          <button class="boton-icono retomado-arm__cerrar" type="button" data-cerrar-retomado aria-label="Cerrar aviso"><svg class="icono icono--s" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+        </div>
         <ol class="pasos-arm" data-pasos-arm></ol>
       </div>
 
@@ -68,7 +134,19 @@
             <span class="resumen-arm__cuotas" data-cuotas-arm>Elegí al menos un componente</span>
             <button class="boton-texto resumen-arm__ver-cuotas" type="button" data-ver-cuotas hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-cuotas"/></svg>Ver cuotas y financiación</button>
           </div>
+          <!-- Agregar al carrito: agregando (.cargando, la ruedita) y no se pudo agregar (.con-error, con la alerta debajo) -->
           <button class="boton boton--primario resumen-arm__agregar" type="button" data-agregar-arm disabled data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono" aria-hidden="true"><use href="#i-carrito"/></svg><span data-agregar-texto>Agregar al carrito</span></button>
+          <div class="alerta alerta--error" role="alert" data-error-agregar hidden>
+            <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+            <div class="alerta__cuerpo">
+              <p class="alerta__titulo">No pudimos agregar tu armado al carrito</p>
+              <p>Tu armado sigue acá. Volvé a intentar en un momento o escribinos y lo cargamos por vos.</p>
+              <div class="alerta__acciones">
+                <button class="boton boton--secundario" type="button" data-reintentar-arm data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">Volver a intentar</button>
+                <a class="boton-texto" href="https://wa.me/541123575522" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+              </div>
+            </div>
+          </div>
           <div class="resumen-arm__acciones">
             <button class="boton-texto" type="button" data-copiar-arm><svg class="icono icono--s" aria-hidden="true"><use href="#i-compartir"/></svg>Copiar link</button>
             <button class="boton-texto boton-texto--suave" type="button" data-reiniciar-arm><svg class="icono icono--s" aria-hidden="true"><use href="#i-borrar"/></svg>Empezar de nuevo</button>
@@ -89,7 +167,7 @@
         <span class="barra-arm__nota" data-cant-arm>0 componentes</span>
       </div>
       <button class="boton boton--secundario" type="button" data-ver-arm>Resumen</button>
-      <button class="boton boton--primario" type="button" data-agregar-barra data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="" disabled><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar</button>
+      <button class="boton boton--primario barra-arm__agregar" type="button" data-agregar-barra data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="" disabled><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg><span data-agregar-texto>Agregar</span></button>
     </div>
 
     <!-- Ficha "+ info": la arma js/armador.js -->
@@ -130,6 +208,23 @@
           </table>
           <p class="cuotas-arm__efectivo"><svg class="icono icono--s" aria-hidden="true"><use href="#i-transferencia"/></svg><span>Pagando por transferencia o efectivo el total es <strong data-cuotas-efectivo>$0</strong> (10% menos).</span></p>
           <p class="cuotas-arm__legal">Promociones sujetas a disponibilidad de medios de pago. El valor final puede variar según el medio elegido en el checkout.</p>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- "Empezar de nuevo" con algo elegido: confirmación -->
+    <dialog class="dialogo dialogo--chico" aria-labelledby="reinicio-arm-titulo" data-reinicio-dialogo>
+      <div class="dialogo__caja">
+        <header class="dialogo__cab">
+          <h2 class="dialogo__titulo" id="reinicio-arm-titulo">¿Empezar un armado nuevo?</h2>
+          <button class="boton-icono dialogo__cerrar" type="button" data-cerrar-dialogo aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+        </header>
+        <div class="dialogo__cuerpo">
+          <p class="dialogo__texto">Vamos a quitar <span data-reinicio-cant>lo que elegiste</span> de tu armado. Si lo querés guardar, copiá el link antes.</p>
+          <div class="dialogo__acciones">
+            <button class="boton boton--secundario" type="button" data-cerrar-dialogo>No, volver</button>
+            <button class="boton boton--primario" type="button" data-confirmar-reinicio>Sí, empezar de nuevo</button>
+          </div>
         </div>
       </div>
     </dialog>

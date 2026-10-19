@@ -1,8 +1,12 @@
 // Tu PC ideal: embudo en 3 pasos como el de maximus.com.ar (categoría → uso → presupuesto) y el resultado, con las PC
 // del uso elegido de menor a mayor potencia (niveles Entrada a Tope), "Ver especificaciones" y "Agregar al carrito".
-// Categorías, usos, niveles y textos son los del sitio. Cada uso tiene 5 PC, elegidas entre las armadas del home
+// Categorías, usos, niveles y textos son los del sitio. Cada uso tiene 5 PC (salvo Simuladores, 3), elegidas entre las armadas del home
 // (datos de muestra) y las Powered by MSI del sitio (nombres y precios del 17/10/2026); en el sitio real el backend
 // trae las 5 de cada uso, con stock y suplentes. El paso queda en la URL (#elegir/gaming/juegos-livianos/hasta).
+// Un uso con menos de 4 PC (de muestra, "Simuladores exigentes" con 3) ofrece "Todas las opciones" en lugar de los
+// rangos. Estados de la búsqueda de las PC del uso (paso 3: buscando, sin PC, error) y de la ficha de
+// especificaciones (cargando, sin ficha): en el sitio real dependen de lo que responde el backend; en la vista
+// previa se fuerzan con "Estados de muestra" (data-demo).
 
 const raiz = document.querySelector('[data-elegir]');
 if (raiz) iniciar();
@@ -44,7 +48,9 @@ function iniciar() {
     msi19: pc('pc-msi-19', 'PC Powered by MSI Ultimate Intel Ultra 9 285K B860 32GB RAM 2TB RTX 5080 850W Gold + Water 360 WiFi', 7405938, 0, { cpu: 'Intel Core Ultra 9 285K', gpu: 'NVIDIA RTX 5080', ram: '32 GB DDR5', disco: 'SSD NVMe 2 TB', fuente: '850 W 80 PLUS Gold', mother: 'MSI B860', frio: 'Water cooler 360 mm', wifi: true }),
   };
 
-  // Las 5 PC de cada tipo de uso, de menor a mayor potencia (una por nivel)
+  // Las 5 PC de cada tipo de uso, de menor a mayor potencia (una por nivel: Entrada a Tope). null: el nivel no tiene
+  // PC disponible (SIMULADORES, de muestra: un uso con menos de 4 PC)
+  const SIMULADORES = ['msi17', null, 'msi14', null, 'msi15'];
   const BASICAS = ['ml1', 'msi05', 'ml2', 'msi02', 'ml5'];
   const OFICINA = ['ml2', 'ml5', 'msi01', 'ml13', 'msi06'];
   const POTENTES = ['ml5', 'ml13', 'msi06', 'msi07', 'msi09'];
@@ -62,7 +68,7 @@ function iniciar() {
         ['juegos-competitivos', 'Juegos competitivos', 'Valorant, CS2, Fortnite y juegos online competitivos', 'i-mira', GRAFICAS],
         ['juegos-populares', 'Juegos populares y actuales', 'GTA Online, EA Sports FC, Forza Horizon y similares', 'i-juego', GRAFICAS],
         ['juegos-exigentes', 'Juegos exigentes', 'Warzone, Red Dead Redemption 2 y títulos de alta exigencia', 'i-cat-pc', EXIGENTES],
-        ['simuladores', 'Simuladores exigentes', 'Flight Simulator, Assetto Corsa y simuladores avanzados', 'i-cat-cpu', EXIGENTES],
+        ['simuladores', 'Simuladores exigentes', 'Flight Simulator, Assetto Corsa y simuladores avanzados', 'i-cat-cpu', SIMULADORES],
         ['maxima-calidad', 'Juegos con máxima calidad gráfica', 'Para disfrutar juegos exigentes con la mejor calidad visual', 'i-rayo', MAXIMAS],
       ],
     },
@@ -103,14 +109,22 @@ function iniciar() {
   // ---------- Estado ----------
 
   const estado = { cat: null, uso: null, tope: null };
-  const pcsDe = (uso) => uso.pcs.map((id) => ({ id, ...PCS[id] })).sort((a, b) => a.precio - b.precio).map((p, i) => ({ ...p, nivel: NIVELES[i] }));
+  // Estados que fuerza la vista previa ("Estados de muestra"): búsqueda de las PC del uso y ficha de especificaciones
+  const demo = { busqueda: 'lista', ficha: 'lista' };
+  // Las PC disponibles del uso, cada una con el nivel de su lugar en la lista
+  const pcsDe = (uso) => uso.pcs.flatMap((id, i) => (id ? [{ id, ...PCS[id], nivel: NIVELES[i] }] : [])).sort((a, b) => a.precio - b.precio);
+  const enumerar = (xs) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} y ${xs.at(-1)}` : xs[0] || '');
 
-  // Presupuestos del uso, como en el sitio: "Hasta" (los 3 primeros niveles), "Desde" (los superiores) y todas
+  // Presupuestos del uso, como en el sitio: "Hasta" (los 3 primeros niveles), "Desde" (los superiores) y todas.
+  // Con menos de 4 PC no hay rangos: una sola opción, "Todas las opciones"
   function presupuestos(uso) {
     const pcs = pcsDe(uso);
+    if (pcs.length < 4) {
+      return [{ clave: 'todas', rotulo: 'Todas las opciones', monto: `Desde ${pesos(pcs[0]?.precio || 0)}`, texto: enumerar(pcs.map((p) => p.nivel)), desde: 0, hasta: pcs.length }];
+    }
     return [
-      { clave: 'hasta', rotulo: 'Hasta', monto: pesos(pcs[2].precio), texto: 'Entrada, Intermedia y Avanzada', desde: 0, hasta: 3 },
-      { clave: 'desde', rotulo: 'Desde', monto: pesos(pcs[3].precio), texto: 'Superior y Tope', desde: 3, hasta: pcs.length },
+      { clave: 'hasta', rotulo: 'Hasta', monto: pesos(pcs[2].precio), texto: enumerar(pcs.slice(0, 3).map((p) => p.nivel)), desde: 0, hasta: 3 },
+      { clave: 'desde', rotulo: 'Desde', monto: pesos(pcs[3].precio), texto: enumerar(pcs.slice(3).map((p) => p.nivel)), desde: 3, hasta: pcs.length },
       { clave: 'todas', rotulo: 'Sin un presupuesto definido', monto: 'Ver todas', texto: 'Compará todos los niveles disponibles', desde: 0, hasta: pcs.length },
     ];
   }
@@ -130,8 +144,14 @@ function iniciar() {
 
   function pintarPresupuestos() {
     const n = pcsDe(estado.uso).length;
-    $('[data-disponibles]').innerHTML = `${icono('i-check', 'icono icono--s')}${n} PC disponibles para ${estado.uso.nombre.toLowerCase()}`;
-    $('[data-presupuestos]').innerHTML = presupuestos(estado.uso)
+    const opciones = presupuestos(estado.uso);
+    $('[data-disponibles]').innerHTML = `${icono('i-check', 'icono icono--s')}${n} PC ${n === 1 ? 'disponible' : 'disponibles'} para ${estado.uso.nombre.toLowerCase()}`;
+    $('[data-bajada-presupuesto]').textContent =
+      n < 4
+        ? 'Para este uso hay pocas PC disponibles, así que te mostramos todas, de menor a mayor potencia.'
+        : 'Estos valores se calculan con el precio en efectivo o transferencia de las PC disponibles.';
+    $('[data-presupuestos]').classList.toggle('opciones-pc--una', opciones.length === 1);
+    $('[data-presupuestos]').innerHTML = opciones
       .map((p) => {
         const cant = p.hasta - p.desde;
         return opcion({
@@ -179,9 +199,58 @@ function iniciar() {
     $('[data-resultado]').innerHTML = elegidas.map(tarjeta).join('');
     $('[data-resultado-bajada]').textContent = `${elegidas.length} ${elegidas.length === 1 ? 'opción' : 'opciones'} para ${estado.uso.nombre.toLowerCase()}, de menor a mayor potencia.`;
     $('[data-pensadas]').innerHTML = `<strong>Pensadas para:</strong> ${estado.uso.bajada}.`;
-    const texto = encodeURIComponent(`Hola, estoy buscando una PC para ${estado.uso.nombre.toLowerCase()} y quiero consultar con un asesor.`);
-    $('[data-asesor]').href = `https://wa.me/541123575522?text=${texto}`;
+    pintarWhatsapp();
     anunciar(`${elegidas.length} PC para vos.`);
+  }
+
+  // WhatsApp con el uso elegido: el asesor del resultado y los de "sin PC" y el error
+  function pintarWhatsapp() {
+    const texto = encodeURIComponent(`Hola, estoy buscando una PC para ${estado.uso.nombre.toLowerCase()} y quiero consultar con un asesor.`);
+    $$('[data-asesor], [data-whatsapp-uso]').forEach((a) => (a.href = `https://wa.me/541123575522?text=${texto}`));
+  }
+
+  // ---------- Búsqueda de las PC del uso (paso 3) ----------
+  // Cada pieza del paso se ve en los estados de su data-busqueda: lista, cargando, vacio o error
+
+  const vista3 = $('[data-vista="3"]');
+
+  function verBusqueda(e) {
+    $$('[data-busqueda]', vista3).forEach((n) => (n.hidden = !n.dataset.busqueda.split(' ').includes(e)));
+    vista3.classList.toggle('cargando', e === 'cargando');
+    vista3.classList.toggle('con-error', e === 'error');
+    vista3.setAttribute('aria-busy', String(e === 'cargando'));
+  }
+
+  // En el sitio real pide las PC del uso al backend ("Buscando…" mientras tanto) y muestra los presupuestos, "sin PC"
+  // o el error. De muestra, las PC ya están acá y el estado lo fuerza la vista previa (demo.busqueda)
+  function buscarPcs() {
+    pintarWhatsapp();
+    if (demo.busqueda === 'cargando') {
+      verBusqueda('cargando');
+      anunciar('Buscando las PC para vos…');
+    } else if (demo.busqueda === 'error') {
+      verBusqueda('error');
+      anunciar('No pudimos cargar esta selección.');
+    } else if (demo.busqueda === 'vacio' || !pcsDe(estado.uso).length) {
+      verBusqueda('vacio');
+      anunciar('Esta selección no tiene PC disponibles.');
+    } else {
+      pintarPresupuestos();
+      verBusqueda('lista');
+    }
+  }
+
+  // "Volver a intentar": vuelve a buscar (de muestra, un momento de "Buscando…" y los presupuestos)
+  function reintentar() {
+    marcarDemo('[data-ver-busqueda]', 'verBusqueda', 'lista');
+    demo.busqueda = 'lista';
+    const uso = estado.uso;
+    verBusqueda('cargando');
+    anunciar('Buscando las PC para vos…');
+    $('.quiz__titulo', vista3).focus({ preventScroll: true });
+    setTimeout(() => {
+      if (estado.uso === uso && !vista3.hidden && demo.busqueda === 'lista') buscarPcs();
+    }, 900);
   }
 
   // ---------- Especificaciones ----------
@@ -194,6 +263,16 @@ function iniciar() {
     $('[data-specs-nivel]', dialogo).textContent = `Nivel ${p.nivel}`;
     $('[data-specs-nombre]', dialogo).textContent = p.nombre;
     $('[data-specs-precio]', dialogo).innerHTML = `<strong>${pesos(p.precio)}</strong> efectivo o transferencia · 3 × ${pesos(p.precio / 0.9 / 3)} sin interés`;
+    $('[data-specs-whatsapp]', dialogo).href = `https://wa.me/541123575522?text=${encodeURIComponent(`Hola, quiero consultar la configuración de la ${p.nombre}.`)}`;
+    // La ficha: cargando (en el sitio real, mientras llega), sin ficha (el producto no la tiene) o la lista
+    const ficha = demo.ficha !== 'lista' ? demo.ficha : p.cpu ? 'lista' : 'vacio';
+    $$('[data-ficha]', dialogo).forEach((n) => (n.hidden = !n.dataset.ficha.split(' ').includes(ficha)));
+    dialogo.classList.toggle('cargando', ficha === 'cargando');
+    if (ficha === 'lista') pintarFicha(p);
+    dialogo.showModal();
+  }
+
+  function pintarFicha(p) {
     const filas = [
       ['i-cat-cpu', 'Procesador', p.cpu],
       ['i-cat-gpu', 'Placa de video', p.gpu],
@@ -207,7 +286,6 @@ function iniciar() {
       ['i-garantia', 'Garantía', '12 meses'],
     ];
     $('[data-specs-lista]', dialogo).innerHTML = filas.map(([ic, k, v]) => `<div><dt>${icono(ic, 'icono icono--s')}${k}</dt><dd>${v}</dd></div>`).join('');
-    dialogo.showModal();
   }
 
   dialogo.addEventListener('click', (e) => {
@@ -236,7 +314,8 @@ function iniciar() {
     $('.quiz').dataset.pasoActual = vista;
     pintarElegido(paso);
     if (enfocar) {
-      $(`[data-vista="${vista}"] .quiz__titulo`).focus({ preventScroll: true });
+      // El título a la vista: el del paso o, sin PC o con error, el del estado
+      $$(`[data-vista="${vista}"] h2[tabindex="-1"]`).find((t) => !t.closest('[hidden]'))?.focus({ preventScroll: true });
       // Si el embudo no está arriba de la pantalla, sube hasta él (scroll-margin-top en pc-ideal.css)
       const arriba = raiz.getBoundingClientRect().top;
       if (arriba < 0 || arriba > innerHeight * 0.4) raiz.scrollIntoView({ behavior: sinMovimiento.matches ? 'auto' : 'smooth', block: 'start' });
@@ -264,7 +343,7 @@ function iniciar() {
     if (paso <= 3) estado.tope = null;
     escribirUrl();
     if (paso === 2) pintarUsos();
-    if (paso === 3) pintarPresupuestos();
+    if (paso === 3) buscarPcs();
     mostrar(paso, opciones);
   }
 
@@ -279,7 +358,7 @@ function iniciar() {
     } else if (b.dataset.uso) {
       estado.uso = estado.cat.usos.find((u) => u.clave === b.dataset.uso);
       escribirUrl();
-      pintarPresupuestos();
+      buscarPcs();
       mostrar(3);
     } else if (b.dataset.tope) {
       estado.tope = b.dataset.tope;
@@ -290,6 +369,8 @@ function iniciar() {
       irA(Number(b.dataset.volverA));
     } else if (b.dataset.specs) {
       abrirSpecs(b.dataset.specs);
+    } else if ('reintentar' in b.dataset) {
+      reintentar();
     } else if ('agregarPc' in b.dataset) {
       avisar('Vista previa: acá se agregaría la PC al carrito');
     }
@@ -318,19 +399,66 @@ function iniciar() {
     temporizador = setTimeout(() => aviso.classList.remove('aviso--visible'), 2600);
   }
 
+  // ---------- Estados de muestra (vista previa: data-demo; no van en el sitio real) ----------
+
+  function marcarDemo(selector, clave, valor) {
+    document.querySelectorAll(selector).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset[clave] === valor)));
+  }
+
+  // Sin un uso elegido, la muestra abre uno de Gaming: Juegos casuales y livianos (o Simuladores, el de 3 PC)
+  function usoDeMuestra(clave = 'juegos-livianos') {
+    estado.cat = CATEGORIAS[0];
+    estado.uso = estado.cat.usos.find((x) => x.clave === clave);
+  }
+
+  // Búsqueda: con PC, buscando, sin PC, error o un uso con 3 PC; se ve en el paso 3 (del uso elegido o el de muestra)
+  document.querySelectorAll('[data-ver-busqueda]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const modo = b.dataset.verBusqueda;
+      marcarDemo('[data-ver-busqueda]', 'verBusqueda', modo);
+      demo.busqueda = modo === 'pocas' ? 'lista' : modo;
+      if (modo === 'pocas') usoDeMuestra('simuladores');
+      else if (!estado.uso) usoDeMuestra();
+      estado.tope = null;
+      escribirUrl();
+      buscarPcs();
+      mostrar(3);
+    })
+  );
+
+  // Ficha: con ficha, cargando o sin ficha; abre la de la primera PC del resultado (si no está a la vista, el
+  // resultado del uso elegido, o del de muestra, con todas sus PC)
+  document.querySelectorAll('[data-ver-ficha]').forEach((b) =>
+    b.addEventListener('click', () => {
+      demo.ficha = b.dataset.verFicha;
+      marcarDemo('[data-ver-ficha]', 'verFicha', demo.ficha);
+      if ($('[data-vista="resultado"]').hidden) {
+        demo.busqueda = 'lista';
+        marcarDemo('[data-ver-busqueda]', 'verBusqueda', 'lista');
+        if (!estado.uso) usoDeMuestra();
+        estado.tope = 'todas';
+        escribirUrl();
+        pintarResultado();
+        mostrar('resultado');
+      }
+      if (dialogo.open) dialogo.close();
+      abrirSpecs($('[data-specs]').dataset.specs);
+    })
+  );
+
   // ---------- Arranque: retoma lo que dice la URL ----------
 
   const [ancla, cat, uso, tope] = location.hash.slice(1).split('/');
   estado.cat = ancla === 'elegir' ? CATEGORIAS.find((c) => c.clave === cat) || null : null;
   const u = estado.cat?.usos.find((x) => x.clave === uso);
-  if (u && ['hasta', 'desde', 'todas'].includes(tope)) {
+  if (u && pcsDe(u).length && ['hasta', 'desde', 'todas'].includes(tope)) {
     estado.uso = u;
     estado.tope = tope;
     pintarResultado();
     mostrar('resultado', { enfocar: false });
   } else if (u) {
     estado.uso = u;
-    pintarPresupuestos();
+    buscarPcs();
     mostrar(3, { enfocar: false });
   } else if (estado.cat) {
     pintarUsos();

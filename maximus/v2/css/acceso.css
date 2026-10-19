@@ -5,6 +5,9 @@
    con su halo: con mouse aparece en el borde más cercano al puntero y crece al acercarse; en pantallas táctiles
    recorre el borde sola. El halo se enciende más mientras se completa un campo. El botón principal lleva el degradado
    vivo del botón Productos. Mobile: la tarjeta a todo el ancho; desde tablet, centrada a 480px.
+   Errores y avisos de cada formulario con .alerta de base.css: los del formulario arriba de los campos (correo o
+   contraseña incorrectos, faltan datos, no se pudo enviar el correo) y los de un dato debajo de su campo (correo o
+   documento que ya tienen cuenta, CUIT no encontrado).
    Detalle en violeta (el color secundario): la mancha violeta de la aurora y el tramo violeta de la luz del borde. */
 
 .ingreso {
@@ -210,6 +213,13 @@ a.modo__opcion {
   overflow-wrap: anywhere;
 }
 
+/* Encabezado y formulario de un paso de la vista (recuperar: cargar el correo), con el mismo aire que la vista */
+.vista__grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-6);
+}
+
 .vista__volver {
   align-self: flex-start;
   margin-block: calc(var(--espacio-2) * -1);
@@ -249,18 +259,24 @@ a.modo__opcion {
   grid-template-columns: minmax(0, 1fr) minmax(0, 7.5rem);
 }
 
-.ingreso__estado {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--espacio-2);
-  margin: 0;
-  color: var(--color-error-texto);
-  font-size: var(--texto-s);
-  font-weight: var(--peso-medio);
+/* Razón social: la completa el CUIT (solo lectura); mientras se busca, una ruedita a la derecha del campo */
+.ingreso__razon {
+  position: relative;
 }
 
-.ingreso__estado:empty {
-  display: none;
+.ingreso__razon.cargando::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: var(--espacio-3);
+  width: 18px;
+  height: 18px;
+  margin-block: auto;
+  border: 2px solid var(--color-texto-suave);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
 }
 
 .ingreso__acciones {
@@ -348,6 +364,40 @@ a.modo__opcion {
 .ingreso__alterno {
   width: 100%;
   height: var(--alto-control-l);
+}
+
+/* Continuar con Google y con Facebook: botones secundarios a todo el ancho, uno debajo del otro (los logos
+   oficiales se suman al integrar). Mientras conecta (de muestra), la ruedita al lado del texto */
+.ingreso__sociales {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-3);
+}
+
+.ingreso__social {
+  width: 100%;
+  height: var(--alto-control-l);
+}
+
+.ingreso__social.cargando {
+  cursor: progress;
+}
+
+.ingreso__social.cargando::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+/* Estados de muestra (vista previa): cada rótulo con sus botones en una fila */
+.variantes--acceso {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  justify-items: start;
 }
 
 /* Separador con texto al medio */

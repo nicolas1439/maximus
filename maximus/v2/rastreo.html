@@ -24,6 +24,9 @@
        en un solo campo (el largo dice cuál es). El resultado lo arma js/rastreo.js con datos de muestra: en el sitio
        real los da el backend (pedido → guía, como hoy) y el estado y el historial de la guía, consultados a OCA desde
        el servidor. El formulario funciona sin JS (?n=numero) y el enlace ?n= abre el resultado directo (Mi cuenta).
+       Revisión final (tanda 3d): los estados del envío y del pedido que faltaban, cada uno con un pedido de muestra:
+       guía sin movimientos todavía, OCA no responde (con "Ver en OCA" y "Volver a intentar"), visita fallida (hasta 3),
+       en sucursal de OCA para retirar, devuelto a Maximus, cancelado y retiro en Florida además de Floresta.
        Página completa con header y footer: seguimiento.html. -->
   <main class="rastreo" id="contenido" tabindex="-1">
 
@@ -63,10 +66,17 @@
           <div class="muestras">
             <p class="muestras__rotulo">Pedidos de muestra</p>
             <ul class="muestras__lista">
-              <li><button class="muestras__btn" type="button" data-muestra="422907">#MAX-422907<span>En camino</span></button></li>
-              <li><button class="muestras__btn" type="button" data-muestra="423640">#MAX-423640<span>Para retirar</span></button></li>
               <li><button class="muestras__btn" type="button" data-muestra="423518">#MAX-423518<span>Esperando el pago</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423731">#MAX-423731<span>En preparación · Florida</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423640">#MAX-423640<span>Para retirar · Floresta</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423705">#MAX-423705<span>Guía sin movimientos</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="422907">#MAX-422907<span>En camino</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423622">#MAX-423622<span>OCA no responde</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423589">#MAX-423589<span>Visita fallida</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423602">#MAX-423602<span>En sucursal de OCA</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="421386">#MAX-421386<span>Devuelto a Maximus</span></button></li>
               <li><button class="muestras__btn" type="button" data-muestra="418230">#MAX-418230<span>Entregado</span></button></li>
+              <li><button class="muestras__btn" type="button" data-muestra="423571">#MAX-423571<span>Cancelado</span></button></li>
             </ul>
           </div>
         </section>

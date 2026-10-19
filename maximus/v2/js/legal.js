@@ -1,6 +1,7 @@
-// Páginas legales (Términos y condiciones, Política de privacidad): el índice queda plegado en celular y tablet y
-// abierto al costado en escritorio, marca la sección que se está leyendo y se pliega al elegir una en celular.
-// Sin JS el índice queda abierto.
+// Páginas legales (Términos y condiciones, Política de privacidad, Bases y condiciones): el índice queda plegado en
+// celular y tablet y abierto al costado en escritorio, marca la sección que se está leyendo y se pliega al elegir una
+// en celular. Sin JS el índice queda abierto. Los estados llevan su clase además del atributo: .abierto en el índice
+// (open) y .actual en la sección que se lee (aria-current).
 
 const indice = document.querySelector('[data-indice]');
 if (indice) iniciar();
@@ -10,7 +11,11 @@ function iniciar() {
   const enlaces = [...indice.querySelectorAll('a[href^="#"]')];
   const secciones = enlaces.map((a) => document.getElementById(a.hash.slice(1))).filter(Boolean);
 
-  const acomodar = () => (indice.open = escritorio.matches);
+  indice.addEventListener('toggle', () => indice.classList.toggle('abierto', indice.open));
+  const acomodar = () => {
+    indice.open = escritorio.matches;
+    indice.classList.toggle('abierto', indice.open);
+  };
   acomodar();
   escritorio.addEventListener('change', acomodar);
 
@@ -22,8 +27,10 @@ function iniciar() {
   // Sección actual: la primera cuyo título pasó por la franja de arriba de la pantalla
   function marcar(id) {
     enlaces.forEach((a) => {
-      if (a.hash === `#${id}`) a.setAttribute('aria-current', 'true');
+      const actual = a.hash === `#${id}`;
+      if (actual) a.setAttribute('aria-current', 'true');
       else a.removeAttribute('aria-current');
+      a.classList.toggle('actual', actual);
     });
   }
 

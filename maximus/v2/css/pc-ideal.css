@@ -946,3 +946,178 @@ a.cierre-pc__btn {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* ---------- Revisión final (tanda 3d): uso con menos de 4 PC y estados de la búsqueda y de la ficha ---------- */
+
+/* Buscando las PC del uso: la pastilla de "n PC disponibles", en gris con la ruedita */
+.quiz__disponibles--buscando {
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+}
+
+.quiz__disponibles--buscando .icono {
+  animation: girar 0.9s linear infinite;
+}
+
+/* Presupuestos en esqueleto: la misma estructura que los reales, cada renglón con el alto de su texto */
+.opcion-pc--cargando {
+  pointer-events: none;
+}
+
+.opcion-pc--cargando .esqueleto {
+  height: 1lh;
+}
+
+.opcion-pc--cargando .opcion-pc__rotulo .esqueleto {
+  width: 35%;
+}
+
+.opcion-pc--cargando .opcion-pc__monto .esqueleto {
+  width: 65%;
+}
+
+.opcion-pc--cargando .opcion-pc__bajada .esqueleto {
+  width: 85%;
+}
+
+/* El segundo renglón de la bajada, solo donde la real ocupa dos (tablet y escritorio, de a 3) */
+.opcion-pc--cargando .opcion-pc__bajada .esqueleto + .esqueleto {
+  display: none;
+  width: 55%;
+  margin-top: 2px;
+}
+
+.opcion-pc--cargando .opcion-pc__pie .esqueleto {
+  width: 40%;
+}
+
+/* Sin PC para el uso: recuadro punteado con el alto de .error-carga (base.css), así los dos estados ocupan lo mismo */
+.quiz__vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  min-height: 240px;
+  padding: var(--espacio-6) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  text-align: center;
+}
+
+.quiz__vacio > .icono {
+  width: 40px;
+  height: 40px;
+  color: var(--color-secundario-texto);
+}
+
+.quiz__vacio p {
+  max-width: 44ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.quiz__vacio-titulo {
+  margin: 0;
+  color: var(--color-texto);
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+  text-wrap: balance;
+}
+
+.quiz__vacio-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+
+/* Los títulos de los estados reciben el foco al aparecer, como el del paso: sin contorno */
+.quiz__vacio-titulo,
+.quiz .error-carga__titulo {
+  outline: none;
+}
+
+/* Ficha cargando: la línea de estado con el alto de una fila y las filas en esqueleto */
+.specs-pc__estado {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding-block: var(--espacio-2);
+  border-bottom: 1px solid var(--color-borde);
+  color: var(--color-texto-suave);
+}
+
+.specs-pc__estado .icono {
+  flex-shrink: 0;
+  color: var(--color-acento);
+  animation: girar 0.9s linear infinite;
+}
+
+.specs-pc__lista--cargando .esqueleto {
+  height: 1lh;
+  width: 70%;
+}
+
+.specs-pc__lista--cargando .esqueleto + .esqueleto {
+  width: 85%;
+}
+
+/* Sin ficha cargada: recuadro punteado en el lugar de la lista */
+.specs-pc__vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: var(--espacio-4);
+  padding: var(--espacio-6) var(--espacio-4);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-l);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-s);
+  text-align: center;
+}
+
+.specs-pc__vacio > .icono {
+  width: 40px;
+  height: 40px;
+  color: var(--color-secundario-texto);
+}
+
+.specs-pc__vacio p {
+  max-width: 40ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.specs-pc__vacio .specs-pc__vacio-titulo {
+  color: var(--color-texto);
+  font-size: var(--texto-m);
+  font-weight: var(--peso-fuerte);
+}
+
+.specs-pc__vacio .boton {
+  margin-top: var(--espacio-2);
+}
+
+@media (min-width: 768px) {
+  /* Una sola opción ("Todas las opciones"): centrada, al ancho del indicador de pasos */
+  .opciones-pc--presupuestos.opciones-pc--una {
+    grid-template-columns: minmax(0, 1fr);
+    align-self: center;
+    width: min(100%, 520px);
+  }
+
+  .opcion-pc--cargando .opcion-pc__bajada .esqueleto + .esqueleto {
+    display: block;
+  }
+
+  .specs-pc__vacio {
+    margin: var(--espacio-6);
+    padding: var(--espacio-8) var(--espacio-6);
+  }
+}

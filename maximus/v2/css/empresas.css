@@ -443,6 +443,27 @@
   color: var(--color-marca);
 }
 
+/* Correo con "Copiar" al lado (baja al renglón siguiente si no entra) */
+.canal__correo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--espacio-3);
+}
+
+.canal .canal__copiar {
+  min-height: var(--alto-control-xs);
+  color: var(--color-marca);
+  font-size: var(--texto-xs);
+}
+
+.canal .canal__copiar .icono {
+  width: 16px;
+  height: 16px;
+  margin-top: 0;
+  color: currentColor;
+}
+
 /* ---------- Tablet: 768px ---------- */
 
 @media (min-width: 768px) {

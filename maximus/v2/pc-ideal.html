@@ -25,8 +25,34 @@
        maximus.com.ar (/computadoraideal, relevado el 17/10/2026): el embudo en 3 pasos (para qué la vas a usar →
        qué tipo de uso → cuánto querés invertir) con las 4 categorías y sus usos, los niveles Entrada a Tope, "De
        nuestro taller a tu escritorio" y las preguntas frecuentes. En el sitio, cada uso tiene 5 PCs por nivel (y
-       suplentes) que trae el backend con stock y precio; acá cada uso tiene 5 PC elegidas entre las armadas del home
-       (datos de muestra) y las Powered by MSI del sitio (js/pc-ideal.js). Página completa con header y footer: tu-pc-ideal.html. -->
+       suplentes) que trae el backend con stock y precio; acá cada uso tiene 5 PC (salvo Simuladores, 3) elegidas entre las armadas del home
+       (datos de muestra) y las Powered by MSI del sitio (js/pc-ideal.js). Página completa con header y footer: tu-pc-ideal.html.
+       Un uso con menos de 4 PC ("Simuladores exigentes", de muestra: 3) ofrece "Todas las opciones" en lugar de los
+       rangos. Estados de la búsqueda de las PC del uso (en el paso 3) y de la ficha de especificaciones: se ven con
+       "Estados de muestra". -->
+
+  <!-- Estados de muestra (no van en el sitio real): la búsqueda de las PC del uso elegido (buscando, sin PC, error al
+       cargar), un uso con menos de 4 PC y la ficha de especificaciones (cargando, sin ficha) -->
+  <details class="contenedor variantes-plegable" data-demo>
+    <summary class="variantes-plegable__cab">Estados de muestra</summary>
+    <div class="variantes">
+      <span class="variantes__rotulo">Selección</span>
+      <div class="variantes__opciones" role="group" aria-label="Selección">
+        <button class="variantes__btn" type="button" data-ver-busqueda="lista" aria-pressed="true">Con PC</button>
+        <button class="variantes__btn" type="button" data-ver-busqueda="cargando" aria-pressed="false">Buscando</button>
+        <button class="variantes__btn" type="button" data-ver-busqueda="vacio" aria-pressed="false">Sin PC</button>
+        <button class="variantes__btn" type="button" data-ver-busqueda="error" aria-pressed="false">Error al cargar</button>
+        <button class="variantes__btn" type="button" data-ver-busqueda="pocas" aria-pressed="false">Uso con 3 PC</button>
+      </div>
+      <span class="variantes__rotulo">Especificaciones</span>
+      <div class="variantes__opciones" role="group" aria-label="Especificaciones">
+        <button class="variantes__btn" type="button" data-ver-ficha="lista" aria-pressed="true">Con ficha</button>
+        <button class="variantes__btn" type="button" data-ver-ficha="cargando" aria-pressed="false">Cargando ficha</button>
+        <button class="variantes__btn" type="button" data-ver-ficha="vacio" aria-pressed="false">Sin ficha</button>
+      </div>
+    </div>
+  </details>
+
   <main class="pc-ideal" id="contenido" tabindex="-1">
 
     <nav class="contenedor migas" aria-label="Ubicación">
@@ -95,15 +121,50 @@
           <button class="quiz__volver" type="button" data-volver-a="1"><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Cambiar categoría</button>
         </div>
 
-        <!-- Paso 3 -->
+        <!-- Paso 3. Al elegir el uso, el backend trae sus PC (los rangos salen de sus precios). Cada pieza se ve en el
+             estado que dice su data-busqueda (js/pc-ideal.js): lista (los presupuestos; con menos de 4 PC, una sola
+             opción, "Todas las opciones", con .opciones-pc--una), cargando ("Buscando las PC para vos…" y los
+             presupuestos en esqueleto, con su alto), vacio (sin PC) o error (con "Volver a intentar" y WhatsApp).
+             La vista lleva .cargando o .con-error según el estado -->
         <div class="quiz__vista" data-vista="3" hidden>
-          <div class="quiz__textos">
-            <p class="quiz__disponibles" data-disponibles></p>
+          <div class="quiz__textos" data-busqueda="lista cargando">
+            <p class="quiz__disponibles" data-disponibles data-busqueda="lista"></p>
+            <p class="quiz__disponibles quiz__disponibles--buscando" data-busqueda="cargando" hidden><svg class="icono icono--s" aria-hidden="true"><use href="#i-recargar"/></svg>Buscando las PC para vos…</p>
             <p class="quiz__rotulo">El último paso</p>
             <h2 class="quiz__titulo" tabindex="-1">¿Cuánto querés invertir?</h2>
-            <p class="quiz__bajada">Estos valores se calculan con el precio en efectivo o transferencia de las PC disponibles.</p>
+            <p class="quiz__bajada" data-bajada-presupuesto>Estos valores se calculan con el precio en efectivo o transferencia de las PC disponibles.</p>
           </div>
-          <div class="opciones-pc opciones-pc--presupuestos" data-presupuestos></div>
+          <div class="opciones-pc opciones-pc--presupuestos" data-presupuestos data-busqueda="lista"></div>
+
+          <!-- Buscando: tres presupuestos en esqueleto, con el alto de los reales -->
+          <div class="opciones-pc opciones-pc--presupuestos" data-busqueda="cargando" aria-hidden="true" hidden>
+            <div class="opcion-pc opcion-pc--presupuesto opcion-pc--cargando"><span class="opcion-pc__texto"><span class="opcion-pc__titulo"><span class="opcion-pc__rotulo"><span class="esqueleto"></span></span><span class="opcion-pc__monto"><span class="esqueleto"></span></span></span><span class="opcion-pc__bajada"><span class="esqueleto"></span><span class="esqueleto"></span></span></span><span class="opcion-pc__pie"><span class="esqueleto"></span></span></div>
+            <div class="opcion-pc opcion-pc--presupuesto opcion-pc--cargando"><span class="opcion-pc__texto"><span class="opcion-pc__titulo"><span class="opcion-pc__rotulo"><span class="esqueleto"></span></span><span class="opcion-pc__monto"><span class="esqueleto"></span></span></span><span class="opcion-pc__bajada"><span class="esqueleto"></span><span class="esqueleto"></span></span></span><span class="opcion-pc__pie"><span class="esqueleto"></span></span></div>
+            <div class="opcion-pc opcion-pc--presupuesto opcion-pc--cargando"><span class="opcion-pc__texto"><span class="opcion-pc__titulo"><span class="opcion-pc__rotulo"><span class="esqueleto"></span></span><span class="opcion-pc__monto"><span class="esqueleto"></span></span></span><span class="opcion-pc__bajada"><span class="esqueleto"></span><span class="esqueleto"></span></span></span><span class="opcion-pc__pie"><span class="esqueleto"></span></span></div>
+          </div>
+
+          <!-- Sin PC para el uso elegido -->
+          <div class="quiz__vacio" data-busqueda="vacio" hidden>
+            <svg class="icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
+            <h2 class="quiz__vacio-titulo" tabindex="-1">Esta selección no tiene PC disponibles</h2>
+            <p>Por ahora no tenemos PC armadas para este uso. Probá con otro, armá la tuya pieza por pieza o consultanos y te ayudamos a elegir.</p>
+            <div class="quiz__vacio-acciones">
+              <a class="boton boton--primario" href="https://wa.me/541123575522" target="_blank" rel="noopener" data-whatsapp-uso><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp</a>
+              <a class="boton boton--secundario" href="arma-tu-pc.html"><svg class="icono icono--s" aria-hidden="true"><use href="#i-armar"/></svg>Armá tu PC</a>
+            </div>
+          </div>
+
+          <!-- Error al traer las PC: .error-carga de base.css -->
+          <div class="error-carga" data-busqueda="error" hidden>
+            <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+            <h2 class="error-carga__titulo" tabindex="-1">No pudimos cargar esta selección</h2>
+            <p>Puede ser un problema de conexión. Probá de nuevo en unos segundos o consultanos por WhatsApp.</p>
+            <div class="error-carga__acciones">
+              <button class="boton boton--primario" type="button" data-reintentar><svg class="icono icono--s" aria-hidden="true"><use href="#i-recargar"/></svg>Volver a intentar</button>
+              <a class="boton boton--secundario" href="https://wa.me/541123575522" target="_blank" rel="noopener" data-whatsapp-uso><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+            </div>
+          </div>
+
           <button class="quiz__volver" type="button" data-volver-a="2"><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Cambiar uso</button>
         </div>
 
@@ -136,7 +197,9 @@
       </div>
     </section>
 
-    <!-- Especificaciones de una PC ("Ver especificaciones"): las arma js/pc-ideal.js -->
+    <!-- Especificaciones de una PC ("Ver especificaciones"): las arma js/pc-ideal.js. La cabecera (foto, nivel, nombre y
+         precio) sale de la tarjeta; la lista llega con la ficha. Cada pieza se ve en el estado que dice su data-ficha:
+         lista, cargando ("Cargando ficha…" y las filas en esqueleto; el diálogo lleva .cargando) o vacio (sin ficha) -->
     <dialog class="dialogo dialogo--hoja specs-pc" aria-labelledby="specs-pc-nombre" data-specs-pc>
       <div class="dialogo__caja">
         <div class="specs-pc__cab">
@@ -148,8 +211,28 @@
           </div>
           <button class="boton-icono" type="button" data-cerrar-specs aria-label="Cerrar"><svg class="icono" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
         </div>
-        <dl class="specs-pc__lista" data-specs-lista></dl>
-        <p class="specs-pc__nota"><svg class="icono icono--s" aria-hidden="true"><use href="#i-garantia"/></svg>Armada y testeada por Maximus, con 12 meses de garantía. Especificaciones de muestra, sacadas del nombre de la PC.</p>
+        <dl class="specs-pc__lista" data-specs-lista data-ficha="lista"></dl>
+        <!-- Cargando ficha: la línea de estado y 9 filas en esqueleto, el alto de las 10 especificaciones -->
+        <div class="specs-pc__lista specs-pc__lista--cargando" data-ficha="cargando" aria-busy="true" hidden>
+          <p class="specs-pc__estado"><svg class="icono icono--s" aria-hidden="true"><use href="#i-recargar"/></svg>Cargando ficha…</p>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+          <div aria-hidden="true"><span class="esqueleto"></span><span class="esqueleto"></span></div>
+        </div>
+        <!-- Sin ficha cargada -->
+        <div class="specs-pc__vacio" data-ficha="vacio" hidden>
+          <svg class="icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
+          <p class="specs-pc__vacio-titulo">Este producto no tiene ficha cargada</p>
+          <p>Escribinos y te pasamos la configuración completa de esta PC.</p>
+          <a class="boton boton--secundario" href="https://wa.me/541123575522" target="_blank" rel="noopener" data-specs-whatsapp><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>Consultar por WhatsApp</a>
+        </div>
+        <p class="specs-pc__nota" data-ficha="lista cargando"><svg class="icono icono--s" aria-hidden="true"><use href="#i-garantia"/></svg>Armada y testeada por Maximus, con 12 meses de garantía. Especificaciones de muestra, sacadas del nombre de la PC.</p>
         <div class="dialogo__pie">
           <button class="boton boton--secundario" type="button" data-cerrar-specs>Volver</button>
           <button class="boton boton--primario" type="button" data-specs-agregar data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position=""><svg class="icono icono--s" aria-hidden="true"><use href="#i-carrito"/></svg>Agregar al carrito</button>

@@ -7,6 +7,13 @@
 // CDN del sitio (las que ya están en recursos/productos/ van de ahí); algunos descuentos, las fichas y la cantidad
 // total de cada paso son de muestra. En el sitio real todo eso lo trae el backend.
 // El armado queda en la URL (?armado=…) para copiar el link o volver; "Agregar al carrito" es de muestra.
+// Revisión final (tanda 3d), las piezas visuales que pone el armador del sitio (sus reglas y textos son de muestra):
+// avisos del paso en tres tonos (gabinete con fuente, WiFi y slots según la motherboard, BIOS requerida); marca fija
+// en la cabecera de un paso (pieza quitada, paso omitido, servicio en pausa); paso sin compatibles y sin productos;
+// la actualización de BIOS que se suma sola y los servicios en pausa (armado e instalación); memoria con varios
+// modelos y contador de slots; estados de "Agregar al carrito"; "Empezar de nuevo" con confirmación; armado
+// retomado o abierto desde un link, con piezas que ya no están; "+ info" en texto libre. La barra "Estados de
+// muestra" de la vista previa (data-demo) arma cada caso.
 
 import { iniciarLuz } from './luz.js';
 
@@ -32,6 +39,16 @@ function iniciar() {
   const CUOTAS = [[1, 1], [3, 1], [6, 1.16], [9, 1.23], [12, 1.31], [18, 1.52], [24, 1.67]];
 
   // ---------- Datos (de muestra) ----------
+  // Marcas de muestra para ver los avisos y servicios (en el sitio real las da cada producto): biosNueva (el
+  // procesador pide un BIOS reciente) y biosVieja (la motherboard sale de fábrica con uno anterior), wifi y slots de
+  // la motherboard (2 si no se indica), conFuente (gabinete que trae fuente) y libre (descripción en texto libre).
+
+  // "+ info" sin datos por secciones: la descripción llega del sistema como un solo bloque de HTML
+  const DESCRIPCION_LIBRE = `<p>Adaptador <strong>WiFi USB de doble banda</strong> y tamaño nano: queda enchufado a la PC sin molestar.</p>
+    <h3>Características</h3>
+    <ul><li>Doble banda: <strong>5 GHz</strong> para jugar y ver videos, 2,4 GHz para llegar más lejos.</li><li>Se conecta a un puerto USB, sin abrir la PC.</li><li>Compatible con Windows 11, 10, 8.1 y 7.</li></ul>
+    <h3>Especificaciones</h3>
+    <table><tbody><tr><th>Velocidad</th><td>Hasta 433 Mbps en 5 GHz y 200 Mbps en 2,4 GHz</td></tr><tr><th>Estándar</th><td>WiFi 5 (802.11ac)</td></tr><tr><th>Interfaz</th><td>USB 2.0</td></tr><tr><th>Seguridad</th><td>WPA / WPA2</td></tr></tbody></table>`;
 
   const PASOS = [
     {
@@ -45,7 +62,7 @@ function iniciar() {
         { id: 13477, n: 'Micro Intel i3-14100F 4.7 Ghz 12Mb S.1700', p: 203220, img: cdn('BX8071514100F'), socket: '1700' },
         { id: 20790, n: 'Micro AMD Ryzen 5 8500G 5.0 Ghz AM5', p: 243360, a: 279900, img: cdn('100-100000931'), socket: 'AM5', video: true },
         { id: 11021, n: 'Micro Intel i3-12100 4.3 Ghz 12Mb S.1700', p: 252900, img: cdn('BX8071512100'), socket: '1700', video: true },
-        { id: 99010, n: 'Micro AMD Ryzen 7 9800X3D 5.2 Ghz AM5', p: 739999, a: 849999, img: local('ryzen-7-9800x3d'), socket: 'AM5', sinCooler: true },
+        { id: 99010, n: 'Micro AMD Ryzen 7 9800X3D 5.2 Ghz AM5', p: 739999, a: 849999, img: local('ryzen-7-9800x3d'), socket: 'AM5', sinCooler: true, biosNueva: true },
       ],
     },
     {
@@ -70,14 +87,14 @@ function iniciar() {
         { id: 18222, n: 'Motherboard Gigabyte A520M-K V2 AM4', p: 91620, img: cdn('9MA52MK2-00-G11'), socket: 'AM4', ram: 'DDR4' },
         { id: 18772, n: 'Motherboard MSI Pro H610M-G DDR5 S1700', p: 109710, img: cdn('911-7D46-225'), socket: '1700', ram: 'DDR5' },
         { id: 20890, n: 'Motherboard MSI Pro H610M-G DDR4 S1700', p: 111690, img: cdn('911-7D46-238'), socket: '1700', ram: 'DDR4' },
-        { id: 7594, n: 'Motherboard Biostar B550M H 3.0 AM4', p: 119880, a: 139500, img: cdn('B550MH-3.0'), socket: 'AM4', ram: 'DDR4' },
-        { id: 16434, n: 'Motherboard MSI A620M-E Pro DDR5 AM5', p: 125640, img: cdn('911-7E28-014'), socket: 'AM5', ram: 'DDR5' },
-        { id: 13840, n: 'Motherboard Gigabyte A620M-H AM5', p: 126000, img: cdn('A620M-H'), socket: 'AM5', ram: 'DDR5' },
-        { id: 20840, n: 'Motherboard MSI B550M-B Pro AM4', p: 126810, img: cdn('911-7d14-024'), socket: 'AM4', ram: 'DDR4' },
+        { id: 7594, n: 'Motherboard Biostar B550M H 3.0 AM4', p: 119880, a: 139500, img: cdn('B550MH-3.0'), socket: 'AM4', ram: 'DDR4', slots: 4 },
+        { id: 16434, n: 'Motherboard MSI A620M-E Pro DDR5 AM5', p: 125640, img: cdn('911-7E28-014'), socket: 'AM5', ram: 'DDR5', biosVieja: true },
+        { id: 13840, n: 'Motherboard Gigabyte A620M-H AM5', p: 126000, img: cdn('A620M-H'), socket: 'AM5', ram: 'DDR5', biosVieja: true },
+        { id: 20840, n: 'Motherboard MSI B550M-B Pro AM4', p: 126810, img: cdn('911-7d14-024'), socket: 'AM4', ram: 'DDR4', slots: 4, wifi: true },
       ],
     },
     {
-      clave: 'ram', titulo: 'Memoria RAM', saltar: 'No agregar memoria RAM', total: 61, buscar: 'Buscar memoria…', cantidad: { min: 1, max: 4, inicial: 2 },
+      clave: 'ram', titulo: 'Memoria RAM', saltar: 'No agregar memoria RAM', max: 4, total: 61, buscar: 'Buscar memoria…', cantidad: { min: 1, max: 4, inicial: 2 },
       ayuda: 'La memoria RAM define <b>cuántas cosas puede hacer tu PC a la vez</b> sin ponerse lenta. Para gaming y uso general lo recomendado es 16GB (2 módulos de 8GB); para tareas básicas alcanza con 8GB.',
       chips: [['8GB', tiene('8GB')], ['16GB', tiene('16GB')], ['RGB', tiene('RGB')]],
       piezas: [
@@ -119,7 +136,7 @@ function iniciar() {
       ayuda: 'El gabinete es la <b>casa de tu PC</b>: además del estilo, importa que tenga buen flujo de aire para mantener todo fresco y espacio para futuras ampliaciones.',
       chips: [['ARGB', tiene('ARGB', 'RGB')], ['Blanco', tiene('WHITE')], ['Negro', tiene('BLACK')]],
       piezas: [
-        { id: 16562, n: 'Gabinete Gamer Zer01 Gaming Centauri 3 Fan Fixed RGB', p: 29889, a: 36900, img: cdn('CENTAURI') },
+        { id: 16562, n: 'Gabinete Gamer Zer01 Gaming Centauri 3 Fan Fixed RGB', p: 29889, a: 36900, img: cdn('CENTAURI'), conFuente: true },
         { id: 18460, n: 'Gabinete Sentey GS-6130-SF H30 Black - Sin Cooler Fan', p: 35640, img: cdn('GS-6130-SF-BLACK') },
         { id: 18856, n: 'Gabinete Xigmatek Pucara X Arctic 6 Fan Edition White', p: 40905, a: 60600, img: cdn('EN47190') },
         { id: 4089, n: 'Gabinete Gamemax H601 Black Red', p: 45000, img: cdn('H601-BR') },
@@ -188,7 +205,7 @@ function iniciar() {
       piezas: [
         { id: 1028, n: 'Adaptador USB WiFi TP-Link TL-WN725N Nano 150Mbps', p: 11700, img: cdn('TL-WN725N') },
         { id: 19194, n: 'Placa de Red WiFi USB TP-Link Archer TX1U Nano AX300 WiFi 6', p: 12690, img: cdn('Archer-TX1U-Nano') },
-        { id: 6949, n: 'Adaptador USB WiFi TP-Link Archer T2U Nano AC600 Dual Band', p: 16290, img: cdn('ARCHER-T2U-NANO') },
+        { id: 6949, n: 'Adaptador USB WiFi TP-Link Archer T2U Nano AC600 Dual Band', p: 16290, img: cdn('ARCHER-T2U-NANO'), libre: DESCRIPCION_LIBRE },
         { id: 1302, n: 'Placa de Red PCIe WiFi TP-Link TL-WN881ND 300Mbps', p: 20790, img: cdn('TL-WN881ND') },
         { id: 18965, n: 'Placa de Red WiFi USB TP-Link Archer TX10UB Nano AX900 WiFi 6 + BT', p: 23040, img: cdn('Archer-TX10UB-Nano') },
       ],
@@ -198,6 +215,12 @@ function iniciar() {
   const PRINCIPALES = ['micro', 'cooler', 'mother', 'ram', 'video', 'discos', 'gabinete', 'fuente'];
   const porClave = Object.fromEntries(PASOS.map((p) => [p.clave, p]));
   const pieza = (paso, id) => porClave[paso].piezas.find((x) => x.id === id);
+
+  // Servicios: el armado y la instalación del sistema (pasos 9 y 10) y la actualización de BIOS, que no se elige:
+  // se suma sola cuando el procesador la pide (precio de muestra)
+  const ID_ARMADO = 5653;
+  const ID_INSTALACION = 10648;
+  const BIOS = { n: 'Servicio de actualización de BIOS', p: 9900 };
 
   // ---------- Fichas "+ info" (plantilla de muestra por paso) ----------
   // Como la del sitio: qué es, usos y rendimiento, compatibilidad e instalación y especificaciones. Los datos que se
@@ -229,13 +252,13 @@ function iniciar() {
       texto: (p) => `La ${p.n.replace('Motherboard ', '')} es una motherboard Micro ATX para procesadores ${nombreSocket(p.socket)} con memoria ${p.ram}. Une todos los componentes y define cuánto vas a poder ampliar tu PC.`,
       usos: [['Gaming', 'Ranura PCIe para la placa de video y M.2 para un SSD rápido.'], ['Oficina', 'Video por HDMI cuando el procesador tiene gráficos integrados.'], ['Ampliación', 'Lugar para sumar memoria y discos más adelante.'], ['Conectividad', 'USB, red y audio integrados.']],
       compat: (p) => `Socket ${nombreSocket(p.socket)} y memoria ${p.ram}. Entra en gabinetes Micro ATX y ATX.`,
-      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace('Motherboard ', '')], ['Socket', nombreSocket(p.socket)], ['Memoria', p.ram], ['Ranuras de memoria', '2'], ['Formato', 'Micro ATX'], ['M.2 NVMe', 'Sí']],
+      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace('Motherboard ', '')], ['Socket', nombreSocket(p.socket)], ['Memoria', p.ram], ['Ranuras de memoria', String(p.slots || 2)], ['Formato', 'Micro ATX'], ['M.2 NVMe', 'Sí'], ['WiFi integrado', siNo(p.wifi)]],
     },
     ram: {
       que: '¿Qué es esta memoria?',
       texto: (p) => `La ${p.n.replace('Memoria RAM ', '')} es un módulo ${p.ram} para PC de escritorio. Con dos módulos iguales la memoria trabaja en doble canal y rinde más.`,
       usos: [['Gaming', '16 GB en dos módulos es lo recomendado para los juegos actuales.'], ['Multitarea', 'Más memoria, más programas abiertos sin demoras.'], ['Edición', 'Proyectos de foto y video más fluidos.'], ['Estética', 'Los modelos RGB suman iluminación al armado.']],
-      compat: (p) => `Memoria ${p.ram}: va en motherboards ${p.ram}. Conviene usar módulos iguales en pares.`,
+      compat: (p) => `Memoria ${p.ram}: va en motherboards ${p.ram}, un módulo por slot. Conviene usar módulos iguales en pares.`,
       specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace('Memoria RAM ', '')], ['Tipo', p.ram], ['Capacidad', `${busca(p.n, /(\d+)GB/i)} GB`], ['Frecuencia', `${busca(p.n, /(\d{4})\s*Mhz/i)} MHz`], ['RGB', siNo(/RGB/i.test(p.n))]],
     },
     video: {
@@ -257,7 +280,7 @@ function iniciar() {
       texto: (p) => `El ${p.n.replace(/Gabinete (Gamer )?/, '')} es la casa de tu PC: protege los componentes, ordena los cables y, con buen flujo de aire, mantiene todo fresco.`,
       usos: [['Flujo de aire', 'Entrada y salida de aire para mantener todo fresco.'], ['Estética', 'Panel lateral para lucir el armado.'], ['Orden', 'Espacio para esconder los cables.'], ['Ampliación', 'Lugar para sumar discos y ventiladores.']],
       compat: () => 'Admite motherboards Micro ATX y ATX y fuentes ATX. Conviene revisar el largo máximo de placa de video.',
-      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace(/Gabinete (Gamer )?/, '')], ['Formato', 'Mid tower'], ['Ventiladores incluidos', busca(p.n, /(\d)\s*Fans?/i, 'No')], ['Color', /WHITE/i.test(p.n) ? 'Blanco' : 'Negro'], ['Iluminación', /RGB/i.test(p.n) ? 'RGB' : 'No']],
+      specs: (p) => [['Marca', marcaDe(p.n)], ['Modelo', p.n.replace(/Gabinete (Gamer )?/, '')], ['Formato', 'Mid tower'], ['Ventiladores incluidos', busca(p.n, /(\d)\s*Fans?/i, 'No')], ['Color', /WHITE/i.test(p.n) ? 'Blanco' : 'Negro'], ['Iluminación', /RGB/i.test(p.n) ? 'RGB' : 'No'], ['Fuente incluida', siNo(p.conFuente)]],
     },
     fuente: {
       que: '¿Qué es esta fuente?',
@@ -304,18 +327,47 @@ function iniciar() {
   };
 
   // ---------- Estado ----------
-  // elegido[paso]: null (sin elegir), 'no' / 'tengo' (salteado) o [{ id, cant }]
+  // elegido[paso]: null (sin elegir), 'no' / 'tengo' (salteado), 'omitido' ("Omitir este componente por ahora": sigue
+  // pendiente, pero el armador no vuelve a abrirlo solo) o [{ id, cant }]
   const elegido = Object.fromEntries(PASOS.map((p) => [p.clave, null]));
   const vista = Object.fromEntries(PASOS.map((p) => [p.clave, { chip: null, orden: 'menor', texto: '' }]));
+  // nota[paso]: la pieza que el armador quitó y por qué ({ nombre, texto }); queda en la cabecera hasta elegir otra
+  const nota = {};
+  // Solo para la demostración (en el sitio real lo dicen el catálogo y el carrito): un paso sin compatibles, uno sin
+  // productos y si "Agregar al carrito" falla
+  const demo = { sinCompatibles: null, sinProductos: null };
   let abierto = 'micro';
 
   const unica = (clave) => (Array.isArray(elegido[clave]) ? pieza(clave, elegido[clave][0].id) : null);
   const nombreSocket = (s) => (s === '1700' ? 'Intel 1700' : s);
+  const pendiente = (clave) => elegido[clave] === null || elegido[clave] === 'omitido';
+  const salteado = (clave) => elegido[clave] === 'no' || elegido[clave] === 'tengo';
+  const conServicio = (clave, id) => Array.isArray(elegido[clave]) && elegido[clave][0].id === id;
+  // En minúscula solo la inicial: 'Memoria RAM' → 'memoria RAM', 'Placa WiFi' → 'placa WiFi'
+  const minus = (t) => t.charAt(0).toLowerCase() + t.slice(1);
+  const listaY = (l) => (l.length > 1 ? `${l.slice(0, -1).join(', ')} y ${l[l.length - 1]}` : l[0] || '');
+  const titulos = (claves) => listaY(claves.map((k) => minus(porClave[k].titulo)));
+
+  // Memoria: los módulos ocupan los slots de la motherboard (sin motherboard, hasta 4)
+  const ocupados = () => (Array.isArray(elegido.ram) ? elegido.ram.reduce((s, e) => s + e.cant, 0) : 0);
+  const slots = () => (unica('mother') ? unica('mother').slots || 2 : porClave.ram.cantidad.max);
+
+  // La actualización de BIOS se suma sola cuando el procesador la pide y la motherboard no la trae
+  const necesitaBios = () => Boolean(unica('micro')?.biosNueva && unica('mother')?.biosVieja);
+
+  // Servicios en pausa: el armado, mientras falte alguno de los principales; la instalación, mientras el armado esté
+  // en pausa. No se suman al total ni al carrito hasta completar la PC
+  function pausas() {
+    const faltan = PRINCIPALES.filter(pendiente);
+    const armado = conServicio('armado', ID_ARMADO) && faltan.length > 0;
+    return { faltan, armado, so: armado && conServicio('so', ID_INSTALACION) };
+  }
 
   // Compatibilidad: lo que impone lo ya elegido
   function compatible(clave, p) {
     const micro = unica('micro');
     const mother = unica('mother');
+    if (demo.sinCompatibles === clave) return false;
     if (clave === 'mother' && micro && p.socket !== micro.socket) return false;
     if (clave === 'micro' && mother && p.socket !== mother.socket) return false;
     if (clave === 'ram' && mother && p.ram !== mother.ram) return false;
@@ -331,23 +383,51 @@ function iniciar() {
     return '';
   }
 
-  // Aviso de cada paso, como los del sitio (según lo ya elegido)
-  function avisoPaso(clave) {
+  // Pasos que ponen límites a otro: en un paso sin compatibles, un botón por cada pieza en conflicto para cambiarla
+  // (el cooler, por el socket del procesador y la altura que admite el gabinete)
+  const LIMITAN = { micro: ['mother'], mother: ['micro'], ram: ['mother'], cooler: ['micro', 'gabinete'] };
+  const conflictos = (clave) => (LIMITAN[clave] || []).filter((k) => Array.isArray(elegido[k]));
+
+  // Avisos de cada paso, como los del sitio (según lo ya elegido), en tres tonos: exito (bien), info y alerta
+  function avisosPaso(clave) {
     const micro = unica('micro');
+    const mother = unica('mother');
     const video = unica('video');
+    const gabinete = unica('gabinete');
+    const pausa = pausas();
+    const lista = [];
     if (clave === 'cooler' && micro && !micro.sinCooler)
-      return ['exito', 'El procesador que elegiste ya viene con cooler incluido: no necesitás agregar uno, podés marcar “No incluir cooler” y seguir. Si le vas a exigir mucho o querés un equipo más silencioso, un cooler dedicado siempre suma.'];
-    if (clave === 'cooler' && micro?.sinCooler) return ['alerta', 'Tu procesador viene sin cooler: elegí uno para que pueda funcionar.'];
-    if (clave === 'video' && micro?.video) return ['info', 'Tu procesador tiene gráficos integrados: si no vas a jugar ni editar, podés no incluir placa de video.'];
-    if (clave === 'video' && micro && !micro.video) return ['alerta', 'Tu procesador no tiene gráficos integrados: necesitás una placa de video para tener imagen.'];
-    if (clave === 'fuente' && video) return ['info', 'Elegí una fuente de las recomendadas para tu placa de video.'];
-    if (clave === 'ram') return ['info', 'Recomendado: 2 módulos iguales, así la memoria trabaja en doble canal.'];
-    if (clave === 'so' && !(Array.isArray(elegido.armado) && elegido.armado[0].id === 5653)) return ['info', 'La instalación del sistema operativo va con el servicio de armado.'];
-    return null;
+      lista.push(['exito', 'El procesador que elegiste ya viene con cooler incluido: no necesitás agregar uno, podés marcar “No incluir cooler” y seguir. Si le vas a exigir mucho o querés un equipo más silencioso, un cooler dedicado siempre suma.']);
+    if (clave === 'cooler' && micro?.sinCooler) lista.push(['alerta', 'Tu procesador viene sin cooler: elegí uno para que pueda funcionar.']);
+    if (clave === 'video' && micro?.video) lista.push(['info', 'Tu procesador tiene gráficos integrados: si no vas a jugar ni editar, podés no incluir placa de video.']);
+    if (clave === 'video' && micro && !micro.video) lista.push(['alerta', 'Tu procesador no tiene gráficos integrados: necesitás una placa de video para tener imagen.']);
+    if ((clave === 'micro' || clave === 'mother') && necesitaBios())
+      lista.push(['alerta', `Para usar tu procesador, esta motherboard necesita una actualización de BIOS: sumamos el servicio a tu armado (${pesos(BIOS.p)}).`]);
+    if (clave === 'ram') {
+      if (!mother) lista.push(['info', 'Recomendado: 2 módulos iguales, así la memoria trabaja en doble canal.']);
+      else if (ocupados() >= slots()) lista.push(['info', `Ocupaste los ${slots()} slots de tu motherboard: para sumar otro módulo, sacá uno de los que elegiste.`]);
+      else lista.push(['info', `Tu motherboard tiene ${slots()} slots de memoria: podés combinar modelos hasta ocuparlos. Recomendado: módulos iguales de a pares, así trabajan en doble canal.`]);
+      if (Array.isArray(elegido.ram) && elegido.ram.length > 1) lista.push(['alerta', 'Combinaste modelos distintos: funcionan juntos, pero rinden al nivel del más lento y pierden el doble canal si no quedan de a pares iguales.']);
+    }
+    if (clave === 'fuente' && gabinete?.conFuente)
+      lista.push(['exito', 'El gabinete que elegiste ya trae fuente: no necesitás agregar otra, podés marcar “No agregar fuente” y seguir. Si preferís una de mejor calidad, elegila acá.']);
+    if (clave === 'fuente' && video) lista.push(['info', 'Elegí una fuente de las recomendadas para tu placa de video.']);
+    if (clave === 'wifi' && mother)
+      lista.push(mother.wifi
+        ? ['exito', 'Tu motherboard ya trae WiFi: no necesitás una placa, podés marcar “No agregar placa WiFi” y seguir.']
+        : ['info', 'Tu motherboard no trae WiFi: si la PC va a estar lejos del router y no llegás con cable, sumá una placa.']);
+    if (clave === 'armado' && pausa.armado) lista.push(['info', `El armado queda en pausa hasta que elijas ${titulos(pausa.faltan)}: mientras tanto no se suma al total.`]);
+    if (clave === 'so' && pausa.so) lista.push(['info', 'La instalación queda en pausa mientras el armado esté en pausa: no se suma al total.']);
+    else if (clave === 'so' && !conServicio('armado', ID_ARMADO)) lista.push(['info', 'La instalación del sistema operativo va con el servicio de armado.']);
+    return lista;
   }
 
-  // Al cambiar el procesador o la motherboard, lo que deja de ser compatible se quita
+  // Al cambiar el procesador o la motherboard, lo que deja de ser compatible se quita (y queda la marca en su paso);
+  // la memoria se ajusta a los slots de la motherboard
+  const CAUSA = { micro: 'No era compatible con tu motherboard', mother: 'No era compatible con tu procesador', ram: 'No era compatible con tu motherboard' };
+
   function revisarCompatibilidad() {
+    const mensajes = [];
     const quitados = [];
     for (const clave of ['micro', 'mother', 'ram']) {
       const lista = elegido[clave];
@@ -355,10 +435,23 @@ function iniciar() {
       const quedan = lista.filter((e) => compatible(clave, pieza(clave, e.id)));
       if (quedan.length < lista.length) {
         elegido[clave] = quedan.length ? quedan : null;
-        quitados.push(porClave[clave].titulo.toLowerCase());
+        if (!quedan.length) nota[clave] = { nombre: pieza(clave, lista[0].id).n, texto: CAUSA[clave] };
+        quitados.push(minus(porClave[clave].titulo));
       }
     }
-    if (quitados.length) avisar(`Quitamos ${quitados.join(' y ')}: no era compatible con lo nuevo`);
+    if (quitados.length) mensajes.push(`Quitamos ${quitados.join(' y ')}: no era compatible`);
+    let sobran = ocupados() - slots();
+    if (sobran > 0) {
+      const lista = elegido.ram.map((e) => ({ ...e }));
+      for (; sobran > 0; sobran--) {
+        const ultimo = lista[lista.length - 1];
+        if (ultimo.cant > 1) ultimo.cant--;
+        else lista.pop();
+      }
+      elegido.ram = lista;
+      mensajes.push(`Memoria ajustada a los ${slots()} slots`);
+    }
+    if (mensajes.length) avisar(mensajes.join('. '));
   }
 
   // ---------- Pintar los pasos ----------
@@ -379,31 +472,34 @@ function iniciar() {
             <span class="paso-arm__titulo">${p.titulo}${p.opcional ? '<span class="paso-arm__opcional">Opcional</span>' : ''}</span>
             <span class="paso-arm__elegido" data-elegido-texto></span>
             <span class="paso-arm__precio" data-elegido-precio></span>
+            <span class="paso-arm__estado" data-estado-paso hidden></span>
           </span>
           ${icono('i-abajo', 'icono icono--s paso-arm__flecha')}
         </button>
         <div class="paso-arm__acciones" data-acciones hidden>
           <button class="paso-arm__cambiar" type="button" data-abrir="${p.clave}">Cambiar</button>
-          <button class="boton-icono paso-arm__quitar" type="button" data-quitar aria-label="Quitar ${p.titulo.toLowerCase()}">${icono('i-cerrar')}</button>
+          <button class="boton-icono paso-arm__quitar" type="button" data-quitar aria-label="Quitar ${minus(p.titulo)}">${icono('i-cerrar')}</button>
         </div>
       </div>
       <div class="paso-arm__cuerpo" id="cuerpo-${p.clave}" hidden>
         <p class="paso-arm__ayuda">${p.ayuda}</p>
-        <p class="aviso-paso" data-aviso-paso hidden></p>
+        <div class="paso-arm__avisos" data-avisos-paso hidden></div>
         ${p.saltar ? `<div class="saltos">
           <button class="salto" type="button" data-saltar="no" aria-pressed="false">${icono('i-cerrar')}${p.saltar}</button>
           ${p.saltar2 ? `<button class="salto" type="button" data-saltar="tengo" aria-pressed="false">${icono('i-check')}${p.saltar2}</button>` : ''}
         </div>` : ''}
         <p class="paso-arm__filtro" data-filtro hidden>${icono('i-check')}<span></span></p>
+        ${p.cantidad ? '<div class="slots-arm" data-slots></div>' : ''}
         ${p.buscar ? `<div class="herramientas-arm">
           <label class="buscar-arm">${icono('i-buscar')}<span class="sr-only">${p.buscar}</span><input class="buscar-arm__campo" type="search" placeholder="${p.buscar}" data-buscar autocomplete="off"></label>
-          ${p.chips ? `<div class="chips-arm" role="group" aria-label="Filtrar ${p.titulo.toLowerCase()}"><button class="chip-arm" type="button" data-chip="" aria-pressed="true">Todas</button>${p.chips.map(([t], j) => `<button class="chip-arm" type="button" data-chip="${j}" aria-pressed="false">${t}</button>`).join('')}</div>` : ''}
+          ${p.chips ? `<div class="chips-arm" role="group" aria-label="Filtrar ${minus(p.titulo)}"><button class="chip-arm" type="button" data-chip="" aria-pressed="true">Todas</button>${p.chips.map(([t], j) => `<button class="chip-arm" type="button" data-chip="${j}" aria-pressed="false">${t}</button>`).join('')}</div>` : ''}
         </div>` : ''}
         <div class="paso-arm__resultados"><p class="paso-arm__cuenta" data-cuenta-paso></p>${p.buscar ? `<label class="orden-arm"><span class="sr-only">Ordenar</span><span class="selector"><select class="selector__campo" data-orden><option value="menor">Menor a mayor</option><option value="mayor">Mayor a menor</option></select>${icono('i-abajo', 'icono icono--s selector__flecha')}</span></label>` : ''}</div>
         <ul class="piezas" data-piezas></ul>
         <div class="paso-arm__pie">
           ${p.total > p.piezas.length ? `<button class="boton boton--secundario paso-arm__mas-productos" type="button" data-mas-productos>${icono('i-abajo')}Ver más productos (<span data-restantes></span> restantes)</button>` : ''}
           ${p.max > 1 ? `<button class="boton boton--primario paso-arm__listo" type="button" data-listo>Listo, seguir${icono('i-flecha')}</button>` : ''}
+          ${p.opcional ? '' : `<button class="boton-texto boton-texto--suave paso-arm__omitir" type="button" data-saltar="omitido" aria-pressed="false">${icono('i-reloj')}Omitir este componente por ahora</button>`}
         </div>
       </div>
     </li>`
@@ -414,7 +510,8 @@ function iniciar() {
     const li = $(`[data-paso="${clave}"]`);
     const { chip, orden, texto } = vista[clave];
     const elegidos = Array.isArray(elegido[clave]) ? elegido[clave] : [];
-    let piezas = paso.piezas.filter((p) => compatible(clave, p));
+    const catalogo = demo.sinProductos === clave ? [] : paso.piezas;
+    let piezas = catalogo.filter((p) => compatible(clave, p));
     const compatibles = piezas.length;
     if (chip !== null && paso.chips) piezas = piezas.filter((p) => paso.chips[chip][1](p.n));
     if (texto) {
@@ -422,27 +519,39 @@ function iniciar() {
       piezas = piezas.filter((p) => palabras.every((w) => normalizar(p.n).includes(w)));
     }
     piezas = [...piezas].sort((a, b) => (orden === 'menor' ? a.p - b.p : b.p - a.p));
+    const libres = slots() - ocupados();
 
-    $('[data-piezas]', li).innerHTML = piezas.length
-      ? piezas
-          .map((p) => {
-            const sel = elegidos.find((e) => e.id === p.id);
-            const cant = sel && paso.cantidad
-              ? `<div class="pieza__cant"><button class="cantidad__btn" type="button" data-cant="-1" aria-label="Un módulo menos"${sel.cant <= paso.cantidad.min ? ' disabled' : ''}>${icono('i-menos')}</button><span>${sel.cant} ${sel.cant === 1 ? 'módulo' : 'módulos'}</span><button class="cantidad__btn" type="button" data-cant="1" aria-label="Un módulo más"${sel.cant >= paso.cantidad.max ? ' disabled' : ''}>${icono('i-mas')}</button></div>`
-              : '';
-            return `<li class="pieza${sel ? ' pieza--elegida' : ''}">
-              <button class="pieza__btn" type="button" data-pieza="${p.id}" aria-pressed="${Boolean(sel)}">
-                <span class="pieza__media"><img src="${p.img}" alt="" width="400" height="400" loading="lazy">${p.a ? `<span class="etiqueta etiqueta--secundaria pieza__ahorro">Ahorrá ${pesos(p.a - p.p)}</span>` : ''}</span>
-                <span class="pieza__nombre">${p.n}</span>
-                <span class="pieza__precios">${p.a ? `<s class="pieza__antes"><span class="sr-only">Antes: </span>${pesos(p.a)}</s>` : ''}<span class="pieza__precio">${p.p ? pesos(p.p) : 'Sin cargo'}</span><span class="pieza__nota">${p.p ? 'Efectivo o transferencia' : '&nbsp;'}</span></span>
-                <span class="pieza__marca">${icono('i-check')}</span>
-              </button>
-              <button class="pieza__info" type="button" data-info="${p.id}" aria-label="Ver especificaciones de ${p.n}">+ info</button>
-              ${cant}
-            </li>`;
-          })
-          .join('')
-      : `<li class="piezas__vacio">${icono('i-buscar', 'icono')}<span>No encontramos productos${texto ? ` para “${texto}”` : ' con este filtro'}.</span></li>`;
+    // Paso sin productos: la sección vacía o nada compatible con lo elegido (un botón por cada pieza en conflicto).
+    // Se esconden el buscador, los filtros, la cantidad y "Ver más productos"
+    const vacio = !catalogo.length ? 'seccion' : !compatibles ? 'compatibles' : null;
+    li.classList.toggle('paso-arm--vacio', Boolean(vacio));
+    const enConflicto = conflictos(clave);
+
+    $('[data-piezas]', li).innerHTML = vacio === 'seccion'
+      ? `<li class="piezas__vacio">${icono('i-caja', 'icono')}<strong class="piezas__vacio-titulo">Por ahora no hay productos en esta sección</strong><span>Estamos reponiendo stock: seguí con el resto del armado y volvé más tarde.</span><span class="piezas__vacio-acciones"><button class="boton boton--secundario" type="button" data-listo>Seguir con el armado${icono('i-flecha')}</button></span></li>`
+      : vacio === 'compatibles'
+        ? `<li class="piezas__vacio">${icono('i-alerta', 'icono')}<strong class="piezas__vacio-titulo">No hay productos compatibles con lo que elegiste</strong><span>${enConflicto.length ? `Para ver opciones, cambiá ${enConflicto.length > 1 ? 'alguna de estas piezas' : 'esta pieza'}:` : 'Cambiá alguna de las piezas que elegiste para ver opciones.'}</span>${enConflicto.length ? `<span class="piezas__vacio-acciones">${enConflicto.map((k) => `<button class="boton boton--secundario" type="button" data-abrir="${k}">Cambiar ${minus(porClave[k].titulo)}</button>`).join('')}</span>` : ''}</li>`
+        : piezas.length
+          ? piezas
+              .map((p) => {
+                const sel = elegidos.find((e) => e.id === p.id);
+                // Memoria: módulos de cada modelo elegido, hasta ocupar los slots de la motherboard
+                const cant = sel && paso.cantidad
+                  ? `<div class="pieza__cant"><button class="cantidad__btn" type="button" data-cant="-1" data-id="${p.id}" aria-label="Un módulo menos"${sel.cant <= paso.cantidad.min ? ' disabled' : ''}>${icono('i-menos')}</button><span>${sel.cant} ${sel.cant === 1 ? 'módulo' : 'módulos'}</span><button class="cantidad__btn" type="button" data-cant="1" data-id="${p.id}" aria-label="Un módulo más"${sel.cant >= paso.cantidad.max || libres <= 0 ? ' disabled' : ''}>${icono('i-mas')}</button></div>`
+                  : '';
+                return `<li class="pieza${sel ? ' pieza--elegida elegida' : ''}">
+                  <button class="pieza__btn" type="button" data-pieza="${p.id}" aria-pressed="${Boolean(sel)}">
+                    <span class="pieza__media"><img src="${p.img}" alt="" width="400" height="400" loading="lazy">${p.a ? `<span class="etiqueta etiqueta--secundaria pieza__ahorro">Ahorrá ${pesos(p.a - p.p)}</span>` : ''}</span>
+                    <span class="pieza__nombre">${p.n}</span>
+                    <span class="pieza__precios">${p.a ? `<s class="pieza__antes"><span class="sr-only">Antes: </span>${pesos(p.a)}</s>` : ''}<span class="pieza__precio">${p.p ? pesos(p.p) : 'Sin cargo'}</span><span class="pieza__nota">${p.p ? 'Efectivo o transferencia' : '&nbsp;'}</span></span>
+                    <span class="pieza__marca">${icono('i-check')}</span>
+                  </button>
+                  <button class="pieza__info" type="button" data-info="${p.id}" aria-label="Ver especificaciones de ${p.n}">+ info</button>
+                  ${cant}
+                </li>`;
+              })
+              .join('')
+          : `<li class="piezas__vacio">${icono('i-buscar', 'icono')}<span>No encontramos productos${texto ? ` para “${texto}”` : ' con este filtro'}.</span></li>`;
 
     // Cuántos se ven y cuántos hay en el catálogo (el total es de muestra; con filtros, los que quedan)
     const filtrando = chip !== null || texto || compatibles < paso.piezas.length;
@@ -454,81 +563,126 @@ function iniciar() {
       $('[data-restantes]', mas).textContent = paso.total - piezas.length;
     }
 
-    const motivo = motivoFiltro(clave);
+    const motivo = vacio ? '' : motivoFiltro(clave);
     const filtro = $('[data-filtro]', li);
     filtro.hidden = !motivo;
     $('span', filtro).textContent = motivo;
 
-    const aviso = avisoPaso(clave);
-    const caja = $('[data-aviso-paso]', li);
-    caja.hidden = !aviso;
-    if (aviso) {
-      caja.className = `aviso-paso aviso-paso--${aviso[0]}`;
-      caja.innerHTML = `${icono(AVISO_ICONO[aviso[0]])}<span>${aviso[1]}</span>`;
+    // Slots de memoria: los ocupados en verde, sobre los que tiene la motherboard
+    const caja = $('[data-slots]', li);
+    if (caja) {
+      const hay = slots();
+      const usados = Math.min(ocupados(), hay);
+      caja.innerHTML = `<p class="slots-arm__texto">${unica('mother') ? `Slots de memoria ocupados <strong>${usados} de ${hay}</strong>` : `Módulos elegidos <strong>${usados}</strong> · los slots dependen de la motherboard`}</p>
+        <span class="slots-arm__slots${unica('mother') ? '' : ' slots-arm__slots--sin-mother'}" aria-hidden="true">${Array.from({ length: hay }, (_, n) => `<span class="slots-arm__slot${n < usados ? ' marcado' : ''}"></span>`).join('')}</span>`;
+      caja.classList.toggle('slots-arm--completo', Boolean(unica('mother')) && usados >= hay);
     }
 
+    const avisos = avisosPaso(clave);
+    const lugar = $('[data-avisos-paso]', li);
+    lugar.hidden = !avisos.length;
+    lugar.innerHTML = avisos.map(([tono, t]) => `<p class="aviso-paso aviso-paso--${tono}">${icono(AVISO_ICONO[tono])}<span>${t}</span></p>`).join('');
+
     $$('[data-chip]', li).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.chip === String(chip ?? ''))));
-    $$('[data-saltar]', li).forEach((b) => b.setAttribute('aria-pressed', String(elegido[clave] === b.dataset.saltar)));
+    $$('[data-saltar]', li).forEach((b) => {
+      const marcado = elegido[clave] === b.dataset.saltar;
+      b.setAttribute('aria-pressed', String(marcado));
+      b.classList.toggle('marcado', marcado);
+    });
   }
 
   // ---------- Resumen ----------
 
   const resumen = document.querySelector('[data-resumen-arm]');
   const barra = document.querySelector('[data-barra-arm]');
+  const agregar = $('[data-agregar-arm]', resumen);
+  const agregarBarra = $('[data-agregar-barra]', barra);
+  let agregando = false;
 
+  // Cada producto del armado; la actualización de BIOS va después de la motherboard. Los servicios en pausa quedan
+  // en la lista pero no se cobran (cobrables)
   function lineas() {
+    const pausa = pausas();
     const out = [];
     for (const paso of PASOS) {
       const e = elegido[paso.clave];
-      if (!Array.isArray(e)) continue;
-      for (const { id, cant } of e) out.push({ paso, p: pieza(paso.clave, id), cant });
+      if (Array.isArray(e)) for (const { id, cant } of e) out.push({ paso, p: pieza(paso.clave, id), cant, pausada: Boolean(pausa[paso.clave]) });
+      if (paso.clave === 'mother' && necesitaBios()) out.push({ paso, p: BIOS, cant: 1, pausada: false, solo: true });
     }
     return out;
   }
 
-  const totalEfectivo = () => lineas().reduce((s, l) => s + l.p.p * l.cant, 0);
+  const cobrables = () => lineas().filter((l) => !l.pausada);
+  const totalEfectivo = () => cobrables().reduce((s, l) => s + l.p.p * l.cant, 0);
 
   function avisos() {
     const lista = [];
     const micro = unica('micro');
     const video = unica('video');
     const fuente = unica('fuente');
-    if (micro && !micro.video && (elegido.video === 'no' || elegido.video === null))
+    const pausa = pausas();
+    if (micro && !micro.video && (elegido.video === 'no' || pendiente('video')))
       lista.push(['alerta', 'Tu procesador no tiene gráficos integrados: vas a necesitar una placa de video.', 'video']);
     if (micro?.sinCooler && !Array.isArray(elegido.cooler))
       lista.push(['alerta', 'Tu procesador viene sin cooler: sumá uno para que funcione.', 'cooler']);
     if (video && fuente && fuente.w < video.w)
       lista.push(['alerta', 'La fuente que elegiste queda justa para tu placa de video: te recomendamos una de más potencia.', 'fuente']);
-    if (Array.isArray(elegido.so) && elegido.so[0].id === 10648 && !(Array.isArray(elegido.armado) && elegido.armado[0].id === 5653))
+    if (conServicio('so', ID_INSTALACION) && !conServicio('armado', ID_ARMADO))
       lista.push(['alerta', 'La instalación del sistema operativo va con el servicio de armado.', 'armado']);
-    const faltan = PRINCIPALES.filter((k) => elegido[k] === null);
-    if (lineas().length && faltan.length)
-      lista.push(['info', `Para una PC completa te falta: ${faltan.map((k) => porClave[k].titulo.toLowerCase()).join(', ')}.`, faltan[0]]);
+    if (pausa.armado)
+      lista.push(['info', `${pausa.so ? 'El armado y la instalación del sistema quedan' : 'El armado queda'} en pausa hasta que elijas ${titulos(pausa.faltan)}.`, pausa.faltan[0]]);
+    else if (lineas().length && pausa.faltan.length)
+      lista.push(['info', `Para una PC completa te falta: ${pausa.faltan.map((k) => minus(porClave[k].titulo)).join(', ')}.`, pausa.faltan[0]]);
     return lista;
   }
 
+  // Marca fija en la cabecera del paso (y su línea en "Tu armado"): pieza quitada, paso omitido, servicio en pausa
+  // o el servicio que suma. [tono, ícono, texto]
+  function estadoPaso(clave, pausa) {
+    if (elegido[clave] === 'omitido') return ['neutro', 'i-reloj', 'Omitido por ahora'];
+    if (elegido[clave] === null && nota[clave]) return ['aviso', 'i-alerta', nota[clave].texto];
+    if (pausa[clave]) return ['info', 'i-reloj', 'En pausa hasta completar la PC'];
+    if (clave === 'mother' && necesitaBios()) return ['info', 'i-herramienta', 'Suma la actualización de BIOS'];
+    return null;
+  }
+
+  const marcaEstado = (estado, clase) => (estado ? `<span class="${clase} ${clase}--${estado[0]}">${icono(estado[1])}<span>${estado[2]}</span></span>` : '');
+
   function pintarResumen() {
-    const todas = lineas();
+    const pausa = pausas();
+    const cobrar = cobrables();
     const total = totalEfectivo();
-    const componentes = todas.reduce((s, l) => s + l.cant, 0);
-    const hechos = PRINCIPALES.filter((k) => elegido[k] !== null).length;
+    const componentes = cobrar.reduce((s, l) => s + l.cant, 0);
+    const hechos = PRINCIPALES.filter((k) => !pendiente(k)).length;
 
     $('[data-resumen-lista]', resumen).innerHTML = PASOS.map((paso) => {
       const e = elegido[paso.clave];
+      const estado = estadoPaso(paso.clave, pausa);
       let texto = '<span class="resumen-arm__vacio">Sin elegir</span>';
       let precio = '';
       if (e === 'no') texto = '<span class="resumen-arm__vacio">No incluido</span>';
       if (e === 'tengo') texto = '<span class="resumen-arm__vacio">Ya tengo</span>';
+      if (e === 'omitido' || (e === null && nota[paso.clave])) texto = marcaEstado(estado, 'resumen-arm__nota');
       if (Array.isArray(e)) {
         texto = e.map(({ id, cant }) => `<span class="resumen-arm__nombre">${cant > 1 ? `${cant} × ` : ''}${pieza(paso.clave, id).n}</span>`).join('');
+        if (pausa[paso.clave]) texto += marcaEstado(estado, 'resumen-arm__nota');
         precio = pesos(e.reduce((s, { id, cant }) => s + pieza(paso.clave, id).p * cant, 0));
       }
       const foto = Array.isArray(e) ? `<img class="resumen-arm__foto" src="${pieza(paso.clave, e[0].id).img}" alt="" width="400" height="400">` : '<span class="resumen-arm__foto resumen-arm__foto--vacia"></span>';
-      return `<li class="resumen-arm__fila${Array.isArray(e) ? ' resumen-arm__fila--elegida' : ''}">
+      const fila = `<li class="resumen-arm__fila${Array.isArray(e) ? ' resumen-arm__fila--elegida' : ''}${pausa[paso.clave] ? ' resumen-arm__fila--pausada' : ''}">
         <button class="resumen-arm__abrir" type="button" data-abrir="${paso.clave}">${foto}<span class="resumen-arm__textos"><span class="resumen-arm__paso">${paso.titulo}</span><span class="resumen-arm__dato">${texto}</span></span></button>
         <span class="resumen-arm__precio">${precio}</span>
-        ${e !== null ? `<button class="boton-icono resumen-arm__quitar" type="button" data-quitar="${paso.clave}" aria-label="Quitar ${paso.titulo.toLowerCase()}">${icono('i-cerrar')}</button>` : '<span></span>'}
+        ${e !== null ? `<button class="boton-icono resumen-arm__quitar" type="button" data-quitar="${paso.clave}" aria-label="Quitar ${minus(paso.titulo)}">${icono('i-cerrar')}</button>` : '<span></span>'}
       </li>`;
+      // La actualización de BIOS: se suma sola y no se quita (se va al cambiar el procesador o la motherboard)
+      const bios = paso.clave === 'mother' && necesitaBios()
+        ? `<li class="resumen-arm__fila resumen-arm__fila--elegida resumen-arm__fila--servicio">
+        <button class="resumen-arm__abrir" type="button" data-abrir="mother"><span class="resumen-arm__foto resumen-arm__foto--icono">${icono('i-herramienta')}</span><span class="resumen-arm__textos"><span class="resumen-arm__paso">Actualización de BIOS</span><span class="resumen-arm__dato"><span class="resumen-arm__nombre">${BIOS.n}</span>${marcaEstado(['info', 'i-check', 'Se sumó solo: lo pide tu procesador'], 'resumen-arm__nota')}</span></span></button>
+        <span class="resumen-arm__precio">${pesos(BIOS.p)}</span>
+        <span></span>
+      </li>`
+        : '';
+      return fila + bios;
     }).join('');
 
     $('[data-resumen-avisos]', resumen).innerHTML = avisos()
@@ -543,30 +697,40 @@ function iniciar() {
     $('[data-cuotas-arm]', resumen).innerHTML = total ? `Pagalo en <strong>3 cuotas sin interés</strong> de <strong>${pesos(lista(total) / 3)}</strong>` : 'Elegí al menos un componente';
     $('[data-ver-cuotas]', resumen).hidden = !total;
     $('[data-lista-arm]', resumen).textContent = total ? `Precio de lista ${pesos(lista(total))}` : '';
-    const agregar = $('[data-agregar-arm]', resumen);
     agregar.disabled = !total;
-    $('[data-agregar-texto]', agregar).textContent = total ? `Agregar al carrito (${componentes} ${componentes === 1 ? 'producto' : 'productos'})` : 'Agregar al carrito';
-    $('[data-agregar-barra]', barra).disabled = !total;
+    agregarBarra.disabled = !total;
+    if (!agregando) textosAgregar();
     barra.classList.toggle('barra-arm--visible', total > 0);
 
-    // Cabecera de cada paso: la foto de lo elegido (con el número del paso), su nombre, su precio y "Cambiar"
+    // Cabecera de cada paso: la foto de lo elegido (con el número del paso), su nombre, su precio, "Cambiar" y la
+    // marca fija del estado (pieza quitada, omitido, en pausa)
     for (const [i, paso] of PASOS.entries()) {
       const li = $(`[data-paso="${paso.clave}"]`);
       const e = elegido[paso.clave];
       const elegida = Array.isArray(e);
-      li.classList.toggle('paso-arm--hecho', e !== null);
+      const quitada = e === null && nota[paso.clave];
+      li.classList.toggle('paso-arm--hecho', !pendiente(paso.clave));
       li.classList.toggle('paso-arm--con-foto', elegida);
-      li.classList.toggle('paso-arm--salteado', e === 'no' || e === 'tengo');
+      li.classList.toggle('paso-arm--salteado', salteado(paso.clave));
+      li.classList.toggle('paso-arm--omitido', e === 'omitido');
+      li.classList.toggle('paso-arm--quitado', Boolean(quitada));
+      li.classList.toggle('paso-arm--pausado', Boolean(pausa[paso.clave]));
       const foto = $('.paso-arm__foto', li);
       foto.hidden = !elegida;
       if (elegida) foto.src = pieza(paso.clave, e[0].id).img;
       const mas = $('.paso-arm__mas', li);
       mas.hidden = !(elegida && e.length > 1);
       if (elegida) mas.textContent = `+${e.length - 1}`;
-      $('.paso-arm__n', li).textContent = e === 'no' || e === 'tengo' ? '–' : i + 1;
+      $('.paso-arm__n', li).textContent = salteado(paso.clave) ? '–' : i + 1;
+      // Quitada: el nombre de la que estaba, tachado
       $('[data-elegido-texto]', li).textContent =
-        e === null ? 'Sin elegir' : e === 'no' ? 'No incluido' : e === 'tengo' ? 'Ya tengo' : e.map(({ id, cant }) => `${cant > 1 ? `${cant} × ` : ''}${pieza(paso.clave, id).n}`).join(' + ');
+        e === 'no' ? 'No incluido' : e === 'tengo' ? 'Ya tengo' : elegida ? e.map(({ id, cant }) => `${cant > 1 ? `${cant} × ` : ''}${pieza(paso.clave, id).n}`).join(' + ') : quitada?.nombre || 'Sin elegir';
       $('[data-elegido-precio]', li).textContent = elegida ? pesos(e.reduce((s, { id, cant }) => s + pieza(paso.clave, id).p * cant, 0)) : '';
+      const estado = estadoPaso(paso.clave, pausa);
+      const marca = $('[data-estado-paso]', li);
+      marca.hidden = !estado;
+      marca.className = `paso-arm__estado${estado ? ` paso-arm__estado--${estado[0]}` : ''}`;
+      marca.innerHTML = estado ? `${icono(estado[1])}<span>${estado[2]}</span>` : '';
       $('[data-acciones]', li).hidden = e === null || abierto === paso.clave;
     }
   }
@@ -592,7 +756,7 @@ function iniciar() {
     }
   }
 
-  // El siguiente paso sin decidir (después del actual, y si no hay, desde el principio)
+  // El siguiente paso sin decidir (después del actual, y si no hay, desde el principio); los omitidos no se reabren
   function siguiente(clave) {
     const i = PASOS.findIndex((p) => p.clave === clave);
     const orden = [...PASOS.slice(i + 1), ...PASOS.slice(0, i)];
@@ -600,6 +764,10 @@ function iniciar() {
   }
 
   function cambio(clave, { avanzar = true } = {}) {
+    // Con algo decidido en el paso, la marca de la pieza quitada se va
+    if (elegido[clave] !== null) delete nota[clave];
+    // De muestra: cambiar una de las piezas en conflicto vuelve a mostrar los compatibles
+    if (demo.sinCompatibles && LIMITAN[demo.sinCompatibles].includes(clave)) demo.sinCompatibles = null;
     revisarCompatibilidad();
     pintarResumen();
     escribirUrl();
@@ -612,9 +780,17 @@ function iniciar() {
     const paso = porClave[clave];
     const actual = Array.isArray(elegido[clave]) ? elegido[clave] : [];
     const ya = actual.find((x) => x.id === id);
-    if ((paso.max || 1) > 1) {
+    const resto = actual.filter((x) => x.id !== id);
+    if (paso.cantidad) {
+      // Memoria: varios modelos a la vez, cada uno con sus módulos, hasta ocupar los slots; se queda abierta
+      const libres = slots() - ocupados();
+      if (ya) elegido[clave] = resto.length ? resto : null;
+      else if (libres > 0) elegido[clave] = [...actual, { id, cant: actual.length ? 1 : Math.min(paso.cantidad.inicial, libres) }];
+      else return avisar(`Ocupaste los ${slots()} slots de memoria`);
+      cambio(clave, { avanzar: false });
+    } else if ((paso.max || 1) > 1) {
       // Varios: se suman y se quitan; al llegar al máximo, sigue al próximo paso
-      if (ya) elegido[clave] = actual.filter((x) => x.id !== id).length ? actual.filter((x) => x.id !== id) : null;
+      if (ya) elegido[clave] = resto.length ? resto : null;
       else if (actual.length < paso.max) elegido[clave] = [...actual, { id, cant: 1 }];
       else return avisar(`Podés elegir hasta ${paso.max}`);
       cambio(clave, { avanzar: !ya && elegido[clave].length === paso.max });
@@ -622,9 +798,8 @@ function iniciar() {
       elegido[clave] = null;
       cambio(clave, { avanzar: false });
     } else {
-      elegido[clave] = [{ id, cant: paso.cantidad?.inicial || 1 }];
-      // La RAM se queda abierta para ajustar los módulos
-      cambio(clave, { avanzar: !paso.cantidad });
+      elegido[clave] = [{ id, cant: 1 }];
+      cambio(clave);
     }
   }
 
@@ -643,7 +818,11 @@ function iniciar() {
     $('[data-ficha-precios]', ficha).innerHTML = `${p.a ? `<span class="ficha-arm__ahorro"><s>${pesos(p.a)}</s><span class="etiqueta etiqueta--secundaria">Ahorrá ${pesos(p.a - p.p)}</span></span>` : ''}
       <span class="ficha-arm__precio">${p.p ? pesos(p.p) : 'Sin cargo'}</span>
       ${p.p ? `<span class="ficha-arm__nota">Efectivo o transferencia · 3 × ${pesos(lista(p.p) / 3)} sin interés</span>` : ''}`;
-    $('[data-ficha-cuerpo]', ficha).innerHTML = `
+    // Sin datos por secciones, la descripción del sistema tal cual llega (un bloque de HTML), en texto libre
+    $('[data-ficha-cuerpo]', ficha).innerHTML = p.libre || !f
+      ? `<section class="ficha-arm__bloque"><h3>Descripción</h3><div class="texto-libre">${p.libre || ''}</div></section>
+      <p class="ficha-arm__muestra">${icono('i-alerta')}Ficha de muestra en texto libre: en el sitio real llega del sistema como un solo bloque.</p>`
+      : `
       <section class="ficha-arm__bloque"><h3>${f.que}</h3><p>${f.texto(p)}</p></section>
       <section class="ficha-arm__bloque"><h3>Usos y rendimiento</h3><ul class="ficha-arm__usos">${f.usos.filter(([, d]) => d).map(([t, d]) => `<li><strong>${t}</strong>${d}</li>`).join('')}</ul></section>
       <section class="ficha-arm__bloque"><h3>Compatibilidad e instalación</h3><p>${f.compat(p)}</p></section>
@@ -687,6 +866,118 @@ function iniciar() {
     if (e.target === dialogoCuotas || e.target.closest('[data-cerrar-dialogo]')) dialogoCuotas.close();
   });
 
+  // ---------- Agregar al carrito: agregando y no se pudo agregar ----------
+  // De muestra: sale bien (aviso) salvo que se pida el error. En el sitio real, la respuesta del carrito
+
+  const errorAgregar = $('[data-error-agregar]', resumen);
+
+  function textosAgregar() {
+    const componentes = cobrables().reduce((s, l) => s + l.cant, 0);
+    $('[data-agregar-texto]', agregar).textContent = componentes ? `Agregar al carrito (${componentes} ${componentes === 1 ? 'producto' : 'productos'})` : 'Agregar al carrito';
+    $('[data-agregar-texto]', agregarBarra).textContent = 'Agregar';
+    for (const b of [agregar, agregarBarra]) {
+      b.classList.remove('cargando', 'con-error');
+      b.removeAttribute('aria-disabled');
+      $('use', b).setAttribute('href', '#i-carrito');
+    }
+  }
+
+  function estadoAgregar(clase, iconoId, textoResumen, textoBarra) {
+    for (const b of [agregar, agregarBarra]) {
+      b.classList.remove('cargando', 'con-error');
+      b.classList.add(clase);
+      b.setAttribute('aria-disabled', 'true');
+      $('use', b).setAttribute('href', `#${iconoId}`);
+    }
+    $('[data-agregar-texto]', agregar).textContent = textoResumen;
+    $('[data-agregar-texto]', agregarBarra).textContent = textoBarra;
+  }
+
+  let esperaAgregar;
+
+  function cortarAgregar() {
+    clearTimeout(esperaAgregar);
+    agregando = false;
+    textosAgregar();
+  }
+
+  function agregarArmado({ fallar = false, espera = 900 } = {}) {
+    if (agregando || !totalEfectivo()) return;
+    agregando = true;
+    errorAgregar.hidden = true;
+    estadoAgregar('cargando', 'i-recargar', 'Agregando…', 'Agregando…');
+    esperaAgregar = setTimeout(() => {
+      if (!fallar) {
+        cortarAgregar();
+        avisar(`Vista previa: se agregarían ${cobrables().reduce((s, l) => s + l.cant, 0)} productos al carrito`);
+        return;
+      }
+      estadoAgregar('con-error', 'i-alerta', 'No se pudo agregar', 'Reintentar');
+      errorAgregar.hidden = false;
+      // En celular y tablet el resumen queda lejos: el aviso breve lo dice junto a la barra
+      if (getComputedStyle(barra).display !== 'none') avisar('No pudimos agregar tu armado', { error: true });
+      esperaAgregar = setTimeout(cortarAgregar, 2500);
+    }, espera);
+  }
+
+  // ---------- Empezar de nuevo (con algo elegido, pide confirmación) ----------
+
+  const dialogoReinicio = document.querySelector('[data-reinicio-dialogo]');
+
+  function reiniciar({ desplazar = true } = {}) {
+    PASOS.forEach((p) => {
+      elegido[p.clave] = null;
+      vista[p.clave] = { chip: null, orden: 'menor', texto: '' };
+      delete nota[p.clave];
+    });
+    demo.sinCompatibles = null;
+    demo.sinProductos = null;
+    retomado.hidden = true;
+    errorAgregar.hidden = true;
+    cortarAgregar();
+    $$('[data-buscar]').forEach((c) => (c.value = ''));
+    $$('[data-orden]').forEach((c) => (c.value = 'menor'));
+    cambio('micro', { avanzar: false });
+    abrir('micro', { desplazar });
+  }
+
+  function pedirReinicio() {
+    const decididos = PASOS.filter((p) => elegido[p.clave] !== null).length;
+    if (!decididos) return reiniciar();
+    const componentes = lineas().reduce((s, l) => s + l.cant, 0);
+    $('[data-reinicio-cant]', dialogoReinicio).textContent = componentes ? `los ${componentes} ${componentes === 1 ? 'componente' : 'componentes'}` : 'lo que elegiste';
+    dialogoReinicio.showModal();
+  }
+
+  dialogoReinicio.addEventListener('click', (e) => {
+    if (e.target === dialogoReinicio || e.target.closest('[data-cerrar-dialogo]')) dialogoReinicio.close();
+    if (e.target.closest('[data-confirmar-reinicio]')) {
+      dialogoReinicio.close();
+      reiniciar();
+      avisar('Empezaste un armado nuevo');
+    }
+  });
+
+  // ---------- Armado retomado o abierto desde un link (con piezas que ya no están) ----------
+
+  const retomado = $('[data-retomado]');
+
+  function mostrarRetomado(origen, faltan = []) {
+    const n = faltan.length;
+    retomado.hidden = false;
+    retomado.classList.toggle('alerta--aviso', n > 0);
+    $('[data-retomado-icono] use', retomado).setAttribute('href', n ? '#i-alerta' : origen === 'retomado' ? '#i-reloj' : '#i-compartir');
+    $('[data-retomado-titulo]', retomado).textContent = n
+      ? n === 1 ? 'Una pieza ya no está disponible' : 'Algunas piezas ya no están disponibles'
+      : origen === 'retomado' ? 'Retomamos tu armado' : 'Armado abierto desde un link';
+    $('[data-retomado-texto]', retomado).textContent = n
+      ? `${origen === 'retomado' ? 'Retomamos tu armado, pero' : 'En este armado'} ${n === 1 ? 'una pieza se quedó sin stock o salió del catálogo: la quitamos de su paso. Elegí otra' : 'algunas piezas se quedaron sin stock o salieron del catálogo: las quitamos de sus pasos. Elegí otras'} para completarlo.`
+      : origen === 'retomado' ? 'Está como lo dejaste la última vez: seguí desde donde quedaste o empezá uno nuevo.' : 'Podés cambiar lo que quieras: el link se actualiza con cada cambio.';
+    $('[data-retomado-acciones]', retomado).innerHTML = n
+      ? faltan.map((k) => `<button class="boton boton--secundario" type="button" data-abrir="${k}">Elegir ${minus(porClave[k].titulo)}</button>`).join('')
+      : `<button class="boton-texto" type="button" data-reiniciar-arm>${icono('i-borrar')}Empezar de nuevo</button>`;
+  }
+
   // ---------- Eventos ----------
 
   document.addEventListener('click', (e) => {
@@ -705,12 +996,16 @@ function iniciar() {
     } else if ('quitar' in b.dataset) {
       const destino = b.dataset.quitar || clave;
       elegido[destino] = null;
+      delete nota[destino];
       cambio(destino, { avanzar: false });
-      avisar(`Quitamos ${porClave[destino].titulo.toLowerCase()} de tu armado`);
+      avisar(`Quitamos ${minus(porClave[destino].titulo)} de tu armado`);
     } else if (b.dataset.cant) {
+      // Módulos de un modelo de memoria: hasta los slots libres
       const paso = porClave[clave];
-      const sel = elegido[clave][0];
-      sel.cant = Math.min(paso.cantidad.max, Math.max(paso.cantidad.min, sel.cant + Number(b.dataset.cant)));
+      const sel = elegido[clave].find((x) => x.id === Number(b.dataset.id));
+      const suma = Number(b.dataset.cant);
+      if (suma > 0 && ocupados() >= slots()) return avisar(`Ocupaste los ${slots()} slots de tu motherboard`);
+      sel.cant = Math.min(paso.cantidad.max, Math.max(paso.cantidad.min, sel.cant + suma));
       cambio(clave, { avanzar: false });
     } else if (b.dataset.saltar) {
       elegido[clave] = elegido[clave] === b.dataset.saltar ? null : b.dataset.saltar;
@@ -722,22 +1017,16 @@ function iniciar() {
       pintarPiezas(clave);
     } else if ('masProductos' in b.dataset) {
       avisar('Vista previa: acá se cargan más productos');
-    } else if ('agregarArm' in b.dataset || 'agregarBarra' in b.dataset) {
-      avisar(`Vista previa: se agregarían ${lineas().reduce((s, l) => s + l.cant, 0)} productos al carrito`);
+    } else if ('agregarArm' in b.dataset || 'agregarBarra' in b.dataset || 'reintentarArm' in b.dataset) {
+      agregarArmado();
     } else if ('verCuotas' in b.dataset) {
       abrirCuotas();
     } else if ('copiarArm' in b.dataset) {
       navigator.clipboard?.writeText(location.href).then(() => avisar('Link del armado copiado'), () => avisar('No se pudo copiar el link'));
     } else if ('reiniciarArm' in b.dataset) {
-      PASOS.forEach((p) => {
-        elegido[p.clave] = null;
-        vista[p.clave] = { chip: null, orden: 'menor', texto: '' };
-      });
-      $$('[data-buscar]').forEach((c) => (c.value = ''));
-      $$('[data-orden]').forEach((c) => (c.value = 'menor'));
-      cambio('micro', { avanzar: false });
-      abrir('micro');
-      avisar('Empezaste un armado nuevo');
+      pedirReinicio();
+    } else if ('cerrarRetomado' in b.dataset) {
+      retomado.hidden = true;
     } else if ('verArm' in b.dataset) {
       resumen.scrollIntoView({ behavior: sinMovimiento.matches ? 'auto' : 'smooth', block: 'start' });
     }
@@ -757,7 +1046,7 @@ function iniciar() {
     pintarPiezas(clave);
   });
 
-  // ---------- URL: ?armado=micro-10684.ram-14025x2.perif-1065_13942.video-no ----------
+  // ---------- URL: ?armado=micro-10684.ram-14025x2_20782.perif-1065_13942.video-no.mother-omitido ----------
 
   function escribirUrl() {
     const partes = PASOS.filter((p) => elegido[p.clave] !== null).map((p) => {
@@ -770,45 +1059,137 @@ function iniciar() {
     history.replaceState(null, '', url);
   }
 
-  function leerUrl() {
-    const valor = new URLSearchParams(location.search).get('armado');
-    if (!valor) return;
+  // Carga un armado escrito como en la URL; devuelve los pasos con piezas que ya no están en el catálogo
+  function leerArmado(valor) {
+    const faltan = [];
     for (const parte of valor.split('.')) {
       const [clave, resto] = parte.split('-');
       const paso = porClave[clave];
       if (!paso || !resto) continue;
-      if (resto === 'no' || resto === 'tengo') {
+      if (resto === 'no' || resto === 'tengo' || resto === 'omitido') {
         elegido[clave] = resto;
         continue;
       }
-      const lista = resto
-        .split('_')
-        .map((x) => {
-          const [id, cant] = x.split('x').map(Number);
-          return { id, cant: Math.min(paso.cantidad?.max || 1, Math.max(1, cant || 1)) };
-        })
-        .filter(({ id }) => pieza(clave, id))
-        .slice(0, paso.max || 1);
+      const ids = resto.split('_').map((x) => {
+        const [id, cant] = x.split('x').map(Number);
+        return { id, cant: Math.min(paso.cantidad?.max || 1, Math.max(1, cant || 1)) };
+      });
+      const lista = ids.filter(({ id }) => pieza(clave, id)).slice(0, paso.max || 1);
+      if (ids.some(({ id }) => !pieza(clave, id))) faltan.push(clave);
       if (lista.length) elegido[clave] = lista;
+      else nota[clave] = { texto: 'Ya no está disponible' };
     }
     revisarCompatibilidad();
+    return faltan;
+  }
+
+  function leerUrl() {
+    const valor = new URLSearchParams(location.search).get('armado');
+    if (valor) mostrarRetomado('link', leerArmado(valor));
   }
 
   // ---------- Degradado vivo de "Agregar al carrito" (luz.js, como el botón Productos del header) ----------
 
-  const agregar = $('[data-agregar-arm]', resumen);
   if (!sinMovimiento.matches) iniciarLuz(agregar, { tramo: 0.06 });
 
   // ---------- Aviso breve ----------
 
   const aviso = document.querySelector('[data-aviso-arm]');
   let temporizador;
-  function avisar(texto) {
+  function avisar(texto, { error = false } = {}) {
     aviso.textContent = texto;
+    aviso.classList.toggle('aviso--error', error);
     aviso.classList.add('aviso--visible');
     clearTimeout(temporizador);
-    temporizador = setTimeout(() => aviso.classList.remove('aviso--visible'), 2600);
+    temporizador = setTimeout(() => aviso.classList.remove('aviso--visible'), error ? 4000 : 2600);
   }
+
+  // ---------- Estados de muestra (vista previa: data-demo) ----------
+  // Cada botón arma un caso con productos de la muestra y lleva al paso (o al resumen) donde se ve
+
+  const COMPLETA = 'micro-10684.cooler-no.mother-19997.ram-14025x2.video-99002.discos-99004.gabinete-20139.fuente-99005.armado-5653.so-10648';
+
+  // ver: el paso al que se lleva la vista (null: el resumen; false: ninguno)
+  function cargar(valor, abrirClave = null, ver = abrirClave) {
+    document.querySelectorAll('.armador dialog[open]').forEach((d) => d.close());
+    aviso.classList.remove('aviso--visible');
+    reiniciar({ desplazar: false });
+    const faltan = valor ? leerArmado(valor) : [];
+    cambio('micro', { avanzar: false });
+    abrir(abrirClave, { desplazar: false });
+    const destino = ver ? $(`[data-paso="${ver}"]`) : resumen;
+    if (ver !== false) requestAnimationFrame(() => destino.scrollIntoView({ behavior: sinMovimiento.matches ? 'auto' : 'smooth', block: 'start' }));
+    return faltan;
+  }
+
+  const ESTADOS = {
+    fuente: () => cargar('micro-10684.mother-19997.ram-14025x2.gabinete-16562', 'fuente'),
+    wifi: () => cargar('micro-10684.mother-20840.ram-14025x2', 'wifi'),
+    bios: () => cargar('micro-99010.mother-16434', 'mother'),
+    slots: () => cargar('micro-10684.mother-19997.ram-14025_20782', 'ram'),
+    quitada: () => {
+      // Una motherboard DDR5 en lugar de la DDR4: la memoria DDR4 se quita y su paso queda marcado
+      cargar('mother-19997.ram-14025x2', null, 'ram');
+      elegido.mother = [{ id: 16434, cant: 1 }];
+      cambio('mother', { avanzar: false });
+    },
+    corta: () => {
+      // De muestra: el armador del sitio quita la fuente que quedó corta para la placa de video nueva
+      cargar('micro-10684.mother-19997.ram-14025x2.video-99003', null, 'fuente');
+      nota.fuente = { nombre: sinWatts(pieza('fuente', 20765).n), texto: 'Quedó corta para tu placa de video' };
+      cambio('video', { avanzar: false });
+    },
+    omitido: () => cargar('micro-10684.cooler-no.mother-omitido', 'ram', 'mother'),
+    'sin-compatibles': () => {
+      cargar('micro-99010.gabinete-18460', 'cooler');
+      demo.sinCompatibles = 'cooler';
+      pintarPiezas('cooler');
+    },
+    'sin-productos': () => {
+      cargar('micro-10684.mother-19997', 'wifi');
+      demo.sinProductos = 'wifi';
+      pintarPiezas('wifi');
+    },
+    'servicio-bios': () => cargar('micro-99010.cooler-19497.mother-16434.ram-99001x2', null, null),
+    pausados: () => cargar('micro-10684.mother-19997.ram-14025x2.armado-5653.so-10648', 'armado'),
+    memoria: () => cargar('micro-10684.mother-20840.ram-14025x2_20782', 'ram'),
+    agregando: () => {
+      cargar(COMPLETA, null, null);
+      agregarArmado({ espera: 3000 });
+    },
+    'error-agregar': () => {
+      cargar(COMPLETA, null, null);
+      agregarArmado({ fallar: true, espera: 1200 });
+    },
+    reinicio: () => {
+      cargar(COMPLETA, null, null);
+      pedirReinicio();
+    },
+    retomado: () => {
+      cargar('micro-10684.cooler-no.mother-19997.ram-14025x2.video-99002', 'discos', false);
+      mostrarRetomado('retomado');
+      retomado.scrollIntoView({ block: 'center' });
+    },
+    link: () => {
+      cargar('micro-10684.cooler-no.mother-19997.ram-14025x2.video-99002', 'discos', false);
+      mostrarRetomado('link');
+      retomado.scrollIntoView({ block: 'center' });
+    },
+    faltantes: () => {
+      // La placa de video y el gabinete del link ya no están en el catálogo (ids que no existen)
+      const faltan = cargar('micro-10684.cooler-no.mother-19997.ram-14025x2.video-99990.gabinete-99991', 'discos', false);
+      mostrarRetomado('link', faltan);
+      retomado.scrollIntoView({ block: 'center' });
+    },
+    libre: () => abrirFicha('wifi', 6949),
+  };
+
+  document.querySelectorAll('[data-estado-arm]').forEach((boton) =>
+    boton.addEventListener('click', () => {
+      document.querySelectorAll('[data-estado-arm]').forEach((b) => b.setAttribute('aria-pressed', String(b === boton)));
+      ESTADOS[boton.dataset.estadoArm]?.();
+    })
+  );
 
   // ---------- Arranque ----------
 

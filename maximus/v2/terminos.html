@@ -21,7 +21,9 @@
   <!-- Plantilla de página legal, con Términos y condiciones (la abren el footer, el Centro de ayuda, Crear cuenta y el
        último paso del checkout). maximus.com.ar no tiene el texto publicado ("disponible en el documento
        correspondiente"): este se armó con las políticas del centro de ayuda del sitio (relevado el 16 y el 17/10/2026)
-       y la Ley 24.240, sin cambiarlas. Es de muestra: antes de publicarlo lo tiene que revisar quien lleva lo legal.
+       y la Ley 24.240, sin cambiarlas, más las cláusulas vigentes del sitio que se sumaron el 19/10/2026 (error en el
+       precio publicado, verificación de identidad con tarjeta, constancia de daños al recibir y plazo de retiro). Es
+       de muestra: antes de publicarlo lo tiene que revisar quien lleva lo legal.
        La misma plantilla (css/legal.css, js/legal.js) arma la Política de privacidad (privacidad.html).
        Página completa con header y footer: terminos-y-condiciones.html. -->
   <main class="legal" id="contenido" tabindex="-1">
@@ -38,11 +40,11 @@
       <span class="chip-secundario"><span>Legal</span></span>
       <h1 class="legal__titulo">Términos y condiciones</h1>
       <p class="legal__bajada">Las reglas de las compras en maximus.com.ar: cuenta, precios, pagos, envíos, cambios y garantía. Las escribimos claras para que sepas qué esperar.</p>
-      <p class="legal__fecha">Última actualización: 17 de octubre de 2026</p>
+      <p class="legal__fecha">Última actualización: 19 de octubre de 2026</p>
     </header>
 
     <!-- Solo en la vista previa: el texto es de muestra -->
-    <p class="contenedor legal__muestra" data-demo><span><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Texto de muestra armado con las políticas del Centro de ayuda. Antes de publicarlo lo tiene que revisar quien lleva lo legal.</span></p>
+    <p class="contenedor legal__muestra" data-demo><span><svg class="icono icono--s" aria-hidden="true"><use href="#i-alerta"/></svg>Texto de muestra armado con las políticas del Centro de ayuda y las cláusulas vigentes del sitio. Antes de publicarlo lo tiene que revisar quien lleva lo legal.</span></p>
 
     <div class="contenedor legal__cuerpo">
 
@@ -87,10 +89,11 @@
           <ul>
             <li>Los precios están en pesos argentinos e incluyen IVA. Cada producto muestra también su precio sin impuestos nacionales.</li>
             <li>El pago por transferencia o depósito tiene un 10% de descuento sobre el total del pedido, envío y seguro incluidos.</li>
-            <li>Las promociones y campañas valen mientras dure su vigencia o hasta agotar stock. Vale el precio vigente al confirmar la compra.</li>
+            <li>Las promociones y campañas valen mientras dure su vigencia o hasta agotar stock. Vale el precio vigente al confirmar la compra. Cada promoción tiene sus bases; las generales están en <a href="bases-y-condiciones.html">Bases y condiciones de promociones y sorteos</a>.</li>
             <li>Cada producto muestra su disponibilidad: <strong>con stock</strong>, <strong>stock bajo</strong> (3 unidades o menos) o <strong>sin stock</strong>.</li>
             <li>Las fotos son ilustrativas; las características que valen son las de la ficha de cada producto.</li>
           </ul>
+          <p><strong>Error en el precio publicado.</strong> Si por una falla de carga o del sistema un producto se publica con un precio claramente equivocado, podemos anular la compra: te avisamos y te devolvemos todo lo que pagaste, por el mismo medio de pago. Si preferís, podés seguir con la compra al precio correcto.</p>
         </section>
 
         <section class="documento__seccion" id="compra" aria-labelledby="t-compra">
@@ -107,6 +110,7 @@
             <li><strong>Efectivo</strong>: en el local de Florida o en cajeros del Banco Galicia.</li>
           </ul>
           <p>El pago lo tiene que hacer la misma persona o empresa a cuyo nombre se emite la factura. No se aceptan pagos desde cuentas de terceros ni pagos combinados, salvo los habilitados: transferencia con link de pago, o dos tarjetas con Mercado Pago.</p>
+          <p><strong>Verificación de identidad.</strong> Para cuidar a los titulares de las tarjetas, en las compras con tarjeta podemos verificar tu identidad antes de despachar o entregar el pedido: te contactamos para confirmarla y el pedido sigue cuando queda verificada. Al retirar, la verificación se hace en el momento (ver <a href="#retiros">Retiros</a>).</p>
         </section>
 
         <section class="documento__seccion" id="facturacion" aria-labelledby="t-facturacion">
@@ -124,6 +128,7 @@
             <li>Enviamos a todo el país, salvo Tierra del Fuego, con OCA: a domicilio o a sucursal. En AMBA hay entrega en 24 hs hábiles (al día siguiente, salvo fines de semana), salvo para las PC armadas y los productos grandes. Para el resto del país, el costo y el plazo se ven cotizando con el código postal.</li>
             <li>El costo y el plazo dependen del código postal y se ven antes de pagar. Todos los envíos van con seguro de transporte, que se suma al costo.</li>
             <li>Los productos salen en su caja original, protegidos con film burbuja y cinta de frágil.</li>
+            <li>Al recibir, revisá el paquete antes de firmar la entrega. Si está abierto, golpeado o mojado, dejá constancia del daño en el comprobante de OCA antes de firmar y avisanos con fotos del paquete. Si se firma sin observaciones, se entiende que el paquete llegó en buen estado.</li>
             <li>OCA hace hasta 3 intentos de entrega. Si no se concreta, el paquete puede ir a la sucursal más cercana; si no se retira a tiempo, vuelve a nuestro depósito y el nuevo envío corre por tu cuenta.</li>
             <li>En eventos de mucha demanda (Hot Sale, Cyber Monday) los plazos pueden extenderse. No respondemos por demoras del correo ni por casos de fuerza mayor.</li>
             <li>Si falta un producto en tu pedido, avisanos dentro de las 24 horas de recibido, con la factura y el número de pedido.</li>
@@ -134,8 +139,9 @@
           <h2 class="documento__titulo" id="t-retiros"><span class="documento__num">8</span>Retiros</h2>
           <p>Podés retirar sin costo en nuestras oficinas de Floresta (R. de Escalada de San Martín 3875, CABA) o en el local de Galería Jardín (Florida 537, Local 379, PB, CABA), cuando te llegue el correo de que tu pedido está listo: 24 a 48 hs hábiles desde la confirmación del pago, y 72 hs hábiles para las PC armadas.</p>
           <ul>
+            <li>Tenés <strong>15 días desde la fecha de la factura</strong> para retirarlo. Si a los 30 días de la factura no se retiró, el pedido se considera abandonado: se anula la entrega y lo que pagaste queda como nota de crédito a tu nombre, para usar en otra compra.</li>
             <li>Si pagaste por transferencia o depósito, retira el titular o una persona autorizada: la autorización se envía por correo a <a href="mailto:autorizaciones@maximus.com.ar">autorizaciones@maximus.com.ar</a> con el DNI de los dos.</li>
-            <li>Si pagaste con tarjeta, retira solo el titular, con su DNI, la tarjeta con la que pagó y la factura.</li>
+            <li>Si pagaste con tarjeta, retira solo el titular de la tarjeta y verificamos su identidad en el momento: tiene que presentar su DNI, la tarjeta con la que pagó y la factura. Vale también para las compras con débito o en 1 pago: no se puede autorizar a otra persona.</li>
           </ul>
         </section>
 

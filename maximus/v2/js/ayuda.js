@@ -1,6 +1,7 @@
 // Centro de ayuda: buscador en vivo (filtra las preguntas, resalta las coincidencias y cuenta por tema), temas
 // con el actual marcado al hacer scroll, enlaces directos a una pregunta (#p-…: la abre y la marca) y el
-// formulario de contacto (de muestra: valida y confirma, no envía nada).
+// formulario de contacto (de muestra: valida, muestra "Enviando…" y la confirmación o el error de envío; no
+// envía nada).
 
 const asuntos = [...document.querySelectorAll('[data-asunto]')];
 const items = [...document.querySelectorAll('[data-asunto] .faq__item')];
@@ -249,6 +250,7 @@ const mensajes = {
   'Solicitar una factura': ['Tu DNI o CUIT', 'Y cualquier dato que nos ayude a encontrar la compra'],
   'Corregir una factura': ['Datos para corregir la factura', 'Razón social, CUIT, condición fiscal…'],
   'Pedir un presupuesto': ['¿Qué querés presupuestar?', 'Productos, cantidades y para qué los vas a usar'],
+  'Mis datos personales (consulta o borrado)': ['¿Qué necesitás hacer con tus datos?', 'Verlos, corregirlos o borrarlos. Escribinos con el correo de tu cuenta y sumá tu DNI'],
   Reclamo: ['Tu reclamo', 'Contanos qué pasó'],
   Sugerencia: ['Tu sugerencia', 'Todo nos sirve para mejorar'],
 };
@@ -264,6 +266,7 @@ function elegirMotivo(motivo) {
 function marcar(control, mensaje) {
   const caja = control.closest('.campo');
   let nota = caja.querySelector('.campo__error');
+  control.classList.toggle('con-error', Boolean(mensaje));
   if (!mensaje) {
     control.removeAttribute('aria-invalid');
     nota?.remove();
@@ -294,6 +297,11 @@ if (form) {
   const rotulo = form.querySelector('[data-mensaje-rotulo]');
   const pasoCargar = form.querySelector('[data-paso="cargar"]');
   const pasoListo = form.querySelector('[data-paso="listo"]');
+  const errorEnvio = form.querySelector('[data-error-envio]');
+  const enviar = form.querySelector('[data-enviar]');
+  const estadoForm = form.querySelector('.contacto__estado');
+  const demo = { error: false };
+  let enviando = false;
 
   selectMotivo.addEventListener('change', () => {
     const opcion = selectMotivo.selectedOptions[0];
@@ -315,10 +323,23 @@ if (form) {
 
   form.addEventListener('input', (e) => {
     if (e.target.getAttribute('aria-invalid')) marcar(e.target, errorDe(e.target));
+    if (!form.querySelector('[aria-invalid="true"]')) estadoForm.textContent = '';
   });
+
+  // Botón esperando la respuesta: ruedita en lugar del ícono, "Enviando…" y sin poder tocarlo
+  function cargando(boton, si) {
+    const texto = [...boton.childNodes].find((n) => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+    if (si) boton.dataset.texto = texto.textContent;
+    texto.textContent = si ? 'Enviando…' : boton.dataset.texto;
+    boton.classList.toggle('cargando', si);
+    boton.disabled = si;
+    if (si) boton.setAttribute('aria-busy', 'true');
+    else boton.removeAttribute('aria-busy');
+  }
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (enviando) return;
     const controles = [...form.querySelectorAll('select, input, textarea')].filter((c) => !c.closest('[hidden]'));
     let primero = null;
     controles.forEach((c) => {
@@ -326,21 +347,58 @@ if (form) {
       marcar(c, error);
       if (error && !primero) primero = c;
     });
-    if (primero) return primero.focus();
+    if (primero) {
+      estadoForm.textContent = 'Revisá los campos marcados.';
+      return primero.focus();
+    }
+    estadoForm.textContent = '';
 
-    pasoListo.querySelector('[data-correo]').textContent = form.elements.correo.value.trim();
-    pasoCargar.hidden = true;
-    pasoListo.hidden = false;
-    pasoListo.focus();
+    // De muestra: sale con error si lo pide la barra de la vista previa o si el correo dice "error"; el intento
+    // siguiente sale bien. Con Enter, el submitter puede ser el botón de la alerta escondida
+    const boton = e.submitter && !e.submitter.closest('[hidden]') ? e.submitter : enviar;
+    const correo = form.elements.correo.value.trim();
+    const conError = demo.error || correo.toLowerCase().includes('error');
+    enviando = true;
+    cargando(boton, true);
+
+    setTimeout(() => {
+      enviando = false;
+      cargando(boton, false);
+      if (conError && errorEnvio.hidden) {
+        errorEnvio.hidden = false;
+        errorEnvio.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+      errorEnvio.hidden = true;
+      pasoListo.querySelector('[data-correo]').textContent = correo;
+      pasoCargar.hidden = true;
+      pasoListo.hidden = false;
+      pasoListo.focus();
+    }, 1200);
   });
 
   form.querySelector('[data-otro]').addEventListener('click', () => {
     form.reset();
     selectMotivo.dispatchEvent(new Event('change'));
     selectMotivo.value = '';
+    errorEnvio.hidden = true;
     pasoListo.hidden = true;
     pasoCargar.hidden = false;
   });
+
+  // Barra de la vista previa (data-demo): cómo sale el próximo envío
+  document.querySelectorAll('[data-ver-envio]').forEach((b) =>
+    b.addEventListener('click', () => {
+      demo.error = b.dataset.verEnvio === 'error';
+      document.querySelectorAll('[data-ver-envio]').forEach((otro) => otro.setAttribute('aria-pressed', String(otro === b)));
+      errorEnvio.hidden = true;
+      if (!pasoListo.hidden) form.querySelector('[data-otro]').click();
+    })
+  );
+
+  // Desde otra página, ?motivo= elige el motivo (ej.: la Política de privacidad, para pedir el borrado de los datos)
+  const motivoInicial = new URLSearchParams(location.search).get('motivo');
+  if (motivoInicial) elegirMotivo(motivoInicial);
 }
 
 // ---------- Al llegar con un enlace a una pregunta o tema ----------

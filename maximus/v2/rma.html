@@ -26,7 +26,10 @@
        foto de la factura (PDF, JPG o PNG) y foto del producto (JPG o PNG). Acá es un trámite en 3 pasos que dice al
        instante si el producto está en garantía (plazos del centro de ayuda). Con la sesión de muestra iniciada se
        elige el producto de las compras de Mi cuenta y no hace falta la factura; sin sesión, se carga a mano.
-       Todo es de muestra: js/rma.js valida y muestra la confirmación, no envía nada.
+       Todo es de muestra: js/rma.js valida, muestra "Enviando…" y después la confirmación o el error de envío; no
+       envía nada. La barra "Estados de muestra" (solo en la vista previa) cambia la sesión, carga un caso de cada
+       verificación (en garantía, con el fabricante, fuera de plazo, RMA en curso) y hace que el envío salga con error;
+       en la página completa, el error sale con "error" en el correo y el fuera de plazo, con una fecha de compra vieja.
        Página completa con header y footer: garantia.html. -->
   <main class="rma-pagina" id="contenido" tabindex="-1">
 
@@ -37,6 +40,30 @@
         <li aria-current="page">Garantía y RMA</li>
       </ol>
     </nav>
+
+    <!-- Estados de muestra (no van en el sitio real): con o sin sesión, un caso de cada verificación y el error de envío -->
+    <details class="contenedor variantes-plegable" data-demo>
+      <summary class="variantes-plegable__cab">Estados de muestra</summary>
+      <div class="variantes">
+        <span class="variantes__rotulo">Sesión</span>
+        <div class="variantes__opciones" role="group" aria-label="Sesión">
+          <button class="variantes__btn" type="button" data-ver-sesion="con" aria-pressed="false">Con sesión</button>
+          <button class="variantes__btn" type="button" data-ver-sesion="sin" aria-pressed="false">Sin sesión</button>
+        </div>
+        <span class="variantes__rotulo">Verificación</span>
+        <div class="variantes__opciones" role="group" aria-label="Verificación de la garantía">
+          <button class="variantes__btn" type="button" data-ver-caso="ok" aria-pressed="false">En garantía</button>
+          <button class="variantes__btn" type="button" data-ver-caso="fabricante" aria-pressed="false">Con el fabricante</button>
+          <button class="variantes__btn" type="button" data-ver-caso="vencida" aria-pressed="false">Fuera de plazo</button>
+          <button class="variantes__btn" type="button" data-ver-caso="rma" aria-pressed="false">RMA en curso</button>
+        </div>
+        <span class="variantes__rotulo">Envío</span>
+        <div class="variantes__opciones" role="group" aria-label="Envío">
+          <button class="variantes__btn" type="button" data-ver-envio="ok" aria-pressed="true">Sale bien</button>
+          <button class="variantes__btn" type="button" data-ver-envio="error" aria-pressed="false">Con error</button>
+        </div>
+      </div>
+    </details>
 
     <!-- Cabecera y cómo funciona -->
     <header class="contenedor rma-cab">
@@ -248,9 +275,21 @@
 
             <label class="casilla"><input name="condiciones" type="checkbox" required> El producto tiene su caja y no tiene golpes ni daños hechos después de la compra.</label>
 
+            <!-- Error al enviar (de muestra): los datos y las fotos quedan cargados -->
+            <div class="alerta alerta--error" role="alert" data-error-envio hidden>
+              <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+              <div class="alerta__cuerpo">
+                <p class="alerta__titulo">No pudimos enviar tu solicitud</p>
+                <p>Tus datos y las fotos siguen cargados: probá de nuevo en unos minutos. Si sigue sin salir, escribinos por WhatsApp y la cargamos con vos.</p>
+                <div class="alerta__acciones">
+                  <a class="boton boton--secundario" href="https://wa.me/541123575522?text=Hola%2C%20no%20pude%20enviar%20mi%20solicitud%20de%20garant%C3%ADa." target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+                </div>
+              </div>
+            </div>
+
             <div class="etapa__acciones">
               <button class="boton boton--secundario" type="button" data-anterior><svg class="icono icono--s" aria-hidden="true"><use href="#i-izquierda"/></svg>Volver</button>
-              <button class="boton boton--primario" type="submit">Enviar solicitud<svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg></button>
+              <button class="boton boton--primario" type="submit" data-enviar>Enviar solicitud<svg class="icono icono--s" aria-hidden="true"><use href="#i-check"/></svg></button>
               <p class="etapa__estado" role="alert"></p>
             </div>
           </fieldset>

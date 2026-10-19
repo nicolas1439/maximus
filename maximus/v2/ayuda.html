@@ -26,7 +26,9 @@
        Pagos y facturación y los formularios de "¿Necesitás más ayuda?"), reescrito más corto y sin cambiar las
        políticas. Los 12 formularios del sitio (consultas, reclamos, faltantes, facturación…) van en uno solo con el
        motivo. Los términos y condiciones y la privacidad ("Nuestra empresa" en el sitio) quedan como enlaces.
-       js/ayuda.js: buscador en vivo, navegación de temas, enlaces a una pregunta (#p-…) y el formulario de muestra.
+       js/ayuda.js: buscador en vivo, navegación de temas, enlaces a una pregunta (#p-…) y el formulario de muestra
+       (valida, muestra "Enviando…" y la confirmación o el error de envío; el error se ve con la barra de muestra o, en
+       la página completa, con "error" en el correo; ?motivo= elige el motivo al llegar desde otra página).
        Página completa con header y footer: centro-de-ayuda.html. -->
   <main class="centro" id="contenido" tabindex="-1">
 
@@ -551,6 +553,16 @@
           <p class="contacto__bajada">Escribinos y te respondemos por correo. Si es urgente, mejor por WhatsApp.</p>
         </header>
 
+        <!-- Solo en la vista previa: cómo sale el envío (no va en el sitio real; en la página completa, con "error" en
+             el correo sale el error) -->
+        <div class="variantes contacto__variantes" data-demo>
+          <span class="variantes__rotulo">Envío</span>
+          <div class="variantes__opciones" role="group" aria-label="Envío">
+            <button class="variantes__btn" type="button" data-ver-envio="ok" aria-pressed="true">Sale bien</button>
+            <button class="variantes__btn" type="button" data-ver-envio="error" aria-pressed="false">Con error</button>
+          </div>
+        </div>
+
         <form class="contacto__campos" novalidate data-contacto>
           <div data-paso="cargar">
             <div class="contacto__grilla">
@@ -567,6 +579,7 @@
                   <option data-pedido>Solicitar una factura</option>
                   <option data-pedido>Corregir una factura</option>
                   <option>Pedir un presupuesto</option>
+                  <option>Mis datos personales (consulta o borrado)</option>
                   <option>Consulta general</option>
                   <option>Reclamo</option>
                   <option>Sugerencia</option>
@@ -593,8 +606,19 @@
                 <textarea class="campo__control campo__control--area" id="contacto-mensaje" name="mensaje" rows="5" required placeholder="Contanos en qué te podemos ayudar"></textarea>
               </div>
             </div>
+            <!-- Error al enviar (de muestra): el mensaje queda escrito -->
+            <div class="alerta alerta--error contacto__error" role="alert" data-error-envio hidden>
+              <svg class="icono" aria-hidden="true"><use href="#i-alerta"/></svg>
+              <div class="alerta__cuerpo">
+                <p class="alerta__titulo">No pudimos enviar tu mensaje</p>
+                <p>Lo que escribiste sigue acá: probá de nuevo en unos minutos. Si es urgente, escribinos por WhatsApp al +54 11 2357-5522.</p>
+                <div class="alerta__acciones">
+                  <a class="boton boton--secundario" href="https://wa.me/541123575522" target="_blank" rel="noopener"><svg class="icono icono--s" aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+                </div>
+              </div>
+            </div>
             <div class="contacto__acciones">
-              <button class="boton boton--primario" type="submit">Enviar mensaje<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
+              <button class="boton boton--primario" type="submit" data-enviar>Enviar mensaje<svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></button>
               <p class="contacto__estado" role="status" aria-live="polite"></p>
             </div>
           </div>
@@ -637,6 +661,7 @@
       <ul>
         <li><a href="terminos-y-condiciones.html">Términos y condiciones</a></li>
         <li><a href="politica-de-privacidad.html">Política de privacidad</a></li>
+        <li><a href="bases-y-condiciones.html">Bases de promociones y sorteos</a></li>
         <li><a href="boton-de-arrepentimiento.html">Botón de arrepentimiento</a></li>
         <li><a href="https://www.argentina.gob.ar/produccion/defensadelconsumidor" target="_blank" rel="noopener">Defensa del consumidor (Ley 24.240)</a></li>
       </ul>
