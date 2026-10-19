@@ -241,7 +241,7 @@
   margin-top: var(--espacio-2);
 }
 
-/* ---------- Bases y condiciones ---------- */
+/* ---------- Bases y condiciones: un .plegable (base.css), con la altura animada ---------- */
 
 .bases__caja {
   border: 1px solid var(--color-borde);
@@ -256,12 +256,6 @@
   gap: var(--espacio-3);
   min-height: var(--alto-control-l);
   padding-inline: var(--espacio-4);
-  list-style: none;
-  cursor: pointer;
-}
-
-.bases__cab::-webkit-details-marker {
-  display: none;
 }
 
 .bases__titulo {

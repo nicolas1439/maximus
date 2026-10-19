@@ -17,6 +17,8 @@ function iniciar() {
     indice.classList.toggle('abierto', indice.open);
   };
   acomodar();
+  // Al cargar, el índice (abierto en el HTML) se pliega en celular sin la animación de .plegable
+  indice.getAnimations?.({ subtree: true }).forEach((a) => a.finish());
   escritorio.addEventListener('change', acomodar);
 
   // En celular, al elegir una sección el índice se pliega para dejar ver el texto

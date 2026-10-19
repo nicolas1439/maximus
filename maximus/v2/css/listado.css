@@ -234,9 +234,14 @@
   outline-offset: 2px;
 }
 
-/* Grupo de filtro: acordeón nativo */
+/* Grupo de filtro: un .plegable (base.css), con la altura animada */
 .filtro {
   border-top: 1px solid var(--color-borde);
+}
+
+/* El contorno de foco de las casillas y de "Ver más" (en el borde izquierdo) no se recorta */
+.filtro::details-content {
+  overflow-clip-margin: var(--espacio-1);
 }
 
 .filtro__titulo {
@@ -246,15 +251,9 @@
   gap: var(--espacio-3);
   min-height: var(--alto-control-l);
   padding-block: var(--espacio-2);
-  cursor: pointer;
   font-size: var(--texto-s);
   font-weight: var(--peso-medio);
-  list-style: none;
   transition: color var(--transicion);
-}
-
-.filtro__titulo::-webkit-details-marker {
-  display: none;
 }
 
 .filtro__titulo:hover {

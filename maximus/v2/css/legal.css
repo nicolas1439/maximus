@@ -64,7 +64,7 @@
   align-items: start;
 }
 
-/* ---------- Índice ---------- */
+/* ---------- Índice: un .plegable (base.css), con la altura animada ---------- */
 
 .indice {
   border: 1px solid var(--color-borde);
@@ -79,12 +79,6 @@
   min-height: var(--alto-control-l);
   padding-inline: var(--espacio-4);
   font-weight: var(--peso-medio);
-  list-style: none;
-  cursor: pointer;
-}
-
-.indice__cab::-webkit-details-marker {
-  display: none;
 }
 
 .indice__flecha {

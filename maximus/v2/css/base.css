@@ -534,8 +534,9 @@ a.paginas__enlace {
 }
 
 /* Plegable: details con la altura animada (preguntas frecuentes, "Leer más", planes de cuotas, detalle de un
-   pedido). Donde el navegador no anima la altura (interpolate-size), abre y cierra al instante. El summary va sin el
-   triángulo del navegador. Abierto: [open] o la clase .abierto */
+   pedido, filtros del listado, índice de las legales, bases de la campaña). Donde el navegador no anima la altura
+   (interpolate-size) o con "reducir movimiento", abre y cierra al instante. El summary va sin el triángulo del
+   navegador. Abierto: [open] o la clase .abierto */
 .plegable {
   interpolate-size: allow-keywords;
 }
@@ -1677,6 +1678,11 @@ a.saltar {
   :where(.mx) *::after {
     transition-property: color, background-color, border-color, outline-color, box-shadow, opacity, fill, stroke !important;
     animation-duration: 0s !important;
+  }
+
+  /* El plegable abre y cierra al instante (::details-content no entra en el selector de arriba) */
+  .plegable::details-content {
+    transition: none;
   }
 }
 
