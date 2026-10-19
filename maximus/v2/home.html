@@ -40,7 +40,7 @@
       <script>try { const con = Boolean(localStorage.getItem('sesion')); document.querySelectorAll('[data-demo-sesion]').forEach((b) => b.setAttribute('aria-pressed', (b.dataset.demoSesion === 'con') === con)); } catch {}</script>
     </div>
 
-    <!-- Hero: carrusel principal de campañas + 4 tarjetas secundarias (textos de ejemplo).
+    <!-- Hero: carrusel principal de campañas, dos tarjetas a la izquierda y una vertical con carrusel a la derecha (textos de ejemplo).
          Para usar un banner: <img class="hero__img" src="recursos/..." alt=""> dentro de la tarjeta
          (o <picture> con versión mobile y escritorio). Si el banner ya trae el texto, se quita .hero__texto
          y se describe en el alt. Rendimiento: el <img> del primer slide lleva fetchpriority="high" (es lo primero
@@ -112,15 +112,6 @@
         </div>
       </a>
 
-      <a class="hero__tarjeta" href="tu-pc-ideal.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
-        <svg class="hero__icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
-        <div class="hero__texto">
-          <h2 class="hero__titulo">Elegí tu PC en 3 pasos</h2>
-          <p class="hero__bajada">Según para qué la vas a usar</p>
-          <span class="hero__cta">Encontrar mi PC <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></span>
-        </div>
-      </a>
-
       <a class="hero__tarjeta" href="#" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
         <svg class="hero__icono" aria-hidden="true"><use href="#i-envio"/></svg>
         <div class="hero__texto">
@@ -130,14 +121,36 @@
         </div>
       </a>
 
-      <a class="hero__tarjeta" href="#" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
-        <svg class="hero__icono" aria-hidden="true"><use href="#i-cat-notebook"/></svg>
-        <div class="hero__texto">
-          <h2 class="hero__titulo">Notebooks</h2>
-          <p class="hero__bajada">Para trabajar, estudiar y jugar</p>
-          <span class="hero__cta">Ver notebooks <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></span>
+      <!-- Lateral derecha: una tarjeta vertical con carrusel, como el principal (avanza sola, con otro ritmo para
+           no cambiar a la vez). En celular y tablet va a todo el ancho, debajo de las otras dos -->
+      <div class="hero__lateral carrusel" data-carrusel data-bucle data-autoplay="7000" role="region" aria-roledescription="carrusel" aria-label="Destacados">
+        <div class="carrusel__pista">
+          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="1 de 2">
+            <a class="hero__tarjeta hero__tarjeta--vertical" href="tu-pc-ideal.html" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+              <svg class="hero__icono" aria-hidden="true"><use href="#i-cat-pc"/></svg>
+              <div class="hero__texto">
+                <h2 class="hero__titulo">Elegí tu PC en 3 pasos</h2>
+                <p class="hero__bajada">Según para qué la vas a usar</p>
+                <span class="hero__cta">Encontrar mi PC <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></span>
+              </div>
+            </a>
+          </div>
+          <div class="carrusel__item" role="group" aria-roledescription="diapositiva" aria-label="2 de 2">
+            <a class="hero__tarjeta hero__tarjeta--vertical" href="#" data-promo-id="" data-promo-name="" data-promo-creative="" data-promo-position="">
+              <svg class="hero__icono" aria-hidden="true"><use href="#i-cat-notebook"/></svg>
+              <div class="hero__texto">
+                <h2 class="hero__titulo">Notebooks</h2>
+                <p class="hero__bajada">Para trabajar, estudiar y jugar</p>
+                <span class="hero__cta">Ver notebooks <svg class="icono icono--s" aria-hidden="true"><use href="#i-flecha"/></svg></span>
+              </div>
+            </a>
+          </div>
         </div>
-      </a>
+        <div class="carrusel__puntos">
+          <button class="carrusel__punto" type="button" aria-label="Destacado 1" aria-current="true"></button>
+          <button class="carrusel__punto" type="button" aria-label="Destacado 2"></button>
+        </div>
+      </div>
     </section>
 
     <!-- Categorías destacadas: accesos directos a lo que más se vende (selección de ejemplo, con fotos de productos reales de Maximus) -->

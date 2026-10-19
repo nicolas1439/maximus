@@ -1,5 +1,7 @@
-/* Hero: grilla tipo bento con un carrusel principal de campañas y cuatro tarjetas secundarias.
-   Mobile: principal arriba y secundarias en 2 × 2. Escritorio: principal al centro y dos secundarias a cada lado.
+/* Hero: grilla tipo bento con un carrusel principal de campañas, dos tarjetas secundarias y una lateral vertical con
+   su propio carrusel (pedido del usuario, 19/10/2026).
+   Mobile y tablet: principal arriba, las dos secundarias lado a lado y la lateral a todo el ancho debajo.
+   Escritorio: secundarias a la izquierda (una sobre otra), principal al centro y lateral a la derecha, de alto completo.
    Cada tarjeta acepta una imagen de fondo opcional (.hero__img); sin imagen usa el fondo destacado
    (o el que defina --hero-fondo / --hero-brillo).
    Imágenes del carrusel principal (cubren la tarjeta con object-fit: cover; el texto va abajo a la izquierda
@@ -51,6 +53,31 @@ a.hero__tarjeta {
 
 .hero__tarjeta--principal {
   aspect-ratio: 1;
+}
+
+/* Lateral: carrusel de tarjetas verticales (en mobile y tablet, apaisada a todo el ancho) */
+.hero__lateral {
+  position: relative;
+  grid-column: 1 / -1;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radio-l);
+}
+
+.hero__lateral .carrusel__puntos {
+  position: absolute;
+  top: var(--espacio-3);
+  right: var(--espacio-3);
+  z-index: 1;
+}
+
+.hero__tarjeta--vertical {
+  aspect-ratio: 2 / 1;
+}
+
+/* En la lateral la bajada se ve siempre (hay lugar) */
+.hero__lateral .hero__tarjeta--vertical .hero__bajada {
+  display: block;
 }
 
 /* Imagen de fondo (banner), con un velo para que el texto se lea */
@@ -184,6 +211,16 @@ a.hero__tarjeta {
     display: block;
   }
 
+  .hero__tarjeta--vertical {
+    aspect-ratio: 3 / 1;
+  }
+
+  .hero__lateral .carrusel__puntos {
+    top: auto;
+    right: var(--espacio-6);
+    bottom: var(--espacio-6);
+  }
+
   .hero__texto {
     padding: var(--espacio-6);
   }
@@ -222,13 +259,39 @@ a.hero__tarjeta {
   }
 
   .hero > .hero__tarjeta {
-    grid-column: span 2;
+    grid-column: 1 / span 2;
+  }
+
+  .hero__lateral {
+    grid-column: 7 / span 2;
+    grid-row: 1 / span 2;
   }
 
   .hero__principal .carrusel__pista,
   .hero__principal .carrusel__item,
-  .hero__tarjeta--principal {
+  .hero__tarjeta--principal,
+  .hero__lateral .carrusel__pista,
+  .hero__lateral .carrusel__item,
+  .hero__tarjeta--vertical {
     height: 100%;
+  }
+
+  .hero__tarjeta--vertical {
+    aspect-ratio: auto;
+  }
+
+  /* Vertical: el ícono grande arriba y el texto abajo; los puntos arriba a la derecha, como en celular */
+  .hero__tarjeta--vertical .hero__icono {
+    top: 8%;
+    right: 50%;
+    width: 64%;
+    translate: 50% 0;
+  }
+
+  .hero__lateral .carrusel__puntos {
+    top: var(--espacio-3);
+    right: var(--espacio-3);
+    bottom: auto;
   }
 
   .hero__titulo {
