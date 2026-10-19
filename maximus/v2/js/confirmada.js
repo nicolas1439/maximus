@@ -128,15 +128,15 @@ function iniciar() {
 
     // Pasos del pedido: con el pago aprobado, el pedido pasa a preparación
     const actual = pago === 'tarjeta' ? 2 : 1;
-    $$('[data-pasos] .seguimiento__paso').forEach((paso, i) => {
-      paso.classList.toggle('seguimiento__paso--hecho', i < actual);
-      paso.classList.toggle('seguimiento__paso--actual', i === actual);
+    $$('[data-pasos] .pasos__paso').forEach((paso, i) => {
+      paso.classList.toggle('pasos__paso--hecho', i < actual);
+      paso.classList.toggle('actual', i === actual);
       if (i === actual) paso.setAttribute('aria-current', 'step');
       else paso.removeAttribute('aria-current');
-      const punto = paso.querySelector('.seguimiento__punto');
+      const punto = paso.querySelector('.pasos__num');
       punto.innerHTML = i < actual ? '<svg class="icono" aria-hidden="true"><use href="#i-check"/></svg>' : '';
       const fecha = paso.querySelector('small');
-      if (i < actual && !fecha) paso.querySelector('.seguimiento__texto').insertAdjacentHTML('beforeend', '<small>17/10</small>');
+      if (i < actual && !fecha) paso.querySelector('.pasos__nombre').insertAdjacentHTML('beforeend', '<small>17/10</small>');
       if (i >= actual) fecha?.remove();
     });
     const retiro = lugar === 'retiro';

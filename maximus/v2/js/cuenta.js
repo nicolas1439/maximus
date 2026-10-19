@@ -277,17 +277,17 @@ function verPedido(estado, conComprobante = true) {
   pill.textContent = texto;
   tarjetaDemo.querySelector('.pedido').classList.toggle('pedido--cancelado', estado === 'cancelado');
   const nombres = ['Confirmado', 'Pago', 'Preparación', retiro ? 'Para retirar' : 'En camino', retiro ? 'Retirado' : 'Entregado'];
-  tarjetaDemo.querySelectorAll('[data-pasos-pedido] .seguimiento__paso').forEach((paso, i) => {
+  tarjetaDemo.querySelectorAll('[data-pasos-pedido] .pasos__paso').forEach((paso, i) => {
     const hecho = actual > i;
-    paso.classList.toggle('seguimiento__paso--hecho', hecho);
-    paso.classList.toggle('seguimiento__paso--actual', i === actual);
+    paso.classList.toggle('pasos__paso--hecho', hecho);
+    paso.classList.toggle('actual', i === actual);
     if (i === actual) paso.setAttribute('aria-current', 'step');
     else paso.removeAttribute('aria-current');
-    paso.querySelector('.seguimiento__punto').innerHTML = hecho ? '<svg class="icono" aria-hidden="true"><use href="#i-check"/></svg>' : '';
+    paso.querySelector('.pasos__num').innerHTML = hecho ? '<svg class="icono" aria-hidden="true"><use href="#i-check"/></svg>' : '';
     const debajo = hecho ? '12/10' : i === actual && etapa;
-    paso.querySelector('.seguimiento__texto').innerHTML = nombres[i] + (debajo ? `<small>${debajo}</small>` : '');
+    paso.querySelector('.pasos__nombre').innerHTML = nombres[i] + (debajo ? `<small>${debajo}</small>` : '');
   });
-  tarjetaDemo.querySelector('[data-pasos-pedido]').classList.toggle('seguimiento--cancelado', estado === 'cancelado');
+  tarjetaDemo.querySelector('[data-pasos-pedido]').classList.toggle('pasos--cancelado', estado === 'cancelado');
   const cancelable = ['pendiente', 'ingreso', 'revision'].includes(estado);
   tarjetaDemo.querySelector('[data-cancelar-pedido]').hidden = !cancelable;
   if (estado !== 'cancelado') tarjetaDemo.querySelector('[data-cancelado-ok]').hidden = true;

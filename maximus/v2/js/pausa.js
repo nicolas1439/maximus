@@ -2,7 +2,7 @@
 // actual de un pedido y lo marcado con data-pausa. Mientras están fuera de pantalla llevan la clase .en-pausa (base.css detiene sus animaciones).
 // Uso: iniciarPausa(contenedor).
 
-const SELECTOR = '.aurora, .marcas, .barra-sup, .seguimiento, [data-pausa]';
+const SELECTOR = '.aurora, .marcas, .barra-sup, .pasos--pedido, [data-pausa]';
 
 export function iniciarPausa(raiz = document) {
   const observador = new IntersectionObserver((entradas) => {

@@ -1,5 +1,5 @@
 /* Plantilla Compra confirmada (vista previa: confirmada.html; página completa: compra-confirmada.html).
-   Gracias (check que se dibuja, pedido, estado y pasos del pedido de pedido.css), el pago (transferencia: monto y
+   Gracias (check que se dibuja, pedido, estado y pasos del pedido de base.css), el pago (transferencia: monto y
    datos bancarios con "Copiar"; tarjeta: pago aprobado), qué sigue y, al costado, el detalle del pedido (productos,
    totales, entrega, facturación y pago), las acciones y la ayuda por WhatsApp (.ayuda de pedido.css).
    Mobile y tablet: todo en columna. Escritorio: grilla de 8, lo principal en 5 columnas y el detalle en 3, fijo bajo

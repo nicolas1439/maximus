@@ -309,15 +309,15 @@ function pasosHtml(p, numero) {
     const hecho = i < p.paso;
     // Cancelado: sin paso actual (el pedido no sigue)
     const actual = !p.cancelado && i === p.paso;
-    const clase = hecho ? ' seguimiento__paso--hecho' : actual ? ' seguimiento__paso--actual' : '';
+    const clase = hecho ? ' pasos__paso--hecho' : actual ? ' actual' : '';
     const fecha = p.fechas[i] ? `<small>${p.fechas[i]}</small>` : '';
-    return `<li class="seguimiento__paso${clase}"${actual ? ' aria-current="step"' : ''}>`
-      + `<span class="seguimiento__punto">${hecho ? icono('i-check', 'icono') : ''}</span>`
-      + `<span class="seguimiento__texto">${nombre}${fecha}</span></li>`;
+    return `<li class="pasos__paso${clase}"${actual ? ' aria-current="step"' : ''}>`
+      + `<span class="pasos__num">${hecho ? icono('i-check', 'icono') : ''}</span>`
+      + `<span class="pasos__nombre">${nombre}${fecha}</span></li>`;
   });
-  const clase = p.cancelado ? ' seguimiento--cancelado' : p.detenido ? ' seguimiento--detenido' : '';
+  const clase = p.cancelado ? ' pasos--cancelado' : p.detenido ? ' pasos--detenido' : '';
   const rotulo = `Pasos del pedido #MAX-${numero}${p.cancelado ? ' (cancelado)' : ''}`;
-  return `<ol class="seguimiento${clase}" aria-label="${rotulo}">${items.join('')}</ol>`;
+  return `<ol class="pasos pasos--pedido${clase}" aria-label="${rotulo}">${items.join('')}</ol>`;
 }
 
 function datosHtml(p) {

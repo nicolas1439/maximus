@@ -1,5 +1,5 @@
 /* Plantilla Seguimiento de pedido (vista previa: rastreo.html; página completa: seguimiento.html).
-   Consulta (un campo para el número de pedido o de guía), el resultado (estado, pasos del pedido de pedido.css,
+   Consulta (un campo para el número de pedido o de guía), el resultado (estado, pasos del pedido de base.css,
    datos de la entrega, historial del envío y acciones) y, al costado, la ayuda: dónde están los números y WhatsApp.
    Mobile y tablet: todo en columna. Escritorio: grilla de 8, consulta y resultado en 5 columnas y la ayuda en las 3
    restantes, fija bajo el header (--alto-fijo).

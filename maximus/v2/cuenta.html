@@ -142,12 +142,12 @@
               </div>
               <span class="estado estado--info">Despachado</span>
             </header>
-            <ol class="seguimiento" aria-label="Seguimiento del pedido #MAX-422907">
-              <li class="seguimiento__paso seguimiento__paso--hecho"><span class="seguimiento__punto"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="seguimiento__texto">Confirmado<small>08/10</small></span></li>
-              <li class="seguimiento__paso seguimiento__paso--hecho"><span class="seguimiento__punto"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="seguimiento__texto">Pago<small>08/10</small></span></li>
-              <li class="seguimiento__paso seguimiento__paso--hecho"><span class="seguimiento__punto"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="seguimiento__texto">Preparación<small>09/10</small></span></li>
-              <li class="seguimiento__paso seguimiento__paso--actual" aria-current="step"><span class="seguimiento__punto"></span><span class="seguimiento__texto">En camino<small>13/10</small></span></li>
-              <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Entregado</span></li>
+            <ol class="pasos pasos--pedido" aria-label="Seguimiento del pedido #MAX-422907">
+              <li class="pasos__paso pasos__paso--hecho"><span class="pasos__num"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Confirmado<small>08/10</small></span></li>
+              <li class="pasos__paso pasos__paso--hecho"><span class="pasos__num"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Pago<small>08/10</small></span></li>
+              <li class="pasos__paso pasos__paso--hecho"><span class="pasos__num"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Preparación<small>09/10</small></span></li>
+              <li class="pasos__paso actual" aria-current="step"><span class="pasos__num"></span><span class="pasos__nombre">En camino<small>13/10</small></span></li>
+              <li class="pasos__paso"><span class="pasos__num"></span><span class="pasos__nombre">Entregado</span></li>
             </ol>
             <div class="en-curso__pie">
               <ul class="miniaturas" aria-label="Productos del pedido">
@@ -259,12 +259,12 @@
                   <div><h3 class="pedido__numero">Pedido #MAX-423518</h3><p class="pedido__fecha">12 de octubre de 2026</p></div>
                   <span class="estado estado--aviso" data-pendiente-estado data-estado-pedido>Pendiente de pago</span>
                 </header>
-                <ol class="seguimiento pedido__pasos" aria-label="Seguimiento del pedido #MAX-423518" data-pasos-pedido>
-                  <li class="seguimiento__paso seguimiento__paso--hecho"><span class="seguimiento__punto"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="seguimiento__texto">Confirmado<small>12/10</small></span></li>
-                  <li class="seguimiento__paso seguimiento__paso--actual" aria-current="step"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Pago</span></li>
-                  <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Preparación</span></li>
-                  <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto">En camino</span></li>
-                  <li class="seguimiento__paso"><span class="seguimiento__punto"></span><span class="seguimiento__texto">Entregado</span></li>
+                <ol class="pasos pasos--pedido pedido__pasos" aria-label="Seguimiento del pedido #MAX-423518" data-pasos-pedido>
+                  <li class="pasos__paso pasos__paso--hecho"><span class="pasos__num"><svg class="icono" aria-hidden="true"><use href="#i-check"/></svg></span><span class="pasos__nombre">Confirmado<small>12/10</small></span></li>
+                  <li class="pasos__paso actual" aria-current="step"><span class="pasos__num"></span><span class="pasos__nombre">Pago</span></li>
+                  <li class="pasos__paso"><span class="pasos__num"></span><span class="pasos__nombre">Preparación</span></li>
+                  <li class="pasos__paso"><span class="pasos__num"></span><span class="pasos__nombre">En camino</span></li>
+                  <li class="pasos__paso"><span class="pasos__num"></span><span class="pasos__nombre">Entregado</span></li>
                 </ol>
                 <div class="pedido__resumen">
                   <ul class="miniaturas"><li><img src="recursos/productos/rtx-5070-ti-ventus.jpg" alt="" width="600" height="600"></li></ul>

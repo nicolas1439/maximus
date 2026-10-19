@@ -563,7 +563,10 @@ a.paginas__enlace {
    se pinta de marca a medida que se avanza. Tantas columnas como pasos. Los hechos (.pasos__paso--hecho) van en
    verde con check y se pueden volver a abrir; el actual (aria-current="step" o .actual) lleva un halo; los que no
    se alcanzaron no se pueden abrir (aria-disabled="true", disabled o .deshabilitado). El ancho lo pone cada página.
-   .pasos--embudo: el de Tu PC ideal, como el del sitio (más grande, el paso actual relleno y los hechos en blanco) */
+   .pasos--embudo: el de Tu PC ideal, como el del sitio (más grande, el paso actual relleno y los hechos en blanco).
+   .pasos--pedido: los pasos de un pedido (Mi cuenta, Seguimiento, Compra confirmada), sin enlace ni número: el círculo
+   vacío (con check si está hecho) y el nombre con la fecha en <small>; el actual lleva un punto que late (pausado
+   fuera de pantalla y quieto con "reducir movimiento"); .pasos--cancelado apagados, .pasos--detenido actual en ámbar */
 .pasos {
   display: grid;
   grid-auto-flow: column;
@@ -595,7 +598,8 @@ a.paginas__enlace {
   background: var(--color-marca);
 }
 
-.pasos__enlace {
+.pasos__enlace,
+.pasos--pedido .pasos__paso {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -658,7 +662,8 @@ a.pasos__enlace {
 }
 
 .pasos__paso--hecho .pasos__enlace,
-.pasos__paso:is([aria-current="step"], .actual) .pasos__enlace {
+.pasos__paso:is([aria-current="step"], .actual) .pasos__enlace,
+.pasos--pedido .pasos__paso:is(.pasos__paso--hecho, [aria-current="step"], .actual) {
   color: var(--color-texto);
   font-weight: var(--peso-medio);
 }
@@ -668,7 +673,8 @@ a.pasos__enlace {
 }
 
 @media (min-width: 768px) {
-  .pasos__enlace {
+  .pasos__enlace,
+  .pasos--pedido .pasos__paso {
     font-size: var(--texto-xs);
   }
 }
@@ -724,6 +730,47 @@ a.pasos__enlace {
 
 .pasos--embudo .pasos__nombre {
   font-size: var(--texto-xs);
+}
+
+.pasos--pedido {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.pasos--pedido .pasos__nombre small {
+  display: block;
+  color: var(--color-texto-suave);
+  font-size: inherit;
+  font-weight: var(--peso-normal);
+}
+
+.pasos--pedido .pasos__paso:is([aria-current="step"], .actual) .pasos__num::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radio-pill);
+  background: var(--color-marca);
+  animation: latido 1.6s ease-in-out infinite;
+}
+
+@keyframes latido {
+  50% {
+    scale: 0.6;
+    opacity: 0.6;
+  }
+}
+
+.pasos--cancelado {
+  opacity: 0.45;
+}
+
+.pasos--detenido .pasos__paso:is([aria-current="step"], .actual) .pasos__num {
+  border-color: var(--color-aviso);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-aviso) 20%, transparent);
+}
+
+.pasos--detenido .pasos__paso:is([aria-current="step"], .actual) .pasos__num::after {
+  background: var(--color-aviso);
+  animation: none;
 }
 
 /* Totales de una compra (carrito y compra confirmada): filas con rótulo e importe, el total separado con una línea
